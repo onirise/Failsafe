@@ -18,8 +18,7 @@ public class AudioSensor : Sensor
     /// <summary>
     /// Объект, который нужно обнаружить, в данном случае игрок
     /// </summary>
-    [SerializeField]
-    private DemoPlayer _target;
+    public DemoPlayer _target;
     // пока проверяем только игрока, 
     // позже нужна система регистрации всех звуков на уровне (падающих предметов, отвлекающих гаджетов)
     private IAudioSignal _targetAudioSignal => _target.Noise;

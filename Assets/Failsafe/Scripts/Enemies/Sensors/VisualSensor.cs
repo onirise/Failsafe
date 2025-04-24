@@ -10,11 +10,22 @@ public class VisualSensor : Sensor
     [SerializeField]
     private float _viewWidth;
     /// <summary>
-    /// Объект, который нужно обнаружить, в данном случае игрок
+    /// Слой который игнорировать при рейкасте
+    /// Должен быть слой врага чтобы он не попадал сам в себя
     /// </summary>
     [SerializeField]
-    private Transform _target;
+    private LayerMask _ignoreLayer;
+    /// <summary>
+    /// Смещение луча, чтобы он шел из глаз врага 
+    /// </summary>
+    private Vector3 _rayOffset = Vector3.up * 1.5f;
+    /// <summary>
+    /// Объект, который нужно обнаружить, в данном случае игрок
+    /// </summary>
+    public Transform _target;
     public override Vector3? SignalSourcePosition => IsActivated() ? _target.position : null;
+
+    private Ray _rayToPlayer;
 
     protected override float SignalInFieldOfView()
     {
@@ -30,10 +41,11 @@ public class VisualSensor : Sensor
         // Это можно реализовать интереснее, делать рейкаст в каждую часть тела игрока (руку, ногу, голову, туловище)
         // Сколько частей тела замечено, такая сила сигнала будет выведена
         // Пока используется одна капсула, поэтому значение всегда 1
-        if (Physics.Raycast(transform.position, targetDirection, out var hit, _viewRange))
+        _rayToPlayer = new Ray(transform.position + _rayOffset, targetDirection);
+        if (Physics.Raycast(_rayToPlayer, out var hit, _viewRange, ~_ignoreLayer))
         {
             // сейчас обнаружение игрока идет по тэгу Player
-            if (hit.transform.tag == _target.tag)
+            if (hit.transform.parent.tag == _target.tag)
             {
                 return 1;
             }
@@ -48,7 +60,6 @@ public class VisualSensor : Sensor
 
         if (_target == null) return;
         Gizmos.color = SignalStrength > 0 ? Color.green : Color.yellow;
-        var targetDiraction = Vector3.Normalize(_target.position - transform.position);
-        Gizmos.DrawRay(transform.position, targetDiraction);
+        Gizmos.DrawRay(_rayToPlayer);
     }
 }

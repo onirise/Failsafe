@@ -43,7 +43,7 @@ namespace DMDungeonGenerator {
         /// 
         /// If you have questions about this, post an issue on github or tweet me @DMeville
         /// </summary>
-        public static float voxelScale = 1f; 
+        public static float voxelScale = 5f; 
         
         [Header("Room Prefabs")]
         public DungeonSet generatorSettings;

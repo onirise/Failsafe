@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 374109432967700053}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.18172, y: 0.18172, z: 0.18172}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 374109433356125756}
@@ -138,7 +138,7 @@ Transform:
   m_GameObject: {fileID: 374109432981789084}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.066, z: 0.0883}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -234,7 +234,7 @@ Transform:
   m_GameObject: {fileID: 374109433352817464}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.544254, y: 0.203, z: -6.194706}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -257,10 +257,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensX: 250
   mouseSensY: 125
-  moveSpeed: 1.5
+  moveSpeed: 8
   camera: {fileID: 374109432981789085}
   cc: {fileID: 374109433352817471}
-  gravityForce: -2
+  gravityForce: -9.8
 --- !u!143 &374109433352817471
 CharacterController:
   m_ObjectHideFlags: 0
@@ -279,13 +279,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.38
-  m_Radius: 0.09
+  m_Height: 2
+  m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 1
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &4786575343337522745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,8 +300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 374109433352817471}
   crouchSpeed: 1
-  normalHeight: 0.4
-  crouchHeight: 0.15
+  normalHeight: 2
+  crouchHeight: 1
   offset: {x: 0, y: 0, z: 0}
   player: {fileID: 374109433352817470}
 --- !u!114 &5564961472655603788
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518017a7c725d6646a44ecdadd54e1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dist: 0.5
+  dist: 1.5
 --- !u!114 &3587987712684801882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,7 +583,7 @@ Light:
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 10
+  m_Range: 30
   m_SpotAngle: 100
   m_InnerSpotAngle: 1
   m_CookieSize: 10

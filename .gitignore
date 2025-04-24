@@ -1,20 +1,26 @@
 # ========== UNITY ==========
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uilds?/
-[Ll]ogs/
-UserSettings/
-MemoryCaptures/
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
 sysinfo.txt
 
-# Addressables
-Assets/AddressableAssetsData/**/*.bin*
-Assets/AddressableAssetsData/**/*.bundle
-Assets/AddressableAssetsData/**/*.hash
+# Never ignore Asset meta data
+!/[Aa]ssets/**/*.meta
 
-# Do not ignore meta files
-!Assets/**/*.meta
+# Addressables
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bundle
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.hash
+
+# Temporary auto-generated Android Assets
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Ignore all asset store tools if needed
 # Assets/AssetStoreTools*
@@ -61,7 +67,9 @@ desktop.ini
 
 # ========== BUILDS ==========
 *.apk
+*.aab
 *.unitypackage
+*.unitypackage.meta
 *.app
 *.exe
 *.war
@@ -75,9 +83,6 @@ consulo/
 # ========== NODE ==========
 node_modules/
 dist/
-
-# ========== PYTHON ==========
-*.py[cod]
 
 # ========== JAR / JAVA ==========
 *.jar

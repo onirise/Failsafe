@@ -80,6 +80,7 @@ public class EnemyChaseState : EnemyBaseState
         if (_lostPlayerTimer > 0)
         {
             _lostPlayerTimer -= Time.deltaTime;
+            ChasePlayer(enemy); // Продолжать движение к игроку
         }
         else
         {

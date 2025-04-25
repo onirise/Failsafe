@@ -101,6 +101,7 @@ coverage-final.json
 # ========== FMOD ==========
 [Ff]modCache/
 [Ff]modTemp/
+fmod_editor.log
 *.guid
 *.fspro.user
 *.unsaved

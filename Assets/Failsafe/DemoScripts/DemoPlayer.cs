@@ -18,6 +18,11 @@ public class DemoPlayer : MonoBehaviour
 
     public static List<int> keysFound = new List<int>();
 
+    [SerializeField]
+    private float _maxWalkingNoise = 50f;
+    private PlayerAudioSignal _noise = new PlayerAudioSignal();
+    public IAudioSignal Noise => _noise;
+
     void Start()
     {
         yRot = 0f;
@@ -40,23 +45,30 @@ public class DemoPlayer : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        Vector3 move = x * transform.right + z * transform.forward;
+        Vector3 move = Vector3.ClampMagnitude(x * transform.right + z * transform.forward, 1);
         gravity = gravityForce;
-        cc.Move(((move * moveSpeed) + new Vector3(0f, gravity, 0f))* Time.deltaTime) ;
-        if(cc.isGrounded) gravity = 0f;
+        cc.Move(((move * moveSpeed) + new Vector3(0f, gravity, 0f)) * Time.deltaTime);
+        if (cc.isGrounded) gravity = 0f;
 
-       
+        var noiseStrength = (cc.velocity.magnitude - gravity) / moveSpeed * _maxWalkingNoise;
+        if (cc.height < 1.2) noiseStrength -= 30; // пока костыль уменьшения громкости в присяде
+        _noise.Update(transform.position, noiseStrength);
     }
 
-    public static bool HasKey(int keyID) {
-        if(keysFound.IndexOf(keyID) == -1) {
+    public static bool HasKey(int keyID)
+    {
+        if (keysFound.IndexOf(keyID) == -1)
+        {
             return false;
-        } else {
+        }
+        else
+        {
             return true;
         }
     }
 
-    public static void AddKey(int keyID) {
+    public static void AddKey(int keyID)
+    {
         keysFound.Add(keyID);
     }
 }

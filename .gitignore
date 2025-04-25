@@ -97,3 +97,10 @@ coverage-final.json
 !*.dll
 !*.json
 !*.obj
+
+# ========== FMOD ==========
+[Ff]modCache/
+[Ff]modTemp/
+*.guid
+*.fspro.user
+*.unsaved

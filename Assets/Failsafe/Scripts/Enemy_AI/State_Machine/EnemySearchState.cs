@@ -127,7 +127,7 @@ public class EnemySearchState : EnemyBaseState
     /// </summary>
     private void OnThePoint(EnemyStateMachine enemy)
     {
-        if (Vector3.Distance(enemy.transform.position, searchPoint) < enemy.searchAreaRadius)
+        if (Vector3.Distance(enemy.transform.position, searchPoint) < enemy.offsetSearchinPoint)
         {
             PerformSearch(enemy);
         }

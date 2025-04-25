@@ -29,7 +29,7 @@ public class EnemyStateMachine : MonoBehaviour
     public float searchDuration = 5f; // Duration to search for the player
     public float searchRadius = 10f; // Radius to search for the player
     public float timeToGet = 25f; // Time to get to the search point
-    public float searchAreaRadius = 15f; // Radius of the search area
+    public float offsetSearchinPoint = 15f; // Radius of the search area
 
     void Start()
     {

@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.norska-lib.spreadsheets": {
+      "version": "https://github.com/NorskaGames/NorskaLibUPM.git?path=/Spreadsheets",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4bf70c22599147f1a219d0f614b8c9c36dd7a674"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

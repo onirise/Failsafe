@@ -32,7 +32,7 @@ public class DefaultState : BehaviorState
         {
             if (sensor.IsActivated())
             {
-                warningProgres += Time.deltaTime;
+                warningProgres += sensor.SignalStrength * Time.deltaTime;
             }
         }
     }

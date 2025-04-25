@@ -10,33 +10,47 @@ public class VisualSensor : Sensor
     [SerializeField]
     private float _viewWidth;
     /// <summary>
-    /// Объект, который нужно обнаружить, в данном случае игрок
+    /// Слой который игнорировать при рейкасте
+    /// Должен быть слой врага чтобы он не попадал сам в себя
     /// </summary>
     [SerializeField]
-    private Transform _target;
+    private LayerMask _ignoreLayer;
+    /// <summary>
+    /// Смещение луча, чтобы он шел из глаз врага 
+    /// </summary>
+    private Vector3 _rayOffset = Vector3.up * 1.5f;
+    /// <summary>
+    /// Объект, который нужно обнаружить, в данном случае игрок
+    /// </summary>
+    public Transform _target;
+    public override Vector3? SignalSourcePosition => IsActivated() ? _target.position : null;
 
-    public override Transform ObjectThatActivatedSensor => IsActivated() ? _target : null;
+    private Ray _rayToPlayer;
 
-    public override bool IsInFieldOfView()
+    protected override float SignalInFieldOfView()
     {
         var distanceToTarget = Vector3.Distance(transform.position, _target.position);
-        if (distanceToTarget > _viewRange) return false;
+        if (distanceToTarget > _viewRange) return 0;
 
         var viewDirection = transform.forward;
         var targetDirection = Vector3.Normalize(_target.position - transform.position);
 
         var distanceToViewPoint = Vector3.Distance(viewDirection, targetDirection);
-        if (distanceToViewPoint > _viewWidth) return false;
+        if (distanceToViewPoint > _viewWidth) return 0;
 
-        if (Physics.Raycast(transform.position, targetDirection, out var hit, _viewRange))
+        // Это можно реализовать интереснее, делать рейкаст в каждую часть тела игрока (руку, ногу, голову, туловище)
+        // Сколько частей тела замечено, такая сила сигнала будет выведена
+        // Пока используется одна капсула, поэтому значение всегда 1
+        _rayToPlayer = new Ray(transform.position + _rayOffset, targetDirection);
+        if (Physics.Raycast(_rayToPlayer, out var hit, _viewRange, ~_ignoreLayer))
         {
             // сейчас обнаружение игрока идет по тэгу Player
-            if (hit.transform.tag == _target.tag)
+            if (hit.transform.parent.tag == _target.tag)
             {
-                return true;
+                return 1;
             }
         }
-        return false;
+        return 0;
     }
 
     void OnDrawGizmos()
@@ -44,8 +58,8 @@ public class VisualSensor : Sensor
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, transform.forward);
 
-        Gizmos.color = IsInFieldOfView() ? Color.green : Color.yellow;
-        var targetDiraction = Vector3.Normalize(_target.position - transform.position);
-        Gizmos.DrawRay(transform.position, targetDiraction);
+        if (_target == null) return;
+        Gizmos.color = SignalStrength > 0 ? Color.green : Color.yellow;
+        Gizmos.DrawRay(_rayToPlayer);
     }
 }

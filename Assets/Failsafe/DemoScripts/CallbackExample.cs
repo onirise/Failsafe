@@ -9,8 +9,6 @@ public class CallbackExample : MonoBehaviour
 
     public DMDungeonGenerator.DungeonGenerator generator;
 
-    public GameObject PlayerPrefab;
-    public GameObject spawnedPlayer;
     public GameObject KeyPrefab;
     public List<GameObject> keys = new List<GameObject>();
 
@@ -36,8 +34,6 @@ public class CallbackExample : MonoBehaviour
         Debug.Log("CallbackExample::Generator complete!");
 
         //cleanup
-        //Destroy the player if one already exists from the last generation
-        if(spawnedPlayer != null)  GameObject.DestroyImmediate(spawnedPlayer);
         //Destroy any keys we may have spawned (from the last run of the generator if there is a prev gen)
         for(int i = 0; i < keys.Count; i++) GameObject.DestroyImmediate(keys[i].gameObject);
         keys = new List<GameObject>(); //clear the key list
@@ -57,11 +53,6 @@ public class CallbackExample : MonoBehaviour
         for(int i = 0; i < generator.DungeonGraph.Count; i++) {
             OnInitRoomCallback(generator.DungeonGraph[i].data.gameObject, generator.rand, i);
         }
-
-
-        //spawn the player in the first room somewhere
-        Vector3 spawnRoomPos = generator.DungeonGraph[0].data.gameObject.transform.position;
-        spawnedPlayer = GameObject.Instantiate(PlayerPrefab, spawnRoomPos, Quaternion.identity);
 
     }
 

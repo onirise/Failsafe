@@ -4,7 +4,7 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Enemy
+  - PatrolPoints
   layers:
   - Default
   - TransparentFX
@@ -12,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - EnemyLayer
+  - Player
   - 
   - 
   - 

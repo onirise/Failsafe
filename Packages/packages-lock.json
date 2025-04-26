@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.norska-lib.spreadsheets": {
+      "version": "https://github.com/NorskaGames/NorskaLibUPM.git?path=/Spreadsheets",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4bf70c22599147f1a219d0f614b8c9c36dd7a674"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -53,6 +60,15 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.inputsystem": {
+      "version": "1.14.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.test-framework": {
       "version": "1.5.1",
       "depth": 0,
@@ -68,9 +84,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"

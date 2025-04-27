@@ -36,7 +36,7 @@ public class EnemyChaseState : EnemyBaseState
     {
         if (_fieldOfView == null || _zonesOfHearing == null) return;
 
-        if (_fieldOfView.canSeePlayer)
+        if (_fieldOfView.canSeePlayerFar)
         {
             _lostPlayerTimer = 5f; // —брос таймера
             isChasing = true;

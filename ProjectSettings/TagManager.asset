@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - PatrolPoints
+  - Light
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - LightSource
   - 
   - 
   - 

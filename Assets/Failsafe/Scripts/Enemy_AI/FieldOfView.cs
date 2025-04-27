@@ -6,48 +6,49 @@ using UnityEngine;
 public class FieldOfView : MonoBehaviour
 {
     [Header("Радиусы окружностей поля зрения")]
-    public float radius;
-    public float radiusWalking;
-    public float radiusSprinting;
+    public float radiusFar;
+    public float radiusNear;
+    public bool canSeePlayerFar, canSeePlayerNear;
+   [SerializeField] GameObject collisionFar, collisionNear;
     [Range(0, 360)]
-    public float angleSprint, angleWalk, angleNear;
+    public float angleFar, angleNear;
     public GameObject playerRef;
-    public LayerMask targetMask, obstructionMask;
-    public bool canSeePlayer;
+    [SerializeField] private LayerMask targetMask, obstructionMask;
 
-
-
-    private void Update()
+    private void Start()
     {
-        FieldOfViewCheck();
+        if(collisionFar != null)
+        {
+            collisionFar.GetComponent<SphereCollider>().radius = radiusFar;
+        }
+        if (collisionNear != null)
+        {
+            collisionNear.GetComponent<SphereCollider>().radius = radiusNear;
+        }
     }
 
     /// <summary>
     /// Проверяет видимость игрока в разных радиусах и углах.
     /// </summary>
-    private void FieldOfViewCheck()
+    public void  FieldOfViewCheck()
     {
-        canSeePlayer = false;
+        canSeePlayerFar = false;
+        canSeePlayerNear = false;
 
-        // Проверка для спринта
-        if (CheckVisibility(radiusSprinting, angleSprint))
+        if (CheckVisibility(radiusNear, angleNear))
         {
-            canSeePlayer = true;
-            return;
+            canSeePlayerNear = true;
+            Debug.Log("Player detected");
         }
+        // Проверка в дали
+        if (CheckVisibility(radiusFar, angleFar) && !canSeePlayerNear)
+        {
+            canSeePlayerFar = true;
+            Debug.Log("Player detected");
+        }
+        // Проверка вблизи
+       
 
-        // Проверка для ходьбы
-        if (CheckVisibility(radiusWalking, angleWalk))
-        {
-            canSeePlayer = true;
-            return;
-        }
-
-        // Проверка для ближнего радиуса
-        if (CheckVisibility(radius, angleNear))
-        {
-            canSeePlayer = true;
-        }
     }
 
     /// <summary>
@@ -72,6 +73,7 @@ public class FieldOfView : MonoBehaviour
 
             if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
             {
+                Debug.Log("Player is in sight");
                 return true;
             }
         }

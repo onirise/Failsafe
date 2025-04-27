@@ -55,7 +55,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     public void LookForPlayer()
     {
-        if (this.GetComponent<FieldOfView>().canSeePlayer)
+        if (this.GetComponent<FieldOfView>().canSeePlayerNear)
         {
             currentState = chaseState;
             currentState.EnterState(this);
@@ -67,7 +67,7 @@ public class EnemyStateMachine : MonoBehaviour
         // Implement the logic for checking if the player is within the search radius
         // For example, you can use a sphere cast or distance check to see if the player is nearby
         if ((enemy.GetComponent<ZonesOfHearing>().playerNear || enemy.GetComponent<ZonesOfHearing>().playerWalk || enemy.GetComponent<ZonesOfHearing>().playerSprint)
-            && !enemy.GetComponent<FieldOfView>().canSeePlayer)
+            && !enemy.GetComponent<FieldOfView>().canSeePlayerFar)
         {
             Debug.Log("Player found!");
             currentState = searchState;

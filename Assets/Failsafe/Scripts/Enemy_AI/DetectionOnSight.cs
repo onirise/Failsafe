@@ -29,18 +29,18 @@ public class DetectionOnSight : MonoBehaviour
             {
                 if(fov.canSeePlayerNear)
                 {
-                    detectionProgress.playerInNearZone = true;
-                    detectionProgress.plyerInFarZone = false;
+                    detectionProgress._playerInNearZone = true;
+                    detectionProgress._playerInFarZone = false;
                 }
                 else if (fov.canSeePlayerFar)
                 {
-                    detectionProgress.plyerInFarZone = true;
-                    detectionProgress.playerInNearZone = false;
+                    detectionProgress._playerInFarZone = true;
+                    detectionProgress._playerInNearZone = false;
                 }
                 else
                 {
-                    detectionProgress.plyerInFarZone = false;
-                    detectionProgress.playerInNearZone = false;
+                    detectionProgress._playerInFarZone = false;
+                    detectionProgress._playerInNearZone = false;
                 }
             }
             

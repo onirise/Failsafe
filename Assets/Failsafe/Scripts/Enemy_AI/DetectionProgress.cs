@@ -1,76 +1,110 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DetectionProgress : MonoBehaviour
 {
-    [Header("Скорости обнаружения")]
-    [SerializeField] private float _fastZoneDetectionSpeed = 20f; // % в секунду
-    [SerializeField] private float _slowZoneDetectionSpeed = 5f;
+    [Header("Detection Settings")]
+    [SerializeField] private int _baseFastZoneSpeed = 20;
+    [SerializeField] private int _baseSlowZoneSpeed = 5;
+    [SerializeField] private float _decaySpeed = 15f;
+    [SerializeField] private Slider _detectionSlider;
 
-    [Header("Текущий статус")]
+    [Header("Debug")]
     [Range(0, 100)]
     [SerializeField] private float _detectionProgress;
 
-    public event Action<float> OnProgressChanged;
-    public event Action OnDetected;
+    private float _currentFastSpeed;
+    private float _currentSlowSpeed;
+    public  bool _playerInFarZone;
+    public bool _playerInNearZone;
+    private float _lastUpdateTime;
+    private const float UPDATE_INTERVAL = 0.05f; // 20 раз в секунду
 
-    public bool plyerInFarZone, playerInNearZone;
+    public event System.Action<float> OnProgressChanged;
+    public event System.Action OnDetected;
 
-    public float[] modifiers;
-
-    [SerializeField] private Slider slider;
-    private void Start()
+    private void Awake()
     {
-        _detectionProgress = 0;
+        _currentFastSpeed = _baseFastZoneSpeed;
+        _currentSlowSpeed = _baseSlowZoneSpeed;
+
+        if (_detectionSlider == null)
+            _detectionSlider = GetComponentInChildren<Slider>();
+    }
+
+    public void SetDetectionZones(bool inFarZone, bool inNearZone)
+    {
+        _playerInFarZone = inFarZone;
+        _playerInNearZone = inNearZone;
     }
 
     private void Update()
     {
-        if (plyerInFarZone)
-        {
-            AddDetection(_slowZoneDetectionSpeed * Time.deltaTime);
-        }
-        else if (playerInNearZone)
-        {
-            AddDetection(_fastZoneDetectionSpeed * Time.deltaTime);
-        }
-        else
-        {
-            if(_detectionProgress > 0) AddDetection(-_slowZoneDetectionSpeed * Time.deltaTime);
+        if (Time.time - _lastUpdateTime < UPDATE_INTERVAL)
+            return;
 
-        }
-        SliderFillUp();
+        _lastUpdateTime = Time.time;
+        UpdateDetection();
     }
 
-    private void SliderFillUp()
+    private void UpdateDetection()
     {
-        if (slider != null)
+        float detectionRate = 0f;
+
+        if (_playerInNearZone)
         {
-            slider.value = _detectionProgress / 100;
+            detectionRate = _currentFastSpeed;
         }
-        else
+        else if (_playerInFarZone)
         {
-            Debug.LogError("Slider is not assigned in the inspector.");
+            detectionRate = _currentSlowSpeed;
+        }
+        else if (_detectionProgress > 0)
+        {
+            detectionRate = -_decaySpeed;
+        }
+
+        if (Mathf.Abs(detectionRate) > 0.01f)
+        {
+            AddDetection(detectionRate * UPDATE_INTERVAL);
         }
     }
+
     private void AddDetection(float amount)
     {
-        float newProgress = Mathf.Clamp(_detectionProgress + amount, 0, 100);
+        float newProgress = Mathf.Clamp(_detectionProgress + amount, 0f, 100f);
 
         if (Mathf.Abs(newProgress - _detectionProgress) > 0.1f)
         {
             _detectionProgress = newProgress;
+            UpdateVisuals();
             OnProgressChanged?.Invoke(_detectionProgress);
-            Debug.Log($"Detection Progress: {_detectionProgress}");
 
-            if (_detectionProgress >= 100)
+            if (_detectionProgress >= 100f)
             {
                 OnDetected?.Invoke();
             }
         }
     }
 
-    
+    private void UpdateVisuals()
+    {
+        if (_detectionSlider != null)
+        {
+            _detectionSlider.value = _detectionProgress / 100f;
+        }
+    }
 
+    public void ModifyMultiplier(float multiplier)
+    {
+        if (multiplier <= 0)
+        {
+            Debug.LogError("Multiplier must be positive");
+            return;
+        }
+
+        _currentFastSpeed = _baseFastZoneSpeed * multiplier;
+        _currentSlowSpeed = _baseSlowZoneSpeed * multiplier;
+        Debug.Log($"Detection speed modified: Fast = {_currentFastSpeed}, Slow = {_currentSlowSpeed}");
+    }
 }

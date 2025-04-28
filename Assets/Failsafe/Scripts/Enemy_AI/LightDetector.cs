@@ -9,7 +9,7 @@ public class LightDetector : MonoBehaviour
     [SerializeField] private LayerMask _lightLayer; // Слой источников света
     [SerializeField] private LayerMask _obstructionLayer; // Слой препятствий
     [SerializeField] private LayerMask _ignoreLayer; // Слой игрока (игнорируется)
-
+    [SerializeField] PlayerVisibility playerVis; // Ссылка на скрипт обнаружения
     [Header("Отладка")]
     [SerializeField] private bool _visualize = true;
     [SerializeField][Range(0, 1)] private float _illuminationLevel;
@@ -53,6 +53,7 @@ public class LightDetector : MonoBehaviour
         if (!IsValidLight(other)) return;
 
         _activeLights.Remove(other);
+        playerVis.ResetVisibility();
         Debug.Log($"[Освещение] Источник света потерян: {other.name}");
         UpdateIllumination();
     }
@@ -102,6 +103,7 @@ public class LightDetector : MonoBehaviour
         }
 
         _illuminationLevel = totalChecks > 0 ? (float)visibleHits / totalChecks : 0f;
+        playerVis.PlayerVisScore = _illuminationLevel * 100;
 
         Debug.Log($"[Освещение] Статистика: " +
                  $"Точек: {_detectionPoints.Length}, " +

@@ -164,7 +164,6 @@ GameObject:
   - component: {fileID: 105652768}
   - component: {fileID: 105652765}
   - component: {fileID: 105652767}
-  - component: {fileID: 105652766}
   - component: {fileID: 105652763}
   - component: {fileID: 105652764}
   - component: {fileID: 105652772}
@@ -255,27 +254,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &105652766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105652762}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9faef0009df924948ac26cd77b68aa59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mask:
-    serializedVersion: 2
-    m_Bits: 64
-  radiusNear: 0
-  radiusWalk: 0
-  radiusSprint: 0
-  playerNear: 0
-  playerSprint: 0
-  playerWalk: 0
 --- !u!114 &105652767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,7 +365,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105652762}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7661005, z: 0, w: 0.64272076}
   m_LocalPosition: {x: -1.5722076, y: 1.41, z: 1.0829258}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -396,7 +374,7 @@ Transform:
   - {fileID: 575813465}
   - {fileID: 362605030}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 100.01, z: 0}
 --- !u!114 &105652772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2232,6 +2210,7 @@ MonoBehaviour:
   _ignoreLayer:
     serializedVersion: 2
     m_Bits: 64
+  playerVis: {fileID: 1261052314}
   _visualize: 1
   _illuminationLevel: 0
 --- !u!1 &883376995
@@ -3362,7 +3341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1226041354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3866,13 +3845,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 944701fa22d735c4781f56632758a533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fastZoneDetectionSpeed: 50
-  _slowZoneDetectionSpeed: 20
+  _baseFastZoneSpeed: 20
+  _baseSlowZoneSpeed: 5
+  _decaySpeed: 15
+  _detectionSlider: {fileID: 1535571932}
   _detectionProgress: 0
-  plyerInFarZone: 0
-  playerInNearZone: 0
-  modifiers: []
-  slider: {fileID: 1535571932}
+  _playerInFarZone: 0
+  _playerInNearZone: 0
 --- !u!114 &1261052314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3885,19 +3864,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49aa3d2c5fa68854c92513de1800676d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPoints: []
-  playerVisScore: 0
-  playerStatus: 
-  lowModifire: 1.5
-  mediumModifire: 2
-  highModifire: 3
-  checkRadius: 5
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 0
+  _playerVisScore: 0
+  _detectionProgress: {fileID: 1261052313}
+  displayStatus: 
+  _lowModifier: 1.5
+  _mediumModifier: 2
+  _highModifier: 3
 --- !u!1 &1398393907
 GameObject:
   m_ObjectHideFlags: 0
@@ -6041,7 +6013,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!195 &1981270107
 NavMeshAgent:
   m_ObjectHideFlags: 0

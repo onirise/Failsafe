@@ -28,22 +28,16 @@ public class LightDetector : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log($"Обнаружен объект: {other.name}\n" +
-                     $"Тег: {other.tag}\n" +
-                     $"Слой: {LayerMask.LayerToName(other.gameObject.layer)}\n" +
-                     $"Has Rigidbody: {other.attachedRigidbody != null}");
+    { 
 
         if (!IsValidLight(other)) return;
 
         _activeLights.Add(other);
-        Debug.Log($"[Освещение] Обнаружен источник света: {other.name}");
         UpdateIllumination();
     }
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log($"[Освещение] Обнаружен источник света: {other.name} (остается в триггере)");
         if (!IsValidLight(other)) return;
         UpdateIllumination();
     }
@@ -54,7 +48,6 @@ public class LightDetector : MonoBehaviour
 
         _activeLights.Remove(other);
         playerVis.ResetVisibility();
-        Debug.Log($"[Освещение] Источник света потерян: {other.name}");
         UpdateIllumination();
     }
 
@@ -63,8 +56,7 @@ public class LightDetector : MonoBehaviour
         if (col == null) return false;
 
         // Проверяем тег и слой через встроенные методы Unity
-        return col.CompareTag("Light") &&
-               _lightLayer == (_lightLayer | (1 << col.gameObject.layer));
+        return col.CompareTag("Light");
     }
 
     private void UpdateIllumination()

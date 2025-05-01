@@ -30,24 +30,26 @@ public class FieldOfView : MonoBehaviour
     /// <summary>
     /// Проверяет видимость игрока в разных радиусах и углах.
     /// </summary>
-    public void  FieldOfViewCheck()
+    public bool FieldOfViewCheck()
     {
         canSeePlayerFar = false;
         canSeePlayerNear = false;
 
+        // Проверяем ближнюю зону
         if (CheckVisibility(radiusNear, angleNear))
         {
             canSeePlayerNear = true;
-            Debug.Log("Player detected");
+            Debug.Log("Player detected in NEAR range");
         }
-        // Проверка в дали
-        if (CheckVisibility(radiusFar, angleFar) && !canSeePlayerNear)
+        // Проверяем дальнюю зону только если не обнаружено в ближней
+        else if (CheckVisibility(radiusFar, angleFar))
         {
             canSeePlayerFar = true;
-            Debug.Log("Player detected");
+            Debug.Log("Player detected in FAR range");
         }
-        // Проверка вблизи
-       
+
+        // Возвращаем true если обнаружен в любой зоне
+        return canSeePlayerNear || canSeePlayerFar;
 
     }
 

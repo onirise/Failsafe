@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PatrolPoints
   - Light
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - Player
   - LightSource
-  - 
+  - Walls
   - 
   - 
   - 

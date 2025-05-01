@@ -22,6 +22,7 @@ public class DetectionProgress : MonoBehaviour
 
     public event System.Action<float> OnProgressChanged;
     public event System.Action OnDetected;
+    private float _lastVisualProgress = -1f; // -1, чтобы принудительно обновить слайдер при старте
 
     private void Awake()
     {
@@ -49,22 +50,11 @@ public class DetectionProgress : MonoBehaviour
 
     private void UpdateDetection()
     {
-        float detectionRate = 0f;
+        float detectionRate = _playerInNearZone ? _currentFastSpeed :
+                              _playerInFarZone ? _currentSlowSpeed :
+                              _detectionProgress > 0 ? -_decaySpeed : 0f;
 
-        if (_playerInNearZone)
-        {
-            detectionRate = _currentFastSpeed;
-        }
-        else if (_playerInFarZone)
-        {
-            detectionRate = _currentSlowSpeed;
-        }
-        else if (_detectionProgress > 0)
-        {
-            detectionRate = -_decaySpeed;
-        }
-
-        if (Mathf.Abs(detectionRate) > 0.01f)
+        if (detectionRate != 0f)
         {
             AddDetection(detectionRate * UPDATE_INTERVAL);
         }
@@ -87,11 +77,19 @@ public class DetectionProgress : MonoBehaviour
         }
     }
 
+
     private void UpdateVisuals()
     {
         if (_detectionSlider != null)
         {
-            _detectionSlider.value = _detectionProgress / 100f;
+            float normalized = _detectionProgress / 100f;
+
+            // Обновляем только если значение действительно изменилось
+            if (!Mathf.Approximately(normalized, _lastVisualProgress))
+            {
+                _detectionSlider.value = normalized;
+                _lastVisualProgress = normalized;
+            }
         }
     }
 

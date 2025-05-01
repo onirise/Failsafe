@@ -45,7 +45,7 @@ public class EnemyAttackState : EnemyBaseState
 
         if (!_zonesOfHearing.playerNear)
         {
-            enemy.EnemySwitchState(enemy.chaseState);
+            enemy.SwitchState(EnemyStateType.Chase);
         }
     }
 

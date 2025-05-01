@@ -27,23 +27,11 @@ public class DetectionOnSight : MonoBehaviour
             fov.FieldOfViewCheck();
             if (detectionProgress != null)
             {
-                if(fov.canSeePlayerNear)
-                {
-                    detectionProgress._playerInNearZone = true;
-                    detectionProgress._playerInFarZone = false;
-                }
-                else if (fov.canSeePlayerFar)
-                {
-                    detectionProgress._playerInFarZone = true;
-                    detectionProgress._playerInNearZone = false;
-                }
-                else
-                {
-                    detectionProgress._playerInFarZone = false;
-                    detectionProgress._playerInNearZone = false;
-                }
+                detectionProgress._playerInNearZone = fov.canSeePlayerNear;
+                detectionProgress._playerInFarZone = !fov.canSeePlayerNear && fov.canSeePlayerFar;
             }
-            
         }
+            
     }
 }
+

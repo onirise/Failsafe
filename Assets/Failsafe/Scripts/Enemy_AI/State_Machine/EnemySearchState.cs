@@ -42,8 +42,6 @@ public class EnemySearchState : EnemyBaseState
     public override void UpdateState(EnemyStateMachine enemy)
     {
         Debug.Log("Updating Search State");
-        enemy.LookForPlayer();
-        enemy.CheckForPlayer(enemy);
         CantGetToSearchPoint(enemy);
         OnThePoint(enemy);
     }
@@ -54,7 +52,8 @@ public class EnemySearchState : EnemyBaseState
     private void BackToPatrol(EnemyStateMachine enemy)
     {
         Debug.Log("Going back to Patrol State");
-        enemy.EnemySwitchState(enemy.patrolState);
+        enemy.SwitchState(EnemyStateType.Patrol);
+
     }
 
     /// <summary>

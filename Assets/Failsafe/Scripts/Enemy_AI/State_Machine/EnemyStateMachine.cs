@@ -3,76 +3,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemyStateMachine : MonoBehaviour
 {
-    public EnemyBaseState currentState;
-    public String stateName;
-    public EnemySearchState searchState = new EnemySearchState();
-    public EnemyAttackState attackState = new EnemyAttackState();
-    public EnemyPatrolingState patrolState = new EnemyPatrolingState();
-    public EnemyChaseState chaseState = new EnemyChaseState();
+    [Header("References")]
     public GameObject player;
     public GameObject enemyWeapon;
-    public float normalSpeed = 3f; // Normal speed of the enemy
-    [Header("Enemy Patrol Settings")]
+    public FieldOfView FOV { get; private set; }
+    public NavMeshAgent Agent { get; private set; }
+    [Header("State Settings")]
+    public float normalSpeed = 3f;
     public float patrolSpeed = 3f;
     public float waitTime = 2f;
     public GameObject[] patrolPoints;
-    [Header("Enemy Chase Settings")]
     public float lostPlayerTimer = 5f;
     public float enemyChaseSpeed = 8f;
-    public bool afterChase = false; // Flag to check if the enemy is after the player
-    [Header("Enemy Search Settings")]
-    public float changePointTimer = 0.5f;
-    public float searchDuration = 5f; // Duration to search for the player
-    public float searchRadius = 10f; // Radius to search for the player
-    public float timeToGet = 25f; // Time to get to the search point
-    public float offsetSearchinPoint = 15f; // Radius of the search area
+    public bool afterChase = false; // Флаг, указывающий, что враг был в состоянии погони
+    [Header("Search Settings")]
+    public float searchRadius = 10f;
+    public float searchDuration = 5f;
+    public float timeToGet = 5f; // Время, за которое враг должен добраться до точки поиска
+    public float changePointTimer = 5f; // Таймер для смены точки поиска
+    public float offsetSearchinPoint = 5f; // Таймер для смены точки поиска
+
+    // private EnemyStateFactory _stateFactory;
+    private EnemyBaseState _currentState; // Приватное поле
+    public EnemyBaseState CurrentState => _currentState; // Свойство для доступа к текущему состоянию
+    [SerializeField] private string currentStateName; // Для отладки
+
+    void Awake()
+    {
+        FOV = GetComponent<FieldOfView>();
+        Agent = GetComponent<NavMeshAgent>();
+        OnDetectPlayer();
+    }
 
     void Start()
     {
-
-        currentState = patrolState;
-
-        currentState.EnterState(this);
+        SwitchState(EnemyStateType.Patrol);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        stateName = currentState.ToString();
-        currentState.UpdateState(this);
+        CurrentState?.UpdateState(this); // Используем свойство
+        currentStateName = CurrentState?.GetType().Name; // Отображаем имя состояния
     }
 
-   public void EnemySwitchState(EnemyBaseState newState)
+    public void SwitchState(EnemyStateType newState)
     {
-        currentState.ExitState(this);
-        currentState = newState;
-        currentState.EnterState(this);
+        _currentState?.ExitState(this); // Уходим из предыдущего состояния
+        _currentState = EnemyStateFactory.CreateState(newState);
+        _currentState.EnterState(this);
     }
 
-    public void LookForPlayer()
+    private void OnDetectPlayer()
     {
-        if (this.GetComponent<FieldOfView>().canSeePlayerNear)
-        {
-            currentState = chaseState;
-            currentState.EnterState(this);
-        }
+        player.GetComponent<DetectionProgress>().OnDetected += () => SwitchState(EnemyStateType.Chase);
     }
 
-    public void CheckForPlayer(EnemyStateMachine enemy)
-    {
-        // Implement the logic for checking if the player is within the search radius
-        // For example, you can use a sphere cast or distance check to see if the player is nearby
-        if ((enemy.GetComponent<ZonesOfHearing>().playerNear || enemy.GetComponent<ZonesOfHearing>().playerWalk || enemy.GetComponent<ZonesOfHearing>().playerSprint)
-            && !enemy.GetComponent<FieldOfView>().canSeePlayerFar)
-        {
-            Debug.Log("Player found!");
-            currentState = searchState;
-            currentState.EnterState(this);
-        }
-        
-    }
 }
+
+

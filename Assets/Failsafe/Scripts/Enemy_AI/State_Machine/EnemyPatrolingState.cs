@@ -51,8 +51,6 @@ public class EnemyPatrolingState : EnemyBaseState
             CheckPatrolPointProximity();
         }
 
-        enemy.LookForPlayer();
-        enemy.CheckForPlayer(enemy);
     }
 
     /// <summary>
@@ -91,3 +89,5 @@ public class EnemyPatrolingState : EnemyBaseState
         agent.SetDestination(patrolPoints[currentPatrolPointIndex].transform.position);
     }
 }
+
+

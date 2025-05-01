@@ -1,24 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyChaseState : EnemyBaseState
-{
-    private NavMeshAgent _navMeshAgent;
-    private FieldOfView _fieldOfView;
-    private ZonesOfHearing _zonesOfHearing;
-    private bool isChasing = false;
+{ 
     float _lostPlayerTimer; // Таймер потери игрока
+
     /// <summary>
     /// Выполняется при входе в состояние преследования.
     /// </summary>
     public override void EnterState(EnemyStateMachine enemy)
     {
-        InizialezeComponents(enemy);
-        _navMeshAgent.speed = enemy.enemyChaseSpeed;
-        isChasing = true;
-        Debug.Log("Entering Chase State");
+        enemy.Agent.speed = 8f; // Установка скорости преследования
+        enemy.Agent.isStopped = false; // Разрешить движение
+        _lostPlayerTimer = enemy.lostPlayerTimer; // Инициализация таймера потери игрока
+
+
     }
 
     /// <summary>
@@ -26,35 +25,21 @@ public class EnemyChaseState : EnemyBaseState
     /// </summary>
     public override void ExitState(EnemyStateMachine enemy)
     {
-        Debug.Log("Exiting Chase State");
+
     }
 
     /// <summary>
     /// Обновляет логику состояния преследования.
     /// </summary>
     public override void UpdateState(EnemyStateMachine enemy)
-    {
-        if (_fieldOfView == null || _zonesOfHearing == null) return;
-
-        if (_fieldOfView.canSeePlayerFar)
-        {
-            _lostPlayerTimer = 5f; // Сброс таймера
-            isChasing = true;
-        }
+    {        
+         if(enemy.FOV.canSeePlayerFar || enemy.FOV.canSeePlayerNear) ChasePlayer(enemy); // Логика преследования игрока
         else
         {
-            isChasing = false;
+            LosePlayer(enemy); // Логика потери игрока
         }
 
-        if (isChasing)
-        {
-            ChasePlayer(enemy);
-        }
-        else
-        {
-            LosePlayer(enemy);
-        }
-        AttackStateSwitch(enemy);
+
     }
 
     /// <summary>
@@ -62,11 +47,11 @@ public class EnemyChaseState : EnemyBaseState
     /// </summary>
     private void ChasePlayer(EnemyStateMachine enemy)
     {
-        if (_navMeshAgent == null || enemy.player == null) return;
+        if (enemy.Agent == null || enemy.player == null) return;
 
-        if (_navMeshAgent.destination != enemy.player.transform.position)
+        if (enemy.Agent.destination != enemy.player.transform.position)
         {
-            _navMeshAgent.SetDestination(enemy.player.transform.position);
+            enemy.Agent.SetDestination(enemy.player.transform.position);
         }
     }
 
@@ -75,7 +60,7 @@ public class EnemyChaseState : EnemyBaseState
     /// </summary>
     private void LosePlayer(EnemyStateMachine enemy)
     {
-        if (_navMeshAgent == null) return;
+        if (enemy.Agent == null) return;
 
         if (_lostPlayerTimer > 0)
         {
@@ -93,33 +78,13 @@ public class EnemyChaseState : EnemyBaseState
     /// </summary>
     private void ResetChaseState(EnemyStateMachine enemy)
     {
-        isChasing = false;
         _lostPlayerTimer = enemy.lostPlayerTimer; // Сброс таймера
         enemy.afterChase = true; // Установить флаг после преследования
-        enemy.EnemySwitchState(enemy.searchState); // Переход в состояние поиска
+        enemy.SwitchState(EnemyStateType.Search); // Переключиться на состояние поиска
     }
 
     private void AttackStateSwitch(EnemyStateMachine enemy)
     {
-        if (_zonesOfHearing.playerNear)
-        {
-            enemy.EnemySwitchState(enemy.attackState);
-        }
-    }
-
-    private void InizialezeComponents(EnemyStateMachine enemy)
-    {
-        _navMeshAgent = enemy.GetComponent<NavMeshAgent>();
-        _fieldOfView = enemy.GetComponent<FieldOfView>();
-        _zonesOfHearing = enemy.GetComponent<ZonesOfHearing>();
-        Debug.Log("Все необходимые компоненты найдены.");
-
-        if (_navMeshAgent == null || _fieldOfView == null || _zonesOfHearing == null)
-        {
-            Debug.LogError("Не удалось найти необходимые компоненты на объекте врага.");
-            return;
-        }
-       
-        
+        UnityEngine.Debug.Log("Switching to Attack State");
     }
 }

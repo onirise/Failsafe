@@ -4425,6 +4425,51 @@ MonoBehaviour:
   _lowModifier: 1.5
   _mediumModifier: 2
   _highModifier: 3
+--- !u!1 &1330304778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1330304780}
+  - component: {fileID: 1330304779}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1330304779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330304778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701cfd6366c6bac4e97fceddde465983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEmitterPrefab: {fileID: 4298493742512109155, guid: 3a20d8c7fdff12144815b5d960778680, type: 3}
+--- !u!4 &1330304780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330304778}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.526372, y: -3.2095966, z: 7.882251}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1398393907
 GameObject:
   m_ObjectHideFlags: 0
@@ -5280,11 +5325,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1656960968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeace7ada008fcd498761a412cef56c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b234f409851dcf4c8ea9a99b8f76191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundRadius: 10
   soundType: 1
+  radius: 10
+  duration: 2
+  emitOnStart: 0
 --- !u!1 &1708122740
 GameObject:
   m_ObjectHideFlags: 0
@@ -7715,3 +7762,4 @@ SceneRoots:
   - {fileID: 363109875}
   - {fileID: 287011944}
   - {fileID: 1656960974}
+  - {fileID: 1330304780}

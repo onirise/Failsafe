@@ -2,18 +2,17 @@ using UnityEngine;
 
 public enum SoundType { Footstep, Impact, Distract, Explosion }
 
+[System.Serializable]
 public class SoundData
 {
-    public Vector3 position;
-    public float radius;
-    public SoundType type;
-    public GameObject source;
+    public SoundType soundType;
+    public float maxRadius;
+    public float duration;
 
-    public SoundData(Vector3 pos, float rad, SoundType type, GameObject source)
+    public SoundData(SoundType type, float radius, float time)
     {
-        position = pos;
-        radius = rad;
-        this.type = type;
-        this.source = source;
+        soundType = type;
+        maxRadius = radius;
+        duration = time;
     }
 }

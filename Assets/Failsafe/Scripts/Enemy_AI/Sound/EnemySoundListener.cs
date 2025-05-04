@@ -1,51 +1,46 @@
+using FMOD;
 using System;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
-public class EnemySoundListener : MonoBehaviour
+public class EnemySoundListener : MonoBehaviour, IHearSound
 {
     private enum ReactionType { Near, Medium, Far } // Fixed: Changed to a proper enum declaration
 
     [SerializeField] private float hearingMultiplier = 1.0f;
 
-    private void OnEnable()
+    public void OnSoundHeard(Vector3 soundPosition, SoundData data, float distance)
     {
-        SoundManager.OnSoundEmitted += OnSoundHeard;
-    }
-
-    private void OnDisable()
-    {
-        SoundManager.OnSoundEmitted -= OnSoundHeard;
-    }
-
-    private void OnSoundHeard(SoundData sound)
-    {
-        float effectiveRadius = sound.radius * hearingMultiplier;
-        float distance = Vector3.Distance(transform.position, sound.position);
-
-        if (distance > effectiveRadius)
-            return;
-
-        Debug.Log($"{gameObject.name} heard a {sound.type} at {sound.position}");
-
-        switch (sound.type)
+        switch (data.soundType)
         {
             case SoundType.Footstep:
-                SuspiciousLook(sound.position);
+                if (distance < data.maxRadius * 0.3f)
+                {
+                    Debug.Log($"{name} услышал шаги и насторожился.");
+                    // Переход в state Alert, например
+                }
                 break;
-            case SoundType.Impact:
-                Investigate(sound.position);
-                break;
-            case SoundType.Distract:
-                MoveToDistractPoint(sound.position);
-                break;
+
             case SoundType.Explosion:
-                Alert(sound.position);
+                Debug.Log($"{name} услышал упавший предмет и идет проверять.");
+                // Перейти в состояние Search
+                break;
+
+            case SoundType.Distract:
+                Debug.Log($"{name} услышал громкий звук — тревога!");
+                // Немедленный переход в агрессивное состояние
+                break;
+
+            case SoundType.Impact:
+                Debug.Log($"{name} отвлекся на шум.");
+                // Перейти к точке звука
                 break;
         }
     }
-
     private void SuspiciousLook(Vector3 pos) => Debug.Log($"{name} is suspicious near {pos}");
     private void Investigate(Vector3 pos) => Debug.Log($"{name} is investigating {pos}");
     private void MoveToDistractPoint(Vector3 pos) => Debug.Log($"{name} is distracted and moves to {pos}");
     private void Alert(Vector3 pos) => Debug.Log($"{name} is alert and running to {pos}");
+
+   
 }

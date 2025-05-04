@@ -1,12 +1,20 @@
-using System;
 using UnityEngine;
 
-public class SoundManager
+public class SoundManager : MonoBehaviour
 {
-    public static Action<SoundData> OnSoundEmitted;
+    public static SoundManager Instance;
+    [SerializeField] private GameObject soundEmitterPrefab;
 
-    public static void EmitSound(SoundData soundData)
+    private void Awake()
     {
-        OnSoundEmitted?.Invoke(soundData);
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+
+    public void EmitSound(Vector3 position, SoundData soundData)
+    {
+        GameObject obj = Instantiate(soundEmitterPrefab, position, Quaternion.identity);
+        var emitter = obj.GetComponent<SoundEmitter>();
+        emitter.Initialize(soundData);
     }
 }

@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.UI;
 
 public class DetectionProgress : MonoBehaviour
@@ -18,11 +18,11 @@ public class DetectionProgress : MonoBehaviour
     public  bool _playerInFarZone;
     public bool _playerInNearZone;
     private float _lastUpdateTime;
-    private const float UPDATE_INTERVAL = 0.05f; // 20 раз в секунду
+    private const float UPDATE_INTERVAL = 0.05f; // 20 СЂР°Р· РІ СЃРµРєСѓРЅРґСѓ
 
     public event System.Action<float> OnProgressChanged;
     public event System.Action OnDetected;
-    private float _lastVisualProgress = -1f; // -1, чтобы принудительно обновить слайдер при старте
+    private float _lastVisualProgress = -1f; // -1, С‡С‚РѕР±С‹ РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ РѕР±РЅРѕРІРёС‚СЊ СЃР»Р°Р№РґРµСЂ РїСЂРё СЃС‚Р°СЂС‚Рµ
 
     private void Awake()
     {
@@ -84,7 +84,7 @@ public class DetectionProgress : MonoBehaviour
         {
             float normalized = _detectionProgress / 100f;
 
-            // Обновляем только если значение действительно изменилось
+            // РћР±РЅРѕРІР»СЏРµРј С‚РѕР»СЊРєРѕ РµСЃР»Рё Р·РЅР°С‡РµРЅРёРµ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ РёР·РјРµРЅРёР»РѕСЃСЊ
             if (!Mathf.Approximately(normalized, _lastVisualProgress))
             {
                 _detectionSlider.value = normalized;

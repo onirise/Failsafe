@@ -1,4 +1,4 @@
-using FMOD;
+ï»¿using FMOD;
 using System;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -14,25 +14,25 @@ public class EnemySoundListener : MonoBehaviour, IHearSound
             case SoundType.Footstep:
                 if (distance < data.maxRadius * 0.3f)
                 {
-                    Debug.Log($"{name} óñëûøàë øàãè è íàñòîðîæèëñÿ.");
-                    // Ïåðåõîä â state Alert, íàïðèìåð
+                    Debug.Log($"{name} ÑƒÑÐ»Ñ‹ÑˆÐ°Ð» ÑˆÐ°Ð³Ð¸ Ð¸ Ð½Ð°ÑÑ‚Ð¾Ñ€Ð¾Ð¶Ð¸Ð»ÑÑ.");
+                    // ÐŸÐµÑ€ÐµÑ…Ð¾Ð´ Ð² state Alert, Ð½Ð°Ð¿Ñ€Ð¸Ð¼ÐµÑ€
                 }
                 break;
 
             case SoundType.Explosion:
-                Debug.Log($"{name} óñëûøàë óïàâøèé ïðåäìåò è èäåò ïðîâåðÿòü.");
-                // Ïåðåéòè â ñîñòîÿíèå Search
+                Debug.Log($"{name} ÑƒÑÐ»Ñ‹ÑˆÐ°Ð» ÑƒÐ¿Ð°Ð²ÑˆÐ¸Ð¹ Ð¿Ñ€ÐµÐ´Ð¼ÐµÑ‚ Ð¸ Ð¸Ð´ÐµÑ‚ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÑ‚ÑŒ.");
+                // ÐŸÐµÑ€ÐµÐ¹Ñ‚Ð¸ Ð² ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Search
                 break;
 
             case SoundType.Distract:
-                Debug.Log($"{name} óñëûøàë ãðîìêèé çâóê — òðåâîãà!");
-                // Íåìåäëåííûé ïåðåõîä â àãðåññèâíîå ñîñòîÿíèå
+                Debug.Log($"{name} ÑƒÑÐ»Ñ‹ÑˆÐ°Ð» Ð³Ñ€Ð¾Ð¼ÐºÐ¸Ð¹ Ð·Ð²ÑƒÐº â€” Ñ‚Ñ€ÐµÐ²Ð¾Ð³Ð°!");
+                // ÐÐµÐ¼ÐµÐ´Ð»ÐµÐ½Ð½Ñ‹Ð¹ Ð¿ÐµÑ€ÐµÑ…Ð¾Ð´ Ð² Ð°Ð³Ñ€ÐµÑÑÐ¸Ð²Ð½Ð¾Ðµ ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ðµ
                 break;
 
             case SoundType.Impact:
-                Debug.Log($"{name} îòâëåêñÿ íà øóì.");
+                Debug.Log($"{name} Ð¾Ñ‚Ð²Ð»ÐµÐºÑÑ Ð½Ð° ÑˆÑƒÐ¼.");
                 Investigate(soundPosition);
-                // Ïåðåéòè ê òî÷êå çâóêà
+                // ÐŸÐµÑ€ÐµÐ¹Ñ‚Ð¸ Ðº Ñ‚Ð¾Ñ‡ÐºÐµ Ð·Ð²ÑƒÐºÐ°
                 break;
         }
     }

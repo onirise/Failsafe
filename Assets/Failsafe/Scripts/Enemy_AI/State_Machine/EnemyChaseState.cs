@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
@@ -6,22 +6,22 @@ using UnityEngine.AI;
 
 public class EnemyChaseState : EnemyBaseState
 { 
-    float _lostPlayerTimer; // Таймер потери игрока
+    float _lostPlayerTimer; // РўР°Р№РјРµСЂ РїРѕС‚РµСЂРё РёРіСЂРѕРєР°
 
     /// <summary>
-    /// Выполняется при входе в состояние преследования.
+    /// Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РїСЂРё РІС…РѕРґРµ РІ СЃРѕСЃС‚РѕСЏРЅРёРµ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ.
     /// </summary>
     public override void EnterState(EnemyStateMachine enemy)
     {
-        enemy.Agent.speed = 8f; // Установка скорости преследования
-        enemy.Agent.isStopped = false; // Разрешить движение
-        _lostPlayerTimer = enemy.lostPlayerTimer; // Инициализация таймера потери игрока
+        enemy.Agent.speed = 8f; // РЈСЃС‚Р°РЅРѕРІРєР° СЃРєРѕСЂРѕСЃС‚Рё РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ
+        enemy.Agent.isStopped = false; // Р Р°Р·СЂРµС€РёС‚СЊ РґРІРёР¶РµРЅРёРµ
+        _lostPlayerTimer = enemy.lostPlayerTimer; // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С‚Р°Р№РјРµСЂР° РїРѕС‚РµСЂРё РёРіСЂРѕРєР°
 
 
     }
 
     /// <summary>
-    /// Выполняется при выходе из состояния преследования.
+    /// Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РїСЂРё РІС‹С…РѕРґРµ РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ.
     /// </summary>
     public override void ExitState(EnemyStateMachine enemy)
     {
@@ -29,21 +29,21 @@ public class EnemyChaseState : EnemyBaseState
     }
 
     /// <summary>
-    /// Обновляет логику состояния преследования.
+    /// РћР±РЅРѕРІР»СЏРµС‚ Р»РѕРіРёРєСѓ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ.
     /// </summary>
     public override void UpdateState(EnemyStateMachine enemy)
     {        
-         if(enemy.FOV.canSeePlayerFar || enemy.FOV.canSeePlayerNear) ChasePlayer(enemy); // Логика преследования игрока
+         if(enemy.FOV.canSeePlayerFar || enemy.FOV.canSeePlayerNear) ChasePlayer(enemy); // Р›РѕРіРёРєР° РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ РёРіСЂРѕРєР°
         else
         {
-            LosePlayer(enemy); // Логика потери игрока
+            LosePlayer(enemy); // Р›РѕРіРёРєР° РїРѕС‚РµСЂРё РёРіСЂРѕРєР°
         }
 
 
     }
 
     /// <summary>
-    /// Логика преследования игрока.
+    /// Р›РѕРіРёРєР° РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ РёРіСЂРѕРєР°.
     /// </summary>
     private void ChasePlayer(EnemyStateMachine enemy)
     {
@@ -56,7 +56,7 @@ public class EnemyChaseState : EnemyBaseState
     }
 
     /// <summary>
-    /// Логика потери игрока.
+    /// Р›РѕРіРёРєР° РїРѕС‚РµСЂРё РёРіСЂРѕРєР°.
     /// </summary>
     private void LosePlayer(EnemyStateMachine enemy)
     {
@@ -65,7 +65,7 @@ public class EnemyChaseState : EnemyBaseState
         if (_lostPlayerTimer > 0)
         {
             _lostPlayerTimer -= Time.deltaTime;
-            ChasePlayer(enemy); // Продолжать движение к игроку
+            ChasePlayer(enemy); // РџСЂРѕРґРѕР»Р¶Р°С‚СЊ РґРІРёР¶РµРЅРёРµ Рє РёРіСЂРѕРєСѓ
         }
         else
         {
@@ -74,14 +74,14 @@ public class EnemyChaseState : EnemyBaseState
     }
 
     /// <summary>
-    /// Сброс состояния преследования.
+    /// РЎР±СЂРѕСЃ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ.
     /// </summary>
     private void ResetChaseState(EnemyStateMachine enemy)
     {
-        _lostPlayerTimer = enemy.lostPlayerTimer; // Сброс таймера
-        enemy.afterChase = true; // Установить флаг после преследования
-        enemy.searchingPoint = enemy.transform.position; // Установить точку поиска
-        enemy.SwitchState(EnemyStateType.Search); // Переключиться на состояние поиска
+        _lostPlayerTimer = enemy.lostPlayerTimer; // РЎР±СЂРѕСЃ С‚Р°Р№РјРµСЂР°
+        enemy.afterChase = true; // РЈСЃС‚Р°РЅРѕРІРёС‚СЊ С„Р»Р°Рі РїРѕСЃР»Рµ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ
+        enemy.searchingPoint = enemy.transform.position; // РЈСЃС‚Р°РЅРѕРІРёС‚СЊ С‚РѕС‡РєСѓ РїРѕРёСЃРєР°
+        enemy.SwitchState(EnemyStateType.Search); // РџРµСЂРµРєР»СЋС‡РёС‚СЊСЃСЏ РЅР° СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕРёСЃРєР°
     }
 
     private void AttackStateSwitch(EnemyStateMachine enemy)

@@ -1,8 +1,8 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public abstract class EnemyBaseState
 {
-    public abstract void EnterState(EnemyStateMachine enemy); // Заходит в состояние
-    public abstract void UpdateState(EnemyStateMachine enemy); // Обновляет логику состояния
-    public abstract void ExitState(EnemyStateMachine enemy); // Выходит из состояния
+    public abstract void EnterState(EnemyStateMachine enemy); // Р—Р°С…РѕРґРёС‚ РІ СЃРѕСЃС‚РѕСЏРЅРёРµ
+    public abstract void UpdateState(EnemyStateMachine enemy); // РћР±РЅРѕРІР»СЏРµС‚ Р»РѕРіРёРєСѓ СЃРѕСЃС‚РѕСЏРЅРёСЏ
+    public abstract void ExitState(EnemyStateMachine enemy); // Р’С‹С…РѕРґРёС‚ РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ
 }

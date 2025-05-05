@@ -1,17 +1,17 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
 public class SoundDetection : MonoBehaviour
 {
-    [SerializeField] private float baseDetectionRadiusNear = 10f; // Радиус обнаружения звука
-    [SerializeField] private float baseDetectionRadiusMedium = 20f; // Угол обнаружения звука
-    [SerializeField] private float baseDetectionRadiusFar = 30f; // Радиус обнаружения звука
+    [SerializeField] private float baseDetectionRadiusNear = 10f; // Р Р°РґРёСѓСЃ РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ Р·РІСѓРєР°
+    [SerializeField] private float baseDetectionRadiusMedium = 20f; // РЈРіРѕР» РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ Р·РІСѓРєР°
+    [SerializeField] private float baseDetectionRadiusFar = 30f; // Р Р°РґРёСѓСЃ РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ Р·РІСѓРєР°
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Находим всех врагов в радиусе baseDetectionRadiusFar
+        // РќР°С…РѕРґРёРј РІСЃРµС… РІСЂР°РіРѕРІ РІ СЂР°РґРёСѓСЃРµ baseDetectionRadiusFar
         Collider[] colliders = Physics.OverlapSphere(transform.position, baseDetectionRadiusFar);
 
         foreach (Collider col in colliders)
@@ -22,18 +22,18 @@ public class SoundDetection : MonoBehaviour
 
                 if (distance <= baseDetectionRadiusNear)
                 {
-                    // Логика для ближней зоны (например, мгновенная реакция)
-                    Debug.Log($"Противник {col.name} в БЛИЖНЕЙ зоне! (Расстояние: {distance})");
+                    // Р›РѕРіРёРєР° РґР»СЏ Р±Р»РёР¶РЅРµР№ Р·РѕРЅС‹ (РЅР°РїСЂРёРјРµСЂ, РјРіРЅРѕРІРµРЅРЅР°СЏ СЂРµР°РєС†РёСЏ)
+                    Debug.Log($"РџСЂРѕС‚РёРІРЅРёРє {col.name} РІ Р‘Р›РР–РќР•Р™ Р·РѕРЅРµ! (Р Р°СЃСЃС‚РѕСЏРЅРёРµ: {distance})");
                 }
                 else if (distance <= baseDetectionRadiusMedium)
                 {
-                    // Логика для средней зоны (например, подозрение)
-                    Debug.Log($"Противник {col.name} в СРЕДНЕЙ зоне. (Расстояние: {distance})");
+                    // Р›РѕРіРёРєР° РґР»СЏ СЃСЂРµРґРЅРµР№ Р·РѕРЅС‹ (РЅР°РїСЂРёРјРµСЂ, РїРѕРґРѕР·СЂРµРЅРёРµ)
+                    Debug.Log($"РџСЂРѕС‚РёРІРЅРёРє {col.name} РІ РЎР Р•Р”РќР•Р™ Р·РѕРЅРµ. (Р Р°СЃСЃС‚РѕСЏРЅРёРµ: {distance})");
                 }
                 else if (distance <= baseDetectionRadiusFar)
                 {
-                    // Логика для дальней зоны (например, минимальная реакция)
-                    Debug.Log($"Противник {col.name} в ДАЛЬНЕЙ зоне. (Расстояние: {distance})");
+                    // Р›РѕРіРёРєР° РґР»СЏ РґР°Р»СЊРЅРµР№ Р·РѕРЅС‹ (РЅР°РїСЂРёРјРµСЂ, РјРёРЅРёРјР°Р»СЊРЅР°СЏ СЂРµР°РєС†РёСЏ)
+                    Debug.Log($"РџСЂРѕС‚РёРІРЅРёРє {col.name} РІ Р”РђР›Р¬РќР•Р™ Р·РѕРЅРµ. (Р Р°СЃСЃС‚РѕСЏРЅРёРµ: {distance})");
                 }
             }
         }

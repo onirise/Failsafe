@@ -5330,9 +5330,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataContainer: {fileID: 11400000, guid: f644c57eacaa8d54681248f4fb998af3, type: 2}
   soundName: test1
-  soundType: 1
-  radius: 10
-  duration: 2
+  soundType: 3
+  radius: 111
+  duration: 111
 --- !u!1 &1708122740
 GameObject:
   m_ObjectHideFlags: 0

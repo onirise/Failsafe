@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyPatrolingState : EnemyBaseState
@@ -10,7 +10,7 @@ public class EnemyPatrolingState : EnemyBaseState
     private bool isWaiting = false;
 
     /// <summary>
-    /// Выполняется при входе в состояние патрулирования.
+    /// Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РїСЂРё РІС…РѕРґРµ РІ СЃРѕСЃС‚РѕСЏРЅРёРµ РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ.
     /// </summary>
     public override void EnterState(EnemyStateMachine enemy)
     {
@@ -19,7 +19,7 @@ public class EnemyPatrolingState : EnemyBaseState
 
         if (agent == null || patrolPoints == null || patrolPoints.Length == 0)
         {
-            Debug.LogError("NavMeshAgent или патрульные точки не найдены!");
+            Debug.LogError("NavMeshAgent РёР»Рё РїР°С‚СЂСѓР»СЊРЅС‹Рµ С‚РѕС‡РєРё РЅРµ РЅР°Р№РґРµРЅС‹!");
             return;
         }
 
@@ -29,16 +29,16 @@ public class EnemyPatrolingState : EnemyBaseState
     }
 
     /// <summary>
-    /// Выполняется при выходе из состояния патрулирования.
+    /// Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РїСЂРё РІС‹С…РѕРґРµ РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ.
     /// </summary>
     public override void ExitState(EnemyStateMachine enemy)
     {
-        agent.ResetPath(); // Сброс пути
+        agent.ResetPath(); // РЎР±СЂРѕСЃ РїСѓС‚Рё
         Debug.Log("Exiting Patrol State");
     }
 
     /// <summary>
-    /// Обновляет логику состояния патрулирования.
+    /// РћР±РЅРѕРІР»СЏРµС‚ Р»РѕРіРёРєСѓ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ.
     /// </summary>
     public override void UpdateState(EnemyStateMachine enemy)
     {
@@ -54,7 +54,7 @@ public class EnemyPatrolingState : EnemyBaseState
     }
 
     /// <summary>
-    /// Обрабатывает ожидание на патрульной точке.
+    /// РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РѕР¶РёРґР°РЅРёРµ РЅР° РїР°С‚СЂСѓР»СЊРЅРѕР№ С‚РѕС‡РєРµ.
     /// </summary>
     private void HandleWaiting(EnemyStateMachine enemy)
     {
@@ -68,7 +68,7 @@ public class EnemyPatrolingState : EnemyBaseState
     }
 
     /// <summary>
-    /// Проверяет расстояние до текущей патрульной точки.
+    /// РџСЂРѕРІРµСЂСЏРµС‚ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ С‚РµРєСѓС‰РµР№ РїР°С‚СЂСѓР»СЊРЅРѕР№ С‚РѕС‡РєРё.
     /// </summary>
     private void CheckPatrolPointProximity()
     {
@@ -79,7 +79,7 @@ public class EnemyPatrolingState : EnemyBaseState
     }
 
     /// <summary>
-    /// Переключает врага на следующую патрульную точку.
+    /// РџРµСЂРµРєР»СЋС‡Р°РµС‚ РІСЂР°РіР° РЅР° СЃР»РµРґСѓСЋС‰СѓСЋ РїР°С‚СЂСѓР»СЊРЅСѓСЋ С‚РѕС‡РєСѓ.
     /// </summary>
     private void MoveToNextPatrolPoint()
     {

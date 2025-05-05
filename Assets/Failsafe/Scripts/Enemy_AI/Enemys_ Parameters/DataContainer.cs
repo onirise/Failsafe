@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using NorskaLib.Spreadsheets;
 using System;
 using System.Collections.Generic;
@@ -9,9 +9,9 @@ public class DataContainer
     public class SpreadsheetContent
     {
         [SpreadsheetPage("Enemy")]
-        public List<EnemyData> enemyDatas; // Массив данных врагов
+        public List<EnemyData> enemyDatas; // РњР°СЃСЃРёРІ РґР°РЅРЅС‹С… РІСЂР°РіРѕРІ
         [SpreadsheetPage("SoundDatas")]
-        public List<SoundData> soundDatas; // Массив данных звуков
+        public List<SoundData> soundDatas; // РњР°СЃСЃРёРІ РґР°РЅРЅС‹С… Р·РІСѓРєРѕРІ
     }
 
     [CreateAssetMenu(fileName = "SpreadsheetContainer", menuName = "SpreadsheetContainer")]

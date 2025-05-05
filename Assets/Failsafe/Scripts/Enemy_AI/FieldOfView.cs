@@ -1,11 +1,11 @@
-using System;
+п»їusing System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
-    [Header("Радиусы окружностей поля зрения")]
+    [Header("Р Р°РґРёСѓСЃС‹ РѕРєСЂСѓР¶РЅРѕСЃС‚РµР№ РїРѕР»СЏ Р·СЂРµРЅРёСЏ")]
     public float radiusFar;
     public float radiusNear;
     public bool canSeePlayerFar, canSeePlayerNear;
@@ -28,37 +28,37 @@ public class FieldOfView : MonoBehaviour
     }
 
     /// <summary>
-    /// Проверяет видимость игрока в разных радиусах и углах.
+    /// РџСЂРѕРІРµСЂСЏРµС‚ РІРёРґРёРјРѕСЃС‚СЊ РёРіСЂРѕРєР° РІ СЂР°Р·РЅС‹С… СЂР°РґРёСѓСЃР°С… Рё СѓРіР»Р°С….
     /// </summary>
     public bool FieldOfViewCheck()
     {
         canSeePlayerFar = false;
         canSeePlayerNear = false;
 
-        // Проверяем ближнюю зону
+        // РџСЂРѕРІРµСЂСЏРµРј Р±Р»РёР¶РЅСЋСЋ Р·РѕРЅСѓ
         if (CheckVisibility(radiusNear, angleNear))
         {
             canSeePlayerNear = true;
             Debug.Log("Player detected in NEAR range");
         }
-        // Проверяем дальнюю зону только если не обнаружено в ближней
+        // РџСЂРѕРІРµСЂСЏРµРј РґР°Р»СЊРЅСЋСЋ Р·РѕРЅСѓ С‚РѕР»СЊРєРѕ РµСЃР»Рё РЅРµ РѕР±РЅР°СЂСѓР¶РµРЅРѕ РІ Р±Р»РёР¶РЅРµР№
         else if (CheckVisibility(radiusFar, angleFar))
         {
             canSeePlayerFar = true;
             Debug.Log("Player detected in FAR range");
         }
 
-        // Возвращаем true если обнаружен в любой зоне
+        // Р’РѕР·РІСЂР°С‰Р°РµРј true РµСЃР»Рё РѕР±РЅР°СЂСѓР¶РµРЅ РІ Р»СЋР±РѕР№ Р·РѕРЅРµ
         return canSeePlayerNear || canSeePlayerFar;
 
     }
 
     /// <summary>
-    /// Проверяет, виден ли игрок в заданном радиусе и угле.
+    /// РџСЂРѕРІРµСЂСЏРµС‚, РІРёРґРµРЅ Р»Рё РёРіСЂРѕРє РІ Р·Р°РґР°РЅРЅРѕРј СЂР°РґРёСѓСЃРµ Рё СѓРіР»Рµ.
     /// </summary>
-    /// <param name="radius">Радиус проверки.</param>
-    /// <param name="angle">Угол проверки.</param>
-    /// <returns>Возвращает true, если игрок виден.</returns>
+    /// <param name="radius">Р Р°РґРёСѓСЃ РїСЂРѕРІРµСЂРєРё.</param>
+    /// <param name="angle">РЈРіРѕР» РїСЂРѕРІРµСЂРєРё.</param>
+    /// <returns>Р’РѕР·РІСЂР°С‰Р°РµС‚ true, РµСЃР»Рё РёРіСЂРѕРє РІРёРґРµРЅ.</returns>
     private bool CheckVisibility(float radius, float angle)
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);

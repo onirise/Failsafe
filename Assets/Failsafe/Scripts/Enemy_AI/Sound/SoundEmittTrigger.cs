@@ -1,10 +1,10 @@
-using FMOD;
+п»їusing FMOD;
 using UnityEngine;
 
 public class SoundEmittTrigger : MonoBehaviour
 {
     [SerializeField] private DataContainer.SpreadSheetContainer dataContainer;
-    [SerializeField] private string soundName = "test1"; // Название звука
+    [SerializeField] private string soundName = "test1"; // РќР°Р·РІР°РЅРёРµ Р·РІСѓРєР°
     [SerializeField] private SoundType soundType = SoundType.Impact;
     [SerializeField] private float radius;
     [SerializeField] private float duration;
@@ -33,7 +33,7 @@ public class SoundEmittTrigger : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Пример: если объект упал и коснулся земли
+        // РџСЂРёРјРµСЂ: РµСЃР»Рё РѕР±СЉРµРєС‚ СѓРїР°Р» Рё РєРѕСЃРЅСѓР»СЃСЏ Р·РµРјР»Рё
         Emit();
     }
 }

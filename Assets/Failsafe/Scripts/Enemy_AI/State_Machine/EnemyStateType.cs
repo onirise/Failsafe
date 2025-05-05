@@ -1,7 +1,7 @@
-public enum EnemyStateType
+п»їpublic enum EnemyStateType
 {
-    Patrol,  // Патрулирование
-    Chase,   // Преследование
-    Attack,  // Атака
-    Search   // Поиск
+    Patrol,  // РџР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёРµ
+    Chase,   // РџСЂРµСЃР»РµРґРѕРІР°РЅРёРµ
+    Attack,  // РђС‚Р°РєР°
+    Search   // РџРѕРёСЃРє
 }

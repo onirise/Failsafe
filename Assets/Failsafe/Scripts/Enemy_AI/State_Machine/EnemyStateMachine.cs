@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,18 +18,18 @@ public class EnemyStateMachine : MonoBehaviour
     public GameObject[] patrolPoints;
     public float lostPlayerTimer = 5f;
     public float enemyChaseSpeed = 8f;
-    public bool afterChase = false; // Флаг, указывающий, что враг был в состоянии погони
+    public bool afterChase = false; // Р¤Р»Р°Рі, СѓРєР°Р·С‹РІР°СЋС‰РёР№, С‡С‚Рѕ РІСЂР°Рі Р±С‹Р» РІ СЃРѕСЃС‚РѕСЏРЅРёРё РїРѕРіРѕРЅРё
     [Header("Search Settings")]
     public float searchRadius = 10f;
     public float searchDuration = 5f;
-    public float timeToGet = 5f; // Время, за которое враг должен добраться до точки поиска
-    public float changePointTimer = 5f; // Таймер для смены точки поиска
-    public float offsetSearchinPoint = 5f; // Таймер для смены точки поиска
-    public Vector3 searchingPoint; // Точка поиска
+    public float timeToGet = 5f; // Р’СЂРµРјСЏ, Р·Р° РєРѕС‚РѕСЂРѕРµ РІСЂР°Рі РґРѕР»Р¶РµРЅ РґРѕР±СЂР°С‚СЊСЃСЏ РґРѕ С‚РѕС‡РєРё РїРѕРёСЃРєР°
+    public float changePointTimer = 5f; // РўР°Р№РјРµСЂ РґР»СЏ СЃРјРµРЅС‹ С‚РѕС‡РєРё РїРѕРёСЃРєР°
+    public float offsetSearchinPoint = 5f; // РўР°Р№РјРµСЂ РґР»СЏ СЃРјРµРЅС‹ С‚РѕС‡РєРё РїРѕРёСЃРєР°
+    public Vector3 searchingPoint; // РўРѕС‡РєР° РїРѕРёСЃРєР°
     // private EnemyStateFactory _stateFactory;
-    private EnemyBaseState _currentState; // Приватное поле
-    public EnemyBaseState CurrentState => _currentState; // Свойство для доступа к текущему состоянию
-    [SerializeField] private string currentStateName; // Для отладки
+    private EnemyBaseState _currentState; // РџСЂРёРІР°С‚РЅРѕРµ РїРѕР»Рµ
+    public EnemyBaseState CurrentState => _currentState; // РЎРІРѕР№СЃС‚РІРѕ РґР»СЏ РґРѕСЃС‚СѓРїР° Рє С‚РµРєСѓС‰РµРјСѓ СЃРѕСЃС‚РѕСЏРЅРёСЋ
+    [SerializeField] private string currentStateName; // Р”Р»СЏ РѕС‚Р»Р°РґРєРё
 
     void Awake()
     {
@@ -45,13 +45,13 @@ public class EnemyStateMachine : MonoBehaviour
 
     void Update()
     {
-        CurrentState?.UpdateState(this); // Используем свойство
-        currentStateName = CurrentState?.GetType().Name; // Отображаем имя состояния
+        CurrentState?.UpdateState(this); // РСЃРїРѕР»СЊР·СѓРµРј СЃРІРѕР№СЃС‚РІРѕ
+        currentStateName = CurrentState?.GetType().Name; // РћС‚РѕР±СЂР°Р¶Р°РµРј РёРјСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ
     }
 
     public void SwitchState(EnemyStateType newState)
     {
-        _currentState?.ExitState(this); // Уходим из предыдущего состояния
+        _currentState?.ExitState(this); // РЈС…РѕРґРёРј РёР· РїСЂРµРґС‹РґСѓС‰РµРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ
         _currentState = EnemyStateFactory.CreateState(newState);
         _currentState.EnterState(this);
     }
@@ -60,10 +60,10 @@ public class EnemyStateMachine : MonoBehaviour
     {
         player.GetComponent<DetectionProgress>().OnDetected += () =>
         {
-            if (CurrentState is EnemyChaseState) return; // Если уже в состоянии погони, ничего не делаем
+            if (CurrentState is EnemyChaseState) return; // Р•СЃР»Рё СѓР¶Рµ РІ СЃРѕСЃС‚РѕСЏРЅРёРё РїРѕРіРѕРЅРё, РЅРёС‡РµРіРѕ РЅРµ РґРµР»Р°РµРј
             else if (FOV.canSeePlayerFar || FOV.canSeePlayerNear)
             {
-                afterChase = true; // Устанавливаем флаг, что враг был в состоянии погони
+                afterChase = true; // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С„Р»Р°Рі, С‡С‚Рѕ РІСЂР°Рі Р±С‹Р» РІ СЃРѕСЃС‚РѕСЏРЅРёРё РїРѕРіРѕРЅРё
                 SwitchState(EnemyStateType.Chase);
             }
         };

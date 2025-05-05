@@ -205,6 +205,7 @@ MonoBehaviour:
   timeToGet: 25
   changePointTimer: 0.5
   offsetSearchinPoint: 15
+  searchingPoint: {x: 0, y: 0, z: 0}
   currentStateName: 
 --- !u!195 &105652764
 NavMeshAgent:
@@ -220,9 +221,9 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
@@ -408,7 +409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 643157d9e0788a94591b7ffce5e3c503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hearingMultiplier: 1
 --- !u!1 &108963158
 GameObject:
   m_ObjectHideFlags: 0
@@ -5328,10 +5328,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b234f409851dcf4c8ea9a99b8f76191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dataContainer: {fileID: 11400000, guid: f644c57eacaa8d54681248f4fb998af3, type: 2}
+  soundName: test1
   soundType: 1
   radius: 10
   duration: 2
-  emitOnStart: 0
 --- !u!1 &1708122740
 GameObject:
   m_ObjectHideFlags: 0
@@ -6874,7 +6875,6 @@ GameObject:
   - component: {fileID: 1981270108}
   - component: {fileID: 1981270107}
   - component: {fileID: 1981270112}
-  - component: {fileID: 1981270114}
   - component: {fileID: 1981270113}
   m_Layer: 0
   m_Name: Flying_Enemy
@@ -7024,6 +7024,7 @@ MonoBehaviour:
   timeToGet: 25
   changePointTimer: 0.5
   offsetSearchinPoint: 15
+  searchingPoint: {x: 0, y: 0, z: 0}
   currentStateName: 
 --- !u!114 &1981270113
 MonoBehaviour:
@@ -7052,27 +7053,6 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 1
---- !u!114 &1981270114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981270105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9faef0009df924948ac26cd77b68aa59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mask:
-    serializedVersion: 2
-    m_Bits: 0
-  radiusNear: 0
-  radiusWalk: 0
-  radiusSprint: 0
-  playerNear: 0
-  playerSprint: 0
-  playerWalk: 0
 --- !u!1 &2010395239
 GameObject:
   m_ObjectHideFlags: 0

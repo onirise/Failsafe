@@ -25,7 +25,7 @@ public class EnemyStateMachine : MonoBehaviour
     public float timeToGet = 5f; // Время, за которое враг должен добраться до точки поиска
     public float changePointTimer = 5f; // Таймер для смены точки поиска
     public float offsetSearchinPoint = 5f; // Таймер для смены точки поиска
-
+    public Vector3 searchingPoint; // Точка поиска
     // private EnemyStateFactory _stateFactory;
     private EnemyBaseState _currentState; // Приватное поле
     public EnemyBaseState CurrentState => _currentState; // Свойство для доступа к текущему состоянию
@@ -58,7 +58,15 @@ public class EnemyStateMachine : MonoBehaviour
 
     private void OnDetectPlayer()
     {
-        player.GetComponent<DetectionProgress>().OnDetected += () => SwitchState(EnemyStateType.Chase);
+        player.GetComponent<DetectionProgress>().OnDetected += () =>
+        {
+            if (CurrentState is EnemyChaseState) return; // Если уже в состоянии погони, ничего не делаем
+            else if (FOV.canSeePlayerFar || FOV.canSeePlayerNear)
+            {
+                afterChase = true; // Устанавливаем флаг, что враг был в состоянии погони
+                SwitchState(EnemyStateType.Chase);
+            }
+        };
     }
 
 }

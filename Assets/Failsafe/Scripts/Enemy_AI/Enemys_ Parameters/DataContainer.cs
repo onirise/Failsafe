@@ -10,6 +10,8 @@ public class DataContainer
     {
         [SpreadsheetPage("Enemy")]
         public List<EnemyData> enemyDatas; // Массив данных врагов
+        [SpreadsheetPage("SoundDatas")]
+        public List<SoundData> soundDatas; // Массив данных звуков
     }
 
     [CreateAssetMenu(fileName = "SpreadsheetContainer", menuName = "SpreadsheetContainer")]

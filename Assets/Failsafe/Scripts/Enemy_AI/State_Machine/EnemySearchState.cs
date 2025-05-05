@@ -21,9 +21,8 @@ public class EnemySearchState : EnemyBaseState
     {
         InitializeComponents(enemy);
         ResetAllTimers(enemy);
-        searchPoint = enemy.afterChase ? enemy.transform.position : enemy.player.transform.position;
         enemy.afterChase = false;
-        MoveToSearchPoint();
+        MoveToSearchPoint(enemy.searchingPoint);
     }
 
     /// <summary>
@@ -90,10 +89,10 @@ public class EnemySearchState : EnemyBaseState
     /// <summary>
     /// Перемещает врага к точке поиска.
     /// </summary>
-    private void MoveToSearchPoint()
+    private void MoveToSearchPoint(Vector3 pos)
     {
         Debug.Log("Going to Search Point");
-        _navMeshAgent.SetDestination(searchPoint);
+        _navMeshAgent.SetDestination(pos);
         _navMeshAgent.speed = 8f;
     }
 

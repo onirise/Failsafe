@@ -7,8 +7,6 @@ public class EnemySoundListener : MonoBehaviour, IHearSound
 {
     private enum ReactionType { Near, Medium, Far } // Fixed: Changed to a proper enum declaration
 
-    [SerializeField] private float hearingMultiplier = 1.0f;
-
     public void OnSoundHeard(Vector3 soundPosition, SoundData data, float distance)
     {
         switch (data.soundType)
@@ -33,12 +31,22 @@ public class EnemySoundListener : MonoBehaviour, IHearSound
 
             case SoundType.Impact:
                 Debug.Log($"{name} отвлекся на шум.");
+                Investigate(soundPosition);
                 // Перейти к точке звука
                 break;
         }
     }
     private void SuspiciousLook(Vector3 pos) => Debug.Log($"{name} is suspicious near {pos}");
-    private void Investigate(Vector3 pos) => Debug.Log($"{name} is investigating {pos}");
+    private void Investigate(Vector3 pos)
+    {
+        var stateMachine = GetComponent<EnemyStateMachine>();
+
+        if (stateMachine.CurrentState is not EnemyChaseState)
+        {
+            stateMachine.searchingPoint = pos;
+            stateMachine.SwitchState(EnemyStateType.Search);
+        }
+    }
     private void MoveToDistractPoint(Vector3 pos) => Debug.Log($"{name} is distracted and moves to {pos}");
     private void Alert(Vector3 pos) => Debug.Log($"{name} is alert and running to {pos}");
 

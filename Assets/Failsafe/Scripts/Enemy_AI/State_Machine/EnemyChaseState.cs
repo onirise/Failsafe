@@ -80,6 +80,7 @@ public class EnemyChaseState : EnemyBaseState
     {
         _lostPlayerTimer = enemy.lostPlayerTimer; // Сброс таймера
         enemy.afterChase = true; // Установить флаг после преследования
+        enemy.searchingPoint = enemy.transform.position; // Установить точку поиска
         enemy.SwitchState(EnemyStateType.Search); // Переключиться на состояние поиска
     }
 

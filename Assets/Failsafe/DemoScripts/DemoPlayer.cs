@@ -19,14 +19,16 @@ public class DemoPlayer : MonoBehaviour
     public static List<int> keysFound = new List<int>();
 
     [SerializeField]
-    private float _maxWalkingNoise = 50f;
-    private PlayerAudioSignal _noise = new PlayerAudioSignal();
-    public IAudioSignal Noise => _noise;
+    private float _maxWalkingNoise = 10f;
+    private PlayerNoiseSignal _noise;
+    private SignalChannel _audioChannel => SignalManager.Instance.PlayerNoiseChanel;
 
     void Start()
     {
         yRot = 0f;
         rb = this.GetComponent<Rigidbody>();
+        _noise = new PlayerNoiseSignal(transform);
+        _audioChannel.AddConstant(_noise);
     }
 
     // Update is called once per frame
@@ -52,7 +54,7 @@ public class DemoPlayer : MonoBehaviour
 
         var noiseStrength = (cc.velocity.magnitude - gravity) / moveSpeed * _maxWalkingNoise;
         if (cc.height < 1.2) noiseStrength -= 30; // пока костыль уменьшения громкости в присяде
-        _noise.Update(transform.position, noiseStrength);
+        _noise.UpdateStrength(noiseStrength);
     }
 
     public static bool HasKey(int keyID)

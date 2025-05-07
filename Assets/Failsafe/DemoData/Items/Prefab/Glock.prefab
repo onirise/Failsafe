@@ -145,5 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4fdd204e5a230c4ca5cfb2dfb686016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  usesCount: -1
   highlightMaterial: {fileID: 2100000, guid: 6b86d4a73ae4a1d41ba3d1bcef451682, type: 2}
   baseSize: {x: 1, y: 1, z: 1}
+  effects:
+  - {fileID: 6184067679775682399, guid: 3189dacd4e6e2d148af6a6f04b1ea31d, type: 3}

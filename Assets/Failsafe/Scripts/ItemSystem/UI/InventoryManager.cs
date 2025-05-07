@@ -15,7 +15,6 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] public float gridSpacing = 0.2f;
     [SerializeField] public GameObject slotPrefab;
 
-
     [Header("Testing")]
     [SerializeField] private bool addTestItemOnStart = true;
     [SerializeField] public GameObject [] itemPrefabs;
@@ -34,7 +33,6 @@ public class InventoryManager : MonoBehaviour
     {
         IsInventoryActive = state;
     }
-
     public void EndDragItem(InventorySlot fromSlot, InventorySlot toSlot, Item item)
     {
         if (toSlot == null)
@@ -74,6 +72,22 @@ public class InventoryManager : MonoBehaviour
             int randomIndex = Random.Range(0, emptySlots.Count);
             CreateItemInSlot(emptySlots[randomIndex], item);
         }
+    }
+    public InventorySlot GetSlotFromObject(GameObject slotObject)
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.slotObject == slotObject)
+            {
+                return slot;
+            }
+        }
+        return null;
+    }
+
+    public Item GetItemFromBelt(int slotNum)
+    {
+        return slots[gridHeight - 1, slotNum - 1].currentItem;
     }
 
     private void Start()
@@ -141,8 +155,6 @@ public class InventoryManager : MonoBehaviour
     {
         slots = new InventorySlot[gridHeight, gridWidth];
     }
-
-    // создаем сетку инвентаря
     private void GenerateGrid()
     {
         Vector3 startposition = new Vector3(
@@ -200,17 +212,5 @@ public class InventoryManager : MonoBehaviour
         // Обновляем ссылки
         a.currentItem = tempItemB;
         b.currentItem = tempItemA;
-    }
-
-    public InventorySlot GetSlotFromObject(GameObject slotObject)
-    {
-        foreach (var slot in slots)
-        {
-            if (slot.slotObject == slotObject)
-            {
-                return slot;
-            }
-        }
-        return null;
     }
 }

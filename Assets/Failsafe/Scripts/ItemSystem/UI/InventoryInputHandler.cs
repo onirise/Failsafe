@@ -13,16 +13,22 @@ public class InventoryInputHandler : MonoBehaviour
     [SerializeField] private float openInventoryOffcet = 0.10f;
     [SerializeField] private Camera PlayerCamera;
 
+    private InventoryBeltHandler beltHandler;
     private InventoryDragHandler dragHandler;
     private InventoryManager inventoryManager;
     private bool isInventoryOpen;
 
     private void Start()
     {
+        inventoryManager = gameObject.GetComponent<InventoryManager>();
+        if (beltHandler is null)
+        {
+            beltHandler = gameObject.GetComponent<InventoryBeltHandler>();
+        }
+        beltHandler.inventoryManager = inventoryManager;
         if (dragHandler is null)
         {
             dragHandler = gameObject.GetComponent<InventoryDragHandler>();
-            inventoryManager = gameObject.GetComponent<InventoryManager>();
         }
         dragHandler.playerCamera = PlayerCamera;
         dragHandler.inventoryManager = inventoryManager;

@@ -10,7 +10,7 @@ public class InventoryInputHandler : MonoBehaviour
     /// <summary>
     /// Чтобы закрыть инвентарь, мнружно поднять чуть выше
     /// </summary>
-    [SerializeField] private float openInventoryOffcet = 0.10f;
+    [SerializeField] private float openInventoryOffset = 0.10f;
     [SerializeField] private Camera PlayerCamera;
 
     private InventoryBeltHandler beltHandler;
@@ -41,7 +41,7 @@ public class InventoryInputHandler : MonoBehaviour
     private void CheckInventoryToggle()
     {
         float lookDot = Vector3.Dot(PlayerCamera.transform.forward, Vector3.down);
-        bool shouldOpen = lookDot > (isInventoryOpen ? lookDownThreshold - openInventoryOffcet : lookDownThreshold);
+        bool shouldOpen = lookDot > (isInventoryOpen ? lookDownThreshold - openInventoryOffset : lookDownThreshold);
 
         if (shouldOpen != isInventoryOpen)
         {

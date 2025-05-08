@@ -5,3 +5,11 @@ public enum ItemRarity
     SuperRare,
     Unique
 }
+
+public enum ItemSize
+{
+    Huge,
+    Big,
+    Medium,
+    Small
+}

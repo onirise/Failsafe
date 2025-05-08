@@ -84,12 +84,10 @@ public class InventoryManager : MonoBehaviour
         }
         return null;
     }
-
     public Item GetItemFromBelt(int slotNum)
     {
         return slots[gridHeight - 1, slotNum - 1].currentItem;
     }
-
     private void Start()
     {
         InitializeSlots();

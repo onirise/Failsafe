@@ -75,6 +75,13 @@ desktop.ini
 *.war
 *.zip
 
+# Linux
+build.x86_64
+build_Data/
+UnityPlayer.so
+libdecor-0.so.0
+libdecor-cairo.so
+
 # ========== CACHE ==========
 .gradle/
 ExportedObj/

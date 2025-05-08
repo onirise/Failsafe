@@ -3,7 +3,7 @@ using UnityEngine;
 namespace SpawnSystem
 {
     /// <summary>
-    /// Тип точки спауна, разные противнику могу спавниться на определенных точках
+    /// Тип точки спауна, разные противники могу спавниться на определенных точках
     /// </summary>
     public enum SpawnPointType
     {

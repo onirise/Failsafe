@@ -42,14 +42,40 @@ namespace SpawnSystem
 
     public class TimerCondition : SpawnCondition
     {
-        private float _startTime;
+        private float _startTime = -1;
         private float _delay;
-        public TimerCondition(float delay)
+        private ISpawnCondition _startCondition;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <param name="startCondition">Тригер после которого начать таймер, если не указан таймер запускается при создании</param>
+        public TimerCondition(float delay, ISpawnCondition startCondition = null)
         {
             _delay = delay;
-            Reset();
+            if (startCondition != null)
+            {
+                _startCondition = startCondition;
+            }
+            else
+            {
+                Reset();
+            }
+
         }
-        public override bool IsTriggered() => _startTime + _delay < Time.time;
+        public override bool IsTriggered()
+        {
+            if (_startTime >= 0)
+            {
+                return _startTime + _delay < Time.time;
+            }
+            if (_startCondition.IsTriggered())
+            {
+                Reset();
+            }
+            return false;
+        }
 
         public override void Reset()
         {

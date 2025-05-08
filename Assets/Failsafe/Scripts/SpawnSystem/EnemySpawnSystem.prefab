@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b45153b9a12e42b9e6b6bca51c160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnPoints: []
+  _spawnCheckDelay: 1
+  _lastSpawnCheckAt: 0
+  _spawnSystemSpreadsheet: {fileID: 11400000, guid: bbc36621787fe9e43b56f55193828b5b, type: 2}

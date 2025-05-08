@@ -22,6 +22,7 @@ namespace SpawnSystem
             _repeat = repeat;
             _condition = condition;
             _candidate = candidate;
+            _candidate.spawnAgent = this;
         }
 
         /// <summary>
@@ -48,8 +49,12 @@ namespace SpawnSystem
         public void Reset()
         {
             _isConditionTriggered = false;
-            _repeat--;
             _condition.Reset();
+        }
+
+        public void Spawned()
+        {
+            _repeat--;
         }
     }
 }

@@ -38,10 +38,22 @@ namespace SpawnSystem
         private bool IsActive => _activateAt < Time.time;
         private float _activateAt;
 
+        private WeightMeter _weightMeter;
+        public WeightMeter WeightMeter => _weightMeter;
+
+        [SerializeField]
+        private SpawnSystemSpreadsheetContainer _spawnSystemSpreadsheet;
+
+        public List<SpawnCandidate> SpawnedEnemies => _spawnedEnemies;
 
         public void Deactivate(float duration)
         {
             _activateAt = duration;
+        }
+
+        public void AddSpawnAgent(SpawnAgent spawnAgent)
+        {
+            _spawnAgents.Add(spawnAgent);
         }
 
         void Start()
@@ -55,12 +67,13 @@ namespace SpawnSystem
             {
                 _spawnPointTypePresent[spawnPoint.type] = true;
             }
-            TestBuild();
+            var builder = new SpawnSystemSpreadsheetBuilder();
+            builder.BuildSpawnSystem(_spawnSystemSpreadsheet.Content.enemySpawnDatas, this);
         }
 
         private void TestBuild()
         {
-            var candidate1 = new SpawnCandidate { name = "Enemy1", weight = 5 };
+            var candidate1 = new SpawnCandidate("Enemy1", null, 5, SpawnPointType.Default);
             var condition1 = new OrCondition(
                 new AndCondition(
                     new RandomCondition(0.5f),
@@ -68,7 +81,7 @@ namespace SpawnSystem
                 new TimerCondition(5));
             var agent1 = new SpawnAgent(condition1, candidate1, 2);
 
-            var candidate2 = new SpawnCandidate { name = "Enemy2", weight = 10 };
+            var candidate2 = new SpawnCandidate("Enemy2", null, 10, SpawnPointType.Default);
             var condition2 = new EnemySpawnedCondition(_spawnedEnemies, candidate1);
             var agent2 = new SpawnAgent(condition2, candidate2, 5);
 
@@ -103,9 +116,11 @@ namespace SpawnSystem
             var (candidate, spawnPoint) = ChooseCandidateAndSpawnPoint();
 
             //Instantiate(candidate.EnemyPrefab, spawnPoint.Position, spawnPoint.Rotation);
-            Debug.Log($"[{nameof(EnemySpawnSystem)}] Spawned enemy {candidate.name} at position {spawnPoint.Position}");
+            Debug.Log($"[{nameof(EnemySpawnSystem)}] Spawned enemy {candidate.Name} at position {spawnPoint.Position}");
 
             _spawnedEnemies.Add(candidate);
+            _weightMeter.AddWeight(candidate.Weight);
+            candidate.spawnAgent.Spawned();
             _spawnCandidates.Clear();
 
             foreach (var agent in _spawnAgents)
@@ -129,6 +144,22 @@ namespace SpawnSystem
             if (list.Count == 0) return default;
             var i = UnityEngine.Random.Range(0, list.Count);
             return list[i];
+        }
+    }
+
+    /// <summary>
+    /// Шкала веса противников на уровне
+    /// </summary>
+    public class WeightMeter
+    {
+        public int MaxWeight => 1000;
+        public int CurrentWeight { get; private set; }
+
+        public bool CanSpawn(SpawnCandidate candidate) => CurrentWeight + candidate.Weight <= MaxWeight;
+
+        public void AddWeight(int weight)
+        {
+            CurrentWeight += weight;
         }
     }
 }

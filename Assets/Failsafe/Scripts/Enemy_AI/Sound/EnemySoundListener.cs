@@ -39,12 +39,13 @@ public class EnemySoundListener : MonoBehaviour, IHearSound
     private void SuspiciousLook(Vector3 pos) => Debug.Log($"{name} is suspicious near {pos}");
     private void Investigate(Vector3 pos)
     {
+        Debug.Log($"{name} отвлекся на шум.");
         var stateMachine = GetComponent<EnemyStateMachine>();
 
         if (stateMachine.CurrentState is not EnemyChaseState)
         {
             stateMachine.searchingPoint = pos;
-            stateMachine.SwitchState(EnemyStateType.Search);
+            stateMachine.SwitchState<EnemySearchState>();
         }
     }
     private void MoveToDistractPoint(Vector3 pos) => Debug.Log($"{name} is distracted and moves to {pos}");

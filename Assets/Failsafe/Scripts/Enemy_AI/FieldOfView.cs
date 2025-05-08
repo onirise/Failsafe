@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class FieldOfView : MonoBehaviour
 {
@@ -75,12 +76,37 @@ public class FieldOfView : MonoBehaviour
 
             if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
             {
+                RotateTowardsPlayer(target.position); // Поворачиваем врага к игроку
+                if(target.GetComponent<DetectionProgress>().inChase)
+                {
+                    this.GetComponent<EnemyStateMachine>().SwitchState<EnemyChaseState>();
+                }
                 Debug.Log("Player is in sight");
                 return true;
             }
         }
 
         return false;
+    }
+
+    public void RotateTowardsPlayer(Vector3 playerPosition)
+    {
+        // Вычисляем направление к игроку (игнорируем разницу по высоте)
+        Vector3 direction = playerPosition - transform.position;
+        direction.y = 0; // Оставляем только горизонтальный поворот
+
+        if (direction != Vector3.zero)
+        {
+            // Создаем целевой поворот
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            // Плавно поворачиваем с учетом скорости
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRotation,
+                Time.deltaTime * gameObject.GetComponent<NavMeshAgent>().angularSpeed // Добавьте public float rotationSpeed в ваш класс
+            );
+        }
     }
 }
 

@@ -33,7 +33,11 @@ public class EnemyChaseState : EnemyBaseState
     /// </summary>
     public override void UpdateState(EnemyStateMachine enemy)
     {        
-         if(enemy.FOV.canSeePlayerFar || enemy.FOV.canSeePlayerNear) ChasePlayer(enemy); // Логика преследования игрока
+         if(enemy.FOV.canSeePlayerFar || enemy.FOV.canSeePlayerNear)
+        {
+            ChasePlayer(enemy); // Логика преследования игрока
+           
+        } 
         else
         {
             LosePlayer(enemy); // Логика потери игрока
@@ -81,7 +85,7 @@ public class EnemyChaseState : EnemyBaseState
         _lostPlayerTimer = enemy.lostPlayerTimer; // Сброс таймера
         enemy.afterChase = true; // Установить флаг после преследования
         enemy.searchingPoint = enemy.transform.position; // Установить точку поиска
-        enemy.SwitchState(EnemyStateType.Search); // Переключиться на состояние поиска
+        enemy.SwitchState<EnemyPatrolingState>(); // Переключиться на состояние поиска
     }
 
     private void AttackStateSwitch(EnemyStateMachine enemy)

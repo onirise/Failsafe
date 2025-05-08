@@ -1,94 +1,112 @@
-﻿using UnityEngine;
+﻿using FMODUnity;
+using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class DetectionProgress : MonoBehaviour
 {
+    public enum DetectionZone
+    {
+        None,
+        Far,
+        Near
+    }
+    public DetectionZone currentZone = DetectionZone.None;
     [Header("Detection Settings")]
-    [SerializeField] private int _baseFastZoneSpeed = 20;
-    [SerializeField] private int _baseSlowZoneSpeed = 5;
-    [SerializeField] private float _decaySpeed = 15f;
-    [SerializeField] private Slider _detectionSlider;
+    [SerializeField] private int baseFastZoneSpeed = 20;
+    [SerializeField] private int baseSlowZoneSpeed = 5;
+    [SerializeField] private float decaySpeed = 15f;
+    [SerializeField] private Slider detectionSlider;
 
     [Header("Debug")]
     [Range(0, 100)]
-    [SerializeField] private float _detectionProgress;
-
-    private float _currentFastSpeed;
-    private float _currentSlowSpeed;
-    public  bool _playerInFarZone;
-    public bool _playerInNearZone;
-    private float _lastUpdateTime;
-    private const float UPDATE_INTERVAL = 0.05f; // 20 раз в секунду
-
+    [SerializeField] private float detectionProgress;
+    private float currentFastSpeed;
+    private float currentSlowSpeed;
+    private float lastUpdateTime;
+    private const float UPDATE_INTERVAL = 0.05f;
+    private float lastVisualProgress = -1f;
     public event System.Action<float> OnProgressChanged;
     public event System.Action OnDetected;
-    private float _lastVisualProgress = -1f; // -1, чтобы принудительно обновить слайдер при старте
+    public bool inChase = false; // Новый флаг
 
     private void Awake()
     {
-        _currentFastSpeed = _baseFastZoneSpeed;
-        _currentSlowSpeed = _baseSlowZoneSpeed;
+        detectionSlider.value = 0f;
+        currentFastSpeed = baseFastZoneSpeed;
+        currentSlowSpeed = baseSlowZoneSpeed;
 
-        if (_detectionSlider == null)
-            _detectionSlider = GetComponentInChildren<Slider>();
+        if (detectionSlider == null)
+            detectionSlider = GetComponentInChildren<Slider>();
     }
 
-    public void SetDetectionZones(bool inFarZone, bool inNearZone)
-    {
-        _playerInFarZone = inFarZone;
-        _playerInNearZone = inNearZone;
-    }
 
     private void Update()
     {
-        if (Time.time - _lastUpdateTime < UPDATE_INTERVAL)
+        if (Time.time - lastUpdateTime < UPDATE_INTERVAL)
             return;
 
-        _lastUpdateTime = Time.time;
+        lastUpdateTime = Time.time;
         UpdateDetection();
     }
 
     private void UpdateDetection()
     {
-        float detectionRate = _playerInNearZone ? _currentFastSpeed :
-                              _playerInFarZone ? _currentSlowSpeed :
-                              _detectionProgress > 0 ? -_decaySpeed : 0f;
+        float detectionRate = 0f;
+
+        switch (currentZone)
+        {
+            case DetectionZone.Near:
+                detectionRate = currentFastSpeed;
+                break;
+            case DetectionZone.Far:
+                detectionRate = currentSlowSpeed;
+                break;
+            case DetectionZone.None:
+                detectionRate = detectionProgress > 0 ? -decaySpeed : 0f;
+                if(detectionProgress <= 0f)
+                {
+                    inChase = false; // Сбрасываем флаг, если прогресс обнаружения обнулен
+                    detectionProgress = 0f; // Обнуляем прогресс, чтобы избежать отрицательных значений
+                }
+                break;
+        }
 
         if (detectionRate != 0f)
         {
             AddDetection(detectionRate * UPDATE_INTERVAL);
         }
+       
     }
 
     private void AddDetection(float amount)
     {
-        float newProgress = Mathf.Clamp(_detectionProgress + amount, 0f, 100f);
+        float newProgress = Mathf.Clamp(detectionProgress + amount, 0f, 100f);
 
-        if (Mathf.Abs(newProgress - _detectionProgress) > 0.1f)
+        if (Mathf.Abs(newProgress - detectionProgress) > 0.1f)
         {
-            _detectionProgress = newProgress;
+            detectionProgress = newProgress;
             UpdateVisuals();
-            OnProgressChanged?.Invoke(_detectionProgress);
+            OnProgressChanged?.Invoke(detectionProgress);
 
-            if (_detectionProgress >= 100f)
+            if (detectionProgress >= 100f)
             {
+                inChase = true; // Устанавливаем флаг, когда обнаружение завершено
                 OnDetected?.Invoke();
             }
         }
     }
 
-
     private void UpdateVisuals()
     {
-        if (_detectionSlider != null)
+        if (detectionSlider != null)
         {
-            float normalized = _detectionProgress / 100f;
+            float normalized = detectionProgress / 100f;
 
-            // Обновляем только если значение действительно изменилось
-            if (!Mathf.Approximately(normalized, _lastVisualProgress))
+            if (!Mathf.Approximately(normalized, lastVisualProgress))
             {
-                _detectionSlider.value = normalized;
-                _lastVisualProgress = normalized;
+                detectionSlider.value = normalized;
+                lastVisualProgress = normalized;
             }
         }
     }
@@ -101,8 +119,8 @@ public class DetectionProgress : MonoBehaviour
             return;
         }
 
-        _currentFastSpeed = _baseFastZoneSpeed * multiplier;
-        _currentSlowSpeed = _baseSlowZoneSpeed * multiplier;
-        Debug.Log($"Detection speed modified: Fast = {_currentFastSpeed}, Slow = {_currentSlowSpeed}");
+        currentFastSpeed = baseFastZoneSpeed * multiplier;
+        currentSlowSpeed = baseSlowZoneSpeed * multiplier;
+        Debug.Log($"Detection speed modified: Fast = {currentFastSpeed}, Slow = {currentSlowSpeed}");
     }
 }

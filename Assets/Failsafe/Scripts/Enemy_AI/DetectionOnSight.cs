@@ -7,7 +7,7 @@ public class DetectionOnSight : MonoBehaviour
 
     private void Start()
     {
-        fov = this.transform.parent.gameObject.GetComponent<FieldOfView>();
+        fov = transform.parent.GetComponent<FieldOfView>();
         if (fov == null)
         {
             Debug.LogError("FieldOfView not found in the scene.");
@@ -27,8 +27,10 @@ public class DetectionOnSight : MonoBehaviour
             fov.FieldOfViewCheck();
             if (detectionProgress != null)
             {
-                detectionProgress._playerInNearZone = fov.canSeePlayerNear;
-                detectionProgress._playerInFarZone = !fov.canSeePlayerNear && fov.canSeePlayerFar;
+                // Определение зоны с приоритетом ближней
+                detectionProgress.currentZone = fov.canSeePlayerNear ? DetectionProgress.DetectionZone.Near :
+                                              fov.canSeePlayerFar ? DetectionProgress.DetectionZone.Far :
+                                              DetectionProgress.DetectionZone.None;
             }
         }
             

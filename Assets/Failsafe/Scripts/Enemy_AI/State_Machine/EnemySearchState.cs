@@ -40,7 +40,6 @@ public class EnemySearchState : EnemyBaseState
     /// </summary>
     public override void UpdateState(EnemyStateMachine enemy)
     {
-        Debug.Log("Updating Search State");
         CantGetToSearchPoint(enemy);
         OnThePoint(enemy);
     }
@@ -51,8 +50,7 @@ public class EnemySearchState : EnemyBaseState
     private void BackToPatrol(EnemyStateMachine enemy)
     {
         Debug.Log("Going back to Patrol State");
-        enemy.SwitchState(EnemyStateType.Patrol);
-
+        enemy.SwitchState<EnemyPatrolingState>();
     }
 
     /// <summary>
@@ -64,8 +62,6 @@ public class EnemySearchState : EnemyBaseState
 
         _searchDuration -= Time.deltaTime;
         _changePointTimer -= Time.deltaTime;
-        Debug.Log(_searchDuration);
-        Debug.Log(_changePointTimer);
         if (_searchDuration <= 0)
         {
             BackToPatrol(enemy);

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
 
     public void EmitSound(Vector3 position, SoundData soundData)
     {
+        Debug.Log($"Emitting sound at {position} with data: {soundData.soundName}");
         GameObject obj = Instantiate(soundEmitterPrefab, position, Quaternion.identity);
         var emitter = obj.GetComponent<SoundEmitter>();
         emitter.Initialize(soundData);

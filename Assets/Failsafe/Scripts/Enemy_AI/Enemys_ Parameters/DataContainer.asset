@@ -16,7 +16,6 @@ MonoBehaviour:
   documentId: 1CrbLF-TU57rbLQ9dcaXGFtxQFOt-gloZu0mrePZYSpk
   selectedTogglesIds:
   - soundDatas
-  - enemyDatas
   foldoutSerializationGUI: 1
   serializationOutputPath: "C:\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430"
   serializationFileName: Configs
@@ -110,6 +109,6 @@ MonoBehaviour:
       AttackSpeed: 45
     soundDatas:
     - soundName: test1
-      soundType: 0
-      maxRadius: 1
+      soundType: 1
+      maxRadius: 15
       duration: 1

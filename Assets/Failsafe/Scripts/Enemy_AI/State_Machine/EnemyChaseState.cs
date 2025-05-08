@@ -1,86 +1,75 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyChaseState : EnemyBaseState
-{
-    private NavMeshAgent _navMeshAgent;
-    private FieldOfView _fieldOfView;
-    private ZonesOfHearing _zonesOfHearing;
-    private bool isChasing = false;
-    float _lostPlayerTimer; // Таймер потери игрока
+{ 
+    float _lostPlayerTimer; // РўР°Р№РјРµСЂ РїРѕС‚РµСЂРё РёРіСЂРѕРєР°
+
     /// <summary>
-    /// Выполняется при входе в состояние преследования.
+    /// Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РїСЂРё РІС…РѕРґРµ РІ СЃРѕСЃС‚РѕСЏРЅРёРµ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ.
     /// </summary>
     public override void EnterState(EnemyStateMachine enemy)
     {
-        InizialezeComponents(enemy);
-        _navMeshAgent.speed = enemy.enemyChaseSpeed;
-        isChasing = true;
-        Debug.Log("Entering Chase State");
+        enemy.Agent.speed = 8f; // РЈСЃС‚Р°РЅРѕРІРєР° СЃРєРѕСЂРѕСЃС‚Рё РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ
+        enemy.Agent.isStopped = false; // Р Р°Р·СЂРµС€РёС‚СЊ РґРІРёР¶РµРЅРёРµ
+        _lostPlayerTimer = enemy.lostPlayerTimer; // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С‚Р°Р№РјРµСЂР° РїРѕС‚РµСЂРё РёРіСЂРѕРєР°
+
+
     }
 
     /// <summary>
-    /// Выполняется при выходе из состояния преследования.
+    /// Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РїСЂРё РІС‹С…РѕРґРµ РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ.
     /// </summary>
     public override void ExitState(EnemyStateMachine enemy)
     {
-        Debug.Log("Exiting Chase State");
+
     }
 
     /// <summary>
-    /// Обновляет логику состояния преследования.
+    /// РћР±РЅРѕРІР»СЏРµС‚ Р»РѕРіРёРєСѓ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ.
     /// </summary>
     public override void UpdateState(EnemyStateMachine enemy)
-    {
-        if (_fieldOfView == null || _zonesOfHearing == null) return;
-
-        if (_fieldOfView.canSeePlayer)
+    {        
+         if(enemy.FOV.canSeePlayerFar || enemy.FOV.canSeePlayerNear)
         {
-            _lostPlayerTimer = 5f; // Сброс таймера
-            isChasing = true;
-        }
+            ChasePlayer(enemy); // Р›РѕРіРёРєР° РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ РёРіСЂРѕРєР°
+           
+        } 
         else
         {
-            isChasing = false;
+            LosePlayer(enemy); // Р›РѕРіРёРєР° РїРѕС‚РµСЂРё РёРіСЂРѕРєР°
         }
 
-        if (isChasing)
-        {
-            ChasePlayer(enemy);
-        }
-        else
-        {
-            LosePlayer(enemy);
-        }
-        AttackStateSwitch(enemy);
+
     }
 
     /// <summary>
-    /// Логика преследования игрока.
+    /// Р›РѕРіРёРєР° РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ РёРіСЂРѕРєР°.
     /// </summary>
     private void ChasePlayer(EnemyStateMachine enemy)
     {
-        if (_navMeshAgent == null || enemy.player == null) return;
+        if (enemy.Agent == null || enemy.player == null) return;
 
-        if (_navMeshAgent.destination != enemy.player.transform.position)
+        if (enemy.Agent.destination != enemy.player.transform.position)
         {
-            _navMeshAgent.SetDestination(enemy.player.transform.position);
+            enemy.Agent.SetDestination(enemy.player.transform.position);
         }
     }
 
     /// <summary>
-    /// Логика потери игрока.
+    /// Р›РѕРіРёРєР° РїРѕС‚РµСЂРё РёРіСЂРѕРєР°.
     /// </summary>
     private void LosePlayer(EnemyStateMachine enemy)
     {
-        if (_navMeshAgent == null) return;
+        if (enemy.Agent == null) return;
 
         if (_lostPlayerTimer > 0)
         {
             _lostPlayerTimer -= Time.deltaTime;
-            ChasePlayer(enemy); // Продолжать движение к игроку
+            ChasePlayer(enemy); // РџСЂРѕРґРѕР»Р¶Р°С‚СЊ РґРІРёР¶РµРЅРёРµ Рє РёРіСЂРѕРєСѓ
         }
         else
         {
@@ -89,37 +78,18 @@ public class EnemyChaseState : EnemyBaseState
     }
 
     /// <summary>
-    /// Сброс состояния преследования.
+    /// РЎР±СЂРѕСЃ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ.
     /// </summary>
     private void ResetChaseState(EnemyStateMachine enemy)
     {
-        isChasing = false;
-        _lostPlayerTimer = enemy.lostPlayerTimer; // Сброс таймера
-        enemy.afterChase = true; // Установить флаг после преследования
-        enemy.EnemySwitchState(enemy.searchState); // Переход в состояние поиска
+        _lostPlayerTimer = enemy.lostPlayerTimer; // РЎР±СЂРѕСЃ С‚Р°Р№РјРµСЂР°
+        enemy.afterChase = true; // РЈСЃС‚Р°РЅРѕРІРёС‚СЊ С„Р»Р°Рі РїРѕСЃР»Рµ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ
+        enemy.searchingPoint = enemy.transform.position; // РЈСЃС‚Р°РЅРѕРІРёС‚СЊ С‚РѕС‡РєСѓ РїРѕРёСЃРєР°
+        enemy.SwitchState<EnemyPatrolingState>(); // РџРµСЂРµРєР»СЋС‡РёС‚СЊСЃСЏ РЅР° СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕРёСЃРєР°
     }
 
     private void AttackStateSwitch(EnemyStateMachine enemy)
     {
-        if (_zonesOfHearing.playerNear)
-        {
-            enemy.EnemySwitchState(enemy.attackState);
-        }
-    }
-
-    private void InizialezeComponents(EnemyStateMachine enemy)
-    {
-        _navMeshAgent = enemy.GetComponent<NavMeshAgent>();
-        _fieldOfView = enemy.GetComponent<FieldOfView>();
-        _zonesOfHearing = enemy.GetComponent<ZonesOfHearing>();
-        Debug.Log("Все необходимые компоненты найдены.");
-
-        if (_navMeshAgent == null || _fieldOfView == null || _zonesOfHearing == null)
-        {
-            Debug.LogError("Не удалось найти необходимые компоненты на объекте врага.");
-            return;
-        }
-       
-        
+        UnityEngine.Debug.Log("Switching to Attack State");
     }
 }

@@ -17,6 +17,7 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private string jump = "Jump";
     [SerializeField] private string sprint = "Sprint";
     [SerializeField] private string crouch = "Crouch";
+    [SerializeField] private string use = "Use";
 
 
     private InputAction movementAction;
@@ -24,12 +25,14 @@ public class PlayerInputHandler : MonoBehaviour
     private InputAction jumpAction;
     private InputAction sprintAction;
     private InputAction crouchAction;
+    private InputAction useAction;
 
-    public Vector2 MovementInput {  get; private set; }
-    public Vector2 RotationInput {  get; private set; }
-    public bool JumpTriggered {  get; private set; }
-    public bool SprintTriggered {  get; private set; }
-    public bool CrouchTriggered {  get; private set; }
+    public Vector2 MovementInput { get; private set; }
+    public Vector2 RotationInput { get; private set; }
+    public bool JumpTriggered { get; private set; }
+    public bool SprintTriggered { get; private set; }
+    public bool CrouchTriggered { get; private set; }
+    public bool UseTriggered { get; private set; }
 
     private void Awake()
     {
@@ -40,6 +43,7 @@ public class PlayerInputHandler : MonoBehaviour
         jumpAction = mapReference.FindAction(jump);
         sprintAction = mapReference.FindAction(sprint);
         crouchAction = mapReference.FindAction(crouch);
+        useAction = mapReference.FindAction(use);
 
         SubscribeActionValuesToInputEvents();
     }
@@ -60,6 +64,9 @@ public class PlayerInputHandler : MonoBehaviour
 
         crouchAction.performed += inputInfo => CrouchTriggered = true;
         crouchAction.canceled += inputInfo => CrouchTriggered = false;
+
+        useAction.performed += inputInfo => UseTriggered = true;
+        useAction.canceled += inputInfo => UseTriggered = false;
     }
 
     private void OnEnable()

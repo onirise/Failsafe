@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - PatrolPoints
+  - LootBox
+  - Implant
+  - Item
   layers:
   - Default
   - TransparentFX

@@ -15,13 +15,13 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float gravityScale = 1.0f;
     [SerializeField] private float minJumpHeight = 0.5f;    // Минимальная высота
     [SerializeField] private float maxJumpHeight = 2.0f;    // Максимальная высота
-    [SerializeField] private float jumpRiseTime  = 0.2f;         // Время до макс. высоты
+    [SerializeField] private float jumpRiseTime = 0.2f;         // Время до макс. высоты
 
     //[SerializeField] private bool hasJumped = false;
     [SerializeField] private bool isJumping = false;
-    [SerializeField] private bool jumpKeyReleased  = true;
+    [SerializeField] private bool jumpKeyReleased = true;
 
-    
+
 
     [Header("Crouch Parameters")]
     [SerializeField] private float crouchHeight = 0.5f; // Высота камеры при приседании (половина от стандартной)
@@ -32,12 +32,12 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 0.1f;
     [SerializeField] private float upDownLookRange = 80f;
 
-    [Header ("References")]
+    [Header("References")]
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private PlayerInputHandler playerInputHandler;
 
-    [Header ("Statements")]
+    [Header("Statements")]
     [SerializeField] private bool isMoving;
 
     private float jumpProgress;
@@ -55,16 +55,16 @@ public class FirstPersonController : MonoBehaviour
                                               (playerInputHandler.CrouchTriggered ? crouchMultiplier : 1));
     */
     private float CurrentSpeed
-{
-    get
     {
-        if (playerInputHandler.SprintTriggered)
-            return walkSpeed * sprintMultiplier;
-        if (playerInputHandler.CrouchTriggered)
-            return walkSpeed * crouchMultiplier;
-        return walkSpeed;
+        get
+        {
+            if (playerInputHandler.SprintTriggered)
+                return walkSpeed * sprintMultiplier;
+            if (playerInputHandler.CrouchTriggered)
+                return walkSpeed * crouchMultiplier;
+            return walkSpeed;
+        }
     }
-}
 
     // Start is called before the first frame update
     void Start()
@@ -74,8 +74,8 @@ public class FirstPersonController : MonoBehaviour
     }
 
     private void Awake()
-{
-    
+    {
+
         if (mainCamera == null)
         {
             mainCamera = Camera.main;
@@ -84,7 +84,7 @@ public class FirstPersonController : MonoBehaviour
 
         cameraStandingPos = mainCamera.transform.localPosition; // Запоминаем дефолтную позицию
         targetHeight = standingHeight;
-}
+    }
 
     // Update is called once per frame
     void Update()
@@ -92,41 +92,61 @@ public class FirstPersonController : MonoBehaviour
         HandleMovement();
         HandleRotation();
         HandleCrouching();
+
+        // Если игрок нажал использовать
+        if (playerInputHandler.UseTriggered)
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, 4.0f))
+            {
+                // Debug.Log($"Hit object: {hitInfo.collider.gameObject.name}");
+                if (hitInfo.collider.CompareTag("LootBox"))
+                {
+                    LootBox obj = hitInfo.collider.GetComponent<LootBox>();
+                    if (obj != null) obj.Open();
+                }
+                else if (hitInfo.collider.CompareTag("Item"))
+                {
+                    Item obj = hitInfo.collider.GetComponent<Item>();
+                    if (obj != null) obj.PickUp();
+                }
+            }
+        }
     }
 
 
     private void HandleCrouching()
-{
-    // Определяем целевую высоту (присели или нет)
-    if (playerInputHandler.SprintTriggered && playerInputHandler.CrouchTriggered)
     {
-        _forceStandUp = true;
+        // Определяем целевую высоту (присели или нет)
+        if (playerInputHandler.SprintTriggered && playerInputHandler.CrouchTriggered)
+        {
+            _forceStandUp = true;
+        }
+
+        targetHeight = _forceStandUp ? standingHeight :
+                     (playerInputHandler.CrouchTriggered ? crouchHeight : standingHeight);
+
+        // Сброс флага, когда достигли стоячей позиции
+        if (_forceStandUp && Mathf.Approximately(mainCamera.transform.localPosition.y, standingHeight))
+        {
+            _forceStandUp = false;
+        }
+
+        // Плавно меняем высоту камеры
+        float newHeight = Mathf.SmoothDamp(
+            mainCamera.transform.localPosition.y,
+            targetHeight,
+            ref currentHeightVelocity,
+            crouchSmoothTime
+        );
+
+        // Применяем новую позицию камеры
+        mainCamera.transform.localPosition = new Vector3(
+            cameraStandingPos.x,
+            newHeight,
+            cameraStandingPos.z
+        );
     }
-
-    targetHeight = _forceStandUp ? standingHeight : 
-                 (playerInputHandler.CrouchTriggered ? crouchHeight : standingHeight);
-
-    // Сброс флага, когда достигли стоячей позиции
-    if (_forceStandUp && Mathf.Approximately(mainCamera.transform.localPosition.y, standingHeight))
-    {
-        _forceStandUp = false;
-    }
-
-    // Плавно меняем высоту камеры
-    float newHeight = Mathf.SmoothDamp(
-        mainCamera.transform.localPosition.y,
-        targetHeight,
-        ref currentHeightVelocity,
-        crouchSmoothTime
-    );
-
-    // Применяем новую позицию камеры
-    mainCamera.transform.localPosition = new Vector3(
-        cameraStandingPos.x,
-        newHeight,
-        cameraStandingPos.z
-    );
-}
 
     private Vector3 CalculateWorldDirection()
     {
@@ -135,48 +155,48 @@ public class FirstPersonController : MonoBehaviour
         return worldDirection.normalized;
     }
 
-private void HandleJumping()
-{
-    if (characterController.isGrounded)
+    private void HandleJumping()
     {
-        currentMovement.y = -0.5f;
-        
-        // Защита от повторного прыжка: прыгаем ТОЛЬКО при новом нажатии
-        if (playerInputHandler.JumpTriggered && !playerInputHandler.CrouchTriggered && jumpKeyReleased)
+        if (characterController.isGrounded)
         {
-            isJumping = true;
-            jumpProgress = 0f;
-            jumpKeyReleased = false; // Блокируем повторный прыжок
-            initialJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * minJumpHeight);
-            currentMovement.y = initialJumpVelocity;
-        }
-        
-        // Сбрасываем флаг, когда клавиша отпущена
-        if (!playerInputHandler.JumpTriggered)
-        {
-            jumpKeyReleased = true;
-        }
-    }
-    else
-    {
-        // Плавный рост прыжка при удержании
-        if (isJumping && playerInputHandler.JumpTriggered && jumpProgress < jumpRiseTime)
-        {
-            jumpProgress += Time.deltaTime;
-            float addedForce = Mathf.Lerp(0, maxJumpHeight - minJumpHeight, jumpProgress / jumpRiseTime);
-            currentMovement.y = initialJumpVelocity + addedForce;
-        }
-        
-        // Прерывание прыжка
-        if (!playerInputHandler.JumpTriggered)
-        {
-            isJumping = false;
-        }
+            currentMovement.y = -0.5f;
 
-        // Усиленная гравитация
-        currentMovement.y += Physics.gravity.y * gravityScale * Time.deltaTime;
+            // Защита от повторного прыжка: прыгаем ТОЛЬКО при новом нажатии
+            if (playerInputHandler.JumpTriggered && !playerInputHandler.CrouchTriggered && jumpKeyReleased)
+            {
+                isJumping = true;
+                jumpProgress = 0f;
+                jumpKeyReleased = false; // Блокируем повторный прыжок
+                initialJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * minJumpHeight);
+                currentMovement.y = initialJumpVelocity;
+            }
+
+            // Сбрасываем флаг, когда клавиша отпущена
+            if (!playerInputHandler.JumpTriggered)
+            {
+                jumpKeyReleased = true;
+            }
+        }
+        else
+        {
+            // Плавный рост прыжка при удержании
+            if (isJumping && playerInputHandler.JumpTriggered && jumpProgress < jumpRiseTime)
+            {
+                jumpProgress += Time.deltaTime;
+                float addedForce = Mathf.Lerp(0, maxJumpHeight - minJumpHeight, jumpProgress / jumpRiseTime);
+                currentMovement.y = initialJumpVelocity + addedForce;
+            }
+
+            // Прерывание прыжка
+            if (!playerInputHandler.JumpTriggered)
+            {
+                isJumping = false;
+            }
+
+            // Усиленная гравитация
+            currentMovement.y += Physics.gravity.y * gravityScale * Time.deltaTime;
+        }
     }
-}
 
     /*private void HandleJumping()
     {
@@ -210,7 +230,7 @@ private void HandleJumping()
         currentMovement.x = worldDirection.x * CurrentSpeed;
         currentMovement.z = worldDirection.z * CurrentSpeed;
 
-        isMoving = characterController.isGrounded && 
+        isMoving = characterController.isGrounded &&
                new Vector3(currentMovement.x, 0, currentMovement.z).sqrMagnitude > 0.1f;
 
         HandleJumping();

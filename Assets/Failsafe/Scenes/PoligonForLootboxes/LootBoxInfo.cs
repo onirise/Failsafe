@@ -11,19 +11,21 @@ public class LootBoxInfo : ScriptableObject
     public int NeedToOpenLootBoxesToDropImaplant = 3;
 
     // Счетчик расходников (чего сколько выпало)
-    public int[] RashodnikCounter = new int[(int)RashodnikType.COUNT];
+    // public int[] RashodnikCounter = new int[(int)RashodnikType.COUNT];
 
     // Счетчик имплантов (чего сколько выпало)
     public int[] ImplantCounter = new int[(int)ItemImplant.ImplantType.COUNT];
 
+    public bool SpawnedTeleportRashodnik = false;
 
     public void Init()
     {
         OpenedLootBoxesSinceLastDroppedImplant = 0;
-        for (int i = 0; i < RashodnikCounter.Length; i++)
-        {
-            RashodnikCounter[i] = 0;
-        }
+        // for (int i = 0; i < RashodnikCounter.Length; i++)
+        // {
+        //     RashodnikCounter[i] = 0;
+        // }
+        SpawnedTeleportRashodnik = false;
 
         for (int i = 0; i < ImplantCounter.Length; i++)
         {

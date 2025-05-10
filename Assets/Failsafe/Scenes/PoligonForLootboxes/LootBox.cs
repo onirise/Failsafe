@@ -35,11 +35,12 @@ public class LootBox : MonoBehaviour
     }
 
     // Получения кол-во расходников, которые были у игрока
-    private int[] GetRashodnikCounter()
-    {
-        return lootBoxInfo.RashodnikCounter;
-    }
+    // private int[] GetRashodnikCounter()
+    // {
+    //     return lootBoxInfo.RashodnikCounter;
+    // }
 
+    // Кол-во имплантов, которые выпали из лутбокса
     private int[] GetImplantCounter()
     {
         return lootBoxInfo.ImplantCounter;
@@ -104,9 +105,13 @@ public class LootBox : MonoBehaviour
 
             // В зависимости от редкости задаем тип
             // NOTE: тип зависит от того, как часто выпадали различные расходники
-            item.SetRandomTypeDependOnRarity(rnd, GetRashodnikCounter());
+            item.SetRandomTypeDependOnRarity(rnd, lootBoxInfo); // , GetRashodnikCounter()
 
-            lootBoxInfo.RashodnikCounter[(int)item.Type]++;
+            if (item.Type == RashodnikType.TELEPORT)
+            {
+                lootBoxInfo.SpawnedTeleportRashodnik = true;
+            }
+            // lootBoxInfo.RashodnikCounter[(int)item.Type]++;
         }
 
         lootBoxInfo.OpenedLootBoxesSinceLastDroppedImplant++;

@@ -74,13 +74,14 @@ public class ItemRashodnik : Item
         }
     }
 
-    public void SetRandomTypeDependOnRarity(System.Random rnd, int[] RashodnikCounter)
+    public void SetRandomTypeDependOnRarity(System.Random rnd, LootBoxInfo lootBoxInfo) // , int[] RashodnikCounter
     {
         switch (Rarity)
         {
             case RashodnikRarity.UNIQUE:
                 {
-                    if (RashodnikCounter[(int)RashodnikType.TELEPORT] == 1)
+                    // if (RashodnikCounter[(int)RashodnikType.TELEPORT] == 1)
+                    if (lootBoxInfo.SpawnedTeleportRashodnik)
                     {
                         var types = new RashodnikType[] {
                             RashodnikType.REMOTE_ACCESS_CONTROL,
@@ -88,8 +89,8 @@ public class ItemRashodnik : Item
                         };
                         // выбираем остальное, так как телепорт выпадает в
                         // единичном экземпляре
-                        var rareTypes = GetRareTypes(RashodnikCounter, types);
-                        Type = rareTypes[rnd.Next(0, rareTypes.Length)];
+                        // var rareTypes = GetRareTypes(RashodnikCounter, types);
+                        Type = types[rnd.Next(0, types.Length)];
                     }
                     else
                     {
@@ -98,8 +99,8 @@ public class ItemRashodnik : Item
                             RashodnikType.TELEKINEZ_GLOVES,
                             RashodnikType.TELEPORT,
                         };
-                        var rareTypes = GetRareTypes(RashodnikCounter, types);
-                        Type = rareTypes[rnd.Next(0, rareTypes.Length)];
+                        // var rareTypes = GetRareTypes(RashodnikCounter, types);
+                        Type = types[rnd.Next(0, types.Length)];
                     }
 
                 }
@@ -114,8 +115,8 @@ public class ItemRashodnik : Item
                         RashodnikType.SUPER_ADRENALIN,
                         RashodnikType.ENERGY_WALL_GENERATOR
                     };
-                    var rareTypes = GetRareTypes(RashodnikCounter, types);
-                    Type = rareTypes[rnd.Next(0, rareTypes.Length)];
+                    // var rareTypes = GetRareTypes(RashodnikCounter, types);
+                    Type = types[rnd.Next(0, types.Length)];
                 }
                 break;
             case RashodnikRarity.RARE:
@@ -126,8 +127,8 @@ public class ItemRashodnik : Item
                         RashodnikType.TUSHKAN_STIM,
                         RashodnikType.HACK_KEY
                     };
-                    var rareTypes = GetRareTypes(RashodnikCounter, types);
-                    Type = rareTypes[rnd.Next(0, rareTypes.Length)];
+                    // var rareTypes = GetRareTypes(RashodnikCounter, types);
+                    Type = types[rnd.Next(0, types.Length)];
                 }
                 break;
             case RashodnikRarity.COMMON:
@@ -139,33 +140,33 @@ public class ItemRashodnik : Item
                         RashodnikType.HLOPUSHKA
                     };
 
-                    var rareTypes = GetRareTypes(RashodnikCounter, types);
-                    Type = rareTypes[rnd.Next(0, rareTypes.Length)];
+                    // var rareTypes = GetRareTypes(RashodnikCounter, types);
+                    Type = types[rnd.Next(0, types.Length)];
                 }
                 break;
         }
     }
 
-    private RashodnikType[] GetRareTypes(int[] RashodnikCounter, RashodnikType[] types)
-    {
-        var rareTypes = new RashodnikType[] { };
-        var lowest = int.MaxValue;
-        for (int i = 0; i < types.Length; i++)
-        {
-            var counter = RashodnikCounter[(int)types[i]];
-            if (counter < lowest)
-            {
-                lowest = counter;
-                rareTypes = new RashodnikType[] { types[i] };
-            }
-            else if (counter == lowest)
-            {
-                rareTypes.Append(types[i]);
-            }
-        }
+    // private RashodnikType[] GetRareTypes(int[] RashodnikCounter, RashodnikType[] types)
+    // {
+    //     var rareTypes = new RashodnikType[] { };
+    //     var lowest = int.MaxValue;
+    //     for (int i = 0; i < types.Length; i++)
+    //     {
+    //         var counter = RashodnikCounter[(int)types[i]];
+    //         if (counter < lowest)
+    //         {
+    //             lowest = counter;
+    //             rareTypes = new RashodnikType[] { types[i] };
+    //         }
+    //         else if (counter == lowest)
+    //         {
+    //             rareTypes.Append(types[i]);
+    //         }
+    //     }
 
-        return rareTypes;
-    }
+    //     return rareTypes;
+    // }
 
     public string GetTypeName()
     {

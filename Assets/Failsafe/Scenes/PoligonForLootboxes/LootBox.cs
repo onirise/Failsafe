@@ -12,19 +12,21 @@ public class LootBox : MonoBehaviour
     private int itemCount = 0;
     public bool isOpened { get; private set; } = false;
 
+    public int MinItemCount = 1;
+    public int MaxItemCount = 5;
+
     void Start()
     {
         // окрашиваем для понимания, что лутбокс не открыт еще
         GetComponent<Renderer>().material.color = Color.green;
 
-        const int seed = 42; // TODO: get seed
         if (rnd == null)
         {
-            // Какой по номеру сида ( Локацию ) проходит игрок.
+            int seed = Random.Range(0, int.MaxValue);
             rnd = new System.Random(seed);
         }
 
-        itemCount = rnd.Next(1, 5);
+        itemCount = rnd.Next(MinItemCount, MaxItemCount);
     }
 
     void Update()
@@ -120,7 +122,7 @@ public class LootBox : MonoBehaviour
             var force = new Vector3(Random.Range(-1f, 1f) * forcePower, Random.Range(2.5f, 5f), Random.Range(-1f, 1f) * forcePower);
             rigidbody.AddForce(force, ForceMode.Impulse);
 
-            // 
+            // задаем редкость предмету
             var item = prefab.GetComponent<ItemImplant>();
             var rarity = rnd.Next(100);
             if (rarity < 50)

@@ -86,6 +86,8 @@ public class ItemImplant : Item
         }
     }
 
+    // получение тех предметов из типов, которых еще не было
+    // работает по принципу заранее полученного количества
     private ImplantType[] GetRareTypes(int[] counter, ImplantType[] types)
     {
         var rareTypes = new ImplantType[] { };

@@ -38,11 +38,13 @@ namespace SpawnSystem
         private bool IsActive => _activateAt < Time.time;
         private float _activateAt;
 
-        private WeightMeter _weightMeter;
+        private WeightMeter _weightMeter = new WeightMeter();
         public WeightMeter WeightMeter => _weightMeter;
 
         [SerializeField]
         private SpawnSystemSpreadsheetContainer _spawnSystemSpreadsheet;
+        [SerializeField]
+        private EnemyPrefabsSO _enemyPrefabsSO;
 
         public List<SpawnCandidate> SpawnedEnemies => _spawnedEnemies;
 
@@ -67,7 +69,7 @@ namespace SpawnSystem
             {
                 _spawnPointTypePresent[spawnPoint.type] = true;
             }
-            var builder = new SpawnSystemSpreadsheetBuilder();
+            var builder = new SpawnSystemSpreadsheetBuilder(_enemyPrefabsSO.ToDictionary());
             builder.BuildSpawnSystem(_spawnSystemSpreadsheet.Content.enemySpawnDatas, this);
         }
 

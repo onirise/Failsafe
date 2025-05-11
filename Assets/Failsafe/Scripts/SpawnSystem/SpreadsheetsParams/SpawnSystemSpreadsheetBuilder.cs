@@ -8,6 +8,12 @@ namespace SpawnSystem
     {
         private Dictionary<string, SpawnCandidate> _candidatesByName = new();
         private Dictionary<string, GameObject> _enemyPrefabs = new();
+
+        public SpawnSystemSpreadsheetBuilder(Dictionary<string, GameObject> enemyPrefabs)
+        {
+            _enemyPrefabs = enemyPrefabs;
+        }
+
         public void BuildSpawnSystem(List<EnemySpawnData> enemySpawnDatas, EnemySpawnSystem spawnSystem)
         {
             foreach (var enemySpawnData in enemySpawnDatas)

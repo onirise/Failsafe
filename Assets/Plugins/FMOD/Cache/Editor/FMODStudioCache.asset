@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: 5865536144911460472}
-  - {fileID: 4051849374037770497}
+  - {fileID: 8933898257443738596}
+  - {fileID: 4531236313407174697}
   EditorEvents: []
   EditorParameters: []
   MasterBanks:
-  - {fileID: 4051849374037770497}
+  - {fileID: 4531236313407174697}
   StringsBanks:
-  - {fileID: 5865536144911460472}
+  - {fileID: 8933898257443738596}
   cacheVersion: 131847
   cacheTime: 638820756377465534
   SerializableEventsDict: []
---- !u!114 &4051849374037770497
+--- !u!114 &4531236313407174697
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   - Name: Desktop
     Value: 1074
   Exists: 1
---- !u!114 &5865536144911460472
+--- !u!114 &8933898257443738596
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

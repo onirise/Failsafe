@@ -24,9 +24,8 @@ public class ZonesOfHearing : MonoBehaviour
             return;
         }
 
-        radiusNear = _fieldOfView.radius;
-        radiusSprint = _fieldOfView.radiusSprinting;
-        radiusWalk = _fieldOfView.radiusWalking;
+        radiusNear = _fieldOfView.radiusFar;
+        radiusSprint = _fieldOfView.radiusNear;
 
         if (_fieldOfView.playerRef != null)
         {
@@ -48,7 +47,7 @@ public class ZonesOfHearing : MonoBehaviour
         playerWalk = CheckHearingZone(radiusWalk) && _playerInputHandler.MovementInput.magnitude != 0;
 
         // Обновление состояния видимости игрока
-        _fieldOfView.canSeePlayer = playerNear || playerSprint || playerWalk;
+       // _fieldOfView.canSeePlayer = playerNear ;
     }
 
     /// <summary>

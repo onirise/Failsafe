@@ -8,11 +8,11 @@
       "hash": "06067cd4c83e372310d6f79d1c625f6870ff7a2a"
     },
     "com.norska-lib.spreadsheets": {
-      "version": "https://github.com/NorskaGames/NorskaLibUPM.git?path=/Spreadsheets",
+      "version": "https://github.com/NorskaGames/NorskaLib.Spreadsheets.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "4bf70c22599147f1a219d0f614b8c9c36dd7a674"
+      "hash": "bf43763b1641023278d0f77a23dd2d3a9fcf3fbe"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -100,6 +100,13 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.sysroot": {
+      "version": "2.0.10",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.splines": {
       "version": "2.8.0",
       "depth": 1,
@@ -108,6 +115,15 @@
         "com.unity.mathematics": "1.2.1",
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.settings-manager": "1.0.3"
+          },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.sysroot.linux-x86_64": {
+      "version": "2.0.9",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.sysroot": "2.0.10"
       },
       "url": "https://packages.unity.com"
     },
@@ -130,6 +146,16 @@
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.toolchain.linux-x86_64": {
+      "version": "2.0.10",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.sysroot": "2.0.10",
+        "com.unity.sysroot.linux-x86_64": "2.0.9"
       },
       "url": "https://packages.unity.com"
     },

@@ -121,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 374109432981789085}
   - component: {fileID: 374109432981789075}
-  - component: {fileID: 374109432981789074}
+  - component: {fileID: 3056071954068415360}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -196,14 +196,35 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &374109432981789074
-AudioListener:
+--- !u!114 &3056071954068415360
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374109432981789084}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fd9ebf1401392e4bbd47fea32f47642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentBakedListener: {fileID: 0}
+  applyReverb: 1
+  reverbType: 0
+  useAllProbeBatches: 0
+  probeBatches: []
+  mTotalDataSize: 0
+  mProbeDataSizes: 
+  mIdentifier:
+    type: 0
+    variation: 0
+    endpointInfluence:
+      center:
+        x: 0
+        y: 0
+        z: 0
+      radius: 0
+  mProbeBatchesUsed: []
 --- !u!1 &374109433352817464
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,6 +239,7 @@ GameObject:
   - component: {fileID: 4786575343337522745}
   - component: {fileID: 5564961472655603788}
   - component: {fileID: 3587987712684801882}
+  - component: {fileID: -2348027190149931829}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -330,6 +352,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb8b993b2ff8da46b45361c0630c6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2348027190149931829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374109433352817464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730f90c08b87f51498c9dc4048cd4091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepEvent:
+    Guid:
+      Data1: -1050583892
+      Data2: 1246083191
+      Data3: -1439842664
+      Data4: 1628696724
+    Path: event:/SFX/Footstep
+  stepInterval: 0.8
 --- !u!1 &374109433356125759
 GameObject:
   m_ObjectHideFlags: 0

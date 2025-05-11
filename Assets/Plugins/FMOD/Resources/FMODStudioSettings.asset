@@ -477,7 +477,10 @@ MonoBehaviour:
   Plugins: []
   MasterBanks:
   - Master
-  Banks: []
+  Banks:
+  - InGame
+  - Menu
+  - SFX
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
@@ -563,7 +566,7 @@ MonoBehaviour:
       HasValue: 0
     Plugins:
       Value:
-      - phonon_fmod
+      - 
       HasValue: 1
     StaticPlugins:
       Value: []

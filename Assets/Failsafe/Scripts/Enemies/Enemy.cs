@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,11 +18,19 @@ public class Enemy : MonoBehaviour
         defaultState.AddTransition(chasingState, defaultState.PlayerSpoted);
         chasingState.AddTransition(defaultState, chasingState.PlayerLost);
 
-        _stateMachine = new BehaviorStateMachine(defaultState);
+        var disabledStates = new List<BehaviorForcedState>() { new DisabledState() };
+
+        _stateMachine = new BehaviorStateMachine(defaultState, disabledStates);
     }
 
     void Update()
     {
         _stateMachine.Update();
+    }
+
+    [ContextMenu("DisableState")]
+    public void DisableState()
+    {
+        _stateMachine.ForseChangeState<DisabledState>();
     }
 }

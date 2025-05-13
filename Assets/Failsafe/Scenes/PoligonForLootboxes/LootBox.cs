@@ -1,13 +1,13 @@
 using System.Linq;
 using UnityEngine;
-using static ItemRashodnik;
+using static ItemСonsumable;
 
 // https://docs.google.com/document/d/15ZrwKelBM5ZXM42MS_aEq3hCku1SUTj24FSYs0SaV0o/edit?tab=t.0
 public class LootBox : MonoBehaviour
 {
     [SerializeField] private LootBoxInfo lootBoxInfo;
     [SerializeField] private Item implantPrefab;
-    [SerializeField] private Item rashodnikPrefab;
+    [SerializeField] private Item СonsumablePrefab;
     private static System.Random rnd = null;
     private int itemCount = 0;
     public bool isOpened { get; private set; } = false;
@@ -35,9 +35,9 @@ public class LootBox : MonoBehaviour
     }
 
     // Получения кол-во расходников, которые были у игрока
-    // private int[] GetRashodnikCounter()
+    // private int[] GetСonsumableCounter()
     // {
-    //     return lootBoxInfo.RashodnikCounter;
+    //     return lootBoxInfo.СonsumableCounter;
     // }
 
     // Кол-во имплантов, которые выпали из лутбокса
@@ -57,17 +57,17 @@ public class LootBox : MonoBehaviour
             return;
         }
         // bool playerHasImplant = false;
-        // var rashidnikCounts = GetRashodnikCounts();
+        // var rashidnikCounts = GetСonsumableCounts();
 
         // получение типа расходника, который меньше всего получали
-        // var lowestRashodnikIndex = 0;
-        // var lowestRashodnikCount = rashidnikCounts[0];
+        // var lowestСonsumableIndex = 0;
+        // var lowestСonsumableCount = rashidnikCounts[0];
         // for (int i = 1; i < rashidnikCounts.Length; i++)
         // {
-        //     if (rashidnikCounts[i] < lowestRashodnikCount)
+        //     if (rashidnikCounts[i] < lowestСonsumableCount)
         //     {
-        //         lowestRashodnikCount = rashidnikCounts[i];
-        //         lowestRashodnikIndex = i;
+        //         lowestСonsumableCount = rashidnikCounts[i];
+        //         lowestСonsumableIndex = i;
         //     }
         // }
 
@@ -77,41 +77,41 @@ public class LootBox : MonoBehaviour
         {
             var rotation = Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
             var top = Vector3.up * 1.0f;
-            GameObject prefab = Instantiate(rashodnikPrefab.gameObject, transform.position + top, rotation);
+            GameObject prefab = Instantiate(СonsumablePrefab.gameObject, transform.position + top, rotation);
             var rigidbody = prefab.GetComponent<Rigidbody>();
             var forcePower = 1.0f;
             var force = new Vector3(Random.Range(-1f, 1f) * forcePower, Random.Range(2.5f, 5f), Random.Range(-1f, 1f) * forcePower);
             rigidbody.AddForce(force, ForceMode.Impulse);
 
             // Задаем редкость расходнику
-            var item = prefab.GetComponent<ItemRashodnik>();
+            var item = prefab.GetComponent<ItemСonsumable>();
             var rarity = rnd.Next(100);
             if (rarity < 50)
             {
-                item.SetRarity(RashodnikRarity.COMMON);
+                item.SetRarity(СonsumableRarity.COMMON);
             }
             else if (rarity < 80)
             {
-                item.SetRarity(RashodnikRarity.RARE);
+                item.SetRarity(СonsumableRarity.RARE);
             }
             else if (rarity < 95)
             {
-                item.SetRarity(RashodnikRarity.VERY_RARE);
+                item.SetRarity(СonsumableRarity.VERY_RARE);
             }
             else
             {
-                item.SetRarity(RashodnikRarity.UNIQUE);
+                item.SetRarity(СonsumableRarity.UNIQUE);
             }
 
             // В зависимости от редкости задаем тип
             // NOTE: тип зависит от того, как часто выпадали различные расходники
-            item.SetRandomTypeDependOnRarity(rnd, lootBoxInfo); // , GetRashodnikCounter()
+            item.SetRandomTypeDependOnRarity(rnd, lootBoxInfo); // , GetСonsumableCounter()
 
-            if (item.Type == RashodnikType.TELEPORT)
+            if (item.Type == СonsumableType.TELEPORT)
             {
-                lootBoxInfo.SpawnedTeleportRashodnik = true;
+                lootBoxInfo.SpawnedTeleportСonsumable = true;
             }
-            // lootBoxInfo.RashodnikCounter[(int)item.Type]++;
+            // lootBoxInfo.СonsumableCounter[(int)item.Type]++;
         }
 
         lootBoxInfo.OpenedLootBoxesSinceLastDroppedImplant++;

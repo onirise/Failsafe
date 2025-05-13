@@ -2,9 +2,9 @@ using System.Linq;
 using UnityEngine;
 
 // https://docs.google.com/document/d/16ljHmcCaO7HHAfOLeaaGqA7uOBBWy8Pbcn7mU-EfDJo/edit?tab=t.1jwridjpc615
-public class ItemRashodnik : Item
+public class ItemСonsumable : Item
 {
-    public enum RashodnikType
+    public enum СonsumableType
     {
         UNKNOWN,
         STEAMPACK,              // Редкость: Обычный
@@ -26,15 +26,15 @@ public class ItemRashodnik : Item
         COUNT, // Количество типа расходников
     };
 
-    public enum RashodnikRarity
+    public enum СonsumableRarity
     {
         COMMON,
         RARE,
         VERY_RARE,
         UNIQUE
     };
-    public RashodnikType Type { get; private set; } = RashodnikType.UNKNOWN;
-    public RashodnikRarity Rarity { get; private set; } = RashodnikRarity.COMMON;
+    public СonsumableType Type { get; private set; } = СonsumableType.UNKNOWN;
+    public СonsumableRarity Rarity { get; private set; } = СonsumableRarity.COMMON;
 
     void Start()
     {
@@ -44,12 +44,12 @@ public class ItemRashodnik : Item
         SetRarityColor();
     }
 
-    public void SetType(RashodnikType type)
+    public void SetType(СonsumableType type)
     {
         Type = type;
     }
 
-    public void SetRarity(RashodnikRarity rarity)
+    public void SetRarity(СonsumableRarity rarity)
     {
         Rarity = rarity;
         SetRarityColor();
@@ -59,105 +59,105 @@ public class ItemRashodnik : Item
     {
         switch (Rarity)
         {
-            case RashodnikRarity.COMMON:
+            case СonsumableRarity.COMMON:
                 GetComponent<Renderer>().material.color = Color.gray;
                 break;
-            case RashodnikRarity.RARE:
+            case СonsumableRarity.RARE:
                 GetComponent<Renderer>().material.color = Color.green;
                 break;
-            case RashodnikRarity.VERY_RARE:
+            case СonsumableRarity.VERY_RARE:
                 GetComponent<Renderer>().material.color = Color.magenta;
                 break;
-            case RashodnikRarity.UNIQUE:
+            case СonsumableRarity.UNIQUE:
                 GetComponent<Renderer>().material.color = Color.yellow;
                 break;
         }
     }
 
-    public void SetRandomTypeDependOnRarity(System.Random rnd, LootBoxInfo lootBoxInfo) // , int[] RashodnikCounter
+    public void SetRandomTypeDependOnRarity(System.Random rnd, LootBoxInfo lootBoxInfo) // , int[] СonsumableCounter
     {
         switch (Rarity)
         {
-            case RashodnikRarity.UNIQUE:
+            case СonsumableRarity.UNIQUE:
                 {
-                    // if (RashodnikCounter[(int)RashodnikType.TELEPORT] == 1)
-                    if (lootBoxInfo.SpawnedTeleportRashodnik)
+                    // if (СonsumableCounter[(int)СonsumableType.TELEPORT] == 1)
+                    if (lootBoxInfo.SpawnedTeleportСonsumable)
                     {
-                        var types = new RashodnikType[] {
-                            RashodnikType.REMOTE_ACCESS_CONTROL,
-                            RashodnikType.TELEKINEZ_GLOVES,
+                        var types = new СonsumableType[] {
+                            СonsumableType.REMOTE_ACCESS_CONTROL,
+                            СonsumableType.TELEKINEZ_GLOVES,
                         };
                         // выбираем остальное, так как телепорт выпадает в
                         // единичном экземпляре
-                        // var rareTypes = GetRareTypes(RashodnikCounter, types);
+                        // var rareTypes = GetRareTypes(СonsumableCounter, types);
                         Type = types[rnd.Next(0, types.Length)];
                     }
                     else
                     {
-                        var types = new RashodnikType[] {
-                            RashodnikType.REMOTE_ACCESS_CONTROL,
-                            RashodnikType.TELEKINEZ_GLOVES,
-                            RashodnikType.TELEPORT,
+                        var types = new СonsumableType[] {
+                            СonsumableType.REMOTE_ACCESS_CONTROL,
+                            СonsumableType.TELEKINEZ_GLOVES,
+                            СonsumableType.TELEPORT,
                         };
-                        // var rareTypes = GetRareTypes(RashodnikCounter, types);
+                        // var rareTypes = GetRareTypes(СonsumableCounter, types);
                         Type = types[rnd.Next(0, types.Length)];
                     }
 
                 }
                 break;
-            case RashodnikRarity.VERY_RARE:
+            case СonsumableRarity.VERY_RARE:
                 {
-                    var types = new RashodnikType[] {
-                        RashodnikType.EMI_GRANADE,
-                        RashodnikType.DYNAMITE,
-                        RashodnikType.STAZIS_PISTOL,
-                        RashodnikType.STEALTH_SYSTEM,
-                        RashodnikType.SUPER_ADRENALIN,
-                        RashodnikType.ENERGY_WALL_GENERATOR
+                    var types = new СonsumableType[] {
+                        СonsumableType.EMI_GRANADE,
+                        СonsumableType.DYNAMITE,
+                        СonsumableType.STAZIS_PISTOL,
+                        СonsumableType.STEALTH_SYSTEM,
+                        СonsumableType.SUPER_ADRENALIN,
+                        СonsumableType.ENERGY_WALL_GENERATOR
                     };
-                    // var rareTypes = GetRareTypes(RashodnikCounter, types);
+                    // var rareTypes = GetRareTypes(СonsumableCounter, types);
                     Type = types[rnd.Next(0, types.Length)];
                 }
                 break;
-            case RashodnikRarity.RARE:
+            case СonsumableRarity.RARE:
                 {
-                    var types = new RashodnikType[] {
-                        RashodnikType.ADRENALIN,
-                        RashodnikType.GORILLA_STIM,
-                        RashodnikType.TUSHKAN_STIM,
-                        RashodnikType.HACK_KEY
+                    var types = new СonsumableType[] {
+                        СonsumableType.ADRENALIN,
+                        СonsumableType.GORILLA_STIM,
+                        СonsumableType.TUSHKAN_STIM,
+                        СonsumableType.HACK_KEY
                     };
-                    // var rareTypes = GetRareTypes(RashodnikCounter, types);
+                    // var rareTypes = GetRareTypes(СonsumableCounter, types);
                     Type = types[rnd.Next(0, types.Length)];
                 }
                 break;
-            case RashodnikRarity.COMMON:
+            case СonsumableRarity.COMMON:
             default:
                 {
-                    var types = new RashodnikType[] {
-                        RashodnikType.STEAMPACK,
-                        RashodnikType.ENERGY_BOOST,
-                        RashodnikType.HLOPUSHKA
+                    var types = new СonsumableType[] {
+                        СonsumableType.STEAMPACK,
+                        СonsumableType.ENERGY_BOOST,
+                        СonsumableType.HLOPUSHKA
                     };
 
-                    // var rareTypes = GetRareTypes(RashodnikCounter, types);
+                    // var rareTypes = GetRareTypes(СonsumableCounter, types);
                     Type = types[rnd.Next(0, types.Length)];
                 }
                 break;
         }
     }
 
-    // private RashodnikType[] GetRareTypes(int[] RashodnikCounter, RashodnikType[] types)
+    // private СonsumableType[] GetRareTypes(int[] СonsumableCounter, СonsumableType[] types)
     // {
-    //     var rareTypes = new RashodnikType[] { };
+    //     var rareTypes = new СonsumableType[] { };
     //     var lowest = int.MaxValue;
     //     for (int i = 0; i < types.Length; i++)
     //     {
-    //         var counter = RashodnikCounter[(int)types[i]];
+    //         var counter = СonsumableCounter[(int)types[i]];
     //         if (counter < lowest)
     //         {
     //             lowest = counter;
-    //             rareTypes = new RashodnikType[] { types[i] };
+    //             rareTypes = new СonsumableType[] { types[i] };
     //         }
     //         else if (counter == lowest)
     //         {
@@ -172,24 +172,24 @@ public class ItemRashodnik : Item
     {
         switch (Type)
         {
-            case RashodnikType.STEAMPACK: return "Стимпак";
-            case RashodnikType.ENERGY_BOOST: return "Батончик Energy Boost";
-            case RashodnikType.ADRENALIN: return "Адреналин";
-            case RashodnikType.GORILLA_STIM: return "Стимулятор Горилла";
-            case RashodnikType.TUSHKAN_STIM: return "Стимулятор Тушкан";
-            case RashodnikType.HLOPUSHKA: return "Хлопушка";
-            case RashodnikType.HACK_KEY: return "Взлом ключ";
-            case RashodnikType.EMI_GRANADE: return "ЭМИ Граната";
-            case RashodnikType.DYNAMITE: return "Динамит";
-            case RashodnikType.REMOTE_ACCESS_CONTROL: return "Пульт Удаленного Доступа";
-            case RashodnikType.TELEKINEZ_GLOVES: return "Перчатка Телекинез";
-            case RashodnikType.STAZIS_PISTOL: return "Стазис Пистолет";
-            case RashodnikType.STEALTH_SYSTEM: return "Система Стелс";
-            case RashodnikType.SUPER_ADRENALIN: return "Супер Адреналин";
-            case RashodnikType.TELEPORT: return "Устройство Экстренной Телепортации";
-            case RashodnikType.ENERGY_WALL_GENERATOR: return "Генератор Энерго Стен";
-            case RashodnikType.UNKNOWN:
-            case RashodnikType.COUNT:
+            case СonsumableType.STEAMPACK: return "Стимпак";
+            case СonsumableType.ENERGY_BOOST: return "Батончик Energy Boost";
+            case СonsumableType.ADRENALIN: return "Адреналин";
+            case СonsumableType.GORILLA_STIM: return "Стимулятор Горилла";
+            case СonsumableType.TUSHKAN_STIM: return "Стимулятор Тушкан";
+            case СonsumableType.HLOPUSHKA: return "Хлопушка";
+            case СonsumableType.HACK_KEY: return "Взлом ключ";
+            case СonsumableType.EMI_GRANADE: return "ЭМИ Граната";
+            case СonsumableType.DYNAMITE: return "Динамит";
+            case СonsumableType.REMOTE_ACCESS_CONTROL: return "Пульт Удаленного Доступа";
+            case СonsumableType.TELEKINEZ_GLOVES: return "Перчатка Телекинез";
+            case СonsumableType.STAZIS_PISTOL: return "Стазис Пистолет";
+            case СonsumableType.STEALTH_SYSTEM: return "Система Стелс";
+            case СonsumableType.SUPER_ADRENALIN: return "Супер Адреналин";
+            case СonsumableType.TELEPORT: return "Устройство Экстренной Телепортации";
+            case СonsumableType.ENERGY_WALL_GENERATOR: return "Генератор Энерго Стен";
+            case СonsumableType.UNKNOWN:
+            case СonsumableType.COUNT:
             default:
                 return "Неизвестно";
         }

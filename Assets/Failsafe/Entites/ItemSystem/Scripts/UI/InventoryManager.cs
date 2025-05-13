@@ -37,8 +37,14 @@ public class InventoryManager : MonoBehaviour
     {
         if (toSlot == null)
         {
-            fromSlot.currentItem = item;
-            item.transform.position = fromSlot.slotObject.transform.position;
+            item.transform.SetParent(null);
+            fromSlot.currentItem = null;
+            var rigidbody = item.GetComponent<Rigidbody>();
+            if (rigidbody)
+            {
+                rigidbody.isKinematic = false;
+            }
+            SetLayerRecursively(item.gameObject, LayerMask.NameToLayer("Default"));
             return;
         }
 
@@ -103,7 +109,7 @@ public class InventoryManager : MonoBehaviour
         if (itemPrefabs.Length == 0) return;
 
         GameObject newItemObj = Instantiate(item, slot.slotObject.transform);
-        SetLayerRecursively(newItemObj, LayerMask.NameToLayer("Inventory")); // Изменено здесь
+        SetLayerRecursively(newItemObj, LayerMask.NameToLayer("Inventory")); 
 
         Item newItem = newItemObj.GetComponent<Item>();
         if (!newItem) newItem = newItemObj.AddComponent<Item>();

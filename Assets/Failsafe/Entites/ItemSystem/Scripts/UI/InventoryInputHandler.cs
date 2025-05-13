@@ -12,6 +12,7 @@ public class InventoryInputHandler : MonoBehaviour
     /// </summary>
     [SerializeField] private float openInventoryOffset = 0.10f;
     [SerializeField] private Camera PlayerCamera;
+    [SerializeField] private PhysicsPickup physicsPickup;
 
     private InventoryBeltHandler beltHandler;
     private InventoryDragHandler dragHandler;
@@ -32,6 +33,7 @@ public class InventoryInputHandler : MonoBehaviour
         }
         dragHandler.playerCamera = PlayerCamera;
         dragHandler.inventoryManager = inventoryManager;
+        dragHandler.physicsPickup = physicsPickup;
 
     }
     private void Update()
@@ -46,6 +48,10 @@ public class InventoryInputHandler : MonoBehaviour
         if (shouldOpen != isInventoryOpen)
         {
             isInventoryOpen = shouldOpen;
+            if (physicsPickup.GetCurrentObject(out var currentObject))
+            {
+                dragHandler.SetDraggingItem(currentObject);
+            }
             UpdateInventoryVisibility(isInventoryOpen);
         }
     }

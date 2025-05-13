@@ -12,4 +12,12 @@ public class Item : Prop
             gameObject.AddComponent<BoxCollider>();
         }
     }
+    public void SetKinematic(bool value)
+    {
+        var rigidbody = gameObject.GetComponent<Rigidbody>();
+        if (rigidbody)
+        {
+            rigidbody.isKinematic = value;
+        }
+    }
 }

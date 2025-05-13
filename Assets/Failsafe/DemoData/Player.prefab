@@ -569,6 +569,7 @@ MonoBehaviour:
   lookDownThreshold: 0.9
   openInventoryOffset: 0.1
   PlayerCamera: {fileID: 374109432981789075}
+  physicsPickup: {fileID: 5564961472655603788}
 --- !u!114 &185476466963446419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,6 +584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 0}
   playerCamera: {fileID: 0}
+  physicsPickup: {fileID: 0}
   inventoryLayer:
     serializedVersion: 2
     m_Bits: 16384

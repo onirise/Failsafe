@@ -33,33 +33,40 @@ public class InventoryManager : MonoBehaviour
     {
         IsInventoryActive = state;
     }
-    public void EndDragItem(InventorySlot fromSlot, InventorySlot toSlot, Item item)
+    public bool TryEndDragItem(InventorySlot fromSlot, InventorySlot toSlot, Item item)
     {
         if (toSlot == null)
         {
             item.transform.SetParent(null);
-            fromSlot.currentItem = null;
-            var rigidbody = item.GetComponent<Rigidbody>();
-            if (rigidbody)
-            {
-                rigidbody.isKinematic = false;
-            }
+            if(fromSlot is not null) fromSlot.currentItem = null;
+            item.SetKinematic(false);
             SetLayerRecursively(item.gameObject, LayerMask.NameToLayer("Default"));
-            return;
+            return true;
         }
 
         if (toSlot.currentItem == null)
         {
-            fromSlot.currentItem = null;
+            if (fromSlot is not null)
+            {
+                fromSlot.currentItem = null;
+            }
+            else
+            {
+                CreateItemInSlot(toSlot, item);
+            }
             toSlot.currentItem = item;
             item.transform.position = toSlot.slotObject.transform.position;
             item.transform.SetParent(toSlot.slotObject.transform);
         }
-        else
+        else if (fromSlot is not null && fromSlot.currentItem != null)
         {
             SwapItems(fromSlot, toSlot);
+        } 
+        else
+        {
+            return false;
         }
-
+        return true;
     }
     public void AddItemToRandomSlot(GameObject item)
     {
@@ -114,16 +121,22 @@ public class InventoryManager : MonoBehaviour
         Item newItem = newItemObj.GetComponent<Item>();
         if (!newItem) newItem = newItemObj.AddComponent<Item>();
 
-        var rigidbody = newItemObj.GetComponent<Rigidbody>();
-        if(rigidbody)
-        {
-            rigidbody.isKinematic = true;
-        }
+        newItem.SetKinematic(true);
 
         // Масштабирование под размер слота
         FitItemToSlot(newItemObj.transform, slot.slotCollider);
 
         slot.currentItem = newItem;
+    }
+    private void CreateItemInSlot(InventorySlot slot, Item item)
+    {
+        if (itemPrefabs.Length == 0) return;
+
+        SetLayerRecursively(item.gameObject, LayerMask.NameToLayer("Inventory"));
+        item.SetKinematic(true);
+        // Масштабирование под размер слота
+        //FitItemToSlot(item.transform, slot.slotCollider);
+        slot.currentItem = item;
     }
     private void SetLayerRecursively(GameObject parentObj, int layer)
     {

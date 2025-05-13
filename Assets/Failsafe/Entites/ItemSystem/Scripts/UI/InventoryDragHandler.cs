@@ -10,6 +10,7 @@ public class InventoryDragHandler : MonoBehaviour
 {
     [HideInInspector] public InventoryManager inventoryManager;
     [HideInInspector] public Camera playerCamera;
+    [HideInInspector] public PhysicsPickup physicsPickup;
 
     [SerializeField] private LayerMask inventoryLayer;
 
@@ -19,8 +20,16 @@ public class InventoryDragHandler : MonoBehaviour
     private void Update()
     {
         if (!inventoryManager.IsInventoryActive) return;
-
         HandleDragInput();
+    }
+
+    public void SetDraggingItem(GameObject gameObject)
+    {
+        draggedItem = gameObject.GetComponent<Item>();
+        if (draggedItem == null) return;
+        originalSlot = null;
+        physicsPickup.DropItem();
+        draggedItem.SetKinematic(true);
     }
 
     private void HandleDragInput()
@@ -40,6 +49,10 @@ public class InventoryDragHandler : MonoBehaviour
 
     private void TryStartDrag()
     {
+        if (draggedItem)
+        {
+            return;
+        }
         var (slot, item) = GetSlotAndItemUnderMouse();
         if (item != null)
         {
@@ -56,10 +69,11 @@ public class InventoryDragHandler : MonoBehaviour
         if (draggedItem == null) return;
 
         var (targetSlot, _) = GetSlotAndItemUnderMouse();
-        inventoryManager.EndDragItem(originalSlot, targetSlot, draggedItem);
-
-        draggedItem = null;
-        originalSlot = null;
+        if (inventoryManager.TryEndDragItem(originalSlot, targetSlot, draggedItem))
+        {
+            draggedItem = null;
+            originalSlot = null;
+        }
     }
 
     private void UpdateDragPosition()

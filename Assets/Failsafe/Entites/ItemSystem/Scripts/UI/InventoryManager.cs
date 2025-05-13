@@ -108,6 +108,12 @@ public class InventoryManager : MonoBehaviour
         Item newItem = newItemObj.GetComponent<Item>();
         if (!newItem) newItem = newItemObj.AddComponent<Item>();
 
+        var rigidbody = newItemObj.GetComponent<Rigidbody>();
+        if(rigidbody)
+        {
+            rigidbody.isKinematic = true;
+        }
+
         // Масштабирование под размер слота
         FitItemToSlot(newItemObj.transform, slot.slotCollider);
 

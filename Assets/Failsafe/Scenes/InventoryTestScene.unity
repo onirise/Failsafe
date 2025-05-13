@@ -119,6 +119,35 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &215917034 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4379659987494683057, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+  m_PrefabInstance: {fileID: 1485859106}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &215917039 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8412683324506967174, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+  m_PrefabInstance: {fileID: 1485859106}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215917034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3372ab6486b72f4b9b14e21e9334e64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &215917040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215917034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326241382b844404392157b97ddb85f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryManager: {fileID: 0}
 --- !u!20 &495889741 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 374109432981789075, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
@@ -224,6 +253,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 185476466963446419, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 495889741}
+    - target: {fileID: 185476466963446419, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: inventoryManager
+      value: 
+      objectReference: {fileID: 215917039}
+    - target: {fileID: 185476466963446419, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: inventoryLayer.m_Bits
+      value: 16384
+      objectReference: {fileID: 0}
     - target: {fileID: 374109433352817464, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
       propertyPath: m_Name
       value: Player
@@ -316,13 +357,33 @@ PrefabInstance:
       propertyPath: PlayerCamera
       value: 
       objectReference: {fileID: 495889741}
+    - target: {fileID: 3234749147151909194, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737286833293016010, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 503
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412683324506967174, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: itemPrefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412683324506967174, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: 'itemPrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1971230809139740364, guid: 4a7a321a96e9319489660b130a6aeee0, type: 3}
+    - target: {fileID: 8567315772007514968, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4379659987494683057, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1969450494}
+      addedObject: {fileID: 215917040}
   m_SourcePrefab: {fileID: 100100000, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
 --- !u!1 &1782524262
 GameObject:
@@ -530,35 +591,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1969450488 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4379659987494683057, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-  m_PrefabInstance: {fileID: 1485859106}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1969450493 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8412683324506967174, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-  m_PrefabInstance: {fileID: 1485859106}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969450488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3372ab6486b72f4b9b14e21e9334e64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1969450494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969450488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 326241382b844404392157b97ddb85f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryManager: {fileID: 1969450493}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

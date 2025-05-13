@@ -1,7 +1,7 @@
 public enum EntitySize
 {
-    Huge,
-    Big,
+    Small,
     Medium,
-    Small
+    Big,
+    Huge,
 }

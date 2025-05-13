@@ -527,7 +527,6 @@ MonoBehaviour:
   addTestItemOnStart: 1
   itemPrefabs:
   - {fileID: 6887264276549370780, guid: ad6ac15ff092aba4d987eb1ae06489ce, type: 3}
-  - {fileID: 3188705582948278034, guid: a9a33e4a906f94042af98721e1330b52, type: 3}
   - {fileID: 246601230607008535, guid: c099d607a92554045b6d07324a38bc35, type: 3}
   - {fileID: 1971230809139740364, guid: 4a7a321a96e9319489660b130a6aeee0, type: 3}
 --- !u!114 &6128173698099103874

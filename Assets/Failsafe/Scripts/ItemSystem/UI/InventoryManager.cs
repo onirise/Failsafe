@@ -190,21 +190,17 @@ public class InventoryManager : MonoBehaviour
         // Меняем местами
         var tempItemA = a.currentItem;
         var tempItemB = b.currentItem;
-        Debug.Log(a.currentItem.name);
-        Debug.Log(b.currentItem.name);
 
         if (tempItemA != null)
         {
             tempItemA.transform.SetParent(b.slotObject.transform);
             tempItemA.transform.localPosition = Vector3.zero;
-            //tempItemA.UpdateParentSettings();
         }
 
         if (tempItemB != null)
         {
             tempItemB.transform.SetParent(a.slotObject.transform);
             tempItemB.transform.localPosition = Vector3.zero;
-            //tempItemB.UpdateParentSettings();
         }
 
         // Обновляем ссылки

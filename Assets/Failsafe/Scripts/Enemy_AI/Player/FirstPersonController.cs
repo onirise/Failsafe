@@ -96,7 +96,8 @@ public class FirstPersonController : MonoBehaviour
         // Если игрок нажал использовать
         if (playerInputHandler.UseTriggered)
         {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            var position = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+            Ray ray = mainCamera.ScreenPointToRay(position);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 4.0f))
             {
                 // Debug.Log($"Hit object: {hitInfo.collider.gameObject.name}");

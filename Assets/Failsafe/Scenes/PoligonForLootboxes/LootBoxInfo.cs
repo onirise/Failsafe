@@ -1,5 +1,5 @@
 using UnityEngine;
-using static ItemСonsumable;
+using static ItemConsumable;
 
 [CreateAssetMenu(fileName = "LootBoxInfo", menuName = "Scriptable Objects/LootBoxInfo")]
 public class LootBoxInfo : ScriptableObject
@@ -11,21 +11,21 @@ public class LootBoxInfo : ScriptableObject
     public int NeedToOpenLootBoxesToDropImaplant = 3;
 
     // Счетчик расходников (чего сколько выпало)
-    // public int[] СonsumableCounter = new int[(int)СonsumableType.COUNT];
+    // public int[] ConsumableCounter = new int[(int)ConsumableType.COUNT];
 
     // Счетчик имплантов (чего сколько выпало)
     public int[] ImplantCounter = new int[(int)ItemImplant.ImplantType.COUNT];
 
-    public bool SpawnedTeleportСonsumable = false;
+    public bool SpawnedTeleportConsumable = false;
 
     public void Init()
     {
         OpenedLootBoxesSinceLastDroppedImplant = 0;
-        // for (int i = 0; i < СonsumableCounter.Length; i++)
+        // for (int i = 0; i < ConsumableCounter.Length; i++)
         // {
-        //     СonsumableCounter[i] = 0;
+        //     ConsumableCounter[i] = 0;
         // }
-        SpawnedTeleportСonsumable = false;
+        SpawnedTeleportConsumable = false;
 
         for (int i = 0; i < ImplantCounter.Length; i++)
         {
@@ -48,7 +48,7 @@ public class LootBoxInfo : ScriptableObject
 
     }
 
-    // public void PrintСonsumableCounter() {
+    // public void PrintConsumableCounter() {
     //     string str = "Расходники: ";
     // }
 }

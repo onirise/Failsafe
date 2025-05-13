@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2403266338567794713}
   - component: {fileID: 20331125344179018}
   m_Layer: 0
-  m_Name: "\u0421onsumable"
+  m_Name: Consumable
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

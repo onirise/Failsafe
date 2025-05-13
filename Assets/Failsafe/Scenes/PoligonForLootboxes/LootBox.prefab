@@ -123,6 +123,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lootBoxInfo: {fileID: 11400000, guid: fddd2c6f3e5a54c84a6dc4e1f6c9386d, type: 2}
   implantPrefab: {fileID: 411761290075641737, guid: 49798f5e619c747a680bb572a2024bab, type: 3}
-  "\u0421onsumablePrefab": {fileID: 20331125344179018, guid: 2e129322ece874024ba6b21c00b5dc06, type: 3}
+  ConsumablePrefab: {fileID: 20331125344179018, guid: 2e129322ece874024ba6b21c00b5dc06, type: 3}
   MinItemCount: 1
   MaxItemCount: 5

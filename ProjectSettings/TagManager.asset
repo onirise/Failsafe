@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - PatrolPoints
+  - Light
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -13,8 +15,8 @@ TagManager:
   - Water
   - UI
   - Player
-  - Inventory
-  - 
+  - LightSource
+  - Walls
   - 
   - 
   - 

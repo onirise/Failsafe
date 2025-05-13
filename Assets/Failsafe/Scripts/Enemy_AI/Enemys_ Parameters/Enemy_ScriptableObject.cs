@@ -1,35 +1,35 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObjects/Enemy", order = 1)]
 public class Enemy_ScriptableObject : ScriptableObject
 {
     [Header("Enemy Parameters")]
-    public string enemyName; // Имя врага
-    public float accelaration = 120; // Ускорение врага, как быстро он может развить максимальную скорость измерения метры в секунду
-    public int angelarSpeed = 120; // Угол поворота врага, как быстро он может повернуться измерения градус в секунду
-    public float stoppingDistance = 0.5f; // Дистанция остановки врага
+    public string enemyName; // РРјСЏ РІСЂР°РіР°
+    public float accelaration = 120; // РЈСЃРєРѕСЂРµРЅРёРµ РІСЂР°РіР°, РєР°Рє Р±С‹СЃС‚СЂРѕ РѕРЅ РјРѕР¶РµС‚ СЂР°Р·РІРёС‚СЊ РјР°РєСЃРёРјР°Р»СЊРЅСѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ РёР·РјРµСЂРµРЅРёСЏ РјРµС‚СЂС‹ РІ СЃРµРєСѓРЅРґСѓ
+    public int angelarSpeed = 120; // РЈРіРѕР» РїРѕРІРѕСЂРѕС‚Р° РІСЂР°РіР°, РєР°Рє Р±С‹СЃС‚СЂРѕ РѕРЅ РјРѕР¶РµС‚ РїРѕРІРµСЂРЅСѓС‚СЊСЃСЏ РёР·РјРµСЂРµРЅРёСЏ РіСЂР°РґСѓСЃ РІ СЃРµРєСѓРЅРґСѓ
+    public float stoppingDistance = 0.5f; // Р”РёСЃС‚Р°РЅС†РёСЏ РѕСЃС‚Р°РЅРѕРІРєРё РІСЂР°РіР°
 
     [Header("Enemy Chase")]
-    public float enemyChaseSpeed = 6f; // Скорость преследования
-    public float enemyLostPlayerTime = 5f; // Время потери игрока
+    public float enemyChaseSpeed = 6f; // РЎРєРѕСЂРѕСЃС‚СЊ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ
+    public float enemyLostPlayerTime = 5f; // Р’СЂРµРјСЏ РїРѕС‚РµСЂРё РёРіСЂРѕРєР°
     [Header("Enemy Patroling")]
-    public float enemyPatrolingSpeed = 4f; // Скорость патрулирования
-    public float enemyPatrolingWaitTime = 2f; // Время ожидания при патрулировании
+    public float enemyPatrolingSpeed = 4f; // РЎРєРѕСЂРѕСЃС‚СЊ РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ
+    public float enemyPatrolingWaitTime = 2f; // Р’СЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ РїСЂРё РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёРё
     [Header("Enemy Searching")]
-    public float enemySearchingSpeed = 3f; // Скорость поиска
-    public float enemySearchingDuration = 2f; // Время ожидания при поиске
-    public float enemySearchRadius = 5f; // Радиус поиска
-    public float offsetSearchingPoint = 10f; // Радиус области поиска
+    public float enemySearchingSpeed = 3f; // РЎРєРѕСЂРѕСЃС‚СЊ РїРѕРёСЃРєР°
+    public float enemySearchingDuration = 2f; // Р’СЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ РїСЂРё РїРѕРёСЃРєРµ
+    public float enemySearchRadius = 5f; // Р Р°РґРёСѓСЃ РїРѕРёСЃРєР°
+    public float offsetSearchingPoint = 10f; // Р Р°РґРёСѓСЃ РѕР±Р»Р°СЃС‚Рё РїРѕРёСЃРєР°
     [Header("Enemy Health")]
-    public float enemyHealth = 100f; // Здоровье врага
+    public float enemyHealth = 100f; // Р—РґРѕСЂРѕРІСЊРµ РІСЂР°РіР°
     [Header("Enemy Damage")]
-    public float enemyDamage = 10f; // Урон врага
+    public float enemyDamage = 10f; // РЈСЂРѕРЅ РІСЂР°РіР°
     [Header("Enemy Attack Range")]
-    public bool isRangeAttack = true; // Флаг, указывающий, является ли атака ближнего боя
-    public float enemyAttackRange = 2f; // Дальность атаки врага
+    public bool isRangeAttack = true; // Р¤Р»Р°Рі, СѓРєР°Р·С‹РІР°СЋС‰РёР№, СЏРІР»СЏРµС‚СЃСЏ Р»Рё Р°С‚Р°РєР° Р±Р»РёР¶РЅРµРіРѕ Р±РѕСЏ
+    public float enemyAttackRange = 2f; // Р”Р°Р»СЊРЅРѕСЃС‚СЊ Р°С‚Р°РєРё РІСЂР°РіР°
     [Header("Enemy Attack Speed")]
-    public float enemyAttackSpeed = 1f; // Скорость атаки врага
+    public float enemyAttackSpeed = 1f; // РЎРєРѕСЂРѕСЃС‚СЊ Р°С‚Р°РєРё РІСЂР°РіР°
 
 
 }

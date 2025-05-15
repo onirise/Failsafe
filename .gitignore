@@ -106,12 +106,20 @@ coverage-final.json
 !*.obj
 
 # ========== FMOD ==========
+Assets/Plugins/Demigiant/DOTween/Resources/DOTweenSettings.asset
+/Assets/FMODStudioCache.asset
+/Assets/FMODStudioCache.asset.meta
 [Ff]modCache/
 [Ff]modTemp/
 fmod_editor.log
 *.guid
 *.fspro.user
 *.unsaved
-Assets/Plugins/Demigiant/DOTween/Resources/DOTweenSettings.asset
-# FMOD cache
-FMODStudioCache.asset
+
+# FMOD studio (In folder FMOD)
+/FMOD/**.user
+/FMOD/**.unsaved
+/FMOD/**.cache
+/FMOD/**.restore
+
+/Assets/Plugins/FMOD/Cache

@@ -17,6 +17,7 @@ public class BehaviorStateMachine
     /// </summary>
     public void Update()
     {
+        _currentState.Update();
         var nextState = _currentState.DecideNextState();
         if (nextState != _currentState)
         {
@@ -24,7 +25,6 @@ public class BehaviorStateMachine
             _currentState = nextState;
             _currentState.Enter();
         }
-        _currentState.Update();
     }
 
     /// <summary>

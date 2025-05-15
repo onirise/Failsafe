@@ -27,6 +27,7 @@ public class AudioSensor : Sensor
 
     protected override float SignalInFieldOfView()
     {
+        if (_target == null) return 0;
         if (_targetAudioSignal.SignalStrength < _minSoundStrength) return 0;
 
         var distance = Vector3.Distance(transform.position, _targetAudioSignal.SourcePosition);

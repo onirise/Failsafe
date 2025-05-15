@@ -213,11 +213,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 374109433352817470}
-  - component: {fileID: 374109433352817465}
   - component: {fileID: 374109433352817471}
-  - component: {fileID: 4786575343337522745}
   - component: {fileID: 5564961472655603788}
   - component: {fileID: 3587987712684801882}
+  - component: {fileID: 1172725467090908563}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -243,25 +242,6 @@ Transform:
   - {fileID: 7941157265235578742}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &374109433352817465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 374109433352817464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1081507da71669d48ab79a1538378081, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseSensX: 250
-  mouseSensY: 125
-  moveSpeed: 8
-  camera: {fileID: 374109432981789085}
-  cc: {fileID: 374109433352817471}
-  gravityForce: -9.8
-  _maxWalkingNoise: 10
 --- !u!143 &374109433352817471
 CharacterController:
   m_ObjectHideFlags: 0
@@ -287,24 +267,6 @@ CharacterController:
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &4786575343337522745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 374109433352817464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5de17c4fe5c93d04fbc97a5ab93cfe9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 374109433352817471}
-  crouchSpeed: 1
-  normalHeight: 2
-  crouchHeight: 1
-  offset: {x: 0, y: 0, z: 0}
-  player: {fileID: 374109433352817470}
 --- !u!114 &5564961472655603788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +292,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb8b993b2ff8da46b45361c0630c6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1172725467090908563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374109433352817464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c693af0863caad6469b8e7790b6fa8ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementParametrs:
+    rid: 2287994984642642028
+  _inputActionAsset: {fileID: -944628639613478452, guid: 1f09f2f8cfa351946a2c010bb9946270, type: 3}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2287994984642642028
+      type: {class: PlayerMovementParametrs, ns: , asm: Assembly-CSharp}
+      data:
+        walkSpeed: 8
+        runSpeed: 15
+        crouchSpeed: 3
+        crouchHeight: 0.5
+        slideHeight: 0.3
+        slideTime: 1
+        jumpForce: 20
+        jumpForceFade: 30
+        gravityForce: 8
 --- !u!1 &374109433356125759
 GameObject:
   m_ObjectHideFlags: 0

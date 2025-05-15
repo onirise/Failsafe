@@ -33,11 +33,11 @@ public class PlayerMovementParametrs
     /// <summary>
     /// Сила прыжка
     /// </summary>
-    public float jumpForce = 10f;
+    public float jumpForce = 20f;
     /// <summary>
     /// Сила угасания прыжка
     /// </summary>
-    public float jumpForceFade = 10f;
+    public float jumpForceFade = 30f;
     /// <summary>
     /// Сила притяжения
     /// </summary>

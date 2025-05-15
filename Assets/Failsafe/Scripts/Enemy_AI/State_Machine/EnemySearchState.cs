@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,19 +15,18 @@ public class EnemySearchState : EnemyBaseState
     float _changePointTimer;
 
     /// <summary>
-    /// Выполняется при входе в состояние поиска.
+    /// Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РїСЂРё РІС…РѕРґРµ РІ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕРёСЃРєР°.
     /// </summary>
     public override void EnterState(EnemyStateMachine enemy)
     {
         InitializeComponents(enemy);
         ResetAllTimers(enemy);
-        searchPoint = enemy.afterChase ? enemy.transform.position : enemy.player.transform.position;
         enemy.afterChase = false;
-        MoveToSearchPoint();
+        MoveToSearchPoint(enemy.searchingPoint);
     }
 
     /// <summary>
-    /// Выполняется при выходе из состояния поиска.
+    /// Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РїСЂРё РІС‹С…РѕРґРµ РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕРёСЃРєР°.
     /// </summary>
     public override void ExitState(EnemyStateMachine enemy)
     {
@@ -37,28 +36,25 @@ public class EnemySearchState : EnemyBaseState
     }
 
     /// <summary>
-    /// Обновляет логику состояния поиска.
+    /// РћР±РЅРѕРІР»СЏРµС‚ Р»РѕРіРёРєСѓ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕРёСЃРєР°.
     /// </summary>
     public override void UpdateState(EnemyStateMachine enemy)
     {
-        Debug.Log("Updating Search State");
-        enemy.LookForPlayer();
-        enemy.CheckForPlayer(enemy);
         CantGetToSearchPoint(enemy);
         OnThePoint(enemy);
     }
 
     /// <summary>
-    /// Возвращает врага в состояние патрулирования.
+    /// Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЂР°РіР° РІ СЃРѕСЃС‚РѕСЏРЅРёРµ РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ.
     /// </summary>
     private void BackToPatrol(EnemyStateMachine enemy)
     {
         Debug.Log("Going back to Patrol State");
-        enemy.EnemySwitchState(enemy.patrolState);
+        enemy.SwitchState<EnemyPatrolingState>();
     }
 
     /// <summary>
-    /// Логика поиска игрока.
+    /// Р›РѕРіРёРєР° РїРѕРёСЃРєР° РёРіСЂРѕРєР°.
     /// </summary>
     private void PerformSearch(EnemyStateMachine enemy)
     {
@@ -66,8 +62,6 @@ public class EnemySearchState : EnemyBaseState
 
         _searchDuration -= Time.deltaTime;
         _changePointTimer -= Time.deltaTime;
-        Debug.Log(_searchDuration);
-        Debug.Log(_changePointTimer);
         if (_searchDuration <= 0)
         {
             BackToPatrol(enemy);
@@ -89,17 +83,17 @@ public class EnemySearchState : EnemyBaseState
     }
 
     /// <summary>
-    /// Перемещает врага к точке поиска.
+    /// РџРµСЂРµРјРµС‰Р°РµС‚ РІСЂР°РіР° Рє С‚РѕС‡РєРµ РїРѕРёСЃРєР°.
     /// </summary>
-    private void MoveToSearchPoint()
+    private void MoveToSearchPoint(Vector3 pos)
     {
         Debug.Log("Going to Search Point");
-        _navMeshAgent.SetDestination(searchPoint);
+        _navMeshAgent.SetDestination(pos);
         _navMeshAgent.speed = 8f;
     }
 
     /// <summary>
-    /// Инициализирует необходимые компоненты.
+    /// РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ РЅРµРѕР±С…РѕРґРёРјС‹Рµ РєРѕРјРїРѕРЅРµРЅС‚С‹.
     /// </summary>
     private void InitializeComponents(EnemyStateMachine enemy)
     {
@@ -108,12 +102,12 @@ public class EnemySearchState : EnemyBaseState
 
         if (_navMeshAgent == null || _fieldOfView == null)
         {
-            Debug.LogError("NavMeshAgent или FieldOfView не найдены на объекте врага!");
+            Debug.LogError("NavMeshAgent РёР»Рё FieldOfView РЅРµ РЅР°Р№РґРµРЅС‹ РЅР° РѕР±СЉРµРєС‚Рµ РІСЂР°РіР°!");
         }
     }
 
     /// <summary>
-    /// Сбрасывает все таймеры.
+    /// РЎР±СЂР°СЃС‹РІР°РµС‚ РІСЃРµ С‚Р°Р№РјРµСЂС‹.
     /// </summary>
     private void ResetAllTimers(EnemyStateMachine enemy)
     {
@@ -123,7 +117,7 @@ public class EnemySearchState : EnemyBaseState
     }
 
     /// <summary>
-    /// Проверяет, находится ли враг на точке поиска.
+    /// РџСЂРѕРІРµСЂСЏРµС‚, РЅР°С…РѕРґРёС‚СЃСЏ Р»Рё РІСЂР°Рі РЅР° С‚РѕС‡РєРµ РїРѕРёСЃРєР°.
     /// </summary>
     private void OnThePoint(EnemyStateMachine enemy)
     {
@@ -134,7 +128,7 @@ public class EnemySearchState : EnemyBaseState
     }
 
     /// <summary>
-    /// Проверяет, может ли враг добраться до точки поиска.
+    /// РџСЂРѕРІРµСЂСЏРµС‚, РјРѕР¶РµС‚ Р»Рё РІСЂР°Рі РґРѕР±СЂР°С‚СЊСЃСЏ РґРѕ С‚РѕС‡РєРё РїРѕРёСЃРєР°.
     /// </summary>
     private void CantGetToSearchPoint(EnemyStateMachine enemy)
     {

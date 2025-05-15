@@ -113,4 +113,5 @@ fmod_editor.log
 *.fspro.user
 *.unsaved
 Assets/Plugins/Demigiant/DOTween/Resources/DOTweenSettings.asset
-Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
+# FMOD cache
+FMODStudioCache.asset

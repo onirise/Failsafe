@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2764810830006213202}
   - component: {fileID: -4728148220211349564}
   - component: {fileID: 5752601742972840622}
+  - component: {fileID: 7524175060551206276}
   m_Layer: 0
   m_Name: PropBox
   m_TagString: Untagged
@@ -82,6 +83,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.32110798, y: 0.29317704, z: 0.31670177}
   m_Center: {x: 0.014754891, y: 0.1587721, z: 0.0012191534}
+--- !u!114 &7524175060551206276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7637235752642480495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 865ed346946d4664ca8c266f637ad67f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7649151241453007614
 GameObject:
   m_ObjectHideFlags: 0

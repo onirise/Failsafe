@@ -193,8 +193,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _focusingTime: 0.1
   _focusingProgress: 0
-  _viewRange: 30
-  _viewWidth: 1
+  _distance: 30
+  _viewAngle: 20
   _ignoreLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -213,10 +213,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _focusingTime: 0.1
   _focusingProgress: 0
-  _minSoundStrength: 20
-  _maxSoundStrength: 50
+  _distance: 20
+  _minSoundStrength: 1
+  _maxSoundStrength: 10
   _effectiveSoundDistance: 20
-  _target: {fileID: 0}
 --- !u!114 &2287972019786943806
 MonoBehaviour:
   m_ObjectHideFlags: 0

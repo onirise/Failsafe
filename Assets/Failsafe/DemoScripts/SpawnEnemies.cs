@@ -88,7 +88,6 @@ public class SpawnEnemiesCallback : MonoBehaviour
             enemies.Add(spawnedEnemy);
 
             spawnedEnemy.GetComponentInChildren<VisualSensor>()._target = spawnedPlayer.transform;
-            spawnedEnemy.GetComponentInChildren<AudioSensor>()._target = spawnedPlayer.GetComponent<DemoPlayer>();
         }
     }
 }

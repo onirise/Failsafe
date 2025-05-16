@@ -1,3 +1,4 @@
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -14,15 +15,16 @@ public class DefaultState : BehaviorState
         _transform = transform;
     }
 
-    private float warningProgres;
+    private float warningProgress;
     private float warningTime = 1;
 
-    public bool PlayerSpoted() => warningProgres >= warningTime;
+
+    public bool PlayerSpotted() => warningProgress >= warningTime;
 
     public override void Enter()
     {
         base.Enter();
-        warningProgres = 0;
+        warningProgress = 0;
         Debug.Log("Enter DefaultState");
     }
 
@@ -32,7 +34,7 @@ public class DefaultState : BehaviorState
         {
             if (sensor.IsActivated())
             {
-                warningProgres += sensor.SignalStrength * Time.deltaTime;
+                warningProgress += sensor.SignalStrength * Time.deltaTime;
             }
         }
     }

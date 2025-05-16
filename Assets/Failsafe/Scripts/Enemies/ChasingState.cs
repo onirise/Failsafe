@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,36 +12,26 @@ public class ChasingState : BehaviorState
     private Transform _transform;
     private Vector3? _chasingPosition;
 
-    private NavMeshAgent _navMeshAgent;
+    private EnemyController _enemyController;
 
     private float _loseTime = 1;
-    private float _loseProgres;
+    private float _loseProgress;
 
-    public ChasingState(Sensor[] sensors, Transform currentTransform, NavMeshAgent navMeshAgent)
+    public ChasingState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController)
     {
         _sensors = sensors;
         _transform = currentTransform;
-        _navMeshAgent = navMeshAgent;
+        _enemyController = enemyController;
     }
 
-    public bool PlayerLost() => _loseProgres >= _loseTime;
+    public bool PlayerLost() => _loseProgress >= _loseTime;
 
-    public bool IsChasingPointReached()
-    {
-        if (Vector3.Distance(_navMeshAgent.destination, _navMeshAgent.transform.position) <= _navMeshAgent.stoppingDistance)
-        {
-            if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+   
 
     public override void Enter()
     {
         base.Enter();
-        _loseProgres = 0;
+        _loseProgress = 0;
         Debug.Log("Enter ChasingState");
     }
 
@@ -53,20 +43,20 @@ public class ChasingState : BehaviorState
             if (sensor.IsActivated())
             {
                 anySensorIsActive = true;
-                _loseProgres = 0;
+                _loseProgress = 0;
                 _chasingPosition = sensor.SignalSourcePosition;
                 break;
             }
         }
-        if (IsChasingPointReached() && !anySensorIsActive)
+        if (_enemyController.IsPointReached() && !anySensorIsActive)
         {
-            _loseProgres += Time.deltaTime;
+            _loseProgress += Time.deltaTime;
         }
         if (_chasingPosition == null)
         {
             return;
         }
-        _navMeshAgent.SetDestination(_chasingPosition.Value);
-        _transform.LookAt(_chasingPosition.Value, _transform.up);
+        _enemyController.RunToPoint(_chasingPosition.Value);
+        _enemyController.RotateToPoint(_chasingPosition.Value, _transform.up);
     }
 }

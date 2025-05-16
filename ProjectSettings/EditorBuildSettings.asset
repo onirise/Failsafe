@@ -12,5 +12,7 @@ EditorBuildSettings:
     path: Assets/Failsafe/Scenes/Game.unity
     guid: 24c5974dc770b4c45bb774fc00eebc4b
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 8dbd1c987a9aa9846a6ca02681e0a793, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 1f09f2f8cfa351946a2c010bb9946270, type: 3}
+    com.unity.localization.settings: {fileID: 11400000, guid: 77e41a8947835e24bbf800ec98f29b88, type: 2}
   m_UseUCBPForAssetBundles: 0

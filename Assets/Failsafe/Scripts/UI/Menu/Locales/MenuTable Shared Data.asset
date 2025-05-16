@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: MenuTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: MenuTable
+  m_TableCollectionNameGuidString: 80f3b641b39761644b4de4ccdaec3e87
+  m_Entries:
+  - m_Id: 9968525312
+    m_Key: "StartButton\t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 864944592232448
+    m_Key: ProfilesButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 865062565421056
+    m_Key: SettingsButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 865146837377024
+    m_Key: CreditsButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 865211710676992
+    m_Key: ExitGameButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1509095755194368
+    m_Key: BackButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1509411217186816
+    m_Key: CreateNewProfile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1509732786085888
+    m_Key: Delete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1509963426668544
+    m_Key: Selected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1510086399467520
+    m_Key: ClickToSelect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2019629994844160
+    m_Key: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2019718427549696
+    m_Key: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2019942210445312
+    m_Key: Are_you_sure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2239765699862528
+    m_Key: Save/Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2242946454495232
+    m_Key: Return_to_menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2247596498984960
+    m_Key: Return_to_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2256492647129088
+    m_Key: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2256672662462464
+    m_Key: Saves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2592051395534848
+    m_Key: Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2764851548758016
+    m_Key: ClickToChooseShort
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6775925918900224
+    m_Key: start_autosave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6858743231520768
+    m_Key: gameplaySaveName
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 3309498733806485711
+  references:
+    version: 2
+    RefIds:
+    - rid: 3309498733806485711
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1745746608189

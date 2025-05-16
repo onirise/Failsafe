@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: MenuTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 80f3b641b39761644b4de4ccdaec3e87, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 5721228593595416629
+  m_TableData:
+  - m_Id: 9968525312
+    m_Localized: Start game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 864944592232448
+    m_Localized: Profiles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 865062565421056
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 865146837377024
+    m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 865211710676992
+    m_Localized: Exit game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1509095755194368
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1509411217186816
+    m_Localized: Create new profile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1509732786085888
+    m_Localized: Delete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1509963426668544
+    m_Localized: Selected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1510086399467520
+    m_Localized: Click to select this profile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2019629994844160
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2019718427549696
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2019942210445312
+    m_Localized: Are you sure?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2239765699862528
+    m_Localized: Save/Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2242946454495232
+    m_Localized: Return to main menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2247596498984960
+    m_Localized: Return to game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2256492647129088
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2256672662462464
+    m_Localized: Saves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2592051395534848
+    m_Localized: 'Time: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 5721228593595416629
+  - m_Id: 2764851548758016
+    m_Localized: 'Click
+
+      to choose'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6775925918900224
+    m_Localized: Start_autosave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6858743231520768
+    m_Localized: Save{0}
+    m_Metadata:
+      m_Items:
+      - rid: 5721228593595416629
+  references:
+    version: 2
+    RefIds:
+    - rid: 5721228593595416629
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 2592051395534848
+        - id: 6858743231520768

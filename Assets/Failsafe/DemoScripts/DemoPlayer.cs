@@ -32,6 +32,8 @@ public class DemoPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(PauseManager.CheckPause())
+            return;
         float mouseX = Input.GetAxis("Mouse X") * mouseSensX * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensY * Time.deltaTime;
 

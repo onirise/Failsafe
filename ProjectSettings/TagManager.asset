@@ -2,8 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - PatrolPoints
+  - Light
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -11,15 +14,15 @@ TagManager:
   - 
   - Water
   - UI
+  - Player
+  - LightSource
+  - Walls
   - 
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Inventory
   - 
   - 
   - 
@@ -41,3 +44,8 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Inventory
+    uniqueID: 997706247
+    locked: 0
+  m_RenderingLayers:
+  - Default

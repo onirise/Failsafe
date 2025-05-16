@@ -18,10 +18,17 @@ public class DemoPlayer : MonoBehaviour
 
     public static List<int> keysFound = new List<int>();
 
+    [SerializeField]
+    private float _maxWalkingNoise = 10f;
+    private PlayerNoiseSignal _noise;
+    private SignalChannel _audioChannel => SignalManager.Instance.PlayerNoiseChanel;
+
     void Start()
     {
         yRot = 0f;
         rb = this.GetComponent<Rigidbody>();
+        _noise = new PlayerNoiseSignal(transform);
+        _audioChannel.AddConstant(_noise);
     }
 
     // Update is called once per frame
@@ -40,23 +47,30 @@ public class DemoPlayer : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        Vector3 move = x * transform.right + z * transform.forward;
+        Vector3 move = Vector3.ClampMagnitude(x * transform.right + z * transform.forward, 1);
         gravity = gravityForce;
-        cc.Move(((move * moveSpeed) + new Vector3(0f, gravity, 0f))* Time.deltaTime) ;
-        if(cc.isGrounded) gravity = 0f;
+        cc.Move(((move * moveSpeed) + new Vector3(0f, gravity, 0f)) * Time.deltaTime);
+        if (cc.isGrounded) gravity = 0f;
 
-       
+        var noiseStrength = (cc.velocity.magnitude - gravity) / moveSpeed * _maxWalkingNoise;
+        if (cc.height < 1.2) noiseStrength -= 30; // пока костыль уменьшения громкости в присяде
+        _noise.UpdateStrength(noiseStrength);
     }
 
-    public static bool HasKey(int keyID) {
-        if(keysFound.IndexOf(keyID) == -1) {
+    public static bool HasKey(int keyID)
+    {
+        if (keysFound.IndexOf(keyID) == -1)
+        {
             return false;
-        } else {
+        }
+        else
+        {
             return true;
         }
     }
 
-    public static void AddKey(int keyID) {
+    public static void AddKey(int keyID)
+    {
         keysFound.Add(keyID);
     }
 }

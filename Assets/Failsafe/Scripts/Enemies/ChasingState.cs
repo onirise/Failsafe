@@ -54,7 +54,7 @@ public class ChasingState : BehaviorState
             {
                 anySensorIsActive = true;
                 _loseProgres = 0;
-                _chasingPosition = sensor.ObjectThatActivatedSensor.position;
+                _chasingPosition = sensor.SignalSourcePosition;
                 break;
             }
         }

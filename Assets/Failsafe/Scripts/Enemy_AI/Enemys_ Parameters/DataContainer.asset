@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: DataContainer
+  m_EditorClassIdentifier: Assembly-CSharp::DataContainer/SpreadSheetContainer
+  foldoutImportGUI: 1
+  documentId: 1CrbLF-TU57rbLQ9dcaXGFtxQFOt-gloZu0mrePZYSpk
+  selectedTogglesIds:
+  - soundDatas
+  foldoutSerializationGUI: 1
+  serializationOutputPath: "C:\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430"
+  serializationFileName: Configs
+  serializationFormat: 0
+  content:
+    enemyDatas:
+    - Name: Test
+      Accelaration: 1
+      AngelarSpeed: 1
+      StoppingDistance: 1
+      ChaseSpeed: 1
+      LostPlayerTime: 1
+      PatrolingSpeed: 1
+      PatrolingWaitTime: 1
+      SearchingSpeed: 1
+      SearchingDuration: 1
+      SearchRadius: 1
+      offsetSearchingPoint: 1
+      Health: 1
+      Damage: 1
+      isRangeAttack: 1
+      AttackRange: 0
+      AttackSpeed: 1
+    - Name: Test_01
+      Accelaration: 2
+      AngelarSpeed: 2
+      StoppingDistance: 2
+      ChaseSpeed: 2
+      LostPlayerTime: 2
+      PatrolingSpeed: 2
+      PatrolingWaitTime: 2
+      SearchingSpeed: 2
+      SearchingDuration: 2
+      SearchRadius: 2
+      offsetSearchingPoint: 2
+      Health: 2
+      Damage: 2
+      isRangeAttack: 1
+      AttackRange: 0
+      AttackSpeed: 2
+    - Name: Test_02
+      Accelaration: 3
+      AngelarSpeed: 3
+      StoppingDistance: 3
+      ChaseSpeed: 3
+      LostPlayerTime: 3
+      PatrolingSpeed: 3
+      PatrolingWaitTime: 3
+      SearchingSpeed: 3
+      SearchingDuration: 3
+      SearchRadius: 3
+      offsetSearchingPoint: 3
+      Health: 3
+      Damage: 3
+      isRangeAttack: 1
+      AttackRange: 0
+      AttackSpeed: 3
+    - Name: Test_03
+      Accelaration: 4
+      AngelarSpeed: 4
+      StoppingDistance: 4
+      ChaseSpeed: 4
+      LostPlayerTime: 4
+      PatrolingSpeed: 4
+      PatrolingWaitTime: 4
+      SearchingSpeed: 4
+      SearchingDuration: 4
+      SearchRadius: 4
+      offsetSearchingPoint: 4
+      Health: 4
+      Damage: 4
+      isRangeAttack: 0
+      AttackRange: 0
+      AttackSpeed: 4
+    - Name: Test_05
+      Accelaration: 45
+      AngelarSpeed: 45
+      StoppingDistance: 45
+      ChaseSpeed: 45
+      LostPlayerTime: 45
+      PatrolingSpeed: 45
+      PatrolingWaitTime: 45
+      SearchingSpeed: 45
+      SearchingDuration: 45
+      SearchRadius: 45
+      offsetSearchingPoint: 45
+      Health: 45
+      Damage: 45
+      isRangeAttack: 0
+      AttackRange: 0
+      AttackSpeed: 45
+    soundDatas:
+    - soundName: test1
+      soundType: 1
+      maxRadius: 15
+      duration: 1

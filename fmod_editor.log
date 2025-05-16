@@ -1,0 +1,31 @@
+[LOG] system_create                            : Header version = 2.03.07. Current version = 2.03.07.
+[LOG] Manager::init                            : maxchannels = 256 studioflags = 00000006 flags 00000000 extradriverdata (nil).
+[LOG] SystemI::init                            : Initialize version=20307 (150747), maxchannels=256, flags=0x00020000
+[LOG] SystemI::setOutputInternal               : Setting output to 'FMOD PulseAudio Output'
+[LOG] OutputPulseAudio::PulseAudio_RegisterLib : Loaded PulseAudio version 16.1.0.
+[LOG] PulseAudio_EnumOutputCallback            : Found output device NAME:alsa_output.pci-0000_00_1f.3.analog-stereo DESC:Built-in Audio Analog Stereo CHANNELS:2 RATE:48000.
+[LOG] PulseAudio_EnumOutputCallback            : Found output device NAME:alsa_output.pci-0000_01_00.1.hdmi-stereo DESC:TU106 High Definition Audio Controller Digital Stereo (HDMI) CHANNELS:2 RATE:48000.
+[LOG] PulseAudio_EnumOutputCallback            : Found output device NAME:bluez_output.41_42_77_E5_E9_F2.1 DESC:● Commo One CHANNELS:2 RATE:48000.
+[LOG] PulseAudio_EnumInputCallback             : Found input device NAME:alsa_input.usb-0c76_USB_PnP_Audio_Device-00.mono-fallback DESC:USB PnP Audio Device Mono CHANNELS:1 RATE:48000.
+[LOG] PulseAudio_EnumInputCallback             : Found input device NAME:alsa_output.pci-0000_00_1f.3.analog-stereo.monitor DESC:Monitor of Built-in Audio Analog Stereo CHANNELS:2 RATE:48000.
+[LOG] PulseAudio_EnumInputCallback             : Found input device NAME:alsa_input.pci-0000_00_1f.3.analog-stereo DESC:Built-in Audio Analog Stereo CHANNELS:2 RATE:48000.
+[LOG] PulseAudio_EnumInputCallback             : Found input device NAME:alsa_output.pci-0000_01_00.1.hdmi-stereo.monitor DESC:Monitor of TU106 High Definition Audio Controller Digital Stereo (HDMI) CHANNELS:2 RATE:48000.
+[LOG] PulseAudio_EnumInputCallback             : Found input device NAME:bluez_output.41_42_77_E5_E9_F2.1.monitor DESC:Monitor of ● Commo One CHANNELS:2 RATE:48000.
+[LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
+[LOG] FMOD_OS_Thread_Callback                  : Cannot set real-time thread priorities due to insufficient privileges
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 0
+[LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
+[LOG] FMOD_OS_Thread_Callback                  : Cannot set real-time thread priorities due to insufficient privileges
+[LOG] AsyncManager::init                       : manager 0x645eea0f9ee8 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : done
+[LOG] PlaybackSystem::init                     : 
+[LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
+[LOG] FMOD_OS_Thread_Callback                  : Cannot set real-time thread priorities due to insufficient privileges
+[LOG] PlaybackSystem::init                     : done
+[LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
+[LOG] FMOD_OS_Thread_Callback                  : Cannot set real-time thread priorities due to insufficient privileges
+[LOG] Manager::init                            : done.
+[LOG] BankLoader::serializeBank                : fileversion = 146, compatVersion = 146 (oldest = 44, newest = 146)
+[LOG] BankLoader::serializeBank                : fileversion = 146, compatVersion = 146 (oldest = 44, newest = 146)
+[LOG] BankLoader::serializeBank                : fileversion = 146, compatVersion = 146 (oldest = 44, newest = 146)
+[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6

@@ -542,7 +542,7 @@ MonoBehaviour:
   randomSeedOnStart: 1
   randomSeed: 7444
   generationComplete: 0
-  generatorSettings: {fileID: 11400000, guid: 68dbe86204dcdd04c9a6866b7809cfce, type: 2}
+  generatorSettings: {fileID: 11400000, guid: b7d9f96c3a6d0714db5eb1f1e844fa1d, type: 2}
   AllRooms: []
   AllDoorsData: []
   generateInUpdate: 0

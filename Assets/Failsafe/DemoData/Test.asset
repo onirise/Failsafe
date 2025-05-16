@@ -14,20 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Default
   description: Enter any text here
-  TargetRooms: 500
-  minRooms: 20
+  TargetRooms: 100
+  minRooms: 5
   useDeadendRooms: 0
   spawnRooms:
   - {fileID: 4671341197351391010, guid: 67278d84de69a594fa7262753664b6e0, type: 3}
   possibleRooms:
   - {fileID: 8985957381154200328, guid: 2c9f138b18125c74dbad93be4a26d541, type: 3}
-  - {fileID: 7104995489435284039, guid: ad4908c9537b2934995e1b09680cdb9a, type: 3}
   - {fileID: 5909447864317538110, guid: 2115a1c1a16626a4788261b6c1178488, type: 3}
   - {fileID: 7104995489435284039, guid: a8cd084978eb62a41b5cc74823c91585, type: 3}
+  - {fileID: 7104995489435284039, guid: ad4908c9537b2934995e1b09680cdb9a, type: 3}
+  - {fileID: 8256692513938155413, guid: 55c3a4390722ae44bb276c552254acd8, type: 3}
   - {fileID: 8985957381154200328, guid: 3927be6aabe9da34a9aeaf2251fc0f96, type: 3}
-  - {fileID: 8985957381154200328, guid: d3750e76bd44ad94dbe2e2f255d39f9c, type: 3}
-  - {fileID: 8985957381154200328, guid: a42bb21dfc3abc64e939bc2614183edf, type: 3}
   - {fileID: 8985957381154200328, guid: bbbdf4d34df847a45b1048cc951525b1, type: 3}
+  - {fileID: 8985957381154200328, guid: a42bb21dfc3abc64e939bc2614183edf, type: 3}
+  - {fileID: 8985957381154200328, guid: d3750e76bd44ad94dbe2e2f255d39f9c, type: 3}
   - {fileID: 6272551196247957152, guid: dd324f057d9640645b2e6488fa3438e9, type: 3}
   - {fileID: 715781163541446826, guid: 012c5c7de4eeb8443ba9c72055d49b52, type: 3}
   possibleLoopRooms:

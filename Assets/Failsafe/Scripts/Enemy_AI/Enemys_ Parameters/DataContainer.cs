@@ -13,7 +13,6 @@ public class DataContainer
         [SpreadsheetPage("SoundDatas")]
         public List<SoundData> soundDatas; // Массив данных звуков
     }
-
     [CreateAssetMenu(fileName = "SpreadsheetContainer", menuName = "SpreadsheetContainer")]
     public class SpreadSheetContainer : SpreadsheetsContainerBase
     {

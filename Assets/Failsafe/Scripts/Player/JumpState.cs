@@ -14,6 +14,12 @@ namespace PlayerStates
         private Vector3 _initialVelocity;
 
         public bool OnGround() => _characterController.isGrounded;
+        /// <summary>
+        /// Находимся в высшей точке прыжка
+        /// </summary>
+        /// <returns></returns>
+        // Формулу нужно подбирать чтобы было красиво
+        public bool InHightPoint() => (_jumpForce - _jumpProgress * _jumpForceFade) < _movementParametrs.gravityForce * 0.8;
 
         public JumpState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParametrs movementParametrs)
         {

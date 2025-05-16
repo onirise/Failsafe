@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private InputHandler _inputHandler;
 
     float _cameraYRotation = 0f;
+    [SerializeField] float _coyoteTime = 0.1f;
+    float _coyoteTimeProgress = 0f;
 
     void Start()
     {
@@ -33,24 +35,33 @@ public class PlayerController : MonoBehaviour
         var runState = new SprintState(_inputHandler, _characterController, _movementParametrs);
         var crouchState = new CrouchState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
         var jumpState = new JumpState(_inputHandler, _characterController, _movementParametrs);
+        var fallState = new FallState(_inputHandler, _characterController, _movementParametrs);
         var slideState = new SlideState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
 
         walkState.AddTransition(runState, () => _inputHandler.SprintTriggered);
         walkState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
         walkState.AddTransition(crouchState, () => _inputHandler.CrouchTriggered);
+        walkState.AddTransition(fallState, () => IsFalling());
 
         runState.AddTransition(walkState, () => !_inputHandler.SprintTriggered);
         runState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
         runState.AddTransition(slideState, () => _inputHandler.CrouchTriggered);
+        runState.AddTransition(fallState, () => IsFalling());
 
         slideState.AddTransition(runState, () => _inputHandler.SprintTriggered && slideState.SlideFinished());
         slideState.AddTransition(walkState, slideState.SlideFinished);
+        slideState.AddTransition(fallState, () => IsFalling());
 
         crouchState.AddTransition(runState, () => _inputHandler.SprintTriggered && crouchState.CanStand());
         crouchState.AddTransition(walkState, () => !_inputHandler.CrouchTriggered && crouchState.CanStand());
+        crouchState.AddTransition(fallState, () => IsFalling());
 
-        jumpState.AddTransition(walkState, () => _characterController.isGrounded && _inputHandler.SprintTriggered);
-        jumpState.AddTransition(walkState, () => _characterController.isGrounded);
+        jumpState.AddTransition(runState, () => IsGrounded() && _inputHandler.SprintTriggered);
+        jumpState.AddTransition(walkState, () => IsGrounded());
+        jumpState.AddTransition(fallState, jumpState.InHightPoint);
+
+        fallState.AddTransition(walkState, () => IsGrounded());
+
 
         _behaviorStateMachine = new BehaviorStateMachine(walkState);
     }
@@ -58,8 +69,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandlePlayerRotation();
-        _behaviorStateMachine.Update();
         HandleGravity();
+        _behaviorStateMachine.Update();
     }
 
     private float _mouseSensitivity = 50f;
@@ -80,5 +91,16 @@ public class PlayerController : MonoBehaviour
     {
         var gravity = new Vector3(0, -_movementParametrs.gravityForce, 0) * Time.deltaTime;
         _characterController.Move(gravity);
+        if (_characterController.isGrounded)
+        {
+            _coyoteTimeProgress = 0;
+        }
+        else
+        {
+            _coyoteTimeProgress += Time.deltaTime;
+        }
     }
+
+    private bool IsGrounded() => _coyoteTimeProgress <= 0;
+    private bool IsFalling() => _coyoteTimeProgress > _coyoteTime;
 }

@@ -267,7 +267,7 @@ MonoBehaviour:
   camera: {fileID: 374109432981789085}
   cc: {fileID: 374109433352817471}
   gravityForce: -9.8
-  _maxWalkingNoise: 50
+  _maxWalkingNoise: 10
 --- !u!143 &374109433352817471
 CharacterController:
   m_ObjectHideFlags: 0

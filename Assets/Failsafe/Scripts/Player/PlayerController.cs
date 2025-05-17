@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
         _behaviorStateMachine.Update();
     }
 
-    private float _mouseSensitivity = 50f;
+    private float _mouseSensitivity = 5.0f;
     // TODO: Вынести в отдельный класс:
     // В некоторых состояниях может работать по разному (Скольжение, Зацепление)
     // В некоторых не должно работать (Взбирание)

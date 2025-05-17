@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
 
         defaultState.AddTransition(chasingState, defaultState.PlayerSpotted);
         chasingState.AddTransition(patrolState, chasingState.PlayerLost);
+        patrolState.AddTransition(chasingState, patrolState.PlayerSpotted);
 
         var disabledStates = new List<BehaviorForcedState>() { new DisabledState() };
 

@@ -12,7 +12,7 @@ public class PatrolState : BehaviorState
     private Transform[] _patrolPoints;
     private EnemyController _enemyController;
     private float offset = 10f;
-    private float _waitTime = 5f;
+    private float _waitTime = 3f;
     private float _waitTimer;
     private int currentPatrolPointIndex = 0;
     private bool isWaiting = false;
@@ -35,8 +35,22 @@ public class PatrolState : BehaviorState
         HandlePatrolling(); // Установит _patrolPoint и начнет движение
     }
 
+    private float warningProgress;
+    private float warningTime = 1;
+
+    public bool PlayerSpotted() => warningProgress >= warningTime;
+
     public override void Update()
     {
+
+        foreach (var sensor in _sensors)
+        {
+            if (sensor.IsActivated())
+            {
+                warningProgress += sensor.SignalStrength * Time.deltaTime;
+            }
+        }
+
         if (isWaiting)
         {
             HandleWaiting();

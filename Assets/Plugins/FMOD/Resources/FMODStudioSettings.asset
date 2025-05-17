@@ -481,7 +481,7 @@ MonoBehaviour:
   - InGame
   - Menu
   - SFX
-  BanksToLoad: []
+  BanksToLoad: []  Banks: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
   AndroidUseOBB: 0
@@ -566,7 +566,7 @@ MonoBehaviour:
       HasValue: 0
     Plugins:
       Value:
-      - 
+      - phonon_fmod
       HasValue: 1
     StaticPlugins:
       Value: []

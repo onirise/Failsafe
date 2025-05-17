@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyAttackState : EnemyBaseState
@@ -45,7 +45,7 @@ public class EnemyAttackState : EnemyBaseState
 
         if (!_zonesOfHearing.playerNear)
         {
-            enemy.EnemySwitchState(enemy.chaseState);
+            enemy.SwitchState<EnemyPatrolingState>();
         }
     }
 
@@ -81,18 +81,18 @@ public class EnemyAttackState : EnemyBaseState
 
         if (_navMeshAgent == null)
         {
-            Debug.LogError("Не удалось найти необходимые компоненты на объекте врага _navMeshAgent.");
+            Debug.LogError("РќРµ СѓРґР°Р»РѕСЃСЊ РЅР°Р№С‚Рё РЅРµРѕР±С…РѕРґРёРјС‹Рµ РєРѕРјРїРѕРЅРµРЅС‚С‹ РЅР° РѕР±СЉРµРєС‚Рµ РІСЂР°РіР° _navMeshAgent.");
             return;
         }
         if (_animator == null) 
         {
-            Debug.LogError("Не удалось найти необходимые компоненты на объекте врага _animator.");
+            Debug.LogError("РќРµ СѓРґР°Р»РѕСЃСЊ РЅР°Р№С‚Рё РЅРµРѕР±С…РѕРґРёРјС‹Рµ РєРѕРјРїРѕРЅРµРЅС‚С‹ РЅР° РѕР±СЉРµРєС‚Рµ РІСЂР°РіР° _animator.");
             return;
         }
 
          if (_zonesOfHearing == null)
         {
-            Debug.LogError("Не удалось найти необходимые компоненты на объекте врага _zonesOfHearing.");
+            Debug.LogError("РќРµ СѓРґР°Р»РѕСЃСЊ РЅР°Р№С‚Рё РЅРµРѕР±С…РѕРґРёРјС‹Рµ РєРѕРјРїРѕРЅРµРЅС‚С‹ РЅР° РѕР±СЉРµРєС‚Рµ РІСЂР°РіР° _zonesOfHearing.");
             return;
         }
             

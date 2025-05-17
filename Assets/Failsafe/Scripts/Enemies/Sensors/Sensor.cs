@@ -14,9 +14,15 @@ public abstract class Sensor : MonoBehaviour
     /// например апартная задерка между камерой и мозгом врага
     /// </summary>
     [SerializeField]
-    protected float _focusingTime;
+    protected float _focusingTime = 0.1f;
     [SerializeField]
     protected float _focusingProgress;
+
+    /// <summary>
+    /// Дистанция на которой работает сенсор
+    /// </summary>
+    [SerializeField]
+    protected float _distance;
 
     /// <summary>
     /// Значение сигнала попавшего в зону видимости сенсора от 0 до 1.

@@ -1,37 +1,36 @@
-using UnityEditor.UnityLinker;
-using UnityEngine;
+п»їusing UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyDatas", menuName = "Data/EnemyDatas", order = 1)]
 public class EnemyDatas : ScriptableObject
 {
-    public EnemyData[] enemyDatas; // Массив данных врагов
+    public EnemyData[] enemyDatas; // РњР°СЃСЃРёРІ РґР°РЅРЅС‹С… РІСЂР°РіРѕРІ
 }
 
 [System.Serializable]
 public class EnemyData
 {
-    public string Name; // Имя врага
-    public float Accelaration; // Ускорение врага, как быстро он может развить максимальную скорость измерения метры в секунду
-    public int AngelarSpeed ; // Угол поворота врага, как быстро он может повернуться измерения градус в секунду
-    public float StoppingDistance; // Дистанция остановки врага
+    public string Name; // РРјСЏ РІСЂР°РіР°
+    public float Accelaration; // РЈСЃРєРѕСЂРµРЅРёРµ РІСЂР°РіР°, РєР°Рє Р±С‹СЃС‚СЂРѕ РѕРЅ РјРѕР¶РµС‚ СЂР°Р·РІРёС‚СЊ РјР°РєСЃРёРјР°Р»СЊРЅСѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ РёР·РјРµСЂРµРЅРёСЏ РјРµС‚СЂС‹ РІ СЃРµРєСѓРЅРґСѓ
+    public int AngelarSpeed ; // РЈРіРѕР» РїРѕРІРѕСЂРѕС‚Р° РІСЂР°РіР°, РєР°Рє Р±С‹СЃС‚СЂРѕ РѕРЅ РјРѕР¶РµС‚ РїРѕРІРµСЂРЅСѓС‚СЊСЃСЏ РёР·РјРµСЂРµРЅРёСЏ РіСЂР°РґСѓСЃ РІ СЃРµРєСѓРЅРґСѓ
+    public float StoppingDistance; // Р”РёСЃС‚Р°РЅС†РёСЏ РѕСЃС‚Р°РЅРѕРІРєРё РІСЂР°РіР°
     [Header("Enemy Chase")]
-    public float ChaseSpeed; // Скорость преследования
-    public float LostPlayerTime; // Время потери игрока
+    public float ChaseSpeed; // РЎРєРѕСЂРѕСЃС‚СЊ РїСЂРµСЃР»РµРґРѕРІР°РЅРёСЏ
+    public float LostPlayerTime; // Р’СЂРµРјСЏ РїРѕС‚РµСЂРё РёРіСЂРѕРєР°
     [Header("Enemy Patroling")]
-    public float PatrolingSpeed; // Скорость патрулирования
-    public float PatrolingWaitTime; // Время ожидания при патрулировании
+    public float PatrolingSpeed; // РЎРєРѕСЂРѕСЃС‚СЊ РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЏ
+    public float PatrolingWaitTime; // Р’СЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ РїСЂРё РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёРё
     [Header("Enemy Searching")]
-    public float SearchingSpeed; // Скорость поиска
-    public float SearchingDuration; // Время ожидания при поиске
-    public float SearchRadius; // Радиус поиска
-    public float offsetSearchingPoint; // Радиус области поиска
+    public float SearchingSpeed; // РЎРєРѕСЂРѕСЃС‚СЊ РїРѕРёСЃРєР°
+    public float SearchingDuration; // Р’СЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ РїСЂРё РїРѕРёСЃРєРµ
+    public float SearchRadius; // Р Р°РґРёСѓСЃ РїРѕРёСЃРєР°
+    public float offsetSearchingPoint; // Р Р°РґРёСѓСЃ РѕР±Р»Р°СЃС‚Рё РїРѕРёСЃРєР°
     [Header("Enemy Health")]
-    public float Health; // Здоровье врага
+    public float Health; // Р—РґРѕСЂРѕРІСЊРµ РІСЂР°РіР°
     [Header("Enemy Damage")]
-    public float Damage; // Урон врага
+    public float Damage; // РЈСЂРѕРЅ РІСЂР°РіР°
     [Header("Enemy Attack Range")]
-    public bool isRangeAttack = true; // Флаг, указывающий, является ли атака ближнего боя
-    public float AttackRange; // Дальность атаки врага
+    public bool isRangeAttack = true; // Р¤Р»Р°Рі, СѓРєР°Р·С‹РІР°СЋС‰РёР№, СЏРІР»СЏРµС‚СЃСЏ Р»Рё Р°С‚Р°РєР° Р±Р»РёР¶РЅРµРіРѕ Р±РѕСЏ
+    public float AttackRange; // Р”Р°Р»СЊРЅРѕСЃС‚СЊ Р°С‚Р°РєРё РІСЂР°РіР°
     [Header("Enemy Attack Speed")]
-    public float AttackSpeed; // Скорость атаки врага
+    public float AttackSpeed; // РЎРєРѕСЂРѕСЃС‚СЊ Р°С‚Р°РєРё РІСЂР°РіР°
 }

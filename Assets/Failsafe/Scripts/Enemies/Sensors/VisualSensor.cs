@@ -6,9 +6,7 @@ using UnityEngine;
 public class VisualSensor : Sensor
 {
     [SerializeField]
-    private float _viewRange;
-    [SerializeField]
-    private float _viewWidth;
+    private float _viewAngle;
     /// <summary>
     /// Слой который игнорировать при рейкасте
     /// Должен быть слой врага чтобы он не попадал сам в себя
@@ -30,22 +28,22 @@ public class VisualSensor : Sensor
     protected override float SignalInFieldOfView()
     {
         var distanceToTarget = Vector3.Distance(transform.position, _target.position);
-        if (distanceToTarget > _viewRange) return 0;
+        if (distanceToTarget > _distance) return 0;
 
         var viewDirection = transform.forward;
         var targetDirection = Vector3.Normalize(_target.position - transform.position);
 
-        var distanceToViewPoint = Vector3.Distance(viewDirection, targetDirection);
-        if (distanceToViewPoint > _viewWidth) return 0;
+        var angleToTarget = Vector3.Angle(viewDirection, targetDirection);
+        if (angleToTarget > _viewAngle) return 0;
 
         // Это можно реализовать интереснее, делать рейкаст в каждую часть тела игрока (руку, ногу, голову, туловище)
         // Сколько частей тела замечено, такая сила сигнала будет выведена
         // Пока используется одна капсула, поэтому значение всегда 1
         _rayToPlayer = new Ray(transform.position + _rayOffset, targetDirection);
-        if (Physics.Raycast(_rayToPlayer, out var hit, _viewRange, ~_ignoreLayer))
+        if (Physics.Raycast(_rayToPlayer, out var hit, _distance, ~_ignoreLayer))
         {
             // сейчас обнаружение игрока идет по тэгу Player
-            if (hit.transform.parent.tag == _target.tag)
+            if (hit.transform.tag == _target.tag || hit.transform.parent.tag == _target.tag)
             {
                 return 1;
             }

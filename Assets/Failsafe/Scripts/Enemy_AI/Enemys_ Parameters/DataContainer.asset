@@ -15,7 +15,7 @@ MonoBehaviour:
   foldoutImportGUI: 1
   documentId: 1CrbLF-TU57rbLQ9dcaXGFtxQFOt-gloZu0mrePZYSpk
   selectedTogglesIds:
-  - enemyDatas
+  - soundDatas
   foldoutSerializationGUI: 1
   serializationOutputPath: "C:\\\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430"
   serializationFileName: Configs
@@ -90,3 +90,25 @@ MonoBehaviour:
       isRangeAttack: 0
       AttackRange: 0
       AttackSpeed: 4
+    - Name: Test_05
+      Accelaration: 45
+      AngelarSpeed: 45
+      StoppingDistance: 45
+      ChaseSpeed: 45
+      LostPlayerTime: 45
+      PatrolingSpeed: 45
+      PatrolingWaitTime: 45
+      SearchingSpeed: 45
+      SearchingDuration: 45
+      SearchRadius: 45
+      offsetSearchingPoint: 45
+      Health: 45
+      Damage: 45
+      isRangeAttack: 0
+      AttackRange: 0
+      AttackSpeed: 45
+    soundDatas:
+    - soundName: test1
+      soundType: 1
+      maxRadius: 15
+      duration: 1

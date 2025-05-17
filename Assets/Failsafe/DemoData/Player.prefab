@@ -239,7 +239,6 @@ GameObject:
   - component: {fileID: 4786575343337522745}
   - component: {fileID: 5564961472655603788}
   - component: {fileID: 3587987712684801882}
-  - component: {fileID: 3065529089406228447}
   - component: {fileID: -2348027190149931829}
   m_Layer: 0
   m_Name: Player
@@ -358,29 +357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb8b993b2ff8da46b45361c0630c6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!223 &3065529089406228447
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 374109433352817464}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!114 &-2348027190149931829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,8 +654,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 981, y: 369}
-  m_SizeDelta: {x: 1962, y: 738}
+  m_AnchoredPosition: {x: 49.40204, y: 45.698364}
+  m_SizeDelta: {x: 1923.469, y: 1089.2668}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3939979692300916867
 Canvas:
@@ -743,7 +719,7 @@ MonoBehaviour:
   m_BlockingObjects: 3
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16887
 --- !u!1 &4786220528500355192
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,7 +1021,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 2a648aaf7f5dedc4fb1a41c5ef1969b0, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 8c2b2a1767d2b87498864ecfc27f9ba4, type: 2}
     - target: {fileID: 919132149155446097, guid: 2a648aaf7f5dedc4fb1a41c5ef1969b0, type: 3}

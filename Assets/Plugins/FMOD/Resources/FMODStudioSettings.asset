@@ -477,8 +477,11 @@ MonoBehaviour:
   Plugins: []
   MasterBanks:
   - Master
-  Banks: []
-  BanksToLoad: []
+  Banks:
+  - InGame
+  - Menu
+  - SFX
+  BanksToLoad: []  Banks: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
   AndroidUseOBB: 0

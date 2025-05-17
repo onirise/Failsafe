@@ -81,6 +81,7 @@ build_Data/
 UnityPlayer.so
 libdecor-0.so.0
 libdecor-cairo.so
+DMDungeon_BurstDebugInformation_DoNotShip/
 
 # ========== CACHE ==========
 .gradle/

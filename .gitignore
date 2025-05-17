@@ -81,6 +81,7 @@ build_Data/
 UnityPlayer.so
 libdecor-0.so.0
 libdecor-cairo.so
+DMDungeon_BurstDebugInformation_DoNotShip/
 
 # ========== CACHE ==========
 .gradle/
@@ -108,9 +109,16 @@ coverage-final.json
 # ========== FMOD ==========
 [Ff]modCache/
 [Ff]modTemp/
+/[Aa]ssets/[Pp]lugins/FMOD/Cache/
 fmod_editor.log
 *.guid
 *.fspro.user
 *.unsaved
-Assets/Plugins/Demigiant/DOTween/Resources/DOTweenSettings.asset
-Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
+
+# FMOD studio (In folder FMOD)
+/FMOD/**.user
+/FMOD/**.unsaved
+/FMOD/**.cache
+/FMOD/**.restore
+
+/Assets/Plugins/FMOD/Cache

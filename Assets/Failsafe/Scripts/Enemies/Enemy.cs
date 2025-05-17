@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,17 +6,21 @@ public class Enemy : MonoBehaviour
 {
     private Sensor[] _sensors;
     private BehaviorStateMachine _stateMachine;
-
+    
     void Start()
     {
         _sensors = GetComponents<Sensor>();
         var navMeshAgent = GetComponentInChildren<NavMeshAgent>();
 
-        var defaultState = new DefaultState(_sensors, transform);
-        var chasingState = new ChasingState(_sensors, transform, navMeshAgent);
+        var enemyController = new EnemyController(this, this.transform, navMeshAgent);
 
-        defaultState.AddTransition(chasingState, defaultState.PlayerSpoted);
-        chasingState.AddTransition(defaultState, chasingState.PlayerLost);
+        var defaultState = new DefaultState(_sensors, transform);
+        var chasingState = new ChasingState(_sensors, transform, enemyController);
+        var patrolState = new PatrolState(_sensors, transform, enemyController);
+
+        defaultState.AddTransition(chasingState, defaultState.PlayerSpotted);
+        chasingState.AddTransition(patrolState, chasingState.PlayerLost);
+        patrolState.AddTransition(chasingState, patrolState.PlayerSpotted);
 
         var disabledStates = new List<BehaviorForcedState>() { new DisabledState() };
 

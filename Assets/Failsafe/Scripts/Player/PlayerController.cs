@@ -38,18 +38,19 @@ public class PlayerController : MonoBehaviour
         var fallState = new FallState(_inputHandler, _characterController, _movementParametrs);
         var slideState = new SlideState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
 
-        walkState.AddTransition(runState, () => _inputHandler.SprintTriggered);
+        walkState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered);
         walkState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
         walkState.AddTransition(crouchState, () => _inputHandler.CrouchTriggered);
         walkState.AddTransition(fallState, () => IsFalling());
 
-        runState.AddTransition(walkState, () => !_inputHandler.SprintTriggered);
+        runState.AddTransition(walkState, () => !(_inputHandler.MoveForward && _inputHandler.SprintTriggered));
         runState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
-        runState.AddTransition(slideState, () => _inputHandler.CrouchTriggered);
+        runState.AddTransition(slideState, () => _inputHandler.CrouchTriggered && runState.CanSlide());
         runState.AddTransition(fallState, () => IsFalling());
 
-        slideState.AddTransition(runState, () => _inputHandler.SprintTriggered && slideState.SlideFinished());
-        slideState.AddTransition(walkState, slideState.SlideFinished);
+        //slideState.AddTransition(runState, () => _inputHandler.SprintTriggered && slideState.SlideFinished());
+        slideState.AddTransition(crouchState, () => _inputHandler.CrouchTriggered && slideState.SlideFinished());
+        slideState.AddTransition(walkState, () => (!_inputHandler.CrouchTriggered && slideState.CanStand()) || slideState.SlideFinished());
         slideState.AddTransition(fallState, () => IsFalling());
 
         crouchState.AddTransition(runState, () => _inputHandler.SprintTriggered && crouchState.CanStand());

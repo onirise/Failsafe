@@ -10,11 +10,13 @@ namespace PlayerStates
         private readonly Transform _camera;
         private readonly Vector3 _cameraOriginalPosition;
 
-        private float _maxSpeed => _movementParametrs.runSpeed;
+        private float _maxSpeed => _movementParametrs.slideSpeed;
         private float _minSpeed => _movementParametrs.walkSpeed;
-        private float _slideTime => _movementParametrs.slideTime;
+        private float _maxSlideTime => _movementParametrs.maxSlideTime;
+        private float _minSlideTime => _movementParametrs.minSlideTime;
         private float _slideProgress = 0f;
-        public bool SlideFinished() => _slideProgress >= _slideTime;
+        public bool SlideFinished() => _slideProgress >= _maxSlideTime;
+        public bool CanStand() => _slideProgress >= _minSlideTime;
 
         public SlideState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParametrs movementParametrs, Transform camera)
         {
@@ -45,7 +47,7 @@ namespace PlayerStates
             _camera.localPosition = _cameraOriginalPosition;
         }
 
-        private float GetCurrentSpeed() => Mathf.Lerp(_maxSpeed, _minSpeed, _slideProgress / _slideTime);
+        private float GetCurrentSpeed() => Mathf.Lerp(_maxSpeed, _minSpeed, _slideProgress / _maxSlideTime);
 
     }
 }

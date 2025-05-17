@@ -30,6 +30,7 @@ public class InputHandler
     private InputAction crouchAction;
 
     public Vector2 MovementInput { get; private set; }
+    public bool MoveForward => MovementInput.y > 0;
     public Vector2 RotationInput { get; private set; }
     public bool JumpTriggered { get; private set; }
     public bool SprintTriggered { get; private set; }

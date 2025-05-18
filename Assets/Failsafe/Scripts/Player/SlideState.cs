@@ -8,6 +8,7 @@ namespace PlayerStates
         private readonly CharacterController _characterController;
         private readonly PlayerMovementParametrs _movementParametrs;
         private readonly Transform _camera;
+        private readonly PlayerRotationController _playerRotationController;
         private readonly Vector3 _cameraOriginalPosition;
 
         private float _maxSpeed => _movementParametrs.slideSpeed;
@@ -18,12 +19,18 @@ namespace PlayerStates
         public bool SlideFinished() => _slideProgress >= _maxSlideTime;
         public bool CanStand() => _slideProgress >= _minSlideTime;
 
-        public SlideState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParametrs movementParametrs, Transform camera)
+        public SlideState(
+            InputHandler inputHandler,
+            CharacterController characterController,
+            PlayerMovementParametrs movementParametrs,
+            Transform camera,
+            PlayerRotationController playerRotationController)
         {
             _inputHandler = inputHandler;
             _characterController = characterController;
             _movementParametrs = movementParametrs;
             _camera = camera;
+            _playerRotationController = playerRotationController;
             _cameraOriginalPosition = _camera.localPosition;
         }
 
@@ -33,6 +40,7 @@ namespace PlayerStates
             _slideProgress = 0f;
             //TODO: Пока при приседании опускается толко камера, исправить
             _camera.localPosition += Vector3.down * (_cameraOriginalPosition.y * (1 - _movementParametrs.slideHeight));
+            _playerRotationController.RotateBodyToDirection(_characterController.transform.forward);
         }
 
         public override void Update()
@@ -45,6 +53,8 @@ namespace PlayerStates
         public override void Exit()
         {
             _camera.localPosition = _cameraOriginalPosition;
+            _playerRotationController.SyncBodyRotationToHead();
+            _playerRotationController.RotateBodyToHead();
         }
 
         private float GetCurrentSpeed() => Mathf.Lerp(_maxSpeed, _minSpeed, _slideProgress / _maxSlideTime);

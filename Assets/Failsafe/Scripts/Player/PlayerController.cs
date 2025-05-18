@@ -13,10 +13,9 @@ public class PlayerController : MonoBehaviour
 
     private Transform _playerCamera;
     private CharacterController _characterController;
+    private PlayerRotationController _playerRotationController;
     private BehaviorStateMachine _behaviorStateMachine;
     private InputHandler _inputHandler;
-
-    float _cameraYRotation = 0f;
     [SerializeField] float _coyoteTime = 0.1f;
     float _coyoteTimeProgress = 0f;
 
@@ -25,6 +24,7 @@ public class PlayerController : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         _playerCamera = transform.Find("Camera");
         _inputHandler = new InputHandler(_inputActionAsset);
+        _playerRotationController = new PlayerRotationController(_playerCamera, transform, _inputHandler);
         InitializeStateMachine();
     }
 
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         var crouchState = new CrouchState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
         var jumpState = new JumpState(_inputHandler, _characterController, _movementParametrs);
         var fallState = new FallState(_inputHandler, _characterController, _movementParametrs);
-        var slideState = new SlideState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
+        var slideState = new SlideState(_inputHandler, _characterController, _movementParametrs, _playerCamera, _playerRotationController);
 
         walkState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered);
         walkState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
@@ -69,24 +69,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        HandlePlayerRotation();
+        _playerRotationController.HandlePlayerRotation();
         HandleGravity();
         _behaviorStateMachine.Update();
     }
 
-    private float _mouseSensitivity = 5.0f;
-    // TODO: Вынести в отдельный класс:
-    // В некоторых состояниях может работать по разному (Скольжение, Зацепление)
-    // В некоторых не должно работать (Взбирание)
-    private void HandlePlayerRotation()
-    {
-        var rotation = _inputHandler.RotationInput * _mouseSensitivity * Time.deltaTime;
-        _cameraYRotation += rotation.y;
-        _cameraYRotation = Mathf.Clamp(_cameraYRotation, -90f, 90f);
 
-        transform.Rotate(Vector3.up * rotation.x);
-        _playerCamera.transform.localRotation = Quaternion.AngleAxis(_cameraYRotation, Vector3.left);
-    }
 
     private void HandleGravity()
     {

@@ -3,8 +3,8 @@ using UnityEngine;
 using System.Linq;
 
 /// <summary>
-/// Реализует систему перетаскивания
-/// Обрабатывает события UI для drag-and-drop
+/// Р РµР°Р»РёР·СѓРµС‚ СЃРёСЃС‚РµРјСѓ РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёСЏ
+/// РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЃРѕР±С‹С‚РёСЏ UI РґР»СЏ drag-and-drop
 /// </summary>
 public class InventoryDragHandler : MonoBehaviour
 {
@@ -59,7 +59,7 @@ public class InventoryDragHandler : MonoBehaviour
             draggedItem = item;
             originalSlot = slot;
 
-            // Получаем позицию мыши в плоскости инвентаря
+            // РџРѕР»СѓС‡Р°РµРј РїРѕР·РёС†РёСЋ РјС‹С€Рё РІ РїР»РѕСЃРєРѕСЃС‚Рё РёРЅРІРµРЅС‚Р°СЂСЏ
             Vector3 mousePos = GetMouseWorldPosition();
         }
     }
@@ -80,10 +80,10 @@ public class InventoryDragHandler : MonoBehaviour
     {
         if (draggedItem == null) return;
 
-        // Получение позиции с учетом смещения
+        // РџРѕР»СѓС‡РµРЅРёРµ РїРѕР·РёС†РёРё СЃ СѓС‡РµС‚РѕРј СЃРјРµС‰РµРЅРёСЏ
         Vector3 mousePos = GetMouseWorldPosition();
 
-        // Плавное перемещение
+        // РџР»Р°РІРЅРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµ
         draggedItem.transform.position = Vector3.Lerp(
             draggedItem.transform.position,
             mousePos,

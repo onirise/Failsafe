@@ -37,7 +37,7 @@ public class Test_patroling : MonoBehaviour
         if (waitTimer <= 0)
         {
             isWaiting = false;
-            waitTimer = 2f; // Сброс таймера ожидания
+            waitTimer = 2f; // РЎР±СЂРѕСЃ С‚Р°Р№РјРµСЂР° РѕР¶РёРґР°РЅРёСЏ
             MoveToNextPatrolPoint();
         }
     }
@@ -49,7 +49,7 @@ public class Test_patroling : MonoBehaviour
     }
 
     /// <summary>
-    /// Проверяет расстояние до текущей патрульной точки.
+    /// РџСЂРѕРІРµСЂСЏРµС‚ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ С‚РµРєСѓС‰РµР№ РїР°С‚СЂСѓР»СЊРЅРѕР№ С‚РѕС‡РєРё.
     /// </summary>
     private void CheckPatrolPointProximity()
     {

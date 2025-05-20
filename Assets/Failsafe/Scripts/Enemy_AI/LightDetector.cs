@@ -4,13 +4,13 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Collider))]
 public class LightDetector : MonoBehaviour
 {
-    [Header("Настройки обнаружения")]
-    [SerializeField] private Transform[] _detectionPoints; // Точки на теле игрока
-    [SerializeField] private LayerMask _lightLayer; // Слой источников света
-    [SerializeField] private LayerMask _obstructionLayer; // Слой препятствий
-    [SerializeField] private LayerMask _ignoreLayer; // Слой игрока (игнорируется)
-    [SerializeField] PlayerVisibility playerVis; // Ссылка на скрипт обнаружения
-    [Header("Отладка")]
+    [Header("РќР°СЃС‚СЂРѕР№РєРё РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ")]
+    [SerializeField] private Transform[] _detectionPoints; // РўРѕС‡РєРё РЅР° С‚РµР»Рµ РёРіСЂРѕРєР°
+    [SerializeField] private LayerMask _lightLayer; // РЎР»РѕР№ РёСЃС‚РѕС‡РЅРёРєРѕРІ СЃРІРµС‚Р°
+    [SerializeField] private LayerMask _obstructionLayer; // РЎР»РѕР№ РїСЂРµРїСЏС‚СЃС‚РІРёР№
+    [SerializeField] private LayerMask _ignoreLayer; // РЎР»РѕР№ РёРіСЂРѕРєР° (РёРіРЅРѕСЂРёСЂСѓРµС‚СЃСЏ)
+    [SerializeField] PlayerVisibility playerVis; // РЎСЃС‹Р»РєР° РЅР° СЃРєСЂРёРїС‚ РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ
+    [Header("РћС‚Р»Р°РґРєР°")]
     [SerializeField] private bool _visualize = true;
     [SerializeField][Range(0, 1)] private float _illuminationLevel;
 
@@ -24,7 +24,7 @@ public class LightDetector : MonoBehaviour
         _detectorCollider = GetComponent<Collider>();
         _detectorCollider.isTrigger = true;
 
-        Debug.Log($"[Освещение] Детектор готов. Точек обнаружения: {_detectionPoints?.Length ?? 0}");
+        Debug.Log($"[РћСЃРІРµС‰РµРЅРёРµ] Р”РµС‚РµРєС‚РѕСЂ РіРѕС‚РѕРІ. РўРѕС‡РµРє РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ: {_detectionPoints?.Length ?? 0}");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,7 +55,7 @@ public class LightDetector : MonoBehaviour
     {
         if (col == null) return false;
 
-        // Проверяем тег и слой через встроенные методы Unity
+        // РџСЂРѕРІРµСЂСЏРµРј С‚РµРі Рё СЃР»РѕР№ С‡РµСЂРµР· РІСЃС‚СЂРѕРµРЅРЅС‹Рµ РјРµС‚РѕРґС‹ Unity
         return col.CompareTag("Light");
     }
 
@@ -97,11 +97,11 @@ public class LightDetector : MonoBehaviour
         _illuminationLevel = totalChecks > 0 ? (float)visibleHits / totalChecks : 0f;
         playerVis.PlayerVisScore = _illuminationLevel * 100;
 
-        Debug.Log($"[Освещение] Статистика: " +
-                 $"Точек: {_detectionPoints.Length}, " +
-                 $"Источников: {_activeLights.Count}, " +
-                 $"Попаданий: {visibleHits}/{totalChecks}, " +
-                 $"Освещенность: {_illuminationLevel:P0}");
+        Debug.Log($"[РћСЃРІРµС‰РµРЅРёРµ] РЎС‚Р°С‚РёСЃС‚РёРєР°: " +
+                 $"РўРѕС‡РµРє: {_detectionPoints.Length}, " +
+                 $"РСЃС‚РѕС‡РЅРёРєРѕРІ: {_activeLights.Count}, " +
+                 $"РџРѕРїР°РґР°РЅРёР№: {visibleHits}/{totalChecks}, " +
+                 $"РћСЃРІРµС‰РµРЅРЅРѕСЃС‚СЊ: {_illuminationLevel:P0}");
     }
 
     private void OnDrawGizmosSelected()

@@ -16,13 +16,13 @@ public class PlayerVisibility : MonoBehaviour
     public enum VisibilityStatus { Low, Medium, High }
     private VisibilityStatus _currentStatus;
 
-    // Свойство с отслеживанием изменений
+    // РЎРІРѕР№СЃС‚РІРѕ СЃ РѕС‚СЃР»РµР¶РёРІР°РЅРёРµРј РёР·РјРµРЅРµРЅРёР№
     public float PlayerVisScore
     {
         get => _playerVisScore;
         set
         {
-            if (Mathf.Abs(_playerVisScore - value) > 0.1f) // Порог изменения
+            if (Mathf.Abs(_playerVisScore - value) > 0.1f) // РџРѕСЂРѕРі РёР·РјРµРЅРµРЅРёСЏ
             {
                 _playerVisScore = Mathf.Clamp(value, 0, 100);
                 UpdateStatus();
@@ -32,7 +32,7 @@ public class PlayerVisibility : MonoBehaviour
 
     private void Awake()
     {
-        // Инициализация при старте
+        // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РїСЂРё СЃС‚Р°СЂС‚Рµ
         UpdateStatus();
     }
 
@@ -72,7 +72,7 @@ public class PlayerVisibility : MonoBehaviour
         }
     }
 
-    // Для отладки в инспекторе
+    // Р”Р»СЏ РѕС‚Р»Р°РґРєРё РІ РёРЅСЃРїРµРєС‚РѕСЂРµ
     private void OnValidate()
     {
         if (!Application.isPlaying) return;

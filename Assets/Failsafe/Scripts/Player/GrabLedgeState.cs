@@ -15,7 +15,8 @@ namespace PlayerStates
         private readonly Transform _grabPoint;
         private readonly LedgeDetector _obstacleDetector;
         private LedgeData _obstacleData;
-        private float _stickSpeed = 2f;
+        private float _minDuration = 0.5f;
+        private float _stateProgress = 0f;
 
         public GrabLedgeState(
             InputHandler inputHandler,
@@ -35,9 +36,12 @@ namespace PlayerStates
             _grabPoint = grabPoint;
         }
 
+        public bool CanFinish() => _stateProgress >= _minDuration;
+
         public override void Enter()
         {
             Debug.Log("Enter " + nameof(GrabLedgeState));
+            _stateProgress = 0;
             _obstacleData = _obstacleDetector.LedgeInView;
             _playerGravityController.DisableGravity();
             _playerRotationController.RotateBodyToDirection(-_obstacleData.FrontSideNormal);
@@ -47,6 +51,7 @@ namespace PlayerStates
 
         public override void Update()
         {
+            _stateProgress += Time.deltaTime;
             _obstacleData = _obstacleDetector.FindLedgeInFront();
             var movementInput = _inputHandler.MovementInput;
             if (movementInput.x != 0)

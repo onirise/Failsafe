@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
         var fallState = new FallState(_inputHandler, _characterController, _movementParametrs);
         var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _ledgeDetector, _playerRotationController, _playerGrabPoint);
         var climbingState = new ClimbingState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _playerGrabPoint);
+        var ledgeJumpState = new LedgeJumpState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
 
         walkState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered);
         walkState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
@@ -71,8 +72,12 @@ public class PlayerController : MonoBehaviour
         fallState.AddTransition(walkState, () => _playerGravity.IsGrounded);
         fallState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
 
-        grabLedgeState.AddTransition(fallState, () => _inputHandler.MoveBack);
-        grabLedgeState.AddTransition(climbingState, () => _inputHandler.MoveForward && climbingState.CanClimb());
+        grabLedgeState.AddTransition(fallState, () => _inputHandler.MoveBack && grabLedgeState.CanFinish());
+        grabLedgeState.AddTransition(climbingState, () => _inputHandler.MoveForward && grabLedgeState.CanFinish() && climbingState.CanClimb());
+        grabLedgeState.AddTransition(ledgeJumpState, () => _inputHandler.JumpTriggered && grabLedgeState.CanFinish());
+
+        ledgeJumpState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
+        ledgeJumpState.AddTransition(fallState, ledgeJumpState.InHightPoint);
 
         climbingState.AddTransition(walkState, () => climbingState.ClimbFinish());
 

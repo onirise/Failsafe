@@ -22,7 +22,11 @@ public class RunData
     public List<QuestData> quests;
     public RunData()
     {
-        playerState = new PlayerStateData();//Пока только cостояние игрока, временно
+        playerState = new PlayerStateData();
+        Subjects = new List<SubjectsData>();
+        floorGeneration = new FloorGenerationData();
+        enemies = new List<Enemy_Data>();
+        quests = new List<QuestData>();
     }
 }
 
@@ -31,6 +35,7 @@ public class PlayerStateData
 {
     public int health;
     public Vector3 position;
+    public Quaternion rotation;
     // Другие параметры состояния игрока
 }
 

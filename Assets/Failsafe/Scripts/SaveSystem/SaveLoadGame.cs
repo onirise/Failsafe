@@ -17,24 +17,29 @@ public class SaveLoadGame : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F5))
-            SaveGame();
+            SavePlayerState();
 
         if (Input.GetKeyDown(KeyCode.F9))
             LoadGame();
     }
-    public void SaveGame()
+    private void SaveGame()
+    {
+        //сохроняем текущее состояние игры
+
+        saveLoadManager.SaveGame(currentGameData);
+    }
+
+    public void SavePlayerState()
     {
         // Сохронения состояния игрока
         currentGameData.runData.playerState.health = player.health;
         currentGameData.runData.playerState.position = player.gameObject.transform.position;
+        currentGameData.runData.playerState.rotation = player.gameObject.transform.rotation;
 
-
-        //сохроняем текущее состояние игры
-
-        saveLoadManager.SaveGame(currentGameData);
-        
         Debug.Log($"Saving Health: {currentGameData.runData.playerState.health}");
-        Debug.Log($"Saving Position: {player.gameObject.transform.position}");
+        Debug.Log($"Saving Position: {player.gameObject.transform.position}, {player.gameObject.transform.rotation}");
+
+        SaveGame();
     }
     public void LoadGame()
     {
@@ -51,6 +56,7 @@ public class SaveLoadGame : MonoBehaviour
         // Обновление состояния игрока
         player.health = gameData.runData.playerState.health;
         player.gameObject.transform.position = gameData.runData.playerState.position;
+        player.gameObject.transform.rotation = gameData.runData.playerState.rotation;
 
         Debug.Log($"Loaded Health: {gameData.runData.playerState.health}");
         Debug.Log($"Loaded Position: {gameData.runData.playerState.position}");

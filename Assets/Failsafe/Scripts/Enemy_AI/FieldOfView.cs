@@ -77,7 +77,7 @@ public class FieldOfView : MonoBehaviour
             if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
             {
                 RotateTowardsPlayer(target.position); // Поворачиваем врага к игроку
-                if(target.GetComponent<DetectionProgress>().inChase)
+                if(target.GetComponent<DetectionProgress>().InChase)
                 {
                     this.GetComponent<EnemyStateMachine>().SwitchState<EnemyChaseState>();
                 }

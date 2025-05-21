@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 /// <summary>
@@ -14,15 +14,15 @@ public abstract class Sensor : MonoBehaviour
     /// например апартная задерка между камерой и мозгом врага
     /// </summary>
     [SerializeField]
-    protected float _focusingTime = 0.1f;
+    protected float FocusingTime = 1f;
     [SerializeField]
-    protected float _focusingProgress;
+    protected float FocusingProgress;
 
     /// <summary>
     /// Дистанция на которой работает сенсор
     /// </summary>
     [SerializeField]
-    protected float _distance;
+    protected float Distance;
 
     /// <summary>
     /// Значение сигнала попавшего в зону видимости сенсора от 0 до 1.
@@ -39,7 +39,7 @@ public abstract class Sensor : MonoBehaviour
     /// <summary>
     /// Сила обнаруженного сингала от 0 до 1
     /// </summary>
-    public float SignalStrength => _focusingProgress >= _focusingTime ? _signalStrength : 0;
+    public float SignalStrength => FocusingProgress >= FocusingTime ? _signalStrength : 0;
 
     /// <summary>
     /// Координаты источник сигнала
@@ -51,16 +51,16 @@ public abstract class Sensor : MonoBehaviour
         _signalStrength = Math.Clamp(SignalInFieldOfView(), 0, 1);
         if (_signalStrength > 0)
         {
-            if (_focusingProgress < _focusingTime)
+            if (FocusingProgress < FocusingTime)
             {
-                _focusingProgress += Time.deltaTime;
+                FocusingProgress += Time.deltaTime;
             }
         }
         else
         {
-            if (_focusingProgress >= 0)
+            if (FocusingProgress >= 0)
             {
-                _focusingProgress -= Time.deltaTime;
+                FocusingProgress -= Time.deltaTime;
             }
         }
     }

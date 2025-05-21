@@ -14,7 +14,7 @@ public class ChasingState : BehaviorState
 
     private EnemyController _enemyController;
 
-    private float _loseTime = 1;
+    private float _loseTime = 3;
     private float _loseProgress;
 
     public ChasingState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController)

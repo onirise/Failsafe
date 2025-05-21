@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Состояние деактивации
@@ -23,6 +23,6 @@ public class DisabledState : BehaviorForcedState
     public override BehaviorState DecideNextState()
     {
         if (_disableProgress < _disableTime) return this;
-        return _previousState;
+        return PreviousState;
     }
 }

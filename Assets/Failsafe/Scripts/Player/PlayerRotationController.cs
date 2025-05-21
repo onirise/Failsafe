@@ -13,10 +13,10 @@ public class PlayerRotationController
     private float _mouseSensitivity = 10f;
     private bool _syncBodyRotationWithHead = true;
 
-    public PlayerRotationController(Transform headTransform, Transform playerTransform, InputHandler inputHandler)
+    public PlayerRotationController(Transform playerTransform, Transform headTransform, InputHandler inputHandler)
     {
-        _headTransform = headTransform;
         _playerTransform = playerTransform;
+        _headTransform = headTransform;
         _inputHandler = inputHandler;
     }
 

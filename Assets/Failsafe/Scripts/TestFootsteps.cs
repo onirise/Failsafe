@@ -4,10 +4,10 @@ using FMODUnity;
 [RequireComponent(typeof(CharacterController))]
 public class SimpleFootsteps : MonoBehaviour
 {
-    [Tooltip("Перетащите сюда FMOD Event из FMOD Browser")]
-    public EventReference footstepEvent;    // <-- новое поле вместо строки
+    [Tooltip("РџРµСЂРµС‚Р°С‰РёС‚Рµ СЃСЋРґР° FMOD Event РёР· FMOD Browser")]
+    public EventReference footstepEvent;    // <-- РЅРѕРІРѕРµ РїРѕР»Рµ РІРјРµСЃС‚Рѕ СЃС‚СЂРѕРєРё
 
-    [Tooltip("Интервал между шагами (сек)")]
+    [Tooltip("РРЅС‚РµСЂРІР°Р» РјРµР¶РґСѓ С€Р°РіР°РјРё (СЃРµРє)")]
     public float stepInterval = 0.4f;
 
     private CharacterController cc;
@@ -27,7 +27,7 @@ public class SimpleFootsteps : MonoBehaviour
             stepTimer -= Time.deltaTime;
             if (stepTimer <= 0f)
             {
-                // теперь используем EventReference
+                // С‚РµРїРµСЂСЊ РёСЃРїРѕР»СЊР·СѓРµРј EventReference
                 RuntimeManager.PlayOneShot(footstepEvent, transform.position);
                 stepTimer = stepInterval;
             }

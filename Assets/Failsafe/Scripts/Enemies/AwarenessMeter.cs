@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public class AwarenessMeter : MonoBehaviour
+public class AwarenessMeter
 {
     [Header("Sensors")]
      private Sensor[] _sensors;
 
     [Header("Настройки")]
-    [SerializeField] private float _fillSpeed = 20f;
+    [SerializeField] private float _fillSpeed = 40f;
     [SerializeField] private float _decaySpeed = 10f;
     [SerializeField] private float _decayDelay = 2f;
 
@@ -24,9 +24,12 @@ public class AwarenessMeter : MonoBehaviour
 
     public float AlertnessValue => _alertness;
 
+    public AwarenessMeter(Sensor[] sensors)
+    {
+        _sensors = sensors;
+    }
     private void Start()
     {
-        _sensors = GetComponentsInChildren<Sensor>();
         _alertness = 0f;
         _decayDelayTimer = 0f;
     }
@@ -52,7 +55,7 @@ public class AwarenessMeter : MonoBehaviour
         return _alertness < _alertThreshold;
     }
 
-    private void Update()
+    public void Update()
     {
         float maxSignal = _sensors.Max(s => s.SignalStrength);
 

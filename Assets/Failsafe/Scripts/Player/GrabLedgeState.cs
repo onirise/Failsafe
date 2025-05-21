@@ -13,16 +13,16 @@ namespace PlayerStates
         private readonly PlayerGravityController _playerGravityController;
         private readonly PlayerRotationController _playerRotationController;
         private readonly Transform _grabPoint;
-        private readonly ObstacleDetector _obstacleDetector;
-        private float _distanceToObstacle = 0.75f;
-        private float _stickSpeed = 10f;
+        private readonly LedgeDetector _obstacleDetector;
+        private LedgeData _obstacleData;
+        private float _stickSpeed = 2f;
 
         public GrabLedgeState(
             InputHandler inputHandler,
             CharacterController characterController,
             PlayerMovementParametrs movementParametrs,
             PlayerGravityController playerGravityController,
-            ObstacleDetector obstacleDetector,
+            LedgeDetector obstacleDetector,
             PlayerRotationController playerRotationController,
             Transform grabPoint)
         {
@@ -38,45 +38,54 @@ namespace PlayerStates
         public override void Enter()
         {
             Debug.Log("Enter " + nameof(GrabLedgeState));
+            _obstacleData = _obstacleDetector.LedgeInView;
             _playerGravityController.DisableGravity();
-            _playerRotationController.RotateBodyToDirection(-_obstacleDetector.Obstacle.FrontSideNormal);
-            StickToObstacle(_obstacleDetector.Obstacle);
+            _playerRotationController.RotateBodyToDirection(-_obstacleData.FrontSideNormal);
+            StickToObstacle(_obstacleData);
+            _characterController.SimpleMove(Vector3.zero);
         }
 
         public override void Update()
         {
+            _obstacleData = _obstacleDetector.FindLedgeInFront();
             var movementInput = _inputHandler.MovementInput;
             if (movementInput.x != 0)
             {
                 var movementX = movementInput.x;
-                var checkObstacleDirection = _characterController.transform.right * movementX * 0.5f;
-                var sideObstacle = _obstacleDetector.FindObstacleOnDirection(checkObstacleDirection);
-                var heghtDiff = sideObstacle.Height - _obstacleDetector.Obstacle.Height;
+                var checkObstacleDirection = _characterController.transform.right * movementX * 0.2f;
+                var sideObstacle = _obstacleDetector.FindLedgeOnDirection(checkObstacleDirection);
+                var heghtDiff = sideObstacle.Height - _obstacleData.Height;
                 if (Mathf.Abs(heghtDiff) < _movementParametrs.GrabLedgeHeightDifference)
                 {
                     var movement = _movementParametrs.GrabLedgeSpeed * movementX * Time.deltaTime * _characterController.transform.right;
                     _characterController.Move(movement);
-                    // TODO Сделать плавный поворот, сейчас дергается на границах между нормалями
-                    _playerRotationController.RotateBodyToDirection(-_obstacleDetector.Obstacle.FrontSideNormal);
+                    _playerRotationController.RotateBodyToDirection(-_obstacleData.FrontSideNormal);
+                    //StickToObstacle(_obstacleData);
                 }
-
             }
-            StickToObstacle(_obstacleDetector.Obstacle);
         }
 
         public override void Exit()
         {
             _playerGravityController.EnableGravity();
-            _playerRotationController.RotateBodyToHead();
+            if (_inputHandler.MoveForward)
+            {
+                _playerRotationController.RotateHeadToBody();
+            }
+            else
+            {
+                _playerRotationController.RotateBodyToHead();
+            }
             _playerRotationController.SyncBodyRotationToHead();
+            // TODO фикс метода StickToObstacle
+            _characterController.velocity.Set(0, 0, 0);
         }
 
-        private void StickToObstacle(ObstacleData obstacle)
+        private void StickToObstacle(LedgeData obstacle)
         {
-            var distanceDiff = obstacle.Distance - _distanceToObstacle;
-            var heightDiff = obstacle.Height - _grabPoint.localPosition.y;
-            var pathToGrapPosition = Vector3.up * heightDiff + _characterController.transform.forward * distanceDiff;
-            _characterController.Move(_stickSpeed * Time.deltaTime * pathToGrapPosition);
+            var pathToGrabPoint = obstacle.GrabPointPosition - _grabPoint.position;
+            // TODO Этот способ задает большие значения velocity у игрока, исправить перемежение в точку захвата
+            _characterController.Move(pathToGrabPoint);
         }
     }
 }

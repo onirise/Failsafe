@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private PlayerRotationController _playerRotationController;
     private BehaviorStateMachine _behaviorStateMachine;
     private InputHandler _inputHandler;
-    private ObstacleDetector _obstacleDetector;
+    private LedgeDetector _ledgeDetector;
     private PlayerGravityController _playerGravity;
 
     void Start()
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
         _playerGrabPoint = transform.Find("ObstacleGrabPoint");
         _inputHandler = new InputHandler(_inputActionAsset);
         _playerRotationController = new PlayerRotationController(transform, _playerCamera, _inputHandler);
-        _obstacleDetector = new ObstacleDetector(transform, _playerCamera, _playerGrabPoint);
+        _ledgeDetector = new LedgeDetector(transform, _playerCamera, _playerGrabPoint);
         _playerGravity = new PlayerGravityController(_characterController, _movementParametrs);
         InitializeStateMachine();
     }
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
         var crouchState = new CrouchState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
         var jumpState = new JumpState(_inputHandler, _characterController, _movementParametrs);
         var fallState = new FallState(_inputHandler, _characterController, _movementParametrs);
-        var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _obstacleDetector, _playerRotationController, _playerGrabPoint);
+        var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _ledgeDetector, _playerRotationController, _playerGrabPoint);
         var climbingState = new ClimbingState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _playerGrabPoint);
 
         walkState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered);
@@ -66,10 +66,10 @@ public class PlayerController : MonoBehaviour
         jumpState.AddTransition(runState, () => _playerGravity.IsGrounded && _inputHandler.SprintTriggered);
         jumpState.AddTransition(walkState, () => _playerGravity.IsGrounded);
         jumpState.AddTransition(fallState, jumpState.InHightPoint);
-        jumpState.AddTransition(grabLedgeState, () => { var obstacle = _obstacleDetector.Obstacle; return obstacle.IsFound && obstacle.InPlayerView && obstacle.AroundGrabPoint; });
+        jumpState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
 
         fallState.AddTransition(walkState, () => _playerGravity.IsGrounded);
-        fallState.AddTransition(grabLedgeState, () => { var obstacle = _obstacleDetector.Obstacle; return obstacle.IsFound && obstacle.InPlayerView && obstacle.AroundGrabPoint; });
+        fallState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
 
         grabLedgeState.AddTransition(fallState, () => _inputHandler.MoveBack);
         grabLedgeState.AddTransition(climbingState, () => _inputHandler.MoveForward && climbingState.CanClimb());
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        _obstacleDetector.HandleFindingObstacle();
+        _ledgeDetector.HandleFindingLedge();
         _playerRotationController.HandlePlayerRotation();
         _playerGravity.HandleGravity();
         _behaviorStateMachine.Update();

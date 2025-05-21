@@ -50,4 +50,12 @@ public class PlayerMovementParametrs
     /// Сила притяжения
     /// </summary>
     public float gravityForce = 8f;
+    /// <summary>
+    /// Скорость передвижения при зацепдении
+    /// </summary>
+    public float GrabLedgeSpeed = 4f;
+    /// <summary>
+    /// На какую высоту игрок может подняться/опуститься пока движется при зацеплении
+    /// </summary>
+    public float GrabLedgeHeightDifference = 0.1f;
 }

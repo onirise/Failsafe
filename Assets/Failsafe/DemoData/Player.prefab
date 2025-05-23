@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 5564961472655603788}
   - component: {fileID: 3587987712684801882}
   - component: {fileID: -2348027190149931829}
-  - component: {fileID: 1172725467090908563}
+  - component: {fileID: 5543863665210299431}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -340,7 +340,7 @@ MonoBehaviour:
       Data4: 1628696724
     Path: event:/SFX/Footstep
   stepInterval: 0.8
---- !u!114 &1172725467090908563
+--- !u!114 &5543863665210299431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -353,27 +353,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementParametrs:
-    rid: 2287994984642642028
+    rid: 2287995151870591098
   _inputActionAsset: {fileID: -944628639613478452, guid: 1f09f2f8cfa351946a2c010bb9946270, type: 3}
+  _noiseParametrs:
+    rid: 2287995151870591099
   references:
     version: 2
     RefIds:
-    - rid: 2287994984642642028
-      type: {class: PlayerMovementParametrs, ns: , asm: Assembly-CSharp}
+    - rid: 2287995151870591098
+      type: {class: PlayerMovementParameters, ns: Failsafe.PlayerMovements, asm: Assembly-CSharp}
       data:
-        walkSpeed: 8
-        runSpeed: 15
-        crouchSpeed: 3
-        crouchHeight: 0.5
-        slideSpeed: 12
-        slideHeight: 0.3
-        maxSlideTime: 1
-        minSlideTime: 0.5
-        jumpForce: 20
-        jumpForceFade: 30
-        gravityForce: 8
+        WalkSpeed: 8
+        RunSpeed: 15
+        CrouchSpeed: 3
+        CrouchHeight: 0.5
+        SlideSpeed: 12
+        SlideHeight: 0.3
+        MaxSlideTime: 1
+        MinSlideTime: 0.5
+        JumpForce: 20
+        JumpForceFade: 30
+        GravityForce: 8
         GrabLedgeSpeed: 4
         GrabLedgeHeightDifference: 0.1
+    - rid: 2287995151870591099
+      type: {class: PlayerNoiseParameters, ns: Failsafe.PlayerMovements, asm: Assembly-CSharp}
+      data:
+        MinStrength: 1
+        DefaultStrength: 5
+        IncreasedStrength: 10
+        ReducedStrength: 2
 --- !u!1 &374109433356125759
 GameObject:
   m_ObjectHideFlags: 0

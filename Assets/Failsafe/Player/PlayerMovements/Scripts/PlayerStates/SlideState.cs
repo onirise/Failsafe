@@ -1,20 +1,24 @@
+using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
-namespace PlayerStates
+namespace Failsafe.PlayerMovements.States
 {
+    /// <summary>
+    /// Скольжение
+    /// </summary>
     public class SlideState : BehaviorState
     {
         private readonly InputHandler _inputHandler;
         private readonly CharacterController _characterController;
-        private readonly PlayerMovementParametrs _movementParametrs;
+        private readonly PlayerMovementParameters _movementParametrs;
         private readonly Transform _camera;
         private readonly PlayerRotationController _playerRotationController;
         private readonly Vector3 _cameraOriginalPosition;
 
-        private float _maxSpeed => _movementParametrs.slideSpeed;
-        private float _minSpeed => _movementParametrs.walkSpeed;
-        private float _maxSlideTime => _movementParametrs.maxSlideTime;
-        private float _minSlideTime => _movementParametrs.minSlideTime;
+        private float _maxSpeed => _movementParametrs.SlideSpeed;
+        private float _minSpeed => _movementParametrs.WalkSpeed;
+        private float _maxSlideTime => _movementParametrs.MaxSlideTime;
+        private float _minSlideTime => _movementParametrs.MinSlideTime;
         private float _slideProgress = 0f;
         public bool SlideFinished() => _slideProgress >= _maxSlideTime;
         public bool CanStand() => _slideProgress >= _minSlideTime;
@@ -22,7 +26,7 @@ namespace PlayerStates
         public SlideState(
             InputHandler inputHandler,
             CharacterController characterController,
-            PlayerMovementParametrs movementParametrs,
+            PlayerMovementParameters movementParametrs,
             Transform camera,
             PlayerRotationController playerRotationController)
         {
@@ -39,7 +43,7 @@ namespace PlayerStates
             Debug.Log("Enter " + nameof(SlideState));
             _slideProgress = 0f;
             //TODO: Пока при приседании опускается толко камера, исправить
-            _camera.localPosition += Vector3.down * (_cameraOriginalPosition.y * (1 - _movementParametrs.slideHeight));
+            _camera.localPosition += Vector3.down * (_cameraOriginalPosition.y * (1 - _movementParametrs.SlideHeight));
             _playerRotationController.RotateBodyToDirection(_characterController.transform.forward);
         }
 

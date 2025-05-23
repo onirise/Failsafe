@@ -1,8 +1,7 @@
 using UnityEngine;
 
-namespace PlayerStates
+namespace Failsafe.PlayerMovements.States
 {
-    //
     public class StandingState : BehaviorState
     {
         private InputHandler _inputHandler;

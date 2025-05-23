@@ -1,16 +1,16 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class SaveLoadGame : MonoBehaviour
 {
     private SaveLoadManager saveLoadManager;
     private GameData currentGameData;
 
-    [SerializeField] private Player player;//Не бейте бога ради, это временно
+    [SerializeField] private Player player;//РќРµ Р±РµР№С‚Рµ Р±РѕРіР° СЂР°РґРё, СЌС‚Рѕ РІСЂРµРјРµРЅРЅРѕ
 
     private void Awake()
     {
         saveLoadManager = GetComponent<SaveLoadManager>();
-        currentGameData = new GameData(); // Инициализация новых данных
+        currentGameData = new GameData(); // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РЅРѕРІС‹С… РґР°РЅРЅС‹С…
     }
 
 
@@ -24,14 +24,14 @@ public class SaveLoadGame : MonoBehaviour
     }
     private void SaveGame()
     {
-        //сохроняем текущее состояние игры
+        //СЃРѕС…СЂРѕРЅСЏРµРј С‚РµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹
 
         saveLoadManager.SaveGame(currentGameData);
     }
 
     public void SavePlayerState()
     {
-        // Сохронения состояния игрока
+        // РЎРѕС…СЂРѕРЅРµРЅРёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂРѕРєР°
         currentGameData.runData.playerState.health = player.health;
         currentGameData.runData.playerState.position = player.gameObject.transform.position;
         currentGameData.runData.playerState.rotation = player.gameObject.transform.rotation;
@@ -51,12 +51,10 @@ public class SaveLoadGame : MonoBehaviour
     }
     private void UpdateGameState(GameData gameData)
     {
-        // Обновление данных о текущем забеге
+        // РћР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С… Рѕ С‚РµРєСѓС‰РµРј Р·Р°Р±РµРіРµ
 
-        // Обновление состояния игрока
+        // РћР±РЅРѕРІР»РµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂРѕРєР°
         player.health = gameData.runData.playerState.health;
-        player.gameObject.transform.position = gameData.runData.playerState.position;
-        player.gameObject.transform.rotation = gameData.runData.playerState.rotation;
 
         Debug.Log($"Loaded Health: {gameData.runData.playerState.health}");
         Debug.Log($"Loaded Position: {gameData.runData.playerState.position}");
@@ -65,13 +63,13 @@ public class SaveLoadGame : MonoBehaviour
 
 
 
-        // Обновление текущего этажа
+        // РћР±РЅРѕРІР»РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ СЌС‚Р°Р¶Р°
 
-        // Обновление информации о противниках
+        // РћР±РЅРѕРІР»РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РїСЂРѕС‚РёРІРЅРёРєР°С…
 
-        // Обновление квестов
+        // РћР±РЅРѕРІР»РµРЅРёРµ РєРІРµСЃС‚РѕРІ
 
-        // Дополнительные обновления, если необходимо
-        // Например, обновление UI, состояния игры и т.д.
+        // Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РѕР±РЅРѕРІР»РµРЅРёСЏ, РµСЃР»Рё РЅРµРѕР±С…РѕРґРёРјРѕ
+        // РќР°РїСЂРёРјРµСЂ, РѕР±РЅРѕРІР»РµРЅРёРµ UI, СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂС‹ Рё С‚.Рґ.
     }
 }

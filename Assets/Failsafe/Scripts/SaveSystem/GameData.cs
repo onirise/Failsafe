@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -36,7 +36,7 @@ public class PlayerStateData
     public int health;
     public Vector3 position;
     public Quaternion rotation;
-    // Другие параметры состояния игрока
+    // Р”СЂСѓРіРёРµ РїР°СЂР°РјРµС‚СЂС‹ СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂРѕРєР°
 }
 
 [System.Serializable]
@@ -44,13 +44,13 @@ public class SubjectsData
 {
     public string SubjectName;
     public Vector3 position;
-    // Другие параметры предмета
+    // Р”СЂСѓРіРёРµ РїР°СЂР°РјРµС‚СЂС‹ РїСЂРµРґРјРµС‚Р°
 }
 
 [System.Serializable]
 public class FloorGenerationData
 {
-    // Параметры генерации этажа
+    // РџР°СЂР°РјРµС‚СЂС‹ РіРµРЅРµСЂР°С†РёРё СЌС‚Р°Р¶Р°
 }
 
 [System.Serializable]
@@ -59,9 +59,9 @@ public class Enemy_Data
     public string enemyName;
     public Vector3 position;
     public int health;
-    // Другие параметры противника
+    // Р”СЂСѓРіРёРµ РїР°СЂР°РјРµС‚СЂС‹ РїСЂРѕС‚РёРІРЅРёРєР°
 }
 public class QuestData
 {
-    // Параметры квестов
+    // РџР°СЂР°РјРµС‚СЂС‹ РєРІРµСЃС‚РѕРІ
 }

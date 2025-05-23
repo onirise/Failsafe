@@ -19,9 +19,13 @@ namespace PlayerStates
 
         public bool CanClimb()
         {
-            var capsuleBottomPoint = _targetPosition + Vector3.up * 0.51f;
+            var capsuleBottomPoint = _grabPoint.position + _characterController.transform.forward * 0.2f + Vector3.up * 0.51f;
             var collide = Physics.SphereCast(capsuleBottomPoint, 0.5f, Vector3.up, out var hitInfo, 1);
-            if (collide) Debug.Log("Cant Climb " + hitInfo.point);
+            if (collide)
+            {
+                Debug.Log("Cant Climb " + hitInfo.point);
+                Debug.DrawLine(_grabPoint.position, hitInfo.point, Color.black);
+            }
             return !collide;
         }
 
@@ -45,7 +49,7 @@ namespace PlayerStates
         {
             Debug.Log("Enter " + nameof(ClimbingState));
             _climbingProgress = 0;
-            _targetPosition = _grabPoint.position + _characterController.transform.forward * 0.5f;
+            _targetPosition = _grabPoint.position + _characterController.transform.forward * 0.2f;
             _playerGravityController.DisableGravity();
         }
 

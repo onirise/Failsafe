@@ -45,7 +45,7 @@ public class PlayerRotationController
         else
         {
             _cameraHorizontalRotation += rotation.x;
-            _cameraHorizontalRotation = Mathf.Clamp(_cameraHorizontalRotation, -90f, 90f);
+            _cameraHorizontalRotation = Mathf.Clamp(_cameraHorizontalRotation, -120f, 120f);
             _headTransform.transform.localRotation = Quaternion.Euler(-_cameraVerticalRotation, _cameraHorizontalRotation, 0);
         }
     }
@@ -73,6 +73,14 @@ public class PlayerRotationController
         var yAlignedNormal = Vector3.ProjectOnPlane(targetDirection, Vector3.up);
         var targetRotation = Quaternion.LookRotation(yAlignedNormal, _playerTransform.up);
         _playerTransform.rotation = targetRotation;
-        _headTransform.rotation = Quaternion.Euler(-_cameraVerticalRotation, 0, 0);
+        _headTransform.localRotation = Quaternion.Euler(-_cameraVerticalRotation, 0, 0);
+    }
+
+    /// <summary>
+    /// Повернуть голову в направлении тела
+    /// </summary>
+    public void RotateHeadToBody()
+    {
+        _headTransform.localRotation = Quaternion.Euler(-_cameraVerticalRotation, 0, 0);
     }
 }

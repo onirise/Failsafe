@@ -11,11 +11,11 @@ public class PatrolState : BehaviorState
     private Vector3 _patrolPoint;
     private Transform[] _patrolPoints;
     private EnemyController _enemyController;
-    private float offset = 10f;
+    private float _offset = 10f;
     private float _waitTime = 3f;
     private float _waitTimer;
-    private int currentPatrolPointIndex = 0;
-    private bool isWaiting = false;
+    private int _currentPatrolPointIndex = 0;
+    private bool _isWaiting = false;
     public PatrolState(Sensor[] sensors, Transform transform, EnemyController enemyController, Transform[] patrolPoints = null)
     {
         _transform = transform;
@@ -30,15 +30,15 @@ public class PatrolState : BehaviorState
         Debug.Log("Enter PatrolState");
 
         _waitTimer = _waitTime; // Инициализировать таймер
-        isWaiting = false;
+        _isWaiting = false;
 
         HandlePatrolling(); // Установит _patrolPoint и начнет движение
     }
 
-    private float warningProgress;
-    private float warningTime = 1;
+    private float _warningProgress;
+    private float _warningTime = 1;
 
-    public bool PlayerSpotted() => warningProgress >= warningTime;
+    public bool PlayerSpotted() => _warningProgress >= _warningTime;
 
     public override void Update()
     {
@@ -47,11 +47,12 @@ public class PatrolState : BehaviorState
         {
             if (sensor.IsActivated())
             {
-                warningProgress += sensor.SignalStrength * Time.deltaTime;
+                _enemyController.RotateToPoint(sensor.SignalSourcePosition.Value, Vector3.up);
+                _warningProgress += sensor.SignalStrength * Time.deltaTime;
             }
         }
 
-        if (isWaiting)
+        if (_isWaiting)
         {
             HandleWaiting();
         }
@@ -59,7 +60,7 @@ public class PatrolState : BehaviorState
         {
             if (_enemyController.IsPointReached())
             {
-                isWaiting = true;
+                _isWaiting = true;
                 _enemyController.StopMoving();
             }
             else
@@ -79,10 +80,10 @@ public class PatrolState : BehaviorState
         if (isThereAnyPatrolPoint())
         {
             // Обновляем индекс
-            currentPatrolPointIndex = (currentPatrolPointIndex + 1) % _patrolPoints.Length;
+            _currentPatrolPointIndex = (_currentPatrolPointIndex + 1) % _patrolPoints.Length;
 
             // Сохраняем следующую точку
-            _patrolPoint = _patrolPoints[currentPatrolPointIndex].position;
+            _patrolPoint = _patrolPoints[_currentPatrolPointIndex].position;
 
             // Отдаем команду двигаться
             _enemyController.MoveToPoint(_patrolPoint);
@@ -100,7 +101,7 @@ public class PatrolState : BehaviorState
         if (_waitTimer <= 0f)
         {
             _waitTimer = _waitTime;
-            isWaiting = false;
+            _isWaiting = false;
             _enemyController.MoveToPoint(_patrolPoint);
         }
     }

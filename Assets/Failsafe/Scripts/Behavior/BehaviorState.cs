@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 /// <summary>
 /// Состояние
@@ -24,8 +24,8 @@ public abstract class BehaviorState
     {
         foreach (var transition in _transitions)
         {
-            if (transition.condition())
-                return transition.next;
+            if (transition.Condition())
+                return transition.Next;
         }
         return this;
     }
@@ -50,15 +50,15 @@ public abstract class BehaviorState
     /// </summary>
     private class Transition
     {
-        public readonly BehaviorState current;
-        public readonly BehaviorState next;
-        public readonly Func<bool> condition;
+        public readonly BehaviorState Current;
+        public readonly BehaviorState Next;
+        public readonly Func<bool> Condition;
 
         public Transition(BehaviorState current, BehaviorState next, Func<bool> condition)
         {
-            this.current = current;
-            this.next = next;
-            this.condition = condition;
+            this.Current = current;
+            this.Next = next;
+            this.Condition = condition;
         }
     }
 }

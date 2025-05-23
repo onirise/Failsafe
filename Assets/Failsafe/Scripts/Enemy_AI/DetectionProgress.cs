@@ -11,42 +11,42 @@ public class DetectionProgress : MonoBehaviour
         Far,
         Near
     }
-    public DetectionZone currentZone = DetectionZone.None;
+    public DetectionZone CurrentZone = DetectionZone.None;
     [Header("Detection Settings")]
-    [SerializeField] private int baseFastZoneSpeed = 20;
-    [SerializeField] private int baseSlowZoneSpeed = 5;
-    [SerializeField] private float decaySpeed = 15f;
-    [SerializeField] private Slider detectionSlider;
+    [SerializeField] private int _baseFastZoneSpeed = 20;
+    [SerializeField] private int _baseSlowZoneSpeed = 5;
+    [SerializeField] private float _decaySpeed = 15f;
+    [SerializeField] private Slider _detectionSlider;
 
     [Header("Debug")]
     [Range(0, 100)]
-    [SerializeField] private float detectionProgress;
-    private float currentFastSpeed;
-    private float currentSlowSpeed;
-    private float lastUpdateTime;
-    private const float UPDATE_INTERVAL = 0.05f;
-    private float lastVisualProgress = -1f;
+    [SerializeField] private float _detectionProgress;
+    private float _currentFastSpeed;
+    private float _currentSlowSpeed;
+    private float _lastUpdateTime;
+    private const float _uPDATE_INTERVAL = 0.05f;
+    private float _lastVisualProgress = -1f;
     public event System.Action<float> OnProgressChanged;
     public event System.Action OnDetected;
-    public bool inChase = false; // Новый флаг
+    public bool InChase = false; // Новый флаг
 
     private void Awake()
     {
-        detectionSlider.value = 0f;
-        currentFastSpeed = baseFastZoneSpeed;
-        currentSlowSpeed = baseSlowZoneSpeed;
+        _detectionSlider.value = 0f;
+        _currentFastSpeed = _baseFastZoneSpeed;
+        _currentSlowSpeed = _baseSlowZoneSpeed;
 
-        if (detectionSlider == null)
-            detectionSlider = GetComponentInChildren<Slider>();
+        if (_detectionSlider == null)
+            _detectionSlider = GetComponentInChildren<Slider>();
     }
 
 
     private void Update()
     {
-        if (Time.time - lastUpdateTime < UPDATE_INTERVAL)
+        if (Time.time - _lastUpdateTime < _uPDATE_INTERVAL)
             return;
 
-        lastUpdateTime = Time.time;
+        _lastUpdateTime = Time.time;
         UpdateDetection();
     }
 
@@ -54,44 +54,44 @@ public class DetectionProgress : MonoBehaviour
     {
         float detectionRate = 0f;
 
-        switch (currentZone)
+        switch (CurrentZone)
         {
             case DetectionZone.Near:
-                detectionRate = currentFastSpeed;
+                detectionRate = _currentFastSpeed;
                 break;
             case DetectionZone.Far:
-                detectionRate = currentSlowSpeed;
+                detectionRate = _currentSlowSpeed;
                 break;
             case DetectionZone.None:
-                detectionRate = detectionProgress > 0 ? -decaySpeed : 0f;
-                if(detectionProgress <= 0f)
+                detectionRate = _detectionProgress > 0 ? -_decaySpeed : 0f;
+                if(_detectionProgress <= 0f)
                 {
-                    inChase = false; // Сбрасываем флаг, если прогресс обнаружения обнулен
-                    detectionProgress = 0f; // Обнуляем прогресс, чтобы избежать отрицательных значений
+                    InChase = false; // Сбрасываем флаг, если прогресс обнаружения обнулен
+                    _detectionProgress = 0f; // Обнуляем прогресс, чтобы избежать отрицательных значений
                 }
                 break;
         }
 
         if (detectionRate != 0f)
         {
-            AddDetection(detectionRate * UPDATE_INTERVAL);
+            AddDetection(detectionRate * _uPDATE_INTERVAL);
         }
        
     }
 
     private void AddDetection(float amount)
     {
-        float newProgress = Mathf.Clamp(detectionProgress + amount, 0f, 100f);
+        float newProgress = Mathf.Clamp(_detectionProgress + amount, 0f, 100f);
 
-        if (Mathf.Abs(newProgress - detectionProgress) > 0.1f)
+        if (Mathf.Abs(newProgress - _detectionProgress) > 0.1f)
         {
-            detectionProgress = newProgress;
+            _detectionProgress = newProgress;
             UpdateVisuals();
-            OnProgressChanged?.Invoke(detectionProgress);
+            OnProgressChanged?.Invoke(_detectionProgress);
 
-            if (detectionProgress >= 100f)
+            if (_detectionProgress >= 100f)
             {
-                inChase = true; // Устанавливаем флаг, когда обнаружение завершено
+                InChase = true; // Устанавливаем флаг, когда обнаружение завершено
                 OnDetected?.Invoke();
             }
         }
@@ -99,14 +99,14 @@ public class DetectionProgress : MonoBehaviour
 
     private void UpdateVisuals()
     {
-        if (detectionSlider != null)
+        if (_detectionSlider != null)
         {
-            float normalized = detectionProgress / 100f;
+            float normalized = _detectionProgress / 100f;
 
-            if (!Mathf.Approximately(normalized, lastVisualProgress))
+            if (!Mathf.Approximately(normalized, _lastVisualProgress))
             {
-                detectionSlider.value = normalized;
-                lastVisualProgress = normalized;
+                _detectionSlider.value = normalized;
+                _lastVisualProgress = normalized;
             }
         }
     }
@@ -119,8 +119,8 @@ public class DetectionProgress : MonoBehaviour
             return;
         }
 
-        currentFastSpeed = baseFastZoneSpeed * multiplier;
-        currentSlowSpeed = baseSlowZoneSpeed * multiplier;
-        Debug.Log($"Detection speed modified: Fast = {currentFastSpeed}, Slow = {currentSlowSpeed}");
+        _currentFastSpeed = _baseFastZoneSpeed * multiplier;
+        _currentSlowSpeed = _baseSlowZoneSpeed * multiplier;
+        Debug.Log($"Detection speed modified: Fast = {_currentFastSpeed}, Slow = {_currentSlowSpeed}");
     }
 }

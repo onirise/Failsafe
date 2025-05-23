@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 /// <summary>
 /// Реализация визуального обнаружения игрока
@@ -16,48 +17,94 @@ public class VisualSensor : Sensor
     /// <summary>
     /// Смещение луча, чтобы он шел из глаз врага 
     /// </summary>
-    private Vector3 _rayOffset = Vector3.up * 1.5f;
+    private Vector3 _rayOffset = Vector3.up * 0.5f;
+    [SerializeField] private Transform _eyePosition;
+    private Vector3 EyePosition => _eyePosition != null ? _eyePosition.position : transform.position + _rayOffset;
+
     /// <summary>
     /// Объект, который нужно обнаружить, в данном случае игрок
     /// </summary>
-    public Transform _target;
-    public override Vector3? SignalSourcePosition => IsActivated() ? _target.position : null;
+    public Transform Target;
+    public override Vector3? SignalSourcePosition => IsActivated() ? Target.position : null;
 
     private Ray _rayToPlayer;
 
+    float _nearDistance;
     protected override float SignalInFieldOfView()
     {
-        var distanceToTarget = Vector3.Distance(transform.position, _target.position);
-        if (distanceToTarget > _distance) return 0;
+        _nearDistance = Distance + Distance / 3f;
 
-        var viewDirection = transform.forward;
-        var targetDirection = Vector3.Normalize(_target.position - transform.position);
+        if (Target == null)
+            return 0f;
 
-        var angleToTarget = Vector3.Angle(viewDirection, targetDirection);
-        if (angleToTarget > _viewAngle) return 0;
+        Vector3 toTarget = Target.position - transform.position;
+        float distance = toTarget.magnitude;
+        if (distance > Distance)
+            return 0f;
+
+        Vector3 direction = toTarget.normalized;
+        float angle = Vector3.Angle(transform.forward, direction);
+        if (angle > _viewAngle)
+            return 0f;
 
         // Это можно реализовать интереснее, делать рейкаст в каждую часть тела игрока (руку, ногу, голову, туловище)
         // Сколько частей тела замечено, такая сила сигнала будет выведена
         // Пока используется одна капсула, поэтому значение всегда 1
-        _rayToPlayer = new Ray(transform.position + _rayOffset, targetDirection);
-        if (Physics.Raycast(_rayToPlayer, out var hit, _distance, ~_ignoreLayer))
+        _rayToPlayer = new Ray(EyePosition, direction);
+        if (Physics.Raycast(_rayToPlayer, out var hit, Distance, ~_ignoreLayer))
         {
             // сейчас обнаружение игрока идет по тэгу Player
-            if (hit.transform.tag == _target.tag || hit.transform.parent.tag == _target.tag)
+            if (hit.transform == Target || hit.transform.IsChildOf(Target))
             {
-                return 1;
+                // Ближняя зона: мгновенное обнаружение
+                if (distance <= _nearDistance)
+                {
+                    return 1f;
+                }
+                else
+                {
+                    // Дальняя зона: ослабевающий сигнал
+                    float t = Mathf.InverseLerp(Distance, _nearDistance, distance); // от 1 → 0
+                    return Mathf.Lerp(0.2f, 1f, 1f - t); // сигнал 0.2–1.0
+                }
             }
+
         }
         return 0;
     }
 
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.forward);
+        if (Target == null) return;
 
-        if (_target == null) return;
-        Gizmos.color = SignalStrength > 0 ? Color.green : Color.yellow;
-        Gizmos.DrawRay(_rayToPlayer);
+        Vector3 origin = EyePosition;
+
+        // === Углы поля зрения ===
+        Gizmos.color = Color.cyan;
+        Vector3 leftBoundary = Quaternion.Euler(0, -_viewAngle, 0) * transform.forward;
+        Vector3 rightBoundary = Quaternion.Euler(0, _viewAngle, 0) * transform.forward;
+
+        Gizmos.DrawRay(origin, leftBoundary * Distance);
+        Gizmos.DrawRay(origin, rightBoundary * Distance);
+
+        // === Ближняя зона (ярко-зелёная, толстая) ===
+        Color nearColor = new Color(0f, 1f, 0f, 1f); // насыщенный зелёный
+        Gizmos.color = nearColor;
+        Gizmos.DrawWireSphere(origin, _nearDistance);
+
+        // Центральная точка ближней зоны
+        Gizmos.DrawSphere(origin + transform.forward * _nearDistance, 0.15f);
+
+        // === Дальняя зона (ярко-красная) ===
+        Color farColor = new Color(1f, 0f, 0f, 1f); // насыщенный красный
+        Gizmos.color = farColor;
+        Gizmos.DrawWireSphere(origin, Distance);
+
+        // === Визуализация луча до цели (при игре) ===
+        if (Application.isPlaying)
+        {
+            Gizmos.color = SignalStrength > 0 ? Color.green : Color.yellow;
+            Gizmos.DrawRay(_rayToPlayer.origin, _rayToPlayer.direction * Distance);
+        }
     }
 }

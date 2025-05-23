@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
 
@@ -18,25 +19,75 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public GameObject clickToSelectTextGO;
     public GameObject selectedTextGO;
 
+    public GameObject clearButtonGO;
+
     //public string screenshotLink;
     public RawImage savePreview;
 
     public LocalizeStringEvent timeLocalizeStringEvent;
+    
+    bool isStartAutosave = false;
 
-    public Camera _cam;
-
-    [Inject] SaveManager saveManager;
+    //[Inject] SaveManager saveManager;
     [Inject] GameplaySavesHandler gameplaySavesHandler;
     [Inject] TabletHandler tabletHandler;
-    public void UpdateGameplaySaveUI()
+    [Inject] ScreenTaker screenTaker;
+    public void UpdateGameplaySaveUI(bool _setStartAutosave = false)
     {
-        
-        selectedTextGO.SetActive(DATA.selected);
-        TimeSpan timeSpan = TimeSpan.FromSeconds(tabletHandler.time);
+        isStartAutosave = _setStartAutosave;
+        if(isStartAutosave)
+            clearButtonGO.SetActive(false);
+
+        selectedTextGO.SetActive(DATA.lastSave);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(DATA.time); //tabletHandler.time
         string timeFormatted = timeSpan.ToString(@"hh\:mm\:ss");
         timeLocalizeStringEvent.StringReference.Arguments = new object[] { timeFormatted };
         timeLocalizeStringEvent.RefreshString();
+
+        //временно взял этот код вообще из другого места
+         if(DATA.screenshotLink != "")
+        {
+            byte[] fileData = File.ReadAllBytes(DATA.screenshotLink);    
+            Texture2D loadedTexture = new Texture2D(2, 2); // Временные размеры (автоматически изменятся)
+            loadedTexture.LoadImage(fileData);
+            savePreview.texture = loadedTexture;
+        }
+        else
+        {
+            savePreview.texture = null;
+        }
     }
+
+    
+
+    public void SetNewDATA(string _scrLink, bool _lastSave, float _time, bool _isEmpty)
+    {
+        DATA.screenshotLink = _scrLink;
+        DATA.lastSave = _lastSave;
+        DATA.time = _time;
+        DATA.isEmpty = _isEmpty;
+    }
+
+    public void ClearDATA()
+    {
+        SetNewDATA("", false, 0, true);        
+        UpdateGameplaySaveUI();
+        SaveManager.SaveAll();
+        for (int i = gameplaySavesHandler.gameplaySaves.Count-1; i >= 0; i--)
+        {
+            if(!gameplaySavesHandler.gameplaySaves[i].DATA.isEmpty)
+            {
+                gameplaySavesHandler.gameplaySaves[i].DATA.lastSave = true;
+                gameplaySavesHandler.gameplaySaves[i].selectedTextGO.SetActive(true);
+                break;
+            }
+                
+
+        }
+        
+        
+    }
+   
 
     public void SetSaveName(string _entryName, int id)
     {
@@ -46,14 +97,15 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         nameTextLocEvent.RefreshString();
     }
 
+
     public void DeselectGameplaySave()
     {
-        DATA.selected = false;
+        DATA.lastSave = false;
         selectedTextGO.SetActive(false);
         
     }
 
-    public void OnSelectGameplaySave()
+    public void OnSaveGameplaySave()
     {
         
             foreach (var item in gameplaySavesHandler.gameplaySaves)
@@ -61,49 +113,42 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 item.DeselectGameplaySave();
             }
 
-            int newSaveNubmer = gameplaySavesHandler.GetNewSavesID();
-            /*
-            DATA.screenshotLink = $"Assets/Failsafe/Scripts/UI/Menu/SaveSystem/GameplaySaves/Screen{newSaveNubmer}.png";
-            ScreenCapture.CaptureScreenshot($"Assets/Failsafe/Scripts/UI/Menu/SaveSystem/GameplaySaves/Screen{newSaveNubmer}.png");
-            */
-            SaveCameraView(_cam, newSaveNubmer);
-            DATA.screenshotLink = $"Assets/Failsafe/Scripts/UI/Menu/SaveSystem/GameplaySaves/cameracapture{newSaveNubmer}.jpg";
+            int newSaveNubmer = gameplaySavesHandler.GetNewSavesID();            
+            screenTaker.SaveCameraView(newSaveNubmer);
+            string link = $"Assets/Failsafe/Scripts/UI/Menu/SaveSystem/GameplaySaves/cameracapture{newSaveNubmer}.jpg";
 
-            byte[] fileData = File.ReadAllBytes(DATA.screenshotLink);
-            
-
-            Texture2D loadedTexture = new Texture2D(2, 2); // Временные размеры (автоматически изменятся)
-            loadedTexture.LoadImage(fileData);
-            savePreview.texture = loadedTexture;
-            
-
-            DATA.selected = true;
+            SetNewDATA(link, true, tabletHandler.time, false);
             UpdateGameplaySaveUI();
             clickToSelectTextGO.SetActive(false);
-            saveManager.SaveAll();
+            gameplaySavesHandler.profileParent.SelectCLickedProfile();
+            SaveManager.SaveAll();
+            //gameplaySavesHandler.gameplaySavesGO.SetActive(false);
+           
        
             
     }
 
-    void SaveCameraView(Camera cam, int _newSaveNubmer)
-{
-    RenderTexture screenTexture = new RenderTexture(Screen.width, Screen.height, 16);
-    cam.targetTexture = screenTexture;
-    RenderTexture.active = screenTexture;
-    cam.Render();
+    public void OnLoadGameplaySave()
+    {
+        if(!DATA.isEmpty)
+        {
+            clickToSelectTextGO.SetActive(false);
+            gameplaySavesHandler.profileParent.SelectCLickedProfile();
+            gameplaySavesHandler.gameplaySavesGO.SetActive(false);
+            SaveManager.SaveAll();
+        }
+        
+    }
 
-    Texture2D renderedTexture = new Texture2D(Screen.width, Screen.height);
-    renderedTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-    RenderTexture.active = null;
-
-    byte[] byteArray = renderedTexture.EncodeToJPG();
-    File.WriteAllBytes($"Assets/Failsafe/Scripts/UI/Menu/SaveSystem/GameplaySaves/cameracapture{_newSaveNubmer}.jpg", byteArray);
-}
+    
 
     public void OnMouseEnterToGameplaySave()
     {
-       
-            clickToSelectTextGO.SetActive(true);
+        if((!isStartAutosave && gameplaySavesHandler.saveState == SaveState.Save) ||  (!DATA.isEmpty && gameplaySavesHandler.saveState == SaveState.Load))
+        {           
+                clickToSelectTextGO.SetActive(true);            
+        }
+           
     
 
             
@@ -133,20 +178,14 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        OnSelectGameplaySave();
+        if(gameplaySavesHandler.saveState == SaveState.Save && !isStartAutosave)
+        {
+            OnSaveGameplaySave();
+        }
+        else
+            OnLoadGameplaySave();
+        
     
     }
-/*
-    #region LOAD
 
-    public void LoadGameplaySave(GameplaySaveDATA _data)
-    {
-        
-        
-        selected = _data.selected;
-        UpdateProfileUI();
-    }
-
-    #endregion
-    */
 }

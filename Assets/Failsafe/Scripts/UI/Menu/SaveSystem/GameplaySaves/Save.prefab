@@ -99,13 +99,14 @@ MonoBehaviour:
     time: 0
     playerPosition: {x: 0, y: 0, z: 0}
     screenshotLink: 
-    selected: 0
+    lastSave: 0
+    isEmpty: 1
   nameTextLocEvent: {fileID: 2714455525112343335}
   clickToSelectTextGO: {fileID: 5501076093613481770}
   selectedTextGO: {fileID: 2630282045249889363}
+  clearButtonGO: {fileID: 6595815581586747735}
   savePreview: {fileID: 7827307377295047788}
   timeLocalizeStringEvent: {fileID: 3532502059384789571}
-  _cam: {fileID: 0}
 --- !u!1 &2443035843202419803
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +297,7 @@ GameObject:
   - component: {fileID: 2294642612640687645}
   - component: {fileID: 2609599130108123470}
   m_Layer: 5
-  m_Name: SelectedText
+  m_Name: LastSaveText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -436,7 +437,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:80f3b641b39761644b4de4ccdaec3e87
     m_TableEntryReference:
-      m_KeyId: 1509963426668544
+      m_KeyId: 9119675622072320
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -545,7 +546,7 @@ GameObject:
   - component: {fileID: 7517008835672251458}
   - component: {fileID: 7388741913051658826}
   m_Layer: 5
-  m_Name: ClickToSelectText
+  m_Name: ClickToSaveText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -567,7 +568,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -29.2, y: -15.6}
+  m_AnchoredPosition: {x: -29.2, y: 14.9}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5263484197051358371
@@ -775,7 +776,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0423\u0434\u0430\u043B\u0438\u0442\u044C"
+  m_text: "\u041E\u0447\u0438\u0441\u0442\u0438\u0442\u044C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -862,7 +863,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:80f3b641b39761644b4de4ccdaec3e87
     m_TableEntryReference:
-      m_KeyId: 1509732786085888
+      m_KeyId: 9118993611464704
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -899,7 +900,7 @@ GameObject:
   - component: {fileID: 5339847159838420622}
   - component: {fileID: 4975980306112653772}
   m_Layer: 5
-  m_Name: DeleteProfileButton
+  m_Name: ClearGSaveButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1007,9 +1008,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BaseConfirmCallButton, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 4032751711279027398}
+        m_TargetAssemblyTypeName: GameplaySave, Assembly-CSharp
+        m_MethodName: ClearDATA
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

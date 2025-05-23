@@ -111,6 +111,30 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 5721228593595416629
+  - m_Id: 7573455158091776
+    m_Localized: Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7573646544183296
+    m_Localized: Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9118993611464704
+    m_Localized: Clear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9119675622072320
+    m_Localized: Last save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9145572702003200
+    m_Localized: Click to open saves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9167100063752192
+    m_Localized: NEW
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1,11 +1,14 @@
 using UnityEngine;
+using Zenject;
 
 public class OpenSaveLoadWindow : MonoBehaviour
 {
-    public GameObject windowToOpen;
-
+    [SerializeField]
+    SaveState saveStateInButton;
+    [Inject] GameplaySavesHandler gameplaySavesHandler;
+    [Inject] ProfilesHandler profilesHandler;
     public void OpenWindow()
     {
-        windowToOpen.SetActive(true);
+        gameplaySavesHandler.OpenGSavesWindow(profilesHandler.GetSelectedProfile(), saveStateInButton);
     }
 }

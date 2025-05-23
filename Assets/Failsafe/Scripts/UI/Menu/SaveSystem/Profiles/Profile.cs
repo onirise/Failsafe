@@ -8,88 +8,120 @@ using Zenject;
 
 public class Profile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public ProfileDATA data;
-    public bool selected = false;
+    public ProfileDATA DATA;
+    
     public GameObject clickToSelectTextGO;
+
+    public GameObject clickToOpenSavesTextGO;
+
     public GameObject selectedTextGO;
 
-    public TMP_Text nameText;
+    public GameObject newProfileTextGO;
+   
 
     public TMP_Text indexText;
 
-    public int localeEntryIndex;
+    //public bool selected; 
+    //public int localeEntryIndex;
 
-    public int profileID = 1;
+    //public int profileID = 1;
 
     public LocalizeStringEvent locStrEvent;
 
     [Inject] ProfilesHandler profilesHandler;
     [Inject] GameplaySavesHandler gameplaySavesHandler;
-    [Inject] SaveManager saveManager;
+    [Inject] TabletHandler tabletHandler;
+    
 
-    void Start()
+    public void SetDATA(ProfileDATA _profileDATA)
     {
-        
+        DATA = _profileDATA;
+        UpdateProfileUI();
     }
 
     public void SetNewLocaleEntry()
     {
         var stringTable = LocalizationSettings.StringDatabase.GetTable("ProfileNamesTable"); 
-        localeEntryIndex = Random.Range(1, stringTable.Count+1);
-        Debug.Log(localeEntryIndex);
+        DATA.localeEntryIndex = Random.Range(1, stringTable.Count+1);
+        Debug.Log(DATA.localeEntryIndex);
     }
            
      
 
     public void UpdateProfileUI()
     {
-        indexText.text = profileID.ToString();
-        locStrEvent.SetEntry(localeEntryIndex.ToString());
-        selectedTextGO.SetActive(selected);
+        indexText.text = DATA.profileID.ToString();
+        locStrEvent.SetEntry(DATA.localeEntryIndex.ToString());
+        selectedTextGO.SetActive(DATA.selected);
+        newProfileTextGO.SetActive(DATA.isNew);
     }
 
    
 
     public void DeselectProfile()
     {
-        selected = false;
+        DATA.selected = false;
         selectedTextGO.SetActive(false);
         
     }
 
     public void OnSelectProfile()
-    {
-        if(!selected)
+    {   
+        if(!DATA.isNew || DATA.isNew && DATA.selected)
+        {
+            gameplaySavesHandler.SetSavesFromSelectedProfile(DATA.gameplaySaveDATAs);        
+            gameplaySavesHandler.OpenGSavesWindow(this, SaveState.Load);
+        }
+
+        if(DATA.isNew && !DATA.selected)
+        SelectCLickedProfile();
+       
+        
+            
+       
+            
+      
+        
+            
+    }
+
+    public void SelectCLickedProfile()
+    {        
+        if(!DATA.selected)
         {
             foreach (var item in profilesHandler.profiles)
             {
                 item.DeselectProfile();
             }
-            selected = true;
+            DATA.selected = true;
             selectedTextGO.SetActive(true);
+            tabletHandler.playButton.SetPlayButtonInteractable(true);
             clickToSelectTextGO.SetActive(false);
-            gameplaySavesHandler.SetSavesFromProfile(data.gameplaySaveDATAs);
-            saveManager.SaveAll();
+            //gameplaySavesHandler.SetSavesFromSelectedProfile(DATA.gameplaySaveDATAs);
+            SaveManager.SaveAll();
         }
-            
     }
 
     public void OnMouseEnterToProfile()
     {
-        if(!selected)
+        if(!DATA.selected)
         {
             clickToSelectTextGO.SetActive(true);
         }
+        else
+            clickToOpenSavesTextGO.SetActive(true);
 
             
     }
 
     public void OnMouseExitToProfile()
     {
-        if(!selected)
+        if(!DATA.selected)
         {
             clickToSelectTextGO.SetActive(false);
         }
+        else
+            clickToOpenSavesTextGO.SetActive(false);
 
             
     }
@@ -112,15 +144,5 @@ public class Profile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         OnSelectProfile();
     
     }
-
-    #region LOAD
-     public void LoadProfile(ProfileDATA _data)
-    {
-        localeEntryIndex = _data.localeEntryIndex;
-        profileID = _data.profileID;
-        selected = _data.selected;
-        UpdateProfileUI();
-    }
-
-    #endregion
+   
 }

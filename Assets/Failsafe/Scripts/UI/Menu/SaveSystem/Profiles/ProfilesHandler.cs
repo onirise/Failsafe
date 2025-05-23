@@ -9,8 +9,8 @@ public class ProfilesHandler : MonoBehaviour
 
     public List<Profile> profiles = new List<Profile>();
 
-    [Inject] SaveManager saveManager;
-     [Inject] DiContainer _container;
+    //[Inject] SaveManager saveManager;
+    [Inject] DiContainer _container;
 
 
     public void UpdateProfilesList()
@@ -21,11 +21,12 @@ public class ProfilesHandler : MonoBehaviour
 
     public void AddToProfilesList(Profile _newProfile)
     {
+        
         foreach (var item in profiles)
         {
-            if(item.profileID == _newProfile.profileID)
+            if(item.DATA.profileID == _newProfile.DATA.profileID)
             {
-                _newProfile.profileID++;
+                _newProfile.DATA.profileID++;
             }
             else
             {
@@ -34,11 +35,11 @@ public class ProfilesHandler : MonoBehaviour
         }
         
         
-        _newProfile.transform.SetSiblingIndex(_newProfile.profileID-1);
+        _newProfile.transform.SetSiblingIndex(_newProfile.DATA.profileID-1);
         _newProfile.UpdateProfileUI();
         UpdateProfilesList();
 
-        saveManager.SaveAll();
+        SaveManager.SaveAll();
     }
 
    
@@ -47,7 +48,17 @@ public class ProfilesHandler : MonoBehaviour
     {
         profiles.Remove(_profile);
         
-        saveManager.SaveAll();
+        SaveManager.SaveAll();
+    }
+
+    public Profile GetSelectedProfile()
+    {
+        foreach (var item in profiles)
+        {
+            if(item.DATA.selected == true)
+                return item;
+        }
+        return null;
     }
 
     #region SAVE AND LOAD
@@ -57,7 +68,8 @@ public class ProfilesHandler : MonoBehaviour
         data = new ProfileDATA[profiles.Count];
         for (int i = 0; i < profiles.Count; i++)
         {
-            data[i] = new ProfileDATA(profiles[i]);
+            data[i] = profiles[i].DATA;
+            data[i].gameplaySaveDATAs = profiles[i].DATA.gameplaySaveDATAs;
         }
     }
 
@@ -67,10 +79,11 @@ public class ProfilesHandler : MonoBehaviour
         {
             Profile newProfile = _container.InstantiatePrefabForComponent<Profile>(profilePrefab, ProfilesContainerGO.transform);
             //Profile newProfile = Instantiate(profilePrefab, ProfilesContainerGO.transform);
-            newProfile.LoadProfile(item);            
-            newProfile.transform.SetSiblingIndex(newProfile.profileID-1);
+            //newProfile.LoadProfile(item);            
+            
+            newProfile.SetDATA(item);
             UpdateProfilesList();
-            newProfile.data = item;
+            newProfile.transform.SetSiblingIndex(profiles.Count-1);
             
         }
         

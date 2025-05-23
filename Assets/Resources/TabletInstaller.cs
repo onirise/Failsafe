@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 public class TabletInstaller : MonoInstaller
@@ -8,7 +9,7 @@ public class TabletInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.Install<SaveManagerInst>();
+               
         Container.Bind<TabletHandler>().FromInstance(tabletHandlerInstance).AsSingle().NonLazy();
     }
 }

@@ -14,16 +14,13 @@ public class ProfileDATA
 {
     public bool selected;
     public int localeEntryIndex;
-    public int profileID;
+    public int profileID = 1;
 
-    public GameplaySaveDATA[] gameplaySaveDATAs;
+    public bool isNew = true;
 
-    public ProfileDATA(Profile _profile)
-    {
-        selected = _profile.selected;
-        localeEntryIndex = _profile.localeEntryIndex;
-        profileID = _profile.profileID;
-    }
+    public GameplaySaveDATA[] gameplaySaveDATAs = new GameplaySaveDATA[3] {new GameplaySaveDATA(), new GameplaySaveDATA(), new GameplaySaveDATA()};
+   
+   
 
 }
 
@@ -38,14 +35,19 @@ public class GameplaySaveDATA
 
     public string screenshotLink;
 
-    public bool selected;
+    public bool lastSave;
 
-    public GameplaySaveDATA(GameplaySave _gSave)
+    public bool isEmpty;
+
+    public GameplaySaveDATA()
     {
-        //selected = _gSave.selected;
-        //screenshotLink = _gSave.screenshotLink;
-       // localeEntryIndex = _gSave.localeEntryIndex;
-       // profileID = _gSave.profileID;
+        seed = 0;
+        time = 0;
+        playerPosition = Vector3.zero;
+        screenshotLink = "";
+        lastSave = false;
+        isEmpty = true;
     }
+  
 
 }

@@ -4,14 +4,19 @@ using UnityEngine;
 using DMDungeonGenerator;
 using Unity.AI.Navigation;
 using System.Linq;
+using Zenject;
+using UnityEngine.Localization.SmartFormat.PersistentVariables; //
 
 public class SpawnEnemiesCallback : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    [Inject] DiContainer _container; //
     public DMDungeonGenerator.DungeonGenerator generator;
 
     public GameObject PlayerPrefab;
+   
+    
     public GameObject spawnedPlayer;
     public GameObject EnemyPrefab;
     public NavMeshSurface NavMeshSurface;
@@ -21,6 +26,8 @@ public class SpawnEnemiesCallback : MonoBehaviour
     /// Шанс для каждой комнаты, что в ней заспавнится враг
     /// </summary>
     public float enemySpawnChance = 0.8f;
+
+   
 
     void Awake()
     {
@@ -44,8 +51,9 @@ public class SpawnEnemiesCallback : MonoBehaviour
 
         //spawn the player in the first room somewhere
         Vector3 spawnRoomPos = generator.DungeonGraph[0].data.gameObject.transform.position;
-        spawnedPlayer = GameObject.Instantiate(PlayerPrefab, spawnRoomPos, Quaternion.identity);
-
+        //spawnedPlayer = GameObject.Instantiate(PlayerPrefab, spawnRoomPos, Quaternion.identity);        
+        // ОТ ЧЕЛА, КОТОРЫЙ ДЕЛАЛ ГЛАВНОЕ МЕНЮ: сделал instantiate от zenject, ибо не прокидывались зависимости
+        spawnedPlayer = _container.InstantiatePrefab(PlayerPrefab, spawnRoomPos, Quaternion.identity, null); 
         SpawnEnemies();
     }
 

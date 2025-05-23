@@ -103,6 +103,30 @@ MonoBehaviour:
     m_Key: gameplaySaveName
     m_Metadata:
       m_Items: []
+  - m_Id: 7573455158091776
+    m_Key: Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7573646544183296
+    m_Key: Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9118993611464704
+    m_Key: Clear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9119675622072320
+    m_Key: LastSave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9145572702003200
+    m_Key: ClickToOpenSaves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9167100063752192
+    m_Key: New
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

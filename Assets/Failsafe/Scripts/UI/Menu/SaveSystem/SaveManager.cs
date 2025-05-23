@@ -4,19 +4,19 @@ using UnityEngine;
 using Zenject;
 
 
-public class SaveManager //: IInitializable
+public static class SaveManager 
 {
     static SaveDATA _saveDATA = new SaveDATA();
     
-    [Inject] ProfilesHandler profilesHandler;
-
+    //[Inject] ProfilesHandler profilesHandler;
+    public static ProfilesHandler profilesHandler;
     public static string SavePath()
     {        
         return Path.Combine(Application.persistentDataPath, "profiles.json");
     }
 
    
-    public void SaveAll()
+    public static void SaveAll()
     {
         profilesHandler.Save(ref _saveDATA.profileDATAs);
 
@@ -25,10 +25,11 @@ public class SaveManager //: IInitializable
     }
 
     
-    public void LoadAll()
+    public static void LoadAll()
     {
         if (File.Exists(SavePath()))
         {
+           
             string json = File.ReadAllText(SavePath());
             _saveDATA = JsonUtility.FromJson<SaveDATA>(json);
             profilesHandler.Load(_saveDATA.profileDATAs);
@@ -37,8 +38,4 @@ public class SaveManager //: IInitializable
        
     }
 
-    public void Initialize()
-    {
-        throw new System.NotImplementedException();
-    }
 }

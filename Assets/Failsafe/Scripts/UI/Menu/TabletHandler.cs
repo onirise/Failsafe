@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -9,26 +10,50 @@ public class TabletHandler : MonoBehaviour
 
     public GameObject tabletGO;    
 
-    [Inject] SaveManager saveManager;
-    
- 
     public GameObject MainMenuGO;
     public GameObject GameplayMenuGO;
     public float time;
+
+    public PlayButton playButton;
+
+    //[Inject] SaveManager saveManager;
+    [Inject] ProfilesHandler profilesHandler;
+    [Inject] GameplaySavesHandler gameplaySavesHandler;
+    
     void Start()
     {
+       
+        SaveManager.profilesHandler = profilesHandler;
+        PauseManager.Pause(false);
+        //SetCursor();
         if(SceneManager.GetActiveScene().name == "MainMenu")
         {
-            EnableTablet();
+            
+            EnableTablet(true);
+            
         }
-        saveManager.LoadAll();
+        else
+            EnableTablet(false);
+        SaveManager.LoadAll();
+        Profile currentProfile = profilesHandler.GetSelectedProfile();
+        if(currentProfile==null)
+            playButton.SetPlayButtonInteractable(false);
+        gameplaySavesHandler.profileParent = currentProfile;
+        gameplaySavesHandler.SetSavesFromSelectedProfile(currentProfile.DATA.gameplaySaveDATAs);
+        if(currentProfile.DATA.isNew)
+        {
+            currentProfile.DATA.isNew = false;
+            gameplaySavesHandler.gameplaySaves[0].OnSaveGameplaySave();
+        }
+
         
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab))
+        
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab)) && !(SceneManager.GetActiveScene().name == "MainMenu"))
         {
-            EnableTablet();
+            EnableTablet(!tabletGO.activeSelf);
            
         }
         if(!PauseManager.CheckPause())
@@ -36,12 +61,14 @@ public class TabletHandler : MonoBehaviour
 
     }
 
-    public void EnableTablet()
+    public void EnableTablet(bool flag)
     {
-        tabletGO.SetActive(!tabletGO.activeSelf);
-        Cursor.visible = tabletGO.activeSelf;
-        Cursor.lockState = Cursor.visible? CursorLockMode.None : CursorLockMode.Locked;
+        tabletGO.SetActive(flag);
+        SetCursor();
         PauseManager.Pause(tabletGO.activeSelf);
+
+        
+        gameplaySavesHandler.gameplaySavesGO.SetActive(false);
 
         if(SceneManager.GetActiveScene().name == "MainMenu")
         {
@@ -56,7 +83,13 @@ public class TabletHandler : MonoBehaviour
             
     }
 
-   
+    void SetCursor()
+    {
+        Cursor.visible = tabletGO.activeSelf;
+        Cursor.lockState = Cursor.visible? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    
    
 }
 

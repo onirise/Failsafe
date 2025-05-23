@@ -4,8 +4,8 @@ using System.Linq;
 using System.Collections.Generic;
 
 /// <summary>
-/// Реализует систему перетаскивания
-/// Обрабатывает события UI для drag-and-drop
+/// Р РµР°Р»РёР·СѓРµС‚ СЃРёСЃС‚РµРјСѓ РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёВ¤
+/// РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ СЃРѕР±С‹С‚РёСЏ UI РґР»СЏ drag-and-drop
 /// </summary>
 public class InventoryBeltHandler : MonoBehaviour
 {

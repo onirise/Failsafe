@@ -52,10 +52,11 @@ public class EnemyController
 
     public bool IsPointReached()
     {
-        if (Vector3.Distance(_navMeshAgent.destination, _navMeshAgent.transform.position) <= 2f)
+        if (Vector3.Distance(_navMeshAgent.destination, _navMeshAgent.transform.position) <= 3f)
         {
             if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f)
             {
+                Debug.Log("Reached destination");
                 return true;
             }
         }

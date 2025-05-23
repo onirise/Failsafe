@@ -1,14 +1,14 @@
 using UnityEngine;
 
 /// <summary>
-/// Обрабатывает ввод игрока
-/// Управляет открытием/закрытием инвентаря
+/// РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РІРІРѕРґ РёРіСЂРѕРєР°
+/// РЈРїСЂР°РІР»СЏРµС‚ РѕС‚РєСЂС‹С‚РёРµРј/Р·Р°РєСЂС‹С‚РёРµРј РёРЅРІРµРЅС‚Р°СЂСЏ
 /// </summary>
 public class InventoryInputHandler : MonoBehaviour
 {
     [SerializeField] private float lookDownThreshold = 0.9f;
     /// <summary>
-    /// Чтобы закрыть инвентарь, мнружно поднять чуть выше
+    /// Р§С‚РѕР±С‹ Р·Р°РєСЂС‹С‚СЊ РёРЅРІРµРЅС‚Р°СЂСЊ, РјРЅСЂСѓР¶РЅРѕ РїРѕРґРЅСЏС‚СЊ С‡СѓС‚СЊ РІС‹С€Рµ
     /// </summary>
     [SerializeField] private float openInventoryOffset = 0.10f;
     [SerializeField] private Camera PlayerCamera;
@@ -61,10 +61,10 @@ public class InventoryInputHandler : MonoBehaviour
         inventoryManager.SetInventoryState(visible);
         dragHandler.enabled = visible;
 
-        // to-do анимация открытия
-        // to-do звук открытия-закрытия
+        // to-do Р°РЅРёРјР°С†РёСЏ РѕС‚РєСЂС‹С‚РёСЏ
+        // to-do Р·РІСѓРє РѕС‚РєСЂС‹С‚РёСЏ-Р·Р°РєСЂС‹С‚РёСЏ
 
-        // Меняем состояние курсора
+        // РњРµРЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёРµ РєСѓСЂСЃРѕСЂР°
         if (visible)
         {
             Cursor.lockState = CursorLockMode.None;
@@ -77,7 +77,7 @@ public class InventoryInputHandler : MonoBehaviour
             Cursor.visible = false;
         }
 
-        // Меняем слой камеры
+        // РњРµРЅСЏРµРј СЃР»РѕР№ РєР°РјРµСЂС‹
         PlayerCamera.cullingMask = visible ?
             PlayerCamera.cullingMask | (1 << LayerMask.NameToLayer("Inventory")) :
             PlayerCamera.cullingMask & ~(1 << LayerMask.NameToLayer("Inventory"));

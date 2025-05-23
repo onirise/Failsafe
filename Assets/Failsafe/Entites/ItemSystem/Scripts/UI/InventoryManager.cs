@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Управляет структурой сетки
-/// Контролирует состояние слотов
-/// Обрабатывает добавление/удаление предметов
-/// Управляет подсветкой
+/// РЈРїСЂР°РІР»СЏРµС‚ СЃС‚СЂСѓРєС‚СѓСЂРѕР№ СЃРµС‚РєРё
+/// РљРѕРЅС‚СЂРѕР»РёСЂСѓРµС‚ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃР»РѕС‚РѕРІ
+/// РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРѕР±Р°РІР»РµРЅРёРµ/СѓРґР°Р»РµРЅРёРµ РїСЂРµРґРјРµС‚РѕРІ
+/// РЈРїСЂР°РІР»СЏРµС‚ РїРѕРґСЃРІРµС‚РєРѕР№
 /// </summary>
 public class InventoryManager : MonoBehaviour
 {
@@ -70,7 +70,7 @@ public class InventoryManager : MonoBehaviour
     }
     public void AddItemToRandomSlot(GameObject item)
     {
-        // Ищем случайный свободный слот
+        // РС‰РµРј СЃР»СѓС‡Р°Р№РЅС‹Р№ СЃРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚
         List<InventorySlot> emptySlots = new List<InventorySlot>();
         foreach (var slot in slots)
         {
@@ -123,7 +123,7 @@ public class InventoryManager : MonoBehaviour
 
         newItem.SetKinematic(true);
 
-        // Масштабирование под размер слота
+        // РњР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёРµ РїРѕРґ СЂР°Р·РјРµСЂ СЃР»РѕС‚Р°
         FitItemToSlot(newItemObj.transform, slot.slotCollider);
 
         slot.currentItem = newItem;
@@ -134,7 +134,7 @@ public class InventoryManager : MonoBehaviour
 
         SetLayerRecursively(item.gameObject, LayerMask.NameToLayer("Inventory"));
         item.SetKinematic(true);
-        // Масштабирование под размер слота
+        // РњР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёРµ РїРѕРґ СЂР°Р·РјРµСЂ СЃР»РѕС‚Р°
         //FitItemToSlot(item.transform, slot.slotCollider);
         slot.currentItem = item;
     }
@@ -154,7 +154,7 @@ public class InventoryManager : MonoBehaviour
         BoxCollider itemCollider = item.GetComponent<BoxCollider>();
         if (!itemCollider || !slotCollider) return;
 
-        // Вычисляем масштаб
+        // Р’С‹С‡РёСЃР»СЏРµРј РјР°СЃС€С‚Р°Р±
         Vector3 slotSize = slotCollider.size;
         Vector3 itemSize = itemCollider.size;
 
@@ -164,7 +164,7 @@ public class InventoryManager : MonoBehaviour
             slotSize.z / itemSize.z
         );
 
-        item.localScale = Vector3.one * scaleFactor * 0.95f; // 5% отступ
+        item.localScale = Vector3.one * scaleFactor * 0.95f; // 5% РѕС‚СЃС‚СѓРї
         item.localPosition = Vector3.zero;
     }
     private void AddTestItems()
@@ -200,7 +200,7 @@ public class InventoryManager : MonoBehaviour
                 slot.layer = LayerMask.NameToLayer("Inventory");
 
 
-                // Инициализация коллайдера слота
+                // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРѕР»Р»Р°Р№РґРµСЂР° СЃР»РѕС‚Р°
                 slots[row, col] = new InventorySlot
                 {
                     slotObject = slot,
@@ -212,7 +212,7 @@ public class InventoryManager : MonoBehaviour
     }
     private void SwapItems(InventorySlot a, InventorySlot b)
     {
-        // Меняем местами
+        // РњРµРЅСЏРµРј РјРµСЃС‚Р°РјРё
         var tempItemA = a.currentItem;
         var tempItemB = b.currentItem;
 
@@ -228,7 +228,7 @@ public class InventoryManager : MonoBehaviour
             tempItemB.transform.localPosition = Vector3.zero;
         }
 
-        // Обновляем ссылки
+        // РћР±РЅРѕРІР»СЏРµРј СЃСЃС‹Р»РєРё
         a.currentItem = tempItemB;
         b.currentItem = tempItemA;
     }

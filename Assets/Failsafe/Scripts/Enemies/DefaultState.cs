@@ -8,23 +8,24 @@ public class DefaultState : BehaviorState
 {
     private Sensor[] _sensors;
     private Transform _transform;
-
-    public DefaultState(Sensor[] sensors, Transform transform)
+    EnemyController _enemyController;
+    public DefaultState(Sensor[] sensors, Transform transform, EnemyController enemyController)
     {
         _sensors = sensors;
         _transform = transform;
+        _enemyController = enemyController;
     }
 
-    private float warningProgress;
-    private float warningTime = 1;
+    private float _warningProgress;
+    private float _warningTime = 1;
 
 
-    public bool PlayerSpotted() => warningProgress >= warningTime;
+    public bool PlayerSpotted() => _warningProgress >= _warningTime;
 
     public override void Enter()
     {
         base.Enter();
-        warningProgress = 0;
+        _warningProgress = 0;
         Debug.Log("Enter DefaultState");
     }
 
@@ -32,9 +33,12 @@ public class DefaultState : BehaviorState
     {
         foreach (var sensor in _sensors)
         {
+            Debug.Log($"Raw signal: {sensor.SignalStrength}, Activated: {sensor.IsActivated()}");
+
             if (sensor.IsActivated())
             {
-                warningProgress += sensor.SignalStrength * Time.deltaTime;
+                _enemyController.RotateToPoint(sensor.SignalSourcePosition.Value, Vector3.up);
+                _warningProgress += sensor.SignalStrength * Time.deltaTime;
             }
         }
     }

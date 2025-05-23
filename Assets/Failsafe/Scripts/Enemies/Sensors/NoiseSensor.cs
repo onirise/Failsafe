@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,7 +15,7 @@ public class NoiseSensor : Sensor
     /// </summary>
     [SerializeField]
     private float _maxSoundStrength = 10;
-    private List<ISignal> _audioSignals => SignalManager.Instance.PlayerNoiseChanel.GetAllActive();
+    private List<ISignal> AudioSignals => SignalManager.Instance.PlayerNoiseChanel.GetAllActive();
     private ISignal _detectedSignal;
 
     public override Vector3? SignalSourcePosition => _detectedSignal?.SourcePosition;
@@ -24,9 +24,9 @@ public class NoiseSensor : Sensor
     {
         ISignal maxAudioSignal = null;
         float maxDetectedStrength = 0;
-        for (int i = 0; i < _audioSignals.Count; i++)
+        for (int i = 0; i < AudioSignals.Count; i++)
         {
-            ISignal signal = _audioSignals[i];
+            ISignal signal = AudioSignals[i];
             if (signal.SignalStrength < _minSoundStrength) continue;
 
             float detectedSoundStrength = CalculateSignalStrength(signal);
@@ -46,10 +46,10 @@ public class NoiseSensor : Sensor
     {
         var distanceToSignal = Vector3.Distance(transform.position, signal.SourcePosition);
 
-        if (distanceToSignal > _distance)
+        if (distanceToSignal > Distance)
         {
             // Если сигнал за пределами зоны слышимости, то громкость сигнала уменьшается от расстояния
-            var effectiveDistance = distanceToSignal - _distance;
+            var effectiveDistance = distanceToSignal - Distance;
             var detectedSoundStrength = signal.SignalStrength / effectiveDistance;
             return detectedSoundStrength;
         }
@@ -61,6 +61,6 @@ public class NoiseSensor : Sensor
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _distance);
+        Gizmos.DrawWireSphere(transform.position, Distance);
     }
 }

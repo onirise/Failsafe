@@ -41,20 +41,20 @@ public class ZonesOfHearing : MonoBehaviour
     {
         if (_fieldOfView == null || _playerInputHandler == null) return;
 
-        // Проверка зон слышимости
+        // РџСЂРѕРІРµСЂРєР° Р·РѕРЅ СЃР»С‹С€РёРјРѕСЃС‚Рё
         playerNear = CheckHearingZone(radiusNear);
         playerSprint = CheckHearingZone(radiusSprint) && _playerInputHandler.SprintTriggered;
         playerWalk = CheckHearingZone(radiusWalk) && _playerInputHandler.MovementInput.magnitude != 0;
 
-        // Обновление состояния видимости игрока
+        // РћР±РЅРѕРІР»РµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ РІРёРґРёРјРѕСЃС‚Рё РёРіСЂРѕРєР°
        // _fieldOfView.canSeePlayer = playerNear ;
     }
 
     /// <summary>
-    /// Проверяет, находится ли игрок в заданной зоне слышимости.
+    /// РџСЂРѕРІРµСЂСЏРµС‚, РЅР°С…РѕРґРёС‚СЃСЏ Р»Рё РёРіСЂРѕРє РІ Р·Р°РґР°РЅРЅРѕР№ Р·РѕРЅРµ СЃР»С‹С€РёРјРѕСЃС‚Рё.
     /// </summary>
-    /// <param name="radius">Радиус зоны слышимости.</param>
-    /// <returns>Возвращает true, если игрок находится в зоне слышимости.</returns>
+    /// <param name="radius">Р Р°РґРёСѓСЃ Р·РѕРЅС‹ СЃР»С‹С€РёРјРѕСЃС‚Рё.</param>
+    /// <returns>Р’РѕР·РІСЂР°С‰Р°РµС‚ true, РµСЃР»Рё РёРіСЂРѕРє РЅР°С…РѕРґРёС‚СЃСЏ РІ Р·РѕРЅРµ СЃР»С‹С€РёРјРѕСЃС‚Рё.</returns>
     private bool CheckHearingZone(float radius)
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, mask);

@@ -1,10 +1,12 @@
 using System.IO;
 using UnityEngine;
+using Zenject;
 
 public class ScreenTaker : MonoBehaviour
 {
     public Camera _cam;
-    public void SaveCameraView(int _newSaveNubmer)
+    [Inject] GameplaySavesHandler gameplaySavesHandler;
+    public string SaveCameraView(GameplaySave _GSave)
     {
         _cam.gameObject.SetActive(true);
         RenderTexture screenTexture = new RenderTexture(Screen.width, Screen.height, 16);
@@ -16,9 +18,12 @@ public class ScreenTaker : MonoBehaviour
         renderedTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
         RenderTexture.active = null;
 
+        string link = $"Assets/Failsafe/Scripts/UI/Menu/SaveSystem/GameplaySaves/Profile{gameplaySavesHandler.profileParent.DATA.profileID}-"+
+                          $"Slot{gameplaySavesHandler.gameplaySaves.IndexOf(_GSave)}.jpg";
         byte[] byteArray = renderedTexture.EncodeToJPG();
-        File.WriteAllBytes($"Assets/Failsafe/Scripts/UI/Menu/SaveSystem/GameplaySaves/cameracapture{_newSaveNubmer}.jpg", byteArray);
+        File.WriteAllBytes(link, byteArray);
         _cam.gameObject.SetActive(false);
+        return link;
     }
     
 }

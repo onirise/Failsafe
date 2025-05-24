@@ -38,13 +38,20 @@ public class TabletHandler : MonoBehaviour
         Profile currentProfile = profilesHandler.GetSelectedProfile();
         if(currentProfile==null)
             playButton.SetPlayButtonInteractable(false);
-        gameplaySavesHandler.profileParent = currentProfile;
-        gameplaySavesHandler.SetSavesFromSelectedProfile(currentProfile.DATA.gameplaySaveDATAs);
-        if(currentProfile.DATA.isNew)
+        else
         {
-            currentProfile.DATA.isNew = false;
-            gameplaySavesHandler.gameplaySaves[0].OnSaveGameplaySave();
+             gameplaySavesHandler.profileParent = currentProfile;
+             gameplaySavesHandler.SetSavesFromSelectedProfile(currentProfile.DATA.gameplaySaveDATAs);
+             if(currentProfile.DATA.isNew)
+            {
+                currentProfile.DATA.isNew = false;
+                gameplaySavesHandler.gameplaySaves[0].OnSaveGameplaySave();
+            }
         }
+       
+       
+            
+        
 
         
     }

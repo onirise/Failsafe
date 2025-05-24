@@ -14,8 +14,7 @@ public class GameplaySavesHandler : MonoBehaviour
 
     public SaveState saveState = SaveState.Load;
 
-    int savesID = 0;
-    //public List<GameplaySaveDATA> gameplaySaveDATAs = new List<GameplaySaveDATA>(); 
+   
 
     void Start()
     {
@@ -29,11 +28,7 @@ public class GameplaySavesHandler : MonoBehaviour
             gameplaySaves[i].UpdateGameplaySaveUI();
         }
     }
-    public int GetNewSavesID()
-    {
-        savesID++;
-        return savesID;
-    }
+   
 
     public void SetSavesFromSelectedProfile(GameplaySaveDATA[] _gameplaySaveDATA)
     {   

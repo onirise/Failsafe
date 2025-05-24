@@ -113,10 +113,8 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 item.DeselectGameplaySave();
             }
 
-            int newSaveNubmer = gameplaySavesHandler.GetNewSavesID();            
-            screenTaker.SaveCameraView(newSaveNubmer);
-            string link = $"Assets/Failsafe/Scripts/UI/Menu/SaveSystem/GameplaySaves/cameracapture{newSaveNubmer}.jpg";
-
+            
+            string link = screenTaker.SaveCameraView(this);
             SetNewDATA(link, true, tabletHandler.time, false);
             UpdateGameplaySaveUI();
             clickToSelectTextGO.SetActive(false);

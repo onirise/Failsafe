@@ -8,17 +8,12 @@ namespace Failsafe.Scripts.ImplantsSystem
         event Action<IImplant> ImplantAdded; 
         event Action<IImplant> ImplantRemoved;
         
-        event Action<IImplantsPlaceholder> PlaceholderAdded;
-        event Action<IImplantsPlaceholder> PlaceholderRemoved;
+        IReadOnlyCollection<IImplant> InstalledImplants { get; }
         
-        IEnumerable<IImplantsPlaceholder> Placeholders { get; }
+        void Add(IImplant implant);
+        void Remove(IImplant implant);
+        bool CanAdd(IImplant implant);
         
-        void AddImplant(IImplant implant);
-        void RemoveImplant(IImplant implant);
-        bool CanAddImplant(IImplant implant);
-        
-        void RegisterPlaceholder(IImplantsPlaceholder placeholder);
-        void UnregisterPlaceholder(IImplantsPlaceholder placeholder);
         void RegisterProcessor(IImplantProcessor implantProcessor);
         void UnregisterProcessor(IImplantProcessor implantProcessor);
     }

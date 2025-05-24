@@ -6,22 +6,23 @@ namespace Failsafe.Scripts.ImplantsSystem
     {
         Type Type { get; }
 
-        void Add(IImplant implant);
+        void Process(IImplant implant);
         void Remove(IImplant implant);
+        bool CanAdd(IImplant implant);
     }
 
     public interface IImplantProcessor<in T> : IImplantProcessor where T : IImplant
     {
         Type IImplantProcessor.Type => typeof(T);
 
-        void IImplantProcessor.Add(IImplant implant)
+        void IImplantProcessor.Process(IImplant implant)
         {
             if (implant is not T tImplant)
             {
                 throw new ArgumentException($"Implant must be of type {typeof(T).FullName}", nameof(implant));
             }
             
-            Add(tImplant);
+            Process(tImplant);
         }
 
         void IImplantProcessor.Remove(IImplant implant)
@@ -34,7 +35,18 @@ namespace Failsafe.Scripts.ImplantsSystem
             Remove(tImplant);
         }
         
-        void Add(T implant);
+        bool IImplantProcessor.CanAdd(IImplant implant)
+        {
+            if (implant is not T tImplant)
+            {
+                throw new ArgumentException($"Implant must be of type {typeof(T).FullName}", nameof(implant));
+            }
+            
+            return CanProcess(tImplant);
+        }
+        
+        void Process(T implant);
         void Remove(T implant);
+        bool CanProcess(T implant);
     } 
 }

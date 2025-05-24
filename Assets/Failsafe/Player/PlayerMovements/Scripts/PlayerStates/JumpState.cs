@@ -1,15 +1,18 @@
 using UnityEngine;
 
-namespace PlayerStates
+namespace Failsafe.PlayerMovements.States
 {
+    /// <summary>
+    /// Прыжок
+    /// </summary>
     public class JumpState : BehaviorState
     {
         private InputHandler _inputHandler;
         private CharacterController _characterController;
-        private readonly PlayerMovementParametrs _movementParametrs;
+        private readonly PlayerMovementParameters _movementParametrs;
 
-        private float _jumpForce => _movementParametrs.jumpForce;
-        private float _jumpForceFade => _movementParametrs.jumpForceFade;
+        private float _jumpForce => _movementParametrs.JumpForce;
+        private float _jumpForceFade => _movementParametrs.JumpForceFade;
         private float _jumpProgress = 0;
         private Vector3 _initialVelocity;
 
@@ -19,9 +22,9 @@ namespace PlayerStates
         /// </summary>
         /// <returns></returns>
         // Формулу нужно подбирать чтобы было красиво
-        public bool InHightPoint() => (_jumpForce - _jumpProgress * _jumpForceFade) < _movementParametrs.gravityForce * 0.8;
+        public bool InHightPoint() => (_jumpForce - _jumpProgress * _jumpForceFade) < _movementParametrs.GravityForce * 0.8;
 
-        public JumpState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParametrs movementParametrs)
+        public JumpState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParameters movementParametrs)
         {
             _inputHandler = inputHandler;
             _characterController = characterController;

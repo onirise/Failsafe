@@ -1,6 +1,7 @@
+using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
-namespace PlayerStates
+namespace Failsafe.PlayerMovements.States
 {
     /// <summary>
     /// Зацепление за выступ
@@ -9,7 +10,7 @@ namespace PlayerStates
     {
         private readonly InputHandler _inputHandler;
         private readonly CharacterController _characterController;
-        private readonly PlayerMovementParametrs _movementParametrs;
+        private readonly PlayerMovementParameters _movementParametrs;
         private readonly PlayerGravityController _playerGravityController;
         private readonly PlayerRotationController _playerRotationController;
         private readonly Transform _grabPoint;
@@ -21,7 +22,7 @@ namespace PlayerStates
         public GrabLedgeState(
             InputHandler inputHandler,
             CharacterController characterController,
-            PlayerMovementParametrs movementParametrs,
+            PlayerMovementParameters movementParametrs,
             PlayerGravityController playerGravityController,
             LedgeDetector obstacleDetector,
             PlayerRotationController playerRotationController,

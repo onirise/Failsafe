@@ -1,6 +1,7 @@
+using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
-namespace PlayerStates
+namespace Failsafe.PlayerMovements.States
 {
     /// <summary>
     /// Взбирание на уступ
@@ -9,7 +10,7 @@ namespace PlayerStates
     {
         private readonly InputHandler _inputHandler;
         private readonly CharacterController _characterController;
-        private readonly PlayerMovementParametrs _movementParametrs;
+        private readonly PlayerMovementParameters _movementParametrs;
         private readonly PlayerGravityController _playerGravityController;
         private readonly Transform _grabPoint;
         private float _duration = 0.5f;
@@ -34,7 +35,7 @@ namespace PlayerStates
         public ClimbingState(
             InputHandler inputHandler,
             CharacterController characterController,
-            PlayerMovementParametrs movementParametrs,
+            PlayerMovementParameters movementParametrs,
             PlayerGravityController playerGravityController,
             Transform grabPoint)
         {

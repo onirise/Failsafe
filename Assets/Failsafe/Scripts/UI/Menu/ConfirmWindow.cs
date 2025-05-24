@@ -1,14 +1,16 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ConfirmWindow : MonoBehaviour
 {
     public Button yesButton;
     
-    public void InitialiseWindow(BaseConfirmCallButton _button, Vector3 scale) 
+  
+    public void InitialiseWindow(UnityAction funcToListen, string text) 
     {
-        yesButton.onClick.AddListener(_button.funcToListen);
-        transform.localScale = scale;
+        yesButton.onClick.AddListener(funcToListen);
+        
     }
 
     public void CLoseWindow()

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 [Serializable]
 public class SaveDATA 
@@ -13,13 +14,23 @@ public class SaveDATA
 public class ProfileDATA
 {
     public bool selected;
-    public int localeEntryIndex;
-    public int profileID = 1;
+    public int localeEntryIndex;    
 
     public bool isNew = true;
 
     public GameplaySaveDATA[] gameplaySaveDATAs = new GameplaySaveDATA[3] {new GameplaySaveDATA(), new GameplaySaveDATA(), new GameplaySaveDATA()};
    
+   public void SetNewLocaleEntry()
+    {
+        var stringTable = LocalizationSettings.StringDatabase.GetTable("ProfileNamesTable"); 
+        localeEntryIndex = UnityEngine.Random.Range(1, stringTable.Count+1);
+        
+    }
+
+    public ProfileDATA()
+    {
+        SetNewLocaleEntry();
+    }
    
 
 }

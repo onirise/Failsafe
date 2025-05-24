@@ -42,7 +42,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 4438944360978397633}
   cacheVersion: 131847
-  cacheTime: 638820821804730575
+  cacheTime: 638837172908486632
   SerializableEventsDict: []
 --- !u!114 &4438944360978397633
 MonoBehaviour:
@@ -59,7 +59,7 @@ MonoBehaviour:
   Path: FMOD_Failsafe/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638820821804730575
+  lastModified: 638837172908486632
   FileSizes:
   - Name: Desktop
     Value: 724

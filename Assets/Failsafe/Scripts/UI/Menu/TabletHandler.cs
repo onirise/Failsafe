@@ -10,11 +10,9 @@ public class TabletHandler : MonoBehaviour
 
     public GameObject tabletGO;    
 
-    public GameObject MainMenuGO;
-    public GameObject GameplayMenuGO;
+    
     public float time;
 
-    public PlayButton playButton;
 
     //[Inject] SaveManager saveManager;
     [Inject] ProfilesHandler profilesHandler;
@@ -25,20 +23,10 @@ public class TabletHandler : MonoBehaviour
        
         SaveManager.profilesHandler = profilesHandler;
         PauseManager.Pause(false);
-        //SetCursor();
-        if(SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            
-            EnableTablet(true);
-            
-        }
-        else
-            EnableTablet(false);
         SaveManager.LoadAll();
+       
         Profile currentProfile = profilesHandler.GetSelectedProfile();
-        if(currentProfile==null)
-            playButton.SetPlayButtonInteractable(false);
-        else
+        if(currentProfile!=null)           
         {
              gameplaySavesHandler.profileParent = currentProfile;
              gameplaySavesHandler.SetSavesFromSelectedProfile(currentProfile.DATA.gameplaySaveDATAs);
@@ -77,16 +65,7 @@ public class TabletHandler : MonoBehaviour
         
         gameplaySavesHandler.gameplaySavesGO.SetActive(false);
 
-        if(SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            MainMenuGO.SetActive(true);
-            GameplayMenuGO.SetActive(false);
-        }
-        else
-        {
-            MainMenuGO.SetActive(false);
-            GameplayMenuGO.SetActive(true);
-        }
+       
             
     }
 

@@ -8,10 +8,17 @@ public class ProfilesHandler : MonoBehaviour
     public GameObject ProfilesContainerGO;
 
     public List<Profile> profiles = new List<Profile>();
+    public List<ProfileDATA> profiles1 = new List<ProfileDATA>();
 
     //[Inject] SaveManager saveManager;
     [Inject] DiContainer _container;
 
+    public ProfileDATA CreateNewProfile()
+    {
+        ProfileDATA newProfileData = new ProfileDATA();
+        profiles1.Add(newProfileData);
+        return newProfileData;
+    }
 
     public void UpdateProfilesList()
     {
@@ -22,20 +29,6 @@ public class ProfilesHandler : MonoBehaviour
     public void AddToProfilesList(Profile _newProfile)
     {
         
-        foreach (var item in profiles)
-        {
-            if(item.DATA.profileID == _newProfile.DATA.profileID)
-            {
-                _newProfile.DATA.profileID++;
-            }
-            else
-            {
-                break;
-            }
-        }
-        
-        
-        _newProfile.transform.SetSiblingIndex(_newProfile.DATA.profileID-1);
         _newProfile.UpdateProfileUI();
         UpdateProfilesList();
 
@@ -75,6 +68,8 @@ public class ProfilesHandler : MonoBehaviour
 
     public void Load(ProfileDATA[] data)
     {
+        
+        profiles1.AddRange(data);
         foreach (var item in data)
         {
             Profile newProfile = _container.InstantiatePrefabForComponent<Profile>(profilePrefab, ProfilesContainerGO.transform);

@@ -6,7 +6,7 @@ using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using Zenject;
 
-public class Profile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class Profile : BaseMenu, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public ProfileDATA DATA;
     
@@ -20,6 +20,8 @@ public class Profile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
    
 
     public TMP_Text indexText;
+
+   
 
     //public bool selected; 
     //public int localeEntryIndex;
@@ -50,10 +52,24 @@ public class Profile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public void UpdateProfileUI()
     {
-        indexText.text = DATA.profileID.ToString();
+        
         locStrEvent.SetEntry(DATA.localeEntryIndex.ToString());
         selectedTextGO.SetActive(DATA.selected);
         newProfileTextGO.SetActive(DATA.isNew);
+    }
+
+    public void DeleteProfile()
+    {
+
+        CallConfirm(() => 
+        {
+        
+            profilesHandler.RemoveFromProfilesList(this);
+            
+            Destroy(gameObject);
+        });
+        
+
     }
 
    
@@ -64,6 +80,7 @@ public class Profile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         selectedTextGO.SetActive(false);
         
     }
+
 
     public void OnSelectProfile()
     {   
@@ -94,8 +111,7 @@ public class Profile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                 item.DeselectProfile();
             }
             DATA.selected = true;
-            selectedTextGO.SetActive(true);
-            tabletHandler.playButton.SetPlayButtonInteractable(true);
+            selectedTextGO.SetActive(true);            
             clickToSelectTextGO.SetActive(false);
             //gameplaySavesHandler.SetSavesFromSelectedProfile(DATA.gameplaySaveDATAs);
             SaveManager.SaveAll();

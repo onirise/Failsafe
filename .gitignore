@@ -122,3 +122,7 @@ fmod_editor.log
 /FMOD/**.restore
 
 /Assets/Plugins/FMOD/Cache
+
+# TODO: Find and fix problem with this .mets file
+# Ignore TextMesh Pro meta useless file
+/[Aa]ssets/TextMesh Pro.meta

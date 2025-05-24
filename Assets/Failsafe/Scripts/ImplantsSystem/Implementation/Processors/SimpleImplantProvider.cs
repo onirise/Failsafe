@@ -2,9 +2,9 @@
 
 namespace Failsafe.Scripts.ImplantsSystem.Implementation.Processors
 {
-    public class SimpleImplantProvider :  IImplantProcessor<SimpleImplant>
+    public class SimpleImplantProcessor : IImplantProcessor<SimpleImplant>
     {
-        public void Add(SimpleImplant implant)
+        public void Process(SimpleImplant implant)
         {
             //do something with player data model or communicate with other systems
         }
@@ -12,6 +12,13 @@ namespace Failsafe.Scripts.ImplantsSystem.Implementation.Processors
         public void Remove(SimpleImplant implant)
         {
             //opposite of "add"
+        }
+
+        public bool CanProcess(SimpleImplant implant)
+        {
+            //check if can add implant
+            
+            return true;
         }
     }
 }

@@ -2,15 +2,20 @@ using UnityEngine;
 
 public class SpeedModifier : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public SpeedModifierData Data;
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeSpeed()
     {
-        
+        var pc = GetComponentInParent<PlayerController>();
+        if (pc == null)
+        {
+            Debug.LogError("No PlayerController in parents");
+            return;
+        }
+
+        // var movementParams = pc.MovementParametrs;
+        // movementParams.walkSpeed *= Data.SpeedFactor;
+        // movementParams.runSpeed *= Data.SpeedFactor;
+        // movementParams.crouchSpeed *= Data.SpeedFactor;
     }
 }

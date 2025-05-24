@@ -1,9 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Item : Prop
 {
     public ItemData ItemData;
-    public ActionsGroupList ActionsGroups;
+    public List<ActionsGroup> ActionsGroups;
 
     private void Awake()
     {

@@ -7,5 +7,6 @@ public class Healer : MonoBehaviour
     public void Heal()
     {
         //GetComponentInParent<PlayerHealth>().Health += HealData.HealAmount;
+        Debug.Log("Healed");
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 [System.Serializable]
 public class ActionsGroup
 {
-    public List<InputActionReference> ActionReference;
+    public List<InputActionReference> Actions;
     public UnityEvent Event;
 
     public void Invoke() =>

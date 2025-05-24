@@ -7,5 +7,6 @@ public class MaxHealthModifier : MonoBehaviour
     public void ChangeMaxHealth()
     {
         //GetComponentInParent<PlayerHealth>().MaxHealth += Data.MaxHealthDelta;
+        //GetComponentInParent<PlayerUniqieMods>().StimpackUsed = true;
     }
 }

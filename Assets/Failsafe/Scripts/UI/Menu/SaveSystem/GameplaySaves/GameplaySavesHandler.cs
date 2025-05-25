@@ -18,6 +18,7 @@ public class GameplaySavesHandler : MonoBehaviour
 
     void Start()
     {
+        /*
         gameplaySaves[0].SetSaveName("start_autosave", -1);
         gameplaySaves[0].UpdateGameplaySaveUI(true);
         
@@ -26,7 +27,7 @@ public class GameplaySavesHandler : MonoBehaviour
         {
             gameplaySaves[i].SetSaveName("gameplaySaveName", i);
             gameplaySaves[i].UpdateGameplaySaveUI();
-        }
+        }*/
     }
    
 

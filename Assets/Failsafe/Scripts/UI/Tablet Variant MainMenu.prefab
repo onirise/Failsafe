@@ -128,6 +128,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5202282519135628759, guid: d184c0559c037b545a4fd51781121311, type: 3}
+      propertyPath: _monoInstallers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5341003974726804482, guid: d184c0559c037b545a4fd51781121311, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -231,6 +235,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 414141711368027274, guid: d184c0559c037b545a4fd51781121311, type: 3}
+    - {fileID: 203002918713829775, guid: d184c0559c037b545a4fd51781121311, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3298714706703331036, guid: d184c0559c037b545a4fd51781121311, type: 3}
       insertIndex: -1

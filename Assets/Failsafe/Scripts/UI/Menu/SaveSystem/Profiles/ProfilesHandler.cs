@@ -1,87 +1,73 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using Zenject;
 public class ProfilesHandler : MonoBehaviour
 {
-    public Profile profilePrefab;
 
-    public GameObject ProfilesContainerGO;
 
-    public List<Profile> profiles = new List<Profile>();
     public List<ProfileDATA> profiles1 = new List<ProfileDATA>();
+    public ProfileDATA selectedProfile;
+    public UnityAction OnProfilesChanged;
 
-    //[Inject] SaveManager saveManager;
-    [Inject] DiContainer _container;
+
 
     public ProfileDATA CreateNewProfile()
     {
         ProfileDATA newProfileData = new ProfileDATA();
         profiles1.Add(newProfileData);
+        selectedProfile = GetSelectedProfile() ? selectedProfile : newProfileData;
+        SaveManager.SaveAll();
+        OnProfilesChanged?.Invoke();
         return newProfileData;
+
     }
-
-    public void UpdateProfilesList()
+    public void RemoveFromProfilesList(int _index)
     {
-        profiles.Clear();
-        profiles.AddRange(ProfilesContainerGO.GetComponentsInChildren<Profile>());
-    }
-
-    public void AddToProfilesList(Profile _newProfile)
-    {
-        
-        _newProfile.UpdateProfileUI();
-        UpdateProfilesList();
-
+        bool selectedIsDeleted = IsSelectedProfile(_index);
+        profiles1.RemoveAt(_index);
+        if (selectedIsDeleted && profiles1.Count > 0)
+            selectedProfile = profiles1[profiles1.Count - 1];
+        OnProfilesChanged?.Invoke();
         SaveManager.SaveAll();
     }
 
-   
 
-    public void RemoveFromProfilesList(Profile _profile)
+    public bool GetSelectedProfile()
     {
-        profiles.Remove(_profile);
-        
-        SaveManager.SaveAll();
+        return selectedProfile != null;
     }
 
-    public Profile GetSelectedProfile()
+    public void SetSelectedProfile(int _index)
     {
-        foreach (var item in profiles)
-        {
-            if(item.DATA.selected == true)
-                return item;
-        }
-        return null;
+        selectedProfile = profiles1[_index];
+        SaveManager.SaveAll();
+        OnProfilesChanged?.Invoke();
+    }
+
+    public bool IsSelectedProfile(int _index)
+    {
+        return selectedProfile == profiles1[_index];
+    }
+
+    public int GetSelectedProfileIndex()
+    {
+        return profiles1.IndexOf(selectedProfile);
     }
 
     #region SAVE AND LOAD
 
-    public void Save(ref ProfileDATA[] data)
+    public ProfileSaveDATA ToSaveData()
     {
-        data = new ProfileDATA[profiles.Count];
-        for (int i = 0; i < profiles.Count; i++)
-        {
-            data[i] = profiles[i].DATA;
-            data[i].gameplaySaveDATAs = profiles[i].DATA.gameplaySaveDATAs;
-        }
+        return new ProfileSaveDATA(profiles1.ToArray(), GetSelectedProfileIndex());
     }
 
-    public void Load(ProfileDATA[] data)
+    public void Load(ProfileSaveDATA data)
     {
-        
-        profiles1.AddRange(data);
-        foreach (var item in data)
-        {
-            Profile newProfile = _container.InstantiatePrefabForComponent<Profile>(profilePrefab, ProfilesContainerGO.transform);
-            //Profile newProfile = Instantiate(profilePrefab, ProfilesContainerGO.transform);
-            //newProfile.LoadProfile(item);            
-            
-            newProfile.SetDATA(item);
-            UpdateProfilesList();
-            newProfile.transform.SetSiblingIndex(profiles.Count-1);
-            
-        }
-        
+
+        profiles1.AddRange(data.profileDATAs);
+        SetSelectedProfile(data.selectedProfileIndex);
     }
 
     #endregion

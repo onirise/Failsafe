@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 829670027429447349}
   - component: {fileID: 6066864233542915504}
   - component: {fileID: 8102502118665978504}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: TabletObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1808,8 +1808,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasParent: {fileID: 3298714706703331036}
   tabletGO: {fileID: 3092832202079503117}
-  MainMenuGO: {fileID: 0}
-  GameplayMenuGO: {fileID: 0}
   time: 0
 --- !u!114 &7058604030179344141
 MonoBehaviour:
@@ -1823,9 +1821,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fe8bf1f4ce486542804890a8082d724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profilePrefab: {fileID: 3361532966471903475, guid: 155a210ddd4a80a4caad215df7f2c774, type: 3}
-  ProfilesContainerGO: {fileID: 0}
-  profiles: []
+  profiles1: []
+  selectedProfile:
+    localeEntryIndex: 0
+    isNew: 1
+    gameplaySaveDATAs:
+    - seed: 0
+      time: 0
+      playerPosition: {x: 0, y: 0, z: 0}
+      screenshotLink: 
+      lastSave: 0
+      isEmpty: 1
+    - seed: 0
+      time: 0
+      playerPosition: {x: 0, y: 0, z: 0}
+      screenshotLink: 
+      lastSave: 0
+      isEmpty: 1
+    - seed: 0
+      time: 0
+      playerPosition: {x: 0, y: 0, z: 0}
+      screenshotLink: 
+      lastSave: 0
+      isEmpty: 1
 --- !u!114 &8525875654931906786
 MonoBehaviour:
   m_ObjectHideFlags: 0

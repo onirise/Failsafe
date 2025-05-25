@@ -8,8 +8,6 @@ using Zenject;
 
 public class Profile : BaseMenu, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public ProfileDATA DATA;
-    
     public GameObject clickToSelectTextGO;
 
     public GameObject clickToOpenSavesTextGO;
@@ -17,132 +15,72 @@ public class Profile : BaseMenu, IPointerEnterHandler, IPointerExitHandler, IPoi
     public GameObject selectedTextGO;
 
     public GameObject newProfileTextGO;
-   
+
 
     public TMP_Text indexText;
 
-   
-
-    //public bool selected; 
-    //public int localeEntryIndex;
-
-    //public int profileID = 1;
+    public int profileIndex = 0;
 
     public LocalizeStringEvent locStrEvent;
 
     [Inject] ProfilesHandler profilesHandler;
-    [Inject] GameplaySavesHandler gameplaySavesHandler;
-    [Inject] TabletHandler tabletHandler;
-    
 
-    public void SetDATA(ProfileDATA _profileDATA)
-    {
-        DATA = _profileDATA;
-        UpdateProfileUI();
-    }
 
-    public void SetNewLocaleEntry()
-    {
-        var stringTable = LocalizationSettings.StringDatabase.GetTable("ProfileNamesTable"); 
-        DATA.localeEntryIndex = Random.Range(1, stringTable.Count+1);
-        Debug.Log(DATA.localeEntryIndex);
-    }
-           
-     
-
-    public void UpdateProfileUI()
-    {
-        
-        locStrEvent.SetEntry(DATA.localeEntryIndex.ToString());
-        selectedTextGO.SetActive(DATA.selected);
-        newProfileTextGO.SetActive(DATA.isNew);
-    }
 
     public void DeleteProfile()
     {
-
-        CallConfirm(() => 
+        CallConfirm(() =>
         {
-        
-            profilesHandler.RemoveFromProfilesList(this);
-            
-            Destroy(gameObject);
+            profilesHandler.RemoveFromProfilesList(profileIndex);
         });
-        
-
     }
 
-   
-
-    public void DeselectProfile()
+    public void SetDATA(ProfileDATA _profileDATA, int _index)
     {
-        DATA.selected = false;
-        selectedTextGO.SetActive(false);
-        
+        locStrEvent.SetEntry(_profileDATA.localeEntryIndex.ToString());
+        selectedTextGO.SetActive(profilesHandler.IsSelectedProfile(_index));
+        newProfileTextGO.SetActive(_profileDATA.isNew);
+        profileIndex = _index;
+        indexText.text = (profileIndex + 1).ToString();
+        clickToSelectTextGO.SetActive(false);
+
     }
 
 
     public void OnSelectProfile()
-    {   
-        if(!DATA.isNew || DATA.isNew && DATA.selected)
-        {
-            gameplaySavesHandler.SetSavesFromSelectedProfile(DATA.gameplaySaveDATAs);        
-            gameplaySavesHandler.OpenGSavesWindow(this, SaveState.Load);
-        }
+    {
+        //if(!profilesHandler.profiles1[profileIndex].isNew)
+        // {
+        //     gameplaySavesHandler.SetSavesFromSelectedProfile(profilesHandler.profiles1[profileIndex].gameplaySaveDATAs);        
+        //     gameplaySavesHandler.OpenGSavesWindow(this, SaveState.Load);
+        // }
 
-        if(DATA.isNew && !DATA.selected)
-        SelectCLickedProfile();
-       
-        
-            
-       
-            
-      
-        
-            
-    }
+        if (profilesHandler.profiles1[profileIndex].isNew && !profilesHandler.IsSelectedProfile(profileIndex))
+            profilesHandler.SetSelectedProfile(profileIndex);
 
-    public void SelectCLickedProfile()
-    {        
-        if(!DATA.selected)
-        {
-            foreach (var item in profilesHandler.profiles)
-            {
-                item.DeselectProfile();
-            }
-            DATA.selected = true;
-            selectedTextGO.SetActive(true);            
-            clickToSelectTextGO.SetActive(false);
-            //gameplaySavesHandler.SetSavesFromSelectedProfile(DATA.gameplaySaveDATAs);
-            SaveManager.SaveAll();
-        }
+
     }
 
     public void OnMouseEnterToProfile()
     {
-        if(!DATA.selected)
+        if (!profilesHandler.IsSelectedProfile(profileIndex))
         {
             clickToSelectTextGO.SetActive(true);
         }
-        else
+        else if (!profilesHandler.profiles1[profileIndex].isNew)
             clickToOpenSavesTextGO.SetActive(true);
 
-            
+
     }
 
     public void OnMouseExitToProfile()
     {
-        if(!DATA.selected)
-        {
-            clickToSelectTextGO.SetActive(false);
-        }
-        else
-            clickToOpenSavesTextGO.SetActive(false);
+        clickToSelectTextGO.SetActive(false);
+        clickToOpenSavesTextGO.SetActive(false);
 
-            
     }
 
-   
+
     // Использовал ивенты таким образом, ибо если использовать компонент Event trigger,
     // то не будет работать скроллинг профилей пока мышка находится на одном из профилей
     public void OnPointerEnter(PointerEventData eventData)
@@ -158,7 +96,7 @@ public class Profile : BaseMenu, IPointerEnterHandler, IPointerExitHandler, IPoi
     public void OnPointerClick(PointerEventData eventData)
     {
         OnSelectProfile();
-    
+
     }
-   
+
 }

@@ -42,8 +42,14 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 4438944360978397633}
   cacheVersion: 131847
-  cacheTime: 638837172908486632
-  SerializableEventsDict: []
+  cacheTime: 638838109232991915
+  SerializableEventsDict:
+  - key: event:/InGame/1
+    index: 0
+  - key: event:/Menu/1
+    index: 1
+  - key: event:/SFX/Footstep
+    index: 2
 --- !u!114 &4438944360978397633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,7 +65,7 @@ MonoBehaviour:
   Path: FMOD_Failsafe/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638837172908486632
+  lastModified: 638838109232991915
   FileSizes:
   - Name: Desktop
     Value: 724

@@ -25,7 +25,7 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public RawImage savePreview;
 
     public LocalizeStringEvent timeLocalizeStringEvent;
-    
+
     bool isStartAutosave = false;
 
     //[Inject] SaveManager saveManager;
@@ -35,7 +35,7 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void UpdateGameplaySaveUI(bool _setStartAutosave = false)
     {
         isStartAutosave = _setStartAutosave;
-        if(isStartAutosave)
+        if (isStartAutosave)
             clearButtonGO.SetActive(false);
 
         selectedTextGO.SetActive(DATA.lastSave);
@@ -45,9 +45,9 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         timeLocalizeStringEvent.RefreshString();
 
         //временно взял этот код вообще из другого места
-         if(DATA.screenshotLink != "")
+        if (DATA.screenshotLink != "")
         {
-            byte[] fileData = File.ReadAllBytes(DATA.screenshotLink);    
+            byte[] fileData = File.ReadAllBytes(DATA.screenshotLink);
             Texture2D loadedTexture = new Texture2D(2, 2); // Временные размеры (автоматически изменятся)
             loadedTexture.LoadImage(fileData);
             savePreview.texture = loadedTexture;
@@ -58,7 +58,7 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
     }
 
-    
+
 
     public void SetNewDATA(string _scrLink, bool _lastSave, float _time, bool _isEmpty)
     {
@@ -70,29 +70,29 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void ClearDATA()
     {
-        SetNewDATA("", false, 0, true);        
+        SetNewDATA("", false, 0, true);
         UpdateGameplaySaveUI();
         SaveManager.SaveAll();
-        for (int i = gameplaySavesHandler.gameplaySaves.Count-1; i >= 0; i--)
+        for (int i = gameplaySavesHandler.gameplaySaves.Count - 1; i >= 0; i--)
         {
-            if(!gameplaySavesHandler.gameplaySaves[i].DATA.isEmpty)
+            if (!gameplaySavesHandler.gameplaySaves[i].DATA.isEmpty)
             {
                 gameplaySavesHandler.gameplaySaves[i].DATA.lastSave = true;
                 gameplaySavesHandler.gameplaySaves[i].selectedTextGO.SetActive(true);
                 break;
             }
-                
+
 
         }
-        
-        
+
+
     }
-   
+
 
     public void SetSaveName(string _entryName, int id)
     {
         nameTextLocEvent.SetEntry(_entryName);
-        if(id != -1)
+        if (id != -1)
             nameTextLocEvent.StringReference.Arguments = new object[] { id };
         nameTextLocEvent.RefreshString();
     }
@@ -102,66 +102,66 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         DATA.lastSave = false;
         selectedTextGO.SetActive(false);
-        
+
     }
 
     public void OnSaveGameplaySave()
     {
-        
-            foreach (var item in gameplaySavesHandler.gameplaySaves)
-            {
-                item.DeselectGameplaySave();
-            }
 
-            
-            string link = screenTaker.SaveCameraView(this);
-            SetNewDATA(link, true, tabletHandler.time, false);
-            UpdateGameplaySaveUI();
-            clickToSelectTextGO.SetActive(false);
-            gameplaySavesHandler.profileParent.SelectCLickedProfile();
-            SaveManager.SaveAll();
-            //gameplaySavesHandler.gameplaySavesGO.SetActive(false);
-           
-       
-            
+        foreach (var item in gameplaySavesHandler.gameplaySaves)
+        {
+            item.DeselectGameplaySave();
+        }
+
+
+        string link = screenTaker.SaveCameraView(this);
+        SetNewDATA(link, true, tabletHandler.time, false);
+        UpdateGameplaySaveUI();
+        clickToSelectTextGO.SetActive(false);
+        //gameplaySavesHandler.profileParent.SelectCLickedProfile();
+        SaveManager.SaveAll();
+        //gameplaySavesHandler.gameplaySavesGO.SetActive(false);
+
+
+
     }
 
     public void OnLoadGameplaySave()
     {
-        if(!DATA.isEmpty)
+        if (!DATA.isEmpty)
         {
             clickToSelectTextGO.SetActive(false);
-            gameplaySavesHandler.profileParent.SelectCLickedProfile();
+            //gameplaySavesHandler.profileParent.SelectCLickedProfile();
             gameplaySavesHandler.gameplaySavesGO.SetActive(false);
             SaveManager.SaveAll();
         }
-        
+
     }
 
-    
+
 
     public void OnMouseEnterToGameplaySave()
     {
-        if((!isStartAutosave && gameplaySavesHandler.saveState == SaveState.Save) ||  (!DATA.isEmpty && gameplaySavesHandler.saveState == SaveState.Load))
-        {           
-                clickToSelectTextGO.SetActive(true);            
+        if ((!isStartAutosave && gameplaySavesHandler.saveState == SaveState.Save) || (!DATA.isEmpty && gameplaySavesHandler.saveState == SaveState.Load))
+        {
+            clickToSelectTextGO.SetActive(true);
         }
-           
-    
 
-            
+
+
+
     }
 
     public void OnMouseExitToGameplaySave()
     {
-        
-            clickToSelectTextGO.SetActive(false);
-      
 
-            
+        clickToSelectTextGO.SetActive(false);
+
+
+
     }
 
-   
+
     // Использовал ивенты таким образом, ибо если использовать компонент Event trigger,
     // то не будет работать скроллинг профилей пока мышка находится на одном из профилей
     public void OnPointerEnter(PointerEventData eventData)
@@ -176,14 +176,14 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(gameplaySavesHandler.saveState == SaveState.Save && !isStartAutosave)
+        if (gameplaySavesHandler.saveState == SaveState.Save && !isStartAutosave)
         {
             OnSaveGameplaySave();
         }
         else
             OnLoadGameplaySave();
-        
-    
+
+
     }
 
 }

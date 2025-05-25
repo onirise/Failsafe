@@ -9,6 +9,6 @@ public class OpenSaveLoadWindow : MonoBehaviour
     [Inject] ProfilesHandler profilesHandler;
     public void OpenWindow()
     {
-        gameplaySavesHandler.OpenGSavesWindow(profilesHandler.GetSelectedProfile(), saveStateInButton);
+        //gameplaySavesHandler.OpenGSavesWindow(profilesHandler.GetSelectedProfile(), saveStateInButton);
     }
 }

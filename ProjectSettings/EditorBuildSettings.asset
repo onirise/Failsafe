@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Failsafe/Scenes/Game.unity
     guid: 24c5974dc770b4c45bb774fc00eebc4b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Failsafe/Scenes/MenuTest.unity
     guid: 9a2e1b77b991a094c8ab6619a34fbcc6
   m_configObjects:

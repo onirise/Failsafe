@@ -15,8 +15,8 @@ public class SpawnEnemiesCallback : MonoBehaviour
     public DMDungeonGenerator.DungeonGenerator generator;
 
     public GameObject PlayerPrefab;
-   
-    
+
+
     public GameObject spawnedPlayer;
     public GameObject EnemyPrefab;
     public NavMeshSurface NavMeshSurface;
@@ -27,7 +27,7 @@ public class SpawnEnemiesCallback : MonoBehaviour
     /// </summary>
     public float enemySpawnChance = 0.8f;
 
-   
+
 
     void Awake()
     {
@@ -51,9 +51,8 @@ public class SpawnEnemiesCallback : MonoBehaviour
 
         //spawn the player in the first room somewhere
         Vector3 spawnRoomPos = generator.DungeonGraph[0].data.gameObject.transform.position;
-        //spawnedPlayer = GameObject.Instantiate(PlayerPrefab, spawnRoomPos, Quaternion.identity);        
-        // ОТ ЧЕЛА, КОТОРЫЙ ДЕЛАЛ ГЛАВНОЕ МЕНЮ: сделал instantiate от zenject, ибо не прокидывались зависимости
-        spawnedPlayer = _container.InstantiatePrefab(PlayerPrefab, spawnRoomPos, Quaternion.identity, null); 
+        spawnedPlayer = GameObject.Instantiate(PlayerPrefab, spawnRoomPos, Quaternion.identity);
+
         SpawnEnemies();
     }
 

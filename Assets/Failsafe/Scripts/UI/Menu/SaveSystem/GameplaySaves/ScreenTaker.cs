@@ -18,12 +18,12 @@ public class ScreenTaker : MonoBehaviour
         renderedTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
         RenderTexture.active = null;
 
-        string link = $"Assets/Failsafe/Scripts/UI/Menu/SaveSystem/GameplaySaves/Profile{Random.Range(1,1000)}-"+ //gameplaySavesHandler.profileParent.DATA.profileID
-                          $"Slot{gameplaySavesHandler.gameplaySaves.IndexOf(_GSave)}.jpg";
+        string link = Path.Combine(Application.persistentDataPath, $"Profile{Random.Range(1, 1000)}-" + //gameplaySavesHandler.profileParent.DATA.profileID
+                          $"Slot{gameplaySavesHandler.gameplaySaves.IndexOf(_GSave)}.jpg");
         byte[] byteArray = renderedTexture.EncodeToJPG();
         File.WriteAllBytes(link, byteArray);
         _cam.gameObject.SetActive(false);
         return link;
     }
-    
+
 }

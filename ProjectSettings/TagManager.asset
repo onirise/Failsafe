@@ -16,13 +16,13 @@ TagManager:
   - UI
   - Player
   - LightSource
-  - Walls
+  - Walls  
+  - Ledge
+  - Enemy
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Inventory
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Inventory
+    uniqueID: 997706247
     locked: 0
   m_RenderingLayers:
   - Default

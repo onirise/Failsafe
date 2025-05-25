@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using DMDungeonGenerator;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Experimental.AI;
+using UnityEngine.UIElements;
 
 public class EnemyController
 {
@@ -8,12 +11,34 @@ public class EnemyController
     private readonly Transform _transform;
     private readonly NavMeshAgent _navMeshAgent;
 
-
+    public RoomData _currentRoom { get; private set; }
     public EnemyController(Enemy enemy, Transform transform, NavMeshAgent navMeshAgent)
     {
         _enemy = enemy;
         _transform = transform;
         _navMeshAgent = navMeshAgent;
+    }
+    public void SetCurrentRoom(RoomData room)
+    {
+        _currentRoom = room;
+    }
+
+    public RoomData CurrentRoom => _currentRoom;
+
+    public List<Transform> GetRoomPatrolPoints()
+    {
+        if (_currentRoom == null)
+        {
+            Debug.LogWarning("GetRoomPatrolPoints: CurrentRoom is NULL");
+            return new List<Transform>();
+        }
+
+        if (_currentRoom.PatrolPoints == null || _currentRoom.PatrolPoints.Count == 0)
+        {
+            Debug.LogWarning($"Комната {_currentRoom.name} имеет 0 точек — возможно, AutoCollectPatrolPoints() не вызван?");
+        }
+
+        return _currentRoom.GetPatrolPoints();
     }
 
     //Значения для скорости нужно будет брать из условного EnemyData, пока будет магические числа

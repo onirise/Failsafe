@@ -1,48 +1,66 @@
-﻿using FMOD;
+﻿using DMDungeonGenerator;
+using FMOD;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using static UnityEngine.EventSystems.EventTrigger;
 using Debug = UnityEngine.Debug;
 
 public class PatrolState : BehaviorState
 {
-    private Transform _transform;
-    private Sensor[] _sensors;
+    private readonly Transform _transform;
+    private readonly Sensor[] _sensors;
+    private readonly EnemyController _enemyController;
+
+    private List<Transform> _patrolPoints = new();
+    private int _currentPatrolPointIndex = -1;
     private Vector3 _patrolPoint;
-    private Transform[] _patrolPoints;
-    private EnemyController _enemyController;
-    private float _offset = 10f;
+
     private float _waitTime = 3f;
     private float _waitTimer;
-    private int _currentPatrolPointIndex = 0;
     private bool _isWaiting = false;
-    public PatrolState(Sensor[] sensors, Transform transform, EnemyController enemyController, Transform[] patrolPoints = null)
+    private float _warningProgress;
+    private float _warningTime = 1f;
+
+    public PatrolState(Sensor[] sensors, Transform transform, EnemyController enemyController)
     {
-        _transform = transform;
         _sensors = sensors;
-        _patrolPoints = patrolPoints;
+        _transform = transform;
         _enemyController = enemyController;
     }
 
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Enter PatrolState");
-
-        _waitTimer = _waitTime; // Инициализировать таймер
+        _waitTimer = _waitTime;
         _isWaiting = false;
+        _warningProgress = 0f;
+        Debug.Log($"[PatrolState] Текущая комната: {_enemyController.CurrentRoom?.name ?? "NULL"}");
+        var points = _enemyController.GetRoomPatrolPoints();
+        Debug.Log($"[PatrolState] Получено точек: {points.Count}");
 
-        HandlePatrolling(); // Установит _patrolPoint и начнет движение
+        _patrolPoints = points;
+        // Берём точки патруля из текущей комнаты
+        _patrolPoints = _enemyController.GetRoomPatrolPoints();
+
+        if (_patrolPoints == null || _patrolPoints.Count == 0)
+        {
+            Debug.LogWarning($"[PatrolState] {_transform.name} нет патрульных точек — fallback.");
+            _patrolPoint = _enemyController.RandomPoint();
+            _enemyController.MoveToPoint(_patrolPoint);
+        }
+        else
+        {
+            _currentPatrolPointIndex = -1;
+            HandlePatrolling();
+        }
     }
-
-    private float _warningProgress;
-    private float _warningTime = 1;
-
-    public bool PlayerSpotted() => _warningProgress >= _warningTime;
 
     public override void Update()
     {
-
         foreach (var sensor in _sensors)
         {
             if (sensor.IsActivated())
@@ -56,53 +74,38 @@ public class PatrolState : BehaviorState
         {
             HandleWaiting();
         }
-        else
+        else if (_enemyController.IsPointReached())
         {
-            if (_enemyController.IsPointReached())
-            {
-                _isWaiting = true;
-                _enemyController.StopMoving();
-            }
-            else
-            {
-                HandlePatrolling();
-            }
-        }
-    }
-
-    public bool isThereAnyPatrolPoint()
-    {
-        return _patrolPoints != null && _patrolPoints.Length > 0;
-    }
-
-    private void HandlePatrolling()
-    {
-        if (isThereAnyPatrolPoint())
-        {
-            // Обновляем индекс
-            _currentPatrolPointIndex = (_currentPatrolPointIndex + 1) % _patrolPoints.Length;
-
-            // Сохраняем следующую точку
-            _patrolPoint = _patrolPoints[_currentPatrolPointIndex].position;
-
-            // Отдаем команду двигаться
-            _enemyController.MoveToPoint(_patrolPoint);
-        }
-        else
-        {
-            _patrolPoint = _enemyController.RandomPoint();
+            _isWaiting = true;
+            _enemyController.StopMoving();
         }
     }
 
     private void HandleWaiting()
     {
         _waitTimer -= Time.deltaTime;
-
         if (_waitTimer <= 0f)
         {
             _waitTimer = _waitTime;
             _isWaiting = false;
-            _enemyController.MoveToPoint(_patrolPoint);
+            HandlePatrolling();
         }
     }
+
+    private void HandlePatrolling()
+    {
+        if (_patrolPoints == null || _patrolPoints.Count == 0)
+        {
+            _patrolPoint = _enemyController.RandomPoint();
+        }
+        else
+        {
+            _currentPatrolPointIndex = (_currentPatrolPointIndex + 1) % _patrolPoints.Count;
+            _patrolPoint = _patrolPoints[_currentPatrolPointIndex].position;
+        }
+
+        _enemyController.MoveToPoint(_patrolPoint);
+    }
+
+    public bool PlayerSpotted() => _warningProgress >= _warningTime;
 }

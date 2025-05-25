@@ -9,6 +9,7 @@ public class DefaultState : BehaviorState
     private Sensor[] _sensors;
     private Transform _transform;
     EnemyController _enemyController;
+    private bool _ispatroling = true;
     public DefaultState(Sensor[] sensors, Transform transform, EnemyController enemyController)
     {
         _sensors = sensors;
@@ -41,5 +42,9 @@ public class DefaultState : BehaviorState
                 _warningProgress += sensor.SignalStrength * Time.deltaTime;
             }
         }
+    }
+    public bool IsPatroling()
+    {
+        return _ispatroling;
     }
 }

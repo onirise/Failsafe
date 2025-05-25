@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DMDungeonGenerator;
@@ -94,8 +94,7 @@ public class SpawnEnemiesCallback : MonoBehaviour
             GameObject spawnedEnemy = GameObject.Instantiate(EnemyPrefab, enemyPos + enemyOffset, Quaternion.identity);
             enemies.Add(spawnedEnemy);
 
-            spawnedEnemy.GetComponentInChildren<VisualSensor>()._target = spawnedPlayer.transform;
-            spawnedEnemy.GetComponentInChildren<AudioSensor>()._target = spawnedPlayer.GetComponent<DemoPlayer>();
+            spawnedEnemy.GetComponentInChildren<VisualSensor>().Target = spawnedPlayer.transform;
         }
     }
 }

@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - PatrolPoints
+  - Light
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -13,14 +15,14 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
-  - 
-  - 
-  - 
+  - LightSource
+  - Walls  
+  - Ledge
+  - Enemy
   - Screenshot
   - 
   - 
-  - 
+  - Inventory
   - 
   - 
   - 
@@ -41,6 +43,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Inventory
+    uniqueID: 997706247
     locked: 0
   m_RenderingLayers:
   - Default

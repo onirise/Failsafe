@@ -46,6 +46,12 @@ public class PhysicsPickup : MonoBehaviour
         }
     }
 
+    public bool GetCurrentObject(out GameObject currentObject)
+    {
+        currentObject = curObject;
+        return currentObject != null;
+    }
+
     //calculates the new rotation and position of the curObject
     void ReposObject()
     {
@@ -89,7 +95,7 @@ public class PhysicsPickup : MonoBehaviour
     }
 
     //drops the current item
-    void DropItem()
+    public void DropItem()
     {
         curBody.useGravity = true;
         curBody = null;

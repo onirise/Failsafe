@@ -122,3 +122,4 @@ fmod_editor.log
 /FMOD/**.restore
 
 /Assets/Plugins/FMOD/Cache
+ProjectSettings/Packages/com.unity.probuilder/Settings.json

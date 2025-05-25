@@ -1,26 +1,27 @@
 ﻿using Failsafe.Scripts.Configs;
-using VContainer.Unity;
+using System;
+using UnityEngine;
+using Zenject;
 
 namespace Failsafe.Scripts.Bootstrap
 {
-    public class Bootstrapper : IStartable
-    {
-        private readonly ISceneLoader _sceneLoader;
-        private readonly GameConfig _gameConfig;
 
-        public Bootstrapper(ISceneLoader sceneLoader, GameConfig gameConfig)
+    public class Bootstrapper : IInitializable
+    {
+        [Inject] ISceneLoader _sceneLoader;
+        [Inject] GameConfig _gameConfig;
+
+        public async void Initialize()
         {
-            _sceneLoader = sceneLoader;
-            _gameConfig = gameConfig;
-        }
-        
-        public async void Start()
-        {
-            //logic after container build & IInitializable
-            
+            if (_sceneLoader == null)
+                Debug.LogError("_sceneLoader is null!");
+            if (_gameConfig == null)
+                Debug.LogError("_gameConfig is null!");
             await _sceneLoader.LoadSceneAsync(_gameConfig.MainMenuSceneName);
-            
-            //game started, main scene loaded
         }
+
+
+
+
     }
 }

@@ -124,6 +124,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -95.56
       objectReference: {fileID: 0}
+    - target: {fileID: 3160112612134958591, guid: d184c0559c037b545a4fd51781121311, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 20471
+      objectReference: {fileID: 0}
     - target: {fileID: 3965241798883896370, guid: d184c0559c037b545a4fd51781121311, type: 3}
       propertyPath: m_Enabled
       value: 1

@@ -31,7 +31,7 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     //[Inject] SaveManager saveManager;
     [Inject] GameplaySavesHandler gameplaySavesHandler;
     [Inject] TabletHandler tabletHandler;
-    [Inject] ScreenTaker screenTaker;
+    //[Inject] ScreenTaker screenTaker;
     public void UpdateGameplaySaveUI(bool _setStartAutosave = false)
     {
         isStartAutosave = _setStartAutosave;
@@ -114,8 +114,8 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
 
 
-        string link = screenTaker.SaveCameraView(this);
-        SetNewDATA(link, true, tabletHandler.time, false);
+        //string link = screenTaker.SaveCameraView(this);
+        //SetNewDATA(link, true, tabletHandler.time, false);
         UpdateGameplaySaveUI();
         clickToSelectTextGO.SetActive(false);
         //gameplaySavesHandler.profileParent.SelectCLickedProfile();

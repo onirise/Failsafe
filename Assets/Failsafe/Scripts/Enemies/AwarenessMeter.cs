@@ -14,6 +14,8 @@ public class AwarenessMeter
     [Header("Пороги")]
     [SerializeField] private float _alertThreshold = 30f;
     [SerializeField] private float _chaseThreshold = 100f;
+    [SerializeField] private float _chaseExitThreshold = 90f;
+    private bool _isChasing = false;
 
     [SerializeField, Range(0, 100)]
     private float _alertness;
@@ -35,12 +37,21 @@ public class AwarenessMeter
     }
     public bool IsChasing()
     {
-        if (_alertness >= _chaseThreshold)
+        if (_isChasing)
         {
-            _hasEverChased = true;
-            return true;
+            if (_alertness < _chaseExitThreshold)
+                _isChasing = false;
         }
-        return false;
+        else
+        {
+            if (_alertness >= _chaseThreshold)
+            {
+                _isChasing = true;
+                _hasEverChased = true;
+            }
+        }
+
+        return _isChasing;
     }
 
     public bool IsAlerted()

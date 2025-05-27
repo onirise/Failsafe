@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -19,7 +19,7 @@ public class RoomDataEditor: Editor {
 
         mode = (EditingMode)EditorGUILayout.EnumPopup("EditingMode: ", mode);
         EditorGUILayout.LabelField("Transparency: ");
-        data.debugTransparency= EditorGUILayout.Slider(data.debugTransparency, 0f, 0.25f);
+        data.DebugTransparency= EditorGUILayout.Slider(data.DebugTransparency, 0f, 0.25f);
         base.OnInspectorGUI();
     }
 
@@ -32,7 +32,7 @@ public class RoomDataEditor: Editor {
         float voxelScale = DMDungeonGenerator.DungeonGenerator.voxelScale;
 
         for(int i = 0; i < vox.Count; i++) {
-            Handles.color = new Color(1f, 1f, 1f, data.debugTransparency);
+            Handles.color = new Color(1f, 1f, 1f, data.DebugTransparency);
             Vector3 pos = vox[i].position;
             Handles.CubeHandleCap(-1, data.transform.TransformPoint((pos*voxelScale)), data.transform.rotation, voxelScale, EventType.Repaint);
         }

@@ -20,11 +20,14 @@ public class Enemy : MonoBehaviour
         var defaultState = new DefaultState(_sensors, transform, _controller);
         var chasingState = new ChasingState(_sensors, transform, _controller);
         var patrolState = new PatrolState(_sensors, transform, _controller);
-        
+        var attackState = new AttackState(_sensors, transform, _controller);
+
         defaultState.AddTransition(chasingState, _awarenessMeter.IsChasing);
         patrolState.AddTransition(chasingState, _awarenessMeter.IsChasing);
         defaultState.AddTransition(patrolState, defaultState.IsPatroling);
         chasingState.AddTransition(patrolState, chasingState.PlayerLost);
+        chasingState.AddTransition(attackState, chasingState.PlayerInAttackRange);
+        attackState.AddTransition(chasingState, attackState.PlayerOutOfAttackRange);
 
         var disabledStates = new List<BehaviorForcedState>() { new DisabledState() };
 

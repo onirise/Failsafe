@@ -31,6 +31,12 @@ public abstract class Sensor : MonoBehaviour
     protected abstract float SignalInFieldOfView();
 
     /// <summary>
+    /// Значение сигнала попавшего в зону атакующего луча 0 либо 1.
+    /// </summary>
+    /// <returns>0 если не попал , 1 если попал</returns>
+    public abstract bool SignalInAttackRay(Vector3 targetPosition);
+
+    /// <summary>
     /// Сенсор активирован
     /// </summary>
     /// <returns></returns>

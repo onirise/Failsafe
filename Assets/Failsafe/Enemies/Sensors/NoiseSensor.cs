@@ -42,6 +42,11 @@ public class NoiseSensor : Sensor
         return Math.Clamp(maxDetectedStrength / _maxSoundStrength, 0, 1);
     }
 
+    public override bool SignalInAttackRay(Vector3 targetPosition)
+    {
+        return false;
+    }
+
     private float CalculateSignalStrength(ISignal signal)
     {
         var distanceToSignal = Vector3.Distance(transform.position, signal.SourcePosition);

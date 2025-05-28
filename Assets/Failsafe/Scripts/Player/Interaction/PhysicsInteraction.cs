@@ -1,6 +1,3 @@
-using Failsafe.PlayerMovements;
-using System;
-using System.IO.Enumeration;
 using UnityEngine;
 
 namespace Failsafe.Player.Interaction

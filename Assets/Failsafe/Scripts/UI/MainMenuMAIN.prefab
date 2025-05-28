@@ -1606,6 +1606,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4de54c55937684b98bf6ad48594689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirmWindowPrefab: {fileID: 5385178914647578362, guid: 17aaa47da3f96d0478288c5608f16aad, type: 3}
-  playButton: {fileID: 9023147995378041459}
-  profilesMainGO: {fileID: 0}
+  _confirmWindowPrefab: {fileID: 5385178914647578362, guid: 17aaa47da3f96d0478288c5608f16aad, type: 3}
+  _playButton: {fileID: 9023147995378041459}
+  _profilesMainGO: {fileID: 0}

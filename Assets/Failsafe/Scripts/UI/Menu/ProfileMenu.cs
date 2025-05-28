@@ -5,32 +5,32 @@ using UnityEngine;
 using Zenject;
 public class ProfileMenu : BaseMenu
 {
-    [Inject] ProfilesHandler profilesHandler;
-    [Inject] DiContainer _container;
 
-    public GameObject ProfilesContainerGO;
-    public Profile profilePrefab;
-
-    public GameObject mainMenuMainGO;
+    [SerializeField]
+    GameObject _profilesContainerGO;
+    [SerializeField]
+    Profile _profilePrefab;
+    [SerializeField]
+    GameObject _mainMenuMainGO;
 
     void Start()
     {
         RerenderProfiles();
-        profilesHandler.OnProfilesChanged += RerenderProfiles;
+        ProfilesHandler.OnProfilesChanged += RerenderProfiles;
     }
 
     void RerenderProfiles()
     {
         ClearAllProfiles();
-        for (int i = 0; i < profilesHandler.profiles1.Count; i++)
+        for (int i = 0; i < ProfilesHandler.Profiles.Count; i++)
         {
-            RenderProfile(profilesHandler.profiles1[i], i);
+            RenderProfile(ProfilesHandler.Profiles[i], i);
         }
     }
 
     void ClearAllProfiles()
     {
-        foreach (var item in ProfilesContainerGO.GetComponentsInChildren<Profile>())
+        foreach (var item in _profilesContainerGO.GetComponentsInChildren<Profile>())
         {
             Destroy(item.gameObject);
         }
@@ -38,7 +38,7 @@ public class ProfileMenu : BaseMenu
 
     void RenderProfile(ProfileDATA item, int _index)
     {
-        Profile newProfile = _container.InstantiatePrefabForComponent<Profile>(profilePrefab, ProfilesContainerGO.transform);
+        Profile newProfile = Instantiate(_profilePrefab, _profilesContainerGO.transform);
         newProfile.SetDATA(item, _index);
     }
 
@@ -46,13 +46,13 @@ public class ProfileMenu : BaseMenu
 
     public void OnCreateNewProfile()
     {
-        profilesHandler.CreateNewProfile();
+        ProfilesHandler.CreateNewProfile();
     }
 
     public void OnProfilesClose()
     {
         gameObject.SetActive(false);
-        mainMenuMainGO.SetActive(true);
+        _mainMenuMainGO.SetActive(true);
 
     }
 

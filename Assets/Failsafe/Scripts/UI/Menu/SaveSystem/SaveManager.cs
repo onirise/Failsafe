@@ -7,7 +7,7 @@ using Zenject;
 public static class SaveManager
 {
 
-    public static ProfilesHandler profilesHandler;
+    //public static ProfilesHandler profilesHandler;
     public static string SavePath()
     {
         return Path.Combine(Application.persistentDataPath, "profiles.json");
@@ -17,7 +17,7 @@ public static class SaveManager
     public static void SaveAll()
     {
 
-        ProfileSaveDATA _saveDATA = profilesHandler.ToSaveData();
+        ProfileSaveDATA _saveDATA = ProfilesHandler.ToSaveData();
 
         string json = JsonUtility.ToJson(_saveDATA);
         File.WriteAllText(SavePath(), json);
@@ -31,15 +31,15 @@ public static class SaveManager
 
             string json = File.ReadAllText(SavePath());
             ProfileSaveDATA _saveDATA = JsonUtility.FromJson<ProfileSaveDATA>(json);
-            if (_saveDATA.profileDATAs.Length > 0)
+            if (_saveDATA.ProfileDATAs.Length > 0)
             {
-                profilesHandler.Load(_saveDATA);
+                ProfilesHandler.Load(_saveDATA);
             }
             else
             {
                 ProfileDATA[] fallbackProfileDATAs = new ProfileDATA[] { new ProfileDATA() };
                 ProfileSaveDATA fallbackSaveDATA = new ProfileSaveDATA(fallbackProfileDATAs, 0);
-                profilesHandler.Load(fallbackSaveDATA);
+                ProfilesHandler.Load(fallbackSaveDATA);
             }
 
         }

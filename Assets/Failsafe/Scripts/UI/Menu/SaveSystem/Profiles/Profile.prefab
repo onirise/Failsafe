@@ -1505,34 +1505,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d029232708702b64c93955eadbc8bee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirmWindowPrefab: {fileID: 5385178914647578362, guid: 17aaa47da3f96d0478288c5608f16aad, type: 3}
-  DATA:
-    selected: 0
-    localeEntryIndex: 0
-    profileID: 1
-    isNew: 1
-    gameplaySaveDATAs:
-    - seed: 0
-      time: 0
-      playerPosition: {x: 0, y: 0, z: 0}
-      screenshotLink: 
-      lastSave: 0
-      isEmpty: 1
-    - seed: 0
-      time: 0
-      playerPosition: {x: 0, y: 0, z: 0}
-      screenshotLink: 
-      lastSave: 0
-      isEmpty: 1
-    - seed: 0
-      time: 0
-      playerPosition: {x: 0, y: 0, z: 0}
-      screenshotLink: 
-      lastSave: 0
-      isEmpty: 1
-  clickToSelectTextGO: {fileID: 3247141293283774230}
-  clickToOpenSavesTextGO: {fileID: 5829351553708261830}
-  selectedTextGO: {fileID: 5028046708221817967}
-  newProfileTextGO: {fileID: 2156592975648620043}
-  indexText: {fileID: 8215189445043596560}
-  locStrEvent: {fileID: 2729857839940815186}
+  _confirmWindowPrefab: {fileID: 5385178914647578362, guid: 17aaa47da3f96d0478288c5608f16aad, type: 3}
+  _profileNameLocStrEvent: {fileID: 2729857839940815186}
+  _clickToSelectTextGO: {fileID: 3247141293283774230}
+  _clickToOpenSavesTextGO: {fileID: 5829351553708261830}
+  _selectedTextGO: {fileID: 5028046708221817967}
+  _newProfileTextGO: {fileID: 2156592975648620043}
+  _indexText: {fileID: 8215189445043596560}

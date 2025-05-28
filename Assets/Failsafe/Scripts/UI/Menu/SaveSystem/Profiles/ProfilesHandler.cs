@@ -3,71 +3,83 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using Zenject;
-public class ProfilesHandler : MonoBehaviour
+public static class ProfilesHandler
 {
 
 
-    public List<ProfileDATA> profiles1 = new List<ProfileDATA>();
-    public ProfileDATA selectedProfile;
-    public UnityAction OnProfilesChanged;
+    public static List<ProfileDATA> Profiles = new List<ProfileDATA>();
+    public static ProfileDATA SelectedProfile;
+    public static UnityAction OnProfilesChanged;
 
 
 
-    public ProfileDATA CreateNewProfile()
+
+    public static ProfileDATA CreateNewProfile()
     {
         ProfileDATA newProfileData = new ProfileDATA();
-        profiles1.Add(newProfileData);
-        selectedProfile = GetSelectedProfile() ? selectedProfile : newProfileData;
+        Profiles.Add(newProfileData);
+        SelectedProfile = GetSelectedProfile() ? SelectedProfile : newProfileData;
         SaveManager.SaveAll();
         OnProfilesChanged?.Invoke();
         return newProfileData;
 
     }
-    public void RemoveFromProfilesList(int _index)
+    public static void RemoveFromProfilesList(int _index)
     {
         bool selectedIsDeleted = IsSelectedProfile(_index);
-        profiles1.RemoveAt(_index);
-        if (selectedIsDeleted && profiles1.Count > 0)
-            selectedProfile = profiles1[profiles1.Count - 1];
+        Profiles.RemoveAt(_index);
+        if (selectedIsDeleted && Profiles.Count > 0)
+            SelectedProfile = Profiles[Profiles.Count - 1];
         OnProfilesChanged?.Invoke();
         SaveManager.SaveAll();
     }
 
 
-    public bool GetSelectedProfile()
+    public static bool GetSelectedProfile()
     {
-        return selectedProfile != null;
+        return SelectedProfile != null;
     }
 
-    public void SetSelectedProfile(int _index)
+    public static void SetSelectedProfile(int _index)
     {
-        selectedProfile = profiles1[_index];
+        SelectedProfile = Profiles[_index];
         SaveManager.SaveAll();
         OnProfilesChanged?.Invoke();
     }
 
-    public bool IsSelectedProfile(int _index)
+    public static bool IsSelectedProfile(int _index)
     {
-        return selectedProfile == profiles1[_index];
+        return SelectedProfile == Profiles[_index];
+    }
+    public static bool IsSelectedProfileIsNew(int _index)
+    {
+        return !IsSelectedProfile(_index) && SelectedProfile.IsNew;
     }
 
-    public int GetSelectedProfileIndex()
+    public static int GetSelectedProfileIndex()
     {
-        return profiles1.IndexOf(selectedProfile);
+        return Profiles.IndexOf(SelectedProfile);
     }
+
+    public static bool IsProfilesGreaterThanZero()
+    {
+        return Profiles.Count > 0;
+    }
+
+
 
     #region SAVE AND LOAD
 
-    public ProfileSaveDATA ToSaveData()
+    public static ProfileSaveDATA ToSaveData()
     {
-        return new ProfileSaveDATA(profiles1.ToArray(), GetSelectedProfileIndex());
+        return new ProfileSaveDATA(Profiles.ToArray(), GetSelectedProfileIndex());
     }
 
-    public void Load(ProfileSaveDATA data)
+    public static void Load(ProfileSaveDATA data)
     {
 
-        profiles1.AddRange(data.profileDATAs);
-        SetSelectedProfile(data.selectedProfileIndex);
+        Profiles.AddRange(data.ProfileDATAs);
+        SetSelectedProfile(data.SelectedProfileIndex);
     }
 
     #endregion

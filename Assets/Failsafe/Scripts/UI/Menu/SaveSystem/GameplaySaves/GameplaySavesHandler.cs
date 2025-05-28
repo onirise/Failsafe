@@ -8,13 +8,13 @@ public enum SaveState
 }
 public class GameplaySavesHandler : MonoBehaviour
 {
-    public GameObject gameplaySavesGO;
-    public List<GameplaySave> gameplaySaves = new List<GameplaySave>();
-    public Profile profileParent;
+    public GameObject GameplaySavesGO;
+    public List<GameplaySave> GameplaySaves = new List<GameplaySave>();
+    //public Profile profileParent;
 
-    public SaveState saveState = SaveState.Load;
+    public SaveState CurrentSaveState = SaveState.Load;
 
-   
+
 
     void Start()
     {
@@ -29,24 +29,24 @@ public class GameplaySavesHandler : MonoBehaviour
             gameplaySaves[i].UpdateGameplaySaveUI();
         }*/
     }
-   
+
 
     public void SetSavesFromSelectedProfile(GameplaySaveDATA[] _gameplaySaveDATA)
-    {   
-        for (int i = 0; i < gameplaySaves.Count; i++)
+    {
+        for (int i = 0; i < GameplaySaves.Count; i++)
         {
-            gameplaySaves[i].DATA = _gameplaySaveDATA[i];
-            gameplaySaves[i].UpdateGameplaySaveUI();
+            GameplaySaves[i].DATA = _gameplaySaveDATA[i];
+            GameplaySaves[i].UpdateGameplaySaveUI();
         }
-       
+
     }
 
     public void OpenGSavesWindow(Profile _selectedProfile, SaveState _newSaveState)
     {
-        gameplaySavesGO.SetActive(true);
-        profileParent = _selectedProfile;
-        saveState = _newSaveState;
+        GameplaySavesGO.SetActive(true);
+        //profileParent = _selectedProfile;
+        CurrentSaveState = _newSaveState;
     }
-    
-   
+
+
 }

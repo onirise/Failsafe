@@ -7,13 +7,13 @@ using UnityEngine.Events;
 public abstract class BaseMenu : MonoBehaviour
 {
     [SerializeField]
-    ConfirmWindow confirmWindowPrefab;
-   
+    ConfirmWindow _confirmWindowPrefab;
 
- 
 
-    [Inject] TabletHandler menuHandler;
-    
+
+
+
+
     public void LoadLevel(string levelName)
     {
         SceneManager.LoadScene(levelName);
@@ -21,19 +21,19 @@ public abstract class BaseMenu : MonoBehaviour
 
     public void LoadLevelWithConfirm(string levelName)
     {
-         CallConfirm(() => 
-        {
-            LoadLevel(levelName);
-        });
-       
+        CallConfirm(() =>
+       {
+           LoadLevel(levelName);
+       });
+
     }
 
     public void CallConfirm(UnityAction funcToListen, string text = "Are you sure")
     {
-        
-        ConfirmWindow newConfirmWindow = Instantiate(confirmWindowPrefab, menuHandler.canvasParent);
+
+        ConfirmWindow newConfirmWindow = Instantiate(_confirmWindowPrefab, GetComponentInParent<Canvas>().transform);
         //newConfirmWindow.yesButton.onClick.AddListener(funcToListen);
         newConfirmWindow.InitialiseWindow(funcToListen, text);
     }
-    
+
 }

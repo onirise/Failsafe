@@ -8,22 +8,23 @@ using Zenject;
 
 public class Profile : BaseMenu, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public GameObject clickToSelectTextGO;
+    [SerializeField]
+    LocalizeStringEvent _profileNameLocStrEvent;
+    [SerializeField]
+    GameObject _clickToSelectTextGO;
+    [SerializeField]
+    GameObject _clickToOpenSavesTextGO;
+    [SerializeField]
+    GameObject _selectedTextGO;
+    [SerializeField]
+    GameObject _newProfileTextGO;
+    [SerializeField]
+    TMP_Text _indexText;
 
-    public GameObject clickToOpenSavesTextGO;
-
-    public GameObject selectedTextGO;
-
-    public GameObject newProfileTextGO;
 
 
-    public TMP_Text indexText;
 
-    public int profileIndex = 0;
-
-    public LocalizeStringEvent locStrEvent;
-
-    [Inject] ProfilesHandler profilesHandler;
+    int _profileIndex = 0;
 
 
 
@@ -31,18 +32,18 @@ public class Profile : BaseMenu, IPointerEnterHandler, IPointerExitHandler, IPoi
     {
         CallConfirm(() =>
         {
-            profilesHandler.RemoveFromProfilesList(profileIndex);
+            ProfilesHandler.RemoveFromProfilesList(_profileIndex);
         });
     }
 
     public void SetDATA(ProfileDATA _profileDATA, int _index)
     {
-        locStrEvent.SetEntry(_profileDATA.localeEntryIndex.ToString());
-        selectedTextGO.SetActive(profilesHandler.IsSelectedProfile(_index));
-        newProfileTextGO.SetActive(_profileDATA.isNew);
-        profileIndex = _index;
-        indexText.text = (profileIndex + 1).ToString();
-        clickToSelectTextGO.SetActive(false);
+        _profileNameLocStrEvent.SetEntry(_profileDATA.LocaleEntryIndex.ToString());
+        _selectedTextGO.SetActive(ProfilesHandler.IsSelectedProfile(_index));
+        _newProfileTextGO.SetActive(_profileDATA.IsNew);
+        _profileIndex = _index;
+        _indexText.text = (_profileIndex + 1).ToString();
+        _clickToSelectTextGO.SetActive(false);
 
     }
 
@@ -55,28 +56,28 @@ public class Profile : BaseMenu, IPointerEnterHandler, IPointerExitHandler, IPoi
         //     gameplaySavesHandler.OpenGSavesWindow(this, SaveState.Load);
         // }
 
-        if (profilesHandler.profiles1[profileIndex].isNew && !profilesHandler.IsSelectedProfile(profileIndex))
-            profilesHandler.SetSelectedProfile(profileIndex);
+        if (ProfilesHandler.IsSelectedProfileIsNew(_profileIndex))
+            ProfilesHandler.SetSelectedProfile(_profileIndex);
 
 
     }
 
     public void OnMouseEnterToProfile()
     {
-        if (!profilesHandler.IsSelectedProfile(profileIndex))
+        if (!ProfilesHandler.IsSelectedProfile(_profileIndex))
         {
-            clickToSelectTextGO.SetActive(true);
+            _clickToSelectTextGO.SetActive(true);
         }
-        else if (!profilesHandler.profiles1[profileIndex].isNew)
-            clickToOpenSavesTextGO.SetActive(true);
+        else if (!ProfilesHandler.Profiles[_profileIndex].IsNew)
+            _clickToOpenSavesTextGO.SetActive(true);
 
 
     }
 
     public void OnMouseExitToProfile()
     {
-        clickToSelectTextGO.SetActive(false);
-        clickToOpenSavesTextGO.SetActive(false);
+        _clickToSelectTextGO.SetActive(false);
+        _clickToOpenSavesTextGO.SetActive(false);
 
     }
 

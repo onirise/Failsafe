@@ -393,10 +393,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aafc8074f686c3c468806e902d31c0e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirmWindowPrefab: {fileID: 5385178914647578362, guid: 17aaa47da3f96d0478288c5608f16aad, type: 3}
-  ProfilesContainerGO: {fileID: 4119973615442554929}
-  profilePrefab: {fileID: 3361532966471903475, guid: 155a210ddd4a80a4caad215df7f2c774, type: 3}
-  mainMenuMainGO: {fileID: 0}
+  _confirmWindowPrefab: {fileID: 5385178914647578362, guid: 17aaa47da3f96d0478288c5608f16aad, type: 3}
+  _profilesContainerGO: {fileID: 4119973615442554929}
+  _profilePrefab: {fileID: 3361532966471903475, guid: 155a210ddd4a80a4caad215df7f2c774, type: 3}
+  _mainMenuMainGO: {fileID: 0}
 --- !u!1 &2758212103538078176
 GameObject:
   m_ObjectHideFlags: 0

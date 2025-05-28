@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class PauseManager 
+public class PauseManager
 {
-    static bool isPause = false;
+    static bool _isPause = false;
 
     public static void Pause(bool flag)
     {
-        isPause = flag;
+        _isPause = flag;
     }
 
     public static bool CheckPause()
     {
-        return isPause;
+        return _isPause;
     }
 }

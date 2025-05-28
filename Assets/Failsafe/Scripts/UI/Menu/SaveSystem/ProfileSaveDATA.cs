@@ -5,14 +5,14 @@ using UnityEngine.Localization.Settings;
 [Serializable]
 public class ProfileSaveDATA
 {
-    public ProfileDATA[] profileDATAs;
+    public ProfileDATA[] ProfileDATAs;
 
-    public int selectedProfileIndex;
+    public int SelectedProfileIndex;
 
     public ProfileSaveDATA(ProfileDATA[] _profileDATAs, int _selectedProfileIndex)
     {
-        profileDATAs = _profileDATAs;
-        selectedProfileIndex = _selectedProfileIndex;
+        ProfileDATAs = _profileDATAs;
+        SelectedProfileIndex = _selectedProfileIndex;
     }
 
 }
@@ -21,11 +21,11 @@ public class ProfileSaveDATA
 public class ProfileDATA
 {
 
-    public int localeEntryIndex = 0;
+    public int LocaleEntryIndex = 0;
 
-    public bool isNew = true;
+    public bool IsNew = true;
 
-    public GameplaySaveDATA[] gameplaySaveDATAs = new GameplaySaveDATA[3] { new GameplaySaveDATA(), new GameplaySaveDATA(), new GameplaySaveDATA() };
+    public GameplaySaveDATA[] GameplaySaveDATAs = new GameplaySaveDATA[3] { new GameplaySaveDATA(), new GameplaySaveDATA(), new GameplaySaveDATA() };
 
     // public void SetNewLocaleEntry()
     // {
@@ -36,7 +36,7 @@ public class ProfileDATA
 
     public ProfileDATA()
     {
-        localeEntryIndex = 0;
+        LocaleEntryIndex = 0;
         //SetNewLocaleEntry();
     }
 
@@ -46,26 +46,26 @@ public class ProfileDATA
 [Serializable]
 public class GameplaySaveDATA
 {
-    public int seed;
+    public int Seed;
 
-    public float time;
+    public float Time;
 
-    public Vector3 playerPosition;
+    public Vector3 PlayerPosition;
 
-    public string screenshotLink;
+    public string ScreenshotLink;
 
-    public bool lastSave;
+    public bool LastSave;
 
-    public bool isEmpty;
+    public bool IsEmpty;
 
     public GameplaySaveDATA()
     {
-        seed = 0;
-        time = 0;
-        playerPosition = Vector3.zero;
-        screenshotLink = "";
-        lastSave = false;
-        isEmpty = true;
+        Seed = 0;
+        Time = 0;
+        PlayerPosition = Vector3.zero;
+        ScreenshotLink = "";
+        LastSave = false;
+        IsEmpty = true;
     }
 
 

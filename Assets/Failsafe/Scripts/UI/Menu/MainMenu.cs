@@ -6,11 +6,11 @@ using TMPro;
 public class MainMenu : BaseMenu
 {
     [SerializeField]
-    Button playButton;
-    TMP_Dropdown dr;
-    public GameObject profilesMainGO;
+    Button _playButton;
+    [SerializeField]
+    GameObject _profilesMainGO;
 
-    [Inject] ProfilesHandler profilesHandler;
+
 
     void Start()
     {
@@ -31,7 +31,7 @@ public class MainMenu : BaseMenu
     public void OnProfilesOpen()
     {
         gameObject.SetActive(false);
-        profilesMainGO.SetActive(true);
+        _profilesMainGO.SetActive(true);
     }
 
     private void OnEnable()
@@ -41,7 +41,7 @@ public class MainMenu : BaseMenu
 
     void CheckSelectedProfile()
     {
-        playButton.interactable = profilesHandler.profiles1.Count > 0;
+        _playButton.interactable = ProfilesHandler.IsProfilesGreaterThanZero();
     }
 
 

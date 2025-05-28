@@ -23,6 +23,14 @@ public class VisualSensor : Sensor
     private Vector3 EyePosition => _eyePosition != null ? _eyePosition.position : transform.position + _rayOffset;
 
     /// <summary>
+    /// Размеры атакующего луча, идущего из глаз врага
+    /// </summary>
+    private static float _rayWidth = 1f;
+    private static float _rayHeight = 0.5f;
+
+    private Vector3 _attackRaySize = new Vector3(_rayWidth/2, _rayHeight/2, 1);
+
+    /// <summary>
     /// Объект, который нужно обнаружить, в данном случае игрок
     /// </summary>
     public Transform Target;
@@ -74,6 +82,21 @@ public class VisualSensor : Sensor
         return 0;
     }
 
+    public override bool SignalInAttackRay(Vector3 targetPosition)
+    {
+        Vector3 direction = targetPosition.normalized;
+        if (Physics.BoxCast(EyePosition, _attackRaySize, direction, out var hit, transform.rotation, Mathf.Infinity, ~_ignoreLayer))
+        {
+            // сейчас обнаружение игрока идет по тэгу Player
+            if (hit.transform == Target || hit.transform.IsChildOf(Target))
+            {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
     void OnDrawGizmosSelected()
     {
         if (Target == null) return;
@@ -100,6 +123,27 @@ public class VisualSensor : Sensor
         Color farColor = new Color(1f, 0f, 0f, 1f); // насыщенный красный
         Gizmos.color = farColor;
         Gizmos.DrawWireSphere(origin, Distance);
+
+        // === Луч атаки (фиолетовый) ===
+        Color rayColor = Color.magenta; // насыщенный фиолетовый
+
+        Gizmos.color = rayColor;
+        Vector3 ray1 = origin;
+        ray1.x -= _rayWidth / 2;
+        ray1.y -= _rayHeight / 2;
+        Vector3 ray2 = origin;
+        ray2.x -= _rayWidth / 2;
+        ray2.y += _rayHeight / 2;
+        Vector3 ray3 = origin;
+        ray3.x += _rayWidth / 2;
+        ray3.y -= _rayHeight / 2;
+        Vector3 ray4 = origin;
+        ray4.x += _rayWidth / 2;
+        ray4.y += _rayHeight / 2;
+        Gizmos.DrawRay(ray1,transform.forward*Distance);
+        Gizmos.DrawRay(ray2, transform.forward * Distance);
+        Gizmos.DrawRay(ray3, transform.forward * Distance);
+        Gizmos.DrawRay(ray4, transform.forward * Distance);
 
         // === Визуализация луча до цели (при игре) ===
         if (Application.isPlaying)

@@ -17,6 +17,9 @@ public class ChasingState : BehaviorState
     private float _loseTime = 3;
     private float _loseProgress;
 
+    private float _attackRangeMin = 10f;
+    private float _distanceToPlayer;
+
     public ChasingState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController)
     {
         _sensors = sensors;
@@ -25,8 +28,9 @@ public class ChasingState : BehaviorState
     }
 
     public bool PlayerLost() => _loseProgress >= _loseTime;
+    public bool PlayerInAttackRange() => _distanceToPlayer < _attackRangeMin;
 
-   
+
 
     public override void Enter()
     {
@@ -40,6 +44,9 @@ public class ChasingState : BehaviorState
         bool anySensorIsActive = false;
         foreach (var sensor in _sensors)
         {
+            if (sensor.GetType() == typeof(VisualSensor) && sensor.IsActivated())
+                _distanceToPlayer = ((Vector3)(sensor.SignalSourcePosition - _transform.position)).magnitude;
+
             if (sensor.IsActivated())
             {
                 anySensorIsActive = true;

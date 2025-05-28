@@ -1,8 +1,8 @@
 ﻿using DMDungeonGenerator;
-using SteamAudio;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using SteamAudio;
 
 public class Enemy : MonoBehaviour
 {
@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour
         var defaultState = new DefaultState(_sensors, transform, _controller);
         var chasingState = new ChasingState(_sensors, transform, _controller);
         var patrolState = new PatrolState(_sensors, _controller);
+        var attackState = new AttackState(_sensors, transform, _controller);
 
         defaultState.AddTransition(chasingState, _awarenessMeter.IsChasing);
         patrolState.AddTransition(chasingState, _awarenessMeter.IsChasing);
@@ -75,13 +76,25 @@ public class Enemy : MonoBehaviour
             var room = hit.GetComponent<RoomData>() ?? hit.GetComponentInParent<RoomData>();
             if (room != null)
             {
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, 1f); // увеличим радиус для надёжности
+        Debug.Log($"[Enemy] Обнаружено коллайдеров: {hits.Length}");
+
+        foreach (var hit in hits)
+        {
+            Debug.Log($"[Enemy] Hit: {hit.name}");
+
+            if (hit.TryGetComponent<RoomData>(out var room))
+            {
+                Debug.Log($"[Enemy] НАШЁЛ КОМНАТУ через OverlapSphere: {room.name}");
                 _controller.SetCurrentRoom(room);
                 break;
             }
         }
-
+            
         var points = _controller.GetRoomPatrolPoints();
         Debug.Log($"[Enemy] Получено точек патруля: {points.Count}");
+        }
     }
 
     void OnAnimatorMove()
@@ -92,6 +105,7 @@ public class Enemy : MonoBehaviour
 
         // Берём позицию от NavMeshAgent (в том числе Y)
         transform.position = _navMeshAgent.nextPosition;
+    }
     }
 }
 

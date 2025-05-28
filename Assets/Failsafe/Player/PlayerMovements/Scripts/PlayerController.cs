@@ -113,12 +113,12 @@ namespace Failsafe.PlayerMovements
             grabOrDropState.AddTransition(jumpState, () => !_inputHandler.GrabOrDropTriggered);
             grabOrDropState.AddTransition(fallState, () => !_inputHandler.GrabOrDropTriggered);
             
-            throwState.AddTransition(walkState, () => !_inputHandler.GrabOrDropTriggered);
-            throwState.AddTransition(runState, () => !_inputHandler.GrabOrDropTriggered);
-            throwState.AddTransition(slideState, () => !_inputHandler.GrabOrDropTriggered);
-            throwState.AddTransition(crouchState, () => !_inputHandler.GrabOrDropTriggered);
-            throwState.AddTransition(jumpState, () => !_inputHandler.GrabOrDropTriggered);
-            throwState.AddTransition(fallState, () => !_inputHandler.GrabOrDropTriggered);
+            throwState.AddTransition(walkState, () => !_inputHandler.AttackTriggered);
+            throwState.AddTransition(runState, () => !_inputHandler.AttackTriggered);
+            throwState.AddTransition(slideState, () => !_inputHandler.AttackTriggered);
+            throwState.AddTransition(crouchState, () => !_inputHandler.AttackTriggered);
+            throwState.AddTransition(jumpState, () => !_inputHandler.AttackTriggered);
+            throwState.AddTransition(fallState, () => !_inputHandler.AttackTriggered);
 
             _behaviorStateMachine = new BehaviorStateMachine(walkState);
         }

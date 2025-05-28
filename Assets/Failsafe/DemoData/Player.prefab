@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 374109432967700041}
   - component: {fileID: 374109432967700040}
   - component: {fileID: 374109432967700043}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 374109432981789085}
   - component: {fileID: 374109432981789075}
   - component: {fileID: 3056071954068415360}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 3587987712684801882}
   - component: {fileID: -2348027190149931829}
   - component: {fileID: 5543863665210299431}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 374109433356125747}
   - component: {fileID: 374109433356125746}
   - component: {fileID: 374109433356125757}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +532,7 @@ GameObject:
   - component: {fileID: 2632741281496896874}
   - component: {fileID: 185476466963446419}
   - component: {fileID: 5433976205981439677}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: InventoryAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -763,7 +763,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6033173754768017829}
   - component: {fileID: 4284899158147892210}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -920,8 +920,8 @@ MonoBehaviour:
     - \u0432\u043A\u043B/\u0432\u044B\u043A\u043B \u0441\u0447\u0435\u0442\u0447\u0438\u043A
     FPS\nESC - \u0437\u0430\u043A\u0440\u044B\u0442\u044C \u0438\u0433\u0440\u0443\nv0.0.3"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 99f2795ac882903478a1da0b17af609e, type: 2}
+  m_sharedMaterial: {fileID: 2885416551746965573, guid: 99f2795ac882903478a1da0b17af609e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1063,7 +1063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2a648aaf7f5dedc4fb1a41c5ef1969b0, type: 3}
       propertyPath: m_Layer
-      value: 14
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

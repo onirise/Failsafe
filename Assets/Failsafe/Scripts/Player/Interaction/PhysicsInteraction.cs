@@ -14,7 +14,8 @@ namespace Failsafe.Player.Interaction
         [SerializeField] private Vector3 _draggablePositionOffset;
         [SerializeField] private float _dragSpeed = 10f;
         
-        [SerializeField] private float _throwForce = 10f;
+        [Tooltip("Данная сила умножается на число от 1 до 3 при зажатии кнопки броска.")]
+        [SerializeField] private float _throwForce = 3f;
 
         private Quaternion _relativeRotation;
         
@@ -81,11 +82,11 @@ namespace Failsafe.Player.Interaction
             IsDragging = true;
         }
 
-        public void ThrowObject()
+        public void ThrowObject(float throwForceMultiplier)
         {
             _carryingBody.useGravity = true;
             
-            _carryingBody.AddForce(_playerCameraTransform.forward * _throwForce, ForceMode.Impulse);
+            _carryingBody.AddForce(_playerCameraTransform.forward * (_throwForce * throwForceMultiplier), ForceMode.Impulse);
             
             _carryingBody = null;
             _carryingObject = null;

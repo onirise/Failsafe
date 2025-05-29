@@ -22,12 +22,16 @@ public class InputHandler
     private const string _jump = "Jump";
     private const string _sprint = "Sprint";
     private const string _crouch = "Crouch";
+    private const string _grabOrDrop = "GrabOrDrop";
+    private const string _attack = "Attack";
 
     private InputAction _movementAction;
     private InputAction _rotationAction;
     private InputAction _jumpAction;
     private InputAction _sprintAction;
     private InputAction _crouchAction;
+    private InputAction _grabOrDropAction;
+    private InputAction _attackAction;
 
     public Vector2 MovementInput { get; private set; }
     public bool MoveForward => MovementInput.y > 0;
@@ -36,6 +40,8 @@ public class InputHandler
     public bool JumpTriggered { get; private set; }
     public bool SprintTriggered { get; private set; }
     public bool CrouchTriggered { get; private set; }
+    public bool GrabOrDropTriggered { get; private set; }
+    public bool AttackTriggered {get; private set;}
 
     /// <summary>
     /// Преобразовать MovementInput к нужному Transform
@@ -56,6 +62,8 @@ public class InputHandler
         _jumpAction = mapReference.FindAction(_jump);
         _sprintAction = mapReference.FindAction(_sprint);
         _crouchAction = mapReference.FindAction(_crouch);
+        _grabOrDropAction = mapReference.FindAction(_grabOrDrop);
+        _attackAction = mapReference.FindAction(_attack);
 
         SubscribeActionValuesToInputEvents();
     }
@@ -76,5 +84,11 @@ public class InputHandler
 
         _crouchAction.performed += inputInfo => CrouchTriggered = true;
         _crouchAction.canceled += inputInfo => CrouchTriggered = false;
+        
+        _grabOrDropAction.performed += inputInfo => GrabOrDropTriggered = true;
+        _grabOrDropAction.canceled += inputInfo => GrabOrDropTriggered = false;
+        
+        _attackAction.performed += inputInfo => AttackTriggered = true;
+        _attackAction.canceled += inputInfo => AttackTriggered = false;
     }
 }

@@ -1,4 +1,3 @@
-using UnityEngine.EventSystems;
 using UnityEngine;
 using System.Linq;
 
@@ -10,7 +9,6 @@ public class InventoryDragHandler : MonoBehaviour
 {
     [HideInInspector] public InventoryManager inventoryManager;
     [HideInInspector] public Camera playerCamera;
-    [HideInInspector] public PhysicsPickup physicsPickup;
 
     [SerializeField] private LayerMask inventoryLayer;
 
@@ -28,7 +26,6 @@ public class InventoryDragHandler : MonoBehaviour
         draggedItem = gameObject.GetComponent<Item>();
         if (draggedItem == null) return;
         originalSlot = null;
-        physicsPickup.DropItem();
         draggedItem.SetKinematic(true);
     }
 

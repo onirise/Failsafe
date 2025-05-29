@@ -7,11 +7,13 @@ public class DisabledState : BehaviorForcedState
 {
     private float _disableTime = 5f;
     private float _disableProgress;
+    private Transition _transitionToPreviousState;
 
     public override void Enter()
     {
         base.Enter();
         _disableProgress = 0;
+        _transitionToPreviousState = new Transition(this, PreviousState, IsStateFinished);
         Debug.Log("Enter DisabledState");
     }
 
@@ -20,9 +22,10 @@ public class DisabledState : BehaviorForcedState
         _disableProgress += Time.deltaTime;
     }
 
-    public override BehaviorState DecideNextState()
+    private bool IsStateFinished() => _disableProgress >= _disableTime;
+
+    public override Transition DecideTransition()
     {
-        if (_disableProgress < _disableTime) return this;
-        return PreviousState;
+        return _transitionToPreviousState;
     }
 }

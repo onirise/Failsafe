@@ -28,7 +28,7 @@ public class DetectionOnSight : MonoBehaviour
             if (detectionProgress != null)
             {
                 // Определение зоны с приоритетом ближней
-                detectionProgress.currentZone = fov.canSeePlayerNear ? DetectionProgress.DetectionZone.Near :
+                detectionProgress.CurrentZone = fov.canSeePlayerNear ? DetectionProgress.DetectionZone.Near :
                                               fov.canSeePlayerFar ? DetectionProgress.DetectionZone.Far :
                                               DetectionProgress.DetectionZone.None;
             }

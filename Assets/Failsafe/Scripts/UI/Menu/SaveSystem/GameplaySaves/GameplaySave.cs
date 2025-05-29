@@ -8,9 +8,6 @@ using UnityEngine.UI;
 
 public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public GameplaySaveDATA DATA;
-
-
     [SerializeField]
     LocalizeStringEvent _nameTextLocEvent;
     [SerializeField]
@@ -18,7 +15,7 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField]
     GameObject _clickToSelectTextGO;
     [SerializeField]
-    GameObject _selectedTextGO;
+    GameObject _lastSaveTextGO;
     [SerializeField]
     GameObject _clearButtonGO;
     [SerializeField]
@@ -28,24 +25,26 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     bool _isStartAutosave = false;
 
 
-    //[Inject] GameplaySavesHandler _gameplaySavesHandler;
 
-    public void UpdateGameplaySaveUI(bool _setStartAutosave = false)
+    public void SetDATA(GameplaySaveDATA _gSaveDATA, bool _setStartAutosave = false)
     {
         _isStartAutosave = _setStartAutosave;
         if (_isStartAutosave)
             _clearButtonGO.SetActive(false);
 
-        _selectedTextGO.SetActive(DATA.LastSave);
-        TimeSpan timeSpan = TimeSpan.FromSeconds(DATA.Time); //tabletHandler.time
-        string timeFormatted = timeSpan.ToString(@"hh\:mm\:ss");
-        _timeLocalizeStringEvent.StringReference.Arguments = new object[] { timeFormatted };
+        _lastSaveTextGO.SetActive(_gSaveDATA.LastSave);
+        _timeLocalizeStringEvent.StringReference.Arguments = new object[] { TimeSpan.FromSeconds(_gSaveDATA.Time) };
         _timeLocalizeStringEvent.RefreshString();
+        SetScreenshot(_gSaveDATA);
+        //DATA.IsEmpty = _isEmpty;
 
-        //временно взял этот код вообще из другого места
-        if (DATA.ScreenshotLink != "")
+    }
+
+    void SetScreenshot(GameplaySaveDATA _gSaveDATA)
+    {
+        if (_gSaveDATA.ScreenshotLink != "")
         {
-            byte[] fileData = File.ReadAllBytes(DATA.ScreenshotLink);
+            byte[] fileData = File.ReadAllBytes(_gSaveDATA.ScreenshotLink);
             Texture2D loadedTexture = new Texture2D(2, 2); // Временные размеры (автоматически изменятся)
             loadedTexture.LoadImage(fileData);
             _savePreview.texture = loadedTexture;
@@ -57,31 +56,11 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
 
-
-    public void SetNewDATA(string _scrLink, bool _lastSave, float _time, bool _isEmpty)
+    public void ClearSave()
     {
-        DATA.ScreenshotLink = _scrLink;
-        DATA.LastSave = _lastSave;
-        DATA.Time = _time;
-        DATA.IsEmpty = _isEmpty;
-    }
-
-    public void ClearDATA()
-    {
-        SetNewDATA("", false, 0, true);
-        UpdateGameplaySaveUI();
+        //SetDATA(_gSaveDATA); // ну наверное так оно будет
         SaveManager.SaveAll();
-        // for (int i = _gameplaySavesHandler.GameplaySaves.Count - 1; i >= 0; i--)
-        // {
-        //     if (!_gameplaySavesHandler.GameplaySaves[i].DATA.IsEmpty)
-        //     {
-        //         _gameplaySavesHandler.GameplaySaves[i].DATA.LastSave = true;
-        //         _gameplaySavesHandler.GameplaySaves[i].SelectedTextGO.SetActive(true);
-        //         break;
-        //     }
 
-
-        // }
 
 
     }
@@ -98,8 +77,8 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void DeselectGameplaySave()
     {
-        DATA.LastSave = false;
-        _selectedTextGO.SetActive(false);
+        //DATA.LastSave = false;
+        _lastSaveTextGO.SetActive(false);
 
     }
 
@@ -113,8 +92,8 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 
         //string link = screenTaker.SaveCameraView(this);
-        //SetNewDATA(link, true, tabletHandler.time, false);
-        UpdateGameplaySaveUI();
+
+        //SetDATA();
         _clickToSelectTextGO.SetActive(false);
         //gameplaySavesHandler.profileParent.SelectCLickedProfile();
         SaveManager.SaveAll();

@@ -1,6 +1,6 @@
 using System.IO;
 using UnityEngine;
-using Zenject;
+
 
 public class ScreenTaker : MonoBehaviour
 {

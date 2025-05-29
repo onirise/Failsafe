@@ -1,7 +1,6 @@
 using UnityEngine;
-using Zenject;
 using UnityEngine.UI;
-using TMPro;
+
 
 public class MainMenu : BaseMenu
 {

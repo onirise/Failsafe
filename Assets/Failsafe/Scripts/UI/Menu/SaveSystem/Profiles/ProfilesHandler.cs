@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using Zenject;
+
 public static class ProfilesHandler
 {
 
@@ -30,6 +30,8 @@ public static class ProfilesHandler
         Profiles.RemoveAt(_index);
         if (selectedIsDeleted && Profiles.Count > 0)
             SelectedProfile = Profiles[Profiles.Count - 1];
+        else if (Profiles.Count == 0)
+            SelectedProfile = null;
         OnProfilesChanged?.Invoke();
         SaveManager.SaveAll();
     }
@@ -77,7 +79,8 @@ public static class ProfilesHandler
 
     public static void Load(ProfileSaveDATA data)
     {
-
+        Profiles.Clear(); // костыль. из-за того, что это теперь статик-класс - лист не очищается, а всегда заполнен 
+        // и туда второй раз грузятся профили если в каком-то скрипте в Start() вызван SaveManager.LoadAll() 
         Profiles.AddRange(data.ProfileDATAs);
         SetSelectedProfile(data.SelectedProfileIndex);
     }

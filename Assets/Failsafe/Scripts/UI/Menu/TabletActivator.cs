@@ -5,6 +5,10 @@ public class TabletActivator : MonoBehaviour
     [SerializeField]
     GameObject _tabletGO;
 
+    void Start()
+    {
+        EnableTablet(false);
+    }
 
     void Update()
     {
@@ -18,14 +22,14 @@ public class TabletActivator : MonoBehaviour
     public void EnableTablet(bool flag)
     {
         _tabletGO.SetActive(flag);
-        SetCursor();
-        PauseManager.Pause(_tabletGO.activeSelf);
+        SetCursor(flag);
+        PauseManager.Pause(flag);
         //gameplaySavesHandler.gameplaySavesGO.SetActive(false);
     }
 
-    void SetCursor()
+    void SetCursor(bool flag)
     {
-        Cursor.visible = _tabletGO.activeSelf;
+        Cursor.visible = flag;
         Cursor.lockState = Cursor.visible ? CursorLockMode.None : CursorLockMode.Locked;
     }
 

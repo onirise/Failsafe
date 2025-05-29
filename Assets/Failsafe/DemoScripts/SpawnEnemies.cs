@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using DMDungeonGenerator;
 using Unity.AI.Navigation;
-using System.Linq;
-using Zenject;
-using UnityEngine.Localization.SmartFormat.PersistentVariables; //
+
 
 public class SpawnEnemiesCallback : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [Inject] DiContainer _container; //
+
     public DMDungeonGenerator.DungeonGenerator generator;
 
     public GameObject PlayerPrefab;

@@ -1,5 +1,5 @@
 using UnityEngine;
-using Zenject;
+
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
@@ -17,6 +17,7 @@ public abstract class BaseMenu : MonoBehaviour
     public void LoadLevel(string levelName)
     {
         SceneManager.LoadScene(levelName);
+        ProfilesHandler.OnProfilesChanged = null;
     }
 
     public void LoadLevelWithConfirm(string levelName)

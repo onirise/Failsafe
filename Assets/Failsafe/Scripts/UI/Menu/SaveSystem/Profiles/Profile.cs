@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
-using Zenject;
+
 
 public class Profile : BaseMenu, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {

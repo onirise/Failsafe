@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Failsafe.Scripts.Damage;
+using Failsafe.Scripts.Damage.Implementation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +17,7 @@ public class AttackState : BehaviorState
     //Параметры луча атаки
     private float _attackDelay = 3f;
     private float _rayDuration = 5f;
-    private float _rayDPS = 5f;
+    private float _rayDPS = 100f;
     private float _rayCooldown = 10f;
     private float _attackProgress = 0;
     private bool _delayOver = false;
@@ -54,17 +56,25 @@ public class AttackState : BehaviorState
 
         foreach (var sensor in _sensors)
         {
-            if (sensor.GetType() == typeof(VisualSensor) && sensor.IsActivated())
+            if (sensor is VisualSensor visualSensor && sensor.IsActivated())
             {
                 _distanceToPlayer = ((Vector3)(sensor.SignalSourcePosition - _transform.position)).magnitude;
 
                 _targetPosition = sensor.SignalSourcePosition;
                 _enemyController.RotateToPoint(_targetPosition.Value, _transform.up);
+                
                 if (_delayOver && !_onCooldown)
                 {
                     Debug.Log("Пиу");
-                    if(sensor.SignalInAttackRay((Vector3)_targetPosition))
-                        Debug.Log("Попал"); //Сюда прикрутить здоровье
+
+                    var damageableComponent = visualSensor.Target.GetComponentInChildren<DamageableComponent>();
+                    
+                    if (sensor.SignalInAttackRay((Vector3)_targetPosition) && damageableComponent is not null)
+                    {
+                        Debug.Log("damage");
+                        
+                        damageableComponent.TakeDamage(new FlatDamage(_rayDPS * Time.deltaTime));
+                    }
                 }
             }
         }

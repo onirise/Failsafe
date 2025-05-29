@@ -30,7 +30,7 @@ namespace Failsafe.Scripts.Health
 				return;
 			}
 			
-			health = Mathf.Clamp(health - toAdd, 0f, MaxHealth);
+			health = Mathf.Clamp(health + toAdd, 0f, MaxHealth);
 			
 			OnHealthChanged.Invoke(health);
 

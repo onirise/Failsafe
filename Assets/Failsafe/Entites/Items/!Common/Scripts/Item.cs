@@ -1,10 +1,11 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Item : Prop
 {
     public ItemData ItemData;
-    public List<ActionsGroup> ActionsGroups = new List<ActionsGroup>();
+    public List<ActionsGroup> ActionsGroups;
+
     private void Awake()
     {
         if (!GetComponent<BoxCollider>())
@@ -12,6 +13,7 @@ public class Item : Prop
             gameObject.AddComponent<BoxCollider>();
         }
     }
+
     public void SetKinematic(bool value)
     {
         var rigidbody = gameObject.GetComponent<Rigidbody>();

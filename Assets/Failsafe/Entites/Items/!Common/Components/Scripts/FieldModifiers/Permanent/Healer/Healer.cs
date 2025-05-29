@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class Healer : MonoBehaviour
 {
-    public HealData HealData;
+    public HealData Data;
 
     public void Heal()
     {
         //GetComponentInParent<PlayerHealth>().Health += HealData.HealAmount;
+        Debug.Log("Healed");
     }
 }

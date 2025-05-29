@@ -1,3 +1,4 @@
+﻿using Failsafe.PlayerMovements;
 using UnityEngine;
 
 public class SpeedModifier : MonoBehaviour

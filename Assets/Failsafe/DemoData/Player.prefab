@@ -359,18 +359,18 @@ MonoBehaviour:
     - rid: 2287995151870591098
       type: {class: PlayerMovementParameters, ns: Failsafe.PlayerMovements, asm: Assembly-CSharp}
       data:
-        WalkSpeed: 8
-        RunSpeed: 15
-        CrouchSpeed: 3
+        WalkSpeed: 2.7
+        RunSpeed: 4.2
+        CrouchSpeed: 1.8
         CrouchHeight: 0.5
-        SlideSpeed: 12
+        SlideSpeed: 5
         SlideHeight: 0.3
         MaxSlideTime: 1
         MinSlideTime: 0.5
-        JumpForce: 20
-        JumpForceFade: 30
-        GravityForce: 8
-        GrabLedgeSpeed: 4
+        JumpForce: 19
+        JumpForceFade: 32
+        GravityForce: 9
+        GrabLedgeSpeed: 2.4
         GrabLedgeHeightDifference: 0.1
     - rid: 2287995151870591099
       type: {class: PlayerNoiseParameters, ns: Failsafe.PlayerMovements, asm: Assembly-CSharp}

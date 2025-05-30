@@ -908,7 +908,7 @@ MonoBehaviour:
     - \u0432\u043A\u043B/\u0432\u044B\u043A\u043B \u0441\u0447\u0435\u0442\u0447\u0438\u043A
     FPS\nESC - \u0437\u0430\u043A\u0440\u044B\u0442\u044C \u0438\u0433\u0440\u0443\nv0.0.3"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e6657e0b67c622c4aae925daf7d0c73e, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -974,7 +974,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1001 &2316339926891887643
@@ -1129,6 +1129,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3277463938131552915, guid: 876f49695644c6049b6833523a67e621, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341209030205339056, guid: 876f49695644c6049b6833523a67e621, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e6657e0b67c622c4aae925daf7d0c73e, type: 2}
+    - target: {fileID: 4341209030205339056, guid: 876f49695644c6049b6833523a67e621, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: e6657e0b67c622c4aae925daf7d0c73e, type: 2}
+    - target: {fileID: 4341209030205339056, guid: 876f49695644c6049b6833523a67e621, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4420856768109547134, guid: 876f49695644c6049b6833523a67e621, type: 3}

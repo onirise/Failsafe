@@ -23,8 +23,8 @@ namespace Failsafe.Player.Interaction
         
         private PlayerController _playerController;
         
-        private bool _isPreparingToThrow;
-        [SerializeField] private float _throwForceMultiplier;
+        private bool _isPreparingToThrow; 
+        private float _throwForceMultiplier;
         private const float _maxForceMultiplier = 3f;
         
         private bool _allowToGrabOrDrop = true;

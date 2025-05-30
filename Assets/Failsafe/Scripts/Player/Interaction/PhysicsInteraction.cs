@@ -45,11 +45,6 @@ namespace Failsafe.Player.Interaction
 
         private void Update()
         {
-            if (_playerController.InputHandler == null)
-            {
-                throw new Exception("InputHandler is not set.");
-            }
-            
             if (_playerController.InputHandler.GrabOrDropTriggered && _allowToGrabOrDrop)
             {
                 GrabOrDrop();

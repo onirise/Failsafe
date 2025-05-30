@@ -2710,7 +2710,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1444448667796523294, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
       propertyPath: m_StoppingDistance
-      value: 8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1511383286313260163, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2804,6 +2804,30 @@ PrefabInstance:
       propertyPath: _laserSpawnPoint
       value: 
       objectReference: {fileID: 184672235}
+    - target: {fileID: 3749471888417903072, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
+      propertyPath: ManualPoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749471888417903072, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
+      propertyPath: _manualPoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749471888417903072, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
+      propertyPath: 'ManualPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 725820083}
+    - target: {fileID: 3749471888417903072, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
+      propertyPath: 'ManualPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 475814309}
+    - target: {fileID: 3749471888417903072, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
+      propertyPath: '_manualPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 725820083}
+    - target: {fileID: 3749471888417903072, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
+      propertyPath: '_manualPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 475814309}
     - target: {fileID: 3909945133532888999, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 89.93438

@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _laserBeamPrefab;
     private LaserBeamController _activeLaser;
     [SerializeField] private Transform _laserSpawnPoint; // Точка спавна лазера, если нужно
+   [SerializeField] private List<Transform> _manualPoints; // Привязать вручную через инспектор
+
 
     private void Awake()
     {
@@ -56,8 +58,17 @@ public class Enemy : MonoBehaviour
         var disabledStates = new List<BehaviorForcedState> { new DisabledState() };
         _stateMachine = new BehaviorStateMachine(defaultState, disabledStates);
 
-        // Находим комнату и настраиваем поведение
-        RoomCheck();
+        if(_manualPoints.Count > 0)
+        {
+            patrolState.SetManualPatrolPoints(_manualPoints);
+
+        }
+        else
+        {
+            // Ищем комнату, в которой находится противник
+            RoomCheck();
+        }
+
 
     }
 

@@ -31,13 +31,11 @@ public class PatrolState : BehaviorState
         _waitTimer = _waitTime;
         _isWaiting = false;
         _warningProgress = 0f;
-        Debug.Log($"[PatrolState] Текущая комната: {_enemyController.CurrentRoom?.name ?? "NULL"}");
-        var points = _enemyController.GetRoomPatrolPoints();
-        Debug.Log($"[PatrolState] Получено точек: {points.Count}");
 
-        _patrolPoints = points;
-        // Берём точки патруля из текущей комнаты
-        _patrolPoints = _enemyController.GetRoomPatrolPoints();
+        if (_patrolPoints == null || _patrolPoints.Count == 0)
+        {
+            _patrolPoints = _enemyController.GetRoomPatrolPoints();
+        }
 
         if (_patrolPoints == null || _patrolPoints.Count == 0)
         {
@@ -99,4 +97,17 @@ public class PatrolState : BehaviorState
     }
 
     public bool PlayerSpotted() => _warningProgress >= _warningTime;
+
+    public void SetManualPatrolPoints(List<Transform> points, bool restart = true)
+    {
+        _patrolPoints = points ?? new List<Transform>();
+
+        if (restart)
+        {
+            _currentPatrolPointIndex = -1;
+            _isWaiting = false;
+            _waitTimer = _waitTime;
+            HandlePatrolling();
+        }
+    }
 }

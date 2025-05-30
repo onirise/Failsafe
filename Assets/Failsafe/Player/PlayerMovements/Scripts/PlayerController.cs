@@ -27,8 +27,9 @@ namespace Failsafe.PlayerMovements
         private LedgeDetector _ledgeDetector;
         private PlayerGravityController _playerGravity;
         private PlayerNoiseController _noiseController;
-        private PhysicsInteraction _physicsInteraction;
 
+        public InputHandler InputHandler => _inputHandler;
+        
         void Start()
         {
             _characterController = GetComponent<CharacterController>();
@@ -39,7 +40,6 @@ namespace Failsafe.PlayerMovements
             _ledgeDetector = new LedgeDetector(transform, _playerCamera, _playerGrabPoint);
             _playerGravity = new PlayerGravityController(_characterController, _movementParametrs);
             _noiseController = new PlayerNoiseController(transform, _noiseParametrs);
-            _physicsInteraction = GetComponent<PhysicsInteraction>();
             InitializeStateMachine();
         }
 
@@ -55,47 +55,34 @@ namespace Failsafe.PlayerMovements
             var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _ledgeDetector, _playerRotationController, _playerGrabPoint);
             var climbingState = new ClimbingState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _playerGrabPoint);
             var ledgeJumpState = new LedgeJumpState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
-            var grabOrDropState = new GrabOrDropState(_physicsInteraction);
-            var throwState = new ThrowState(_physicsInteraction);
 
             walkState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered);
             walkState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
             walkState.AddTransition(crouchState, () => _inputHandler.CrouchTriggered);
             walkState.AddTransition(fallState, () => _playerGravity.IsFalling);
-            walkState.AddTransition(grabOrDropState, () => _inputHandler.GrabOrDropTriggered);
-            walkState.AddTransition(throwState, () => _inputHandler.AttackTriggered && _physicsInteraction.IsDragging);
 
             runState.AddTransition(walkState, () => !(_inputHandler.MoveForward && _inputHandler.SprintTriggered));
             runState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
             runState.AddTransition(slideState, () => _inputHandler.CrouchTriggered && runState.CanSlide());
             runState.AddTransition(fallState, () => _playerGravity.IsFalling);
-            runState.AddTransition(grabOrDropState, () => _inputHandler.GrabOrDropTriggered);
-            runState.AddTransition(throwState, () => _inputHandler.AttackTriggered && _physicsInteraction.IsDragging);
 
             //slideState.AddTransition(runState, () => _inputHandler.SprintTriggered && slideState.SlideFinished());
             slideState.AddTransition(crouchState, () => _inputHandler.CrouchTriggered && slideState.SlideFinished());
             slideState.AddTransition(walkState, () => (!_inputHandler.CrouchTriggered && slideState.CanStand()) || slideState.SlideFinished());
             slideState.AddTransition(fallState, () => _playerGravity.IsFalling);
-            slideState.AddTransition(grabOrDropState, () => _inputHandler.GrabOrDropTriggered);
-            slideState.AddTransition(throwState, () => _inputHandler.AttackTriggered && _physicsInteraction.IsDragging);
 
             crouchState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered && crouchState.CanStand());
             crouchState.AddTransition(walkState, () => !_inputHandler.CrouchTriggered && crouchState.CanStand());
             crouchState.AddTransition(fallState, () => _playerGravity.IsFalling);
-            crouchState.AddTransition(grabOrDropState, () => _inputHandler.GrabOrDropTriggered);
-            crouchState.AddTransition(throwState, () => _inputHandler.AttackTriggered && _physicsInteraction.IsDragging);
 
             jumpState.AddTransition(runState, () => _playerGravity.IsGrounded && _inputHandler.SprintTriggered);
             jumpState.AddTransition(walkState, () => _playerGravity.IsGrounded);
             jumpState.AddTransition(fallState, jumpState.InHightPoint);
             jumpState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
-            jumpState.AddTransition(grabOrDropState, () => _inputHandler.GrabOrDropTriggered);
-            jumpState.AddTransition(throwState, () => _inputHandler.AttackTriggered && _physicsInteraction.IsDragging);
+            
 
             fallState.AddTransition(walkState, () => _playerGravity.IsGrounded);
             fallState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
-            fallState.AddTransition(grabOrDropState, () => _inputHandler.GrabOrDropTriggered);
-            fallState.AddTransition(throwState, () => _inputHandler.AttackTriggered && _physicsInteraction.IsDragging);
             
             grabLedgeState.AddTransition(fallState, () => _inputHandler.MoveBack && grabLedgeState.CanFinish());
             grabLedgeState.AddTransition(climbingState, () => _inputHandler.MoveForward && grabLedgeState.CanFinish() && climbingState.CanClimb());
@@ -105,20 +92,6 @@ namespace Failsafe.PlayerMovements
             ledgeJumpState.AddTransition(fallState, ledgeJumpState.InHightPoint);
 
             climbingState.AddTransition(walkState, () => climbingState.ClimbFinish());
-            
-            grabOrDropState.AddTransition(walkState, () => !_inputHandler.GrabOrDropTriggered);
-            grabOrDropState.AddTransition(runState, () => !_inputHandler.GrabOrDropTriggered);
-            grabOrDropState.AddTransition(slideState, () => !_inputHandler.GrabOrDropTriggered);
-            grabOrDropState.AddTransition(crouchState, () => !_inputHandler.GrabOrDropTriggered);
-            grabOrDropState.AddTransition(jumpState, () => !_inputHandler.GrabOrDropTriggered);
-            grabOrDropState.AddTransition(fallState, () => !_inputHandler.GrabOrDropTriggered);
-            
-            throwState.AddTransition(walkState, () => !_inputHandler.AttackTriggered);
-            throwState.AddTransition(runState, () => !_inputHandler.AttackTriggered);
-            throwState.AddTransition(slideState, () => !_inputHandler.AttackTriggered);
-            throwState.AddTransition(crouchState, () => !_inputHandler.AttackTriggered);
-            throwState.AddTransition(jumpState, () => !_inputHandler.AttackTriggered);
-            throwState.AddTransition(fallState, () => !_inputHandler.AttackTriggered);
 
             _behaviorStateMachine = new BehaviorStateMachine(walkState);
         }

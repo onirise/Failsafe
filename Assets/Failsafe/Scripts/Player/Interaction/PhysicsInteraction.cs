@@ -1,3 +1,5 @@
+using Failsafe.PlayerMovements;
+using System;
 using UnityEngine;
 
 namespace Failsafe.Player.Interaction
@@ -19,6 +21,14 @@ namespace Failsafe.Player.Interaction
 
         private Quaternion _relativeRotation;
         
+        private PlayerController _playerController;
+        
+        private bool _isPreparingToThrow;
+        [SerializeField] private float _throwForceMultiplier;
+        private const float _maxForceMultiplier = 3f;
+        
+        private bool _allowToGrabOrDrop = true;
+        
         public bool IsDragging { get; private set; }
 
         private void Awake()
@@ -29,8 +39,40 @@ namespace Failsafe.Player.Interaction
                 
                 _playerCameraTransform = playerCamera.transform;
             }
+            
+            _playerController = GetComponent<PlayerController>();
         }
-        
+
+        private void Update()
+        {
+            if (_playerController.InputHandler == null)
+            {
+                throw new Exception("InputHandler is not set.");
+            }
+            
+            if (_playerController.InputHandler.GrabOrDropTriggered && _allowToGrabOrDrop)
+            {
+                GrabOrDrop();
+            }
+            else if (!_playerController.InputHandler.GrabOrDropTriggered)
+            {
+                _allowToGrabOrDrop = true;
+            }
+
+            if (IsDragging)
+            {
+                if (_playerController.InputHandler.AttackTriggered)
+                {
+                    _throwForceMultiplier = Mathf.Clamp(_throwForceMultiplier + Time.deltaTime, _throwForceMultiplier, _maxForceMultiplier);
+                    _isPreparingToThrow = true;
+                }
+                else if (_isPreparingToThrow)
+                {
+                    ThrowObject(_throwForceMultiplier);
+                }
+            }
+        }
+
         private void FixedUpdate()
         {
             if (_carryingObject)
@@ -41,6 +83,8 @@ namespace Failsafe.Player.Interaction
 
         public void GrabOrDrop()
         {
+            _allowToGrabOrDrop = false;
+
             if (!_carryingObject)
             {
                 GrabObject();
@@ -80,6 +124,8 @@ namespace Failsafe.Player.Interaction
             _carryingObject.transform.parent = null;
             
             IsDragging = true;
+            _isPreparingToThrow = false;
+            _throwForceMultiplier = 0f;
         }
 
         public void ThrowObject(float throwForceMultiplier)
@@ -91,6 +137,8 @@ namespace Failsafe.Player.Interaction
             _carryingBody = null;
             _carryingObject = null;
             IsDragging = false;
+            _isPreparingToThrow = false;
+            _throwForceMultiplier = 0f;
         }
         
         private void DropItem()

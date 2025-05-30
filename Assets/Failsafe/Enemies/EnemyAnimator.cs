@@ -54,6 +54,7 @@ public class EnemyAnimator
         if (_waitingForTurnToFinish && !_isTurning)
         {
             _waitingForTurnToFinish = false;
+            _turningAnimationTriggered = false;
             _controller.ResumeMoving();
         }
     }
@@ -69,10 +70,11 @@ public class EnemyAnimator
         float velocity = _navMeshAgent.velocity.magnitude;
         _animator.SetFloat("Speed", velocity, 0.15f, Time.deltaTime);
     }
+    private bool _turningAnimationTriggered = false;
 
     private void HandleRotation()
     {
-        if (_isTurning)
+        if (_isTurning || _turningAnimationTriggered)
         {
             _waitingForTurnToFinish = true;
             return;
@@ -86,37 +88,32 @@ public class EnemyAnimator
 
         if (_navMeshAgent.velocity.magnitude < 0.1f)
         {
-            // → Поворот на 180°
             if (Mathf.Abs(angle) >= _turn180Min)
             {
                 _animator.SetTrigger("Turn180");
                 _controller.StopMoving();
+                _turningAnimationTriggered = true;
                 return;
             }
 
-            // → Поворот направо на 90°
             if (angle >= _turn90Min && angle < _turn180Min)
             {
                 _animator.SetTrigger("TurnRight90");
                 _controller.StopMoving();
+                _turningAnimationTriggered = true;
                 return;
             }
 
-            // → Поворот налево на 90°
             if (angle <= -_turn90Min && angle > -_turn180Min)
             {
                 _animator.SetTrigger("TurnLeft90");
                 _controller.StopMoving();
+                _turningAnimationTriggered = true;
                 return;
             }
         }
 
-        // Плавный поворот при движении
-        _transform.forward = Vector3.Slerp(
-            _transform.forward,
-            direction,
-            Time.deltaTime * 5f
-        );
+        _transform.forward = Vector3.Slerp(_transform.forward, direction, Time.deltaTime * 5f);
     }
 
     private void SeesPlayerAnimation()
@@ -126,8 +123,16 @@ public class EnemyAnimator
 
     public void ApplyRootMotion()
     {
-        _transform.position = _animator.rootPosition;
-        if(UseRootRotation) _transform.rotation = _animator.rootRotation;
+        Vector3 rootPos = _animator.rootPosition;
+
+        // Поддерживать правильную высоту
+        rootPos.y = _navMeshAgent.nextPosition.y;
+
+        _transform.position = rootPos;
+
+        if (UseRootRotation)
+            _transform.rotation = _animator.rootRotation;
+
         _navMeshAgent.nextPosition = _transform.position;
     }
 

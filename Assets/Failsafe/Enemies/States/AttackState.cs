@@ -31,6 +31,7 @@ public class AttackState : BehaviorState
     private LaserBeamController _activeLaser;
     private GameObject _laserPrefab;
     private Transform _laserOrigin;
+    private bool _attackFired = false;
 
     public AttackState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, EnemyAnimator enemyAnimator, LaserBeamController laserBeamController, GameObject laser, Transform laserOrigin)
     {
@@ -43,8 +44,13 @@ public class AttackState : BehaviorState
         _laserOrigin = laserOrigin;
     }
 
-    public bool PlayerOutOfAttackRange() => _distanceToPlayer > _attackRangeMax;
+    public bool PlayerOutOfAttackRange()
+    {
+        Debug.Log($"Attack → Chase? distance={_distanceToPlayer}, threshold={_attackRangeMax}, inAction={_enemyAnimator.IsInAction()}");
+        Debug.Log($"Check: {_distanceToPlayer} > {_attackRangeMax}, InAction: {_enemyAnimator.IsInAction()}");
+        return _distanceToPlayer > _attackRangeMax && !_enemyAnimator.IsInAction();
 
+    }
     public override void Enter()
     {
         base.Enter();
@@ -68,8 +74,16 @@ public class AttackState : BehaviorState
 
     public override void Update()
     {
+        base.Update();
         _attackProgress += Time.deltaTime;
-
+        foreach (var sensor in _sensors)
+        {
+            if (sensor.IsActivated() && sensor.SignalSourcePosition.HasValue)
+            {
+                _targetPosition = sensor.SignalSourcePosition;
+                _distanceToPlayer = Vector3.Distance(_transform.position, _targetPosition.Value);
+            }
+        }
         if (!_delayOver && _attackProgress > _attackDelay)
         {
             _delayOver = true;
@@ -94,7 +108,8 @@ public class AttackState : BehaviorState
                         _activeLaser.Initialize(_laserOrigin, _targetPosition.Value);
                     }
 
-                    _enemyAnimator.TryAttack(); // ← Запускаем анимацию атаки
+                    _enemyAnimator.TryAttack();
+                    _attackFired = true;
 
                     if (sensor.SignalInAttackRay(_targetPosition.Value))
                     {
@@ -105,7 +120,7 @@ public class AttackState : BehaviorState
             }
         }
 
-        if (_attackProgress > _rayDuration)
+        if (_attackFired && _attackProgress > _rayDuration)
         {
             if (_activeLaser != null)
             {
@@ -113,16 +128,16 @@ public class AttackState : BehaviorState
                 _activeLaser = null;
             }
             _onCooldown = true;
-            _enemyAnimator.TryReload(); // ← Анимация перезарядки
-            _enemyAnimator.isReloading(true); // Устанавливаем флаг перезарядки    
+            _enemyAnimator.TryReload();
+            _enemyAnimator.isReloading(true);
             Debug.Log("Атака на перезарядке");
         }
-
         if (_attackProgress > _rayDuration + _rayCooldown)
         {
             _onCooldown = false;
-            _enemyAnimator.isReloading(false); // Сбрасываем флаг перезарядки
+            _enemyAnimator.isReloading(false);
             _attackProgress = 0;
+            _attackFired = false;
         }
     }
 

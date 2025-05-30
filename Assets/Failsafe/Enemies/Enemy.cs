@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using SteamAudio;
+using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
@@ -111,9 +112,11 @@ public class Enemy : MonoBehaviour
     }
 
     void OnAnimatorMove()
-    {
+    { 
+
         _enemyAnimator.ApplyRootMotion(); // Всё управление Root Motion'ом теперь централизовано здесь
-       
+        if (_enemyAnimator.UseRootRotation) transform.rotation = _animator.rootRotation;
+        _navMeshAgent.nextPosition = transform.position;
     }
 }
 

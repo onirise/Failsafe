@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour
     private EnemyAnimator _enemyAnimator;
     private EnemyController _controller;
     private NavMeshAgent _navMeshAgent;
+    [SerializeField] private GameObject _laserBeamPrefab;
+    private LaserBeamController _activeLaser;
+    [SerializeField] private Transform _laserSpawnPoint; // Точка спавна лазера, если нужно
 
     private void Awake()
     {
@@ -29,6 +32,8 @@ public class Enemy : MonoBehaviour
         _controller = new EnemyController(transform, _navMeshAgent);
         _awarenessMeter = new AwarenessMeter(_sensors);
         _enemyAnimator = new EnemyAnimator(_navMeshAgent, _animator, transform, _controller);
+
+
     }
 
     private void Start()
@@ -39,12 +44,14 @@ public class Enemy : MonoBehaviour
         var defaultState = new DefaultState(_sensors, transform, _controller);
         var chasingState = new ChasingState(_sensors, transform, _controller);
         var patrolState = new PatrolState(_sensors, _controller);
-        var attackState = new AttackState(_sensors, transform, _controller);
+        var attackState = new AttackState(_sensors, transform, _controller, _enemyAnimator, _activeLaser, _laserBeamPrefab, _laserSpawnPoint);
 
         defaultState.AddTransition(chasingState, _awarenessMeter.IsChasing);
         patrolState.AddTransition(chasingState, _awarenessMeter.IsChasing);
         defaultState.AddTransition(patrolState, defaultState.IsPatroling);
         chasingState.AddTransition(patrolState, chasingState.PlayerLost);
+        chasingState.AddTransition(attackState, chasingState.PlayerInAttackRange);
+        attackState.AddTransition(chasingState, attackState.PlayerOutOfAttackRange);
 
         var disabledStates = new List<BehaviorForcedState> { new DisabledState() };
         _stateMachine = new BehaviorStateMachine(defaultState, disabledStates);
@@ -69,43 +76,34 @@ public class Enemy : MonoBehaviour
 
     private void RoomCheck()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, 1f);
-
-        foreach (var hit in hits)
-        {
-            var room = hit.GetComponent<RoomData>() ?? hit.GetComponentInParent<RoomData>();
-            if (room != null)
-            {
-
-        Collider[] hits = Physics.OverlapSphere(transform.position, 1f); // увеличим радиус для надёжности
+        // Ищем все коллайдеры рядом с врагом
+        Collider[] hits = Physics.OverlapSphere(transform.position, 5f); // можно увеличить радиус при необходимости
         Debug.Log($"[Enemy] Обнаружено коллайдеров: {hits.Length}");
 
         foreach (var hit in hits)
         {
             Debug.Log($"[Enemy] Hit: {hit.name}");
 
-            if (hit.TryGetComponent<RoomData>(out var room))
+            // Ищем RoomData в дочерних объектах каждого найденного объекта
+            RoomData room = hit.GetComponentInChildren<RoomData>();
+            if (room != null)
             {
                 Debug.Log($"[Enemy] НАШЁЛ КОМНАТУ через OverlapSphere: {room.name}");
                 _controller.SetCurrentRoom(room);
                 break;
             }
         }
-            
+
+        // Получаем патрульные точки из установленной комнаты
         var points = _controller.GetRoomPatrolPoints();
         Debug.Log($"[Enemy] Получено точек патруля: {points.Count}");
-        }
     }
 
     void OnAnimatorMove()
     {
         _enemyAnimator.ApplyRootMotion(); // Всё управление Root Motion'ом теперь централизовано здесь
-        // Только rotation — из Root Motion
-        transform.rotation = _animator.rootRotation;
-
-        // Берём позицию от NavMeshAgent (в том числе Y)
-        transform.position = _navMeshAgent.nextPosition;
-    }
+       
     }
 }
+
 

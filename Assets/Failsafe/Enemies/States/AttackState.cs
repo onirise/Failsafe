@@ -22,15 +22,25 @@ public class AttackState : BehaviorState
     private bool _onCooldown = false;
 
     private EnemyController _enemyController;
+    private EnemyAnimator _enemyAnimator;
+
 
     private float _attackRangeMax = 15f;
     private float _distanceToPlayer;
 
-    public AttackState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController)
+    private LaserBeamController _activeLaser;
+    private GameObject _laserPrefab;
+    private Transform _laserOrigin;
+
+    public AttackState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, EnemyAnimator enemyAnimator, LaserBeamController laserBeamController, GameObject laser, Transform laserOrigin)
     {
         _sensors = sensors;
         _transform = currentTransform;
         _enemyController = enemyController;
+        _enemyAnimator = enemyAnimator;
+        _activeLaser = laserBeamController;
+        _laserPrefab = laser;
+        _laserOrigin = laserOrigin;
     }
 
     public bool PlayerOutOfAttackRange() => _distanceToPlayer > _attackRangeMax;
@@ -42,10 +52,24 @@ public class AttackState : BehaviorState
         _delayOver = false;
         _onCooldown = false;
         Debug.Log("Enter AttackState");
+        _enemyAnimator.UseRootRotation = false; // Отключаем ротацию по корню, чтобы атака была более естественной
+
+        if (_laserPrefab == null)
+        {
+            Debug.LogError("Laser Prefab не назначен!");
+            return;
+        }
+        if (_laserOrigin == null)
+        {
+            Debug.LogError("Laser Origin не назначен!");
+            return;
+        }
     }
 
     public override void Update()
     {
+        _attackProgress += Time.deltaTime;
+
         if (!_delayOver && _attackProgress > _attackDelay)
         {
             _delayOver = true;
@@ -54,33 +78,57 @@ public class AttackState : BehaviorState
 
         foreach (var sensor in _sensors)
         {
-            if (sensor.GetType() == typeof(VisualSensor) && sensor.IsActivated())
+            if (sensor is VisualSensor && sensor.IsActivated())
             {
-                _distanceToPlayer = ((Vector3)(sensor.SignalSourcePosition - _transform.position)).magnitude;
-
+                _distanceToPlayer = Vector3.Distance(sensor.SignalSourcePosition.Value, _transform.position);
                 _targetPosition = sensor.SignalSourcePosition;
-                _enemyController.RotateToPoint(_targetPosition.Value, _transform.up);
-                if (_delayOver && !_onCooldown)
+                _enemyController.RotateToPoint(_targetPosition.Value);
+
+
+                if (_delayOver && !_onCooldown && !_enemyAnimator.IsInAction())
                 {
-                    Debug.Log("Пиу");
-                    if(sensor.SignalInAttackRay((Vector3)_targetPosition))
-                        Debug.Log("Попал"); //Сюда прикрутить здоровье
+                    if (_activeLaser == null)
+                    {
+                        GameObject laserGO = GameObject.Instantiate(_laserPrefab, _laserOrigin.position, _laserOrigin.rotation);
+                        _activeLaser = laserGO.GetComponent<LaserBeamController>();
+                        _activeLaser.Initialize(_laserOrigin, _targetPosition.Value);
+                    }
+
+                    _enemyAnimator.TryAttack(); // ← Запускаем анимацию атаки
+
+                    if (sensor.SignalInAttackRay(_targetPosition.Value))
+                    {
+                        Debug.Log("Попал"); // сюда добавить урон
+                       
+                    }
                 }
             }
         }
 
         if (_attackProgress > _rayDuration)
         {
+            if (_activeLaser != null)
+            {
+                GameObject.Destroy(_activeLaser.gameObject);
+                _activeLaser = null;
+            }
             _onCooldown = true;
-            Debug.Log("Пиу КД");
+            _enemyAnimator.TryReload(); // ← Анимация перезарядки
+            _enemyAnimator.isReloading(true); // Устанавливаем флаг перезарядки    
+            Debug.Log("Атака на перезарядке");
         }
 
         if (_attackProgress > _rayDuration + _rayCooldown)
         {
             _onCooldown = false;
+            _enemyAnimator.isReloading(false); // Сбрасываем флаг перезарядки
             _attackProgress = 0;
         }
+    }
 
-        _attackProgress += Time.deltaTime;
+    public override void Exit()
+    {
+        base.Exit();
+        _enemyAnimator.UseRootRotation = true; // Включаем ротацию по root
     }
 }

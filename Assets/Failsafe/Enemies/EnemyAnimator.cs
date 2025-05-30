@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyAnimator
@@ -14,6 +15,8 @@ public class EnemyAnimator
     private const float _turn180Min = 135f;
 
     private bool _waitingForTurnToFinish = false;
+    private bool _inCooldown = false;
+    public bool UseRootRotation = true; // флаг управления поворотом
 
     public EnemyAnimator( NavMeshAgent navMeshAgent, Animator animator, Transform transform, EnemyController enemyController)
     {
@@ -30,6 +33,10 @@ public class EnemyAnimator
     {
        
         UpdateTurningState();
+
+        if (IsInAction())
+            return; // Блокируем всё, пока идёт атака/перезарядка
+
         HandleRotation();
         SeesPlayerAnimation();
         UpdateSpeedBlend();
@@ -120,7 +127,29 @@ public class EnemyAnimator
     public void ApplyRootMotion()
     {
         _transform.position = _animator.rootPosition;
-        _transform.rotation = _animator.rootRotation;
+        if(UseRootRotation) _transform.rotation = _animator.rootRotation;
         _navMeshAgent.nextPosition = _transform.position;
+    }
+
+    public void TryAttack()
+    {
+        _animator.SetTrigger("Attack");
+    }
+
+    public bool IsInAction()
+    {
+        var state = _animator.GetCurrentAnimatorStateInfo(0);
+        return state.IsTag("Attack") || state.IsTag("Reload");
+    }
+
+    public void TryReload()
+    {
+        _animator.SetTrigger("Reload");
+    }
+
+    public void isReloading(bool isReloading)
+    {
+        _inCooldown = isReloading;
+        _animator.SetBool("isReloading", isReloading);
     }
 }

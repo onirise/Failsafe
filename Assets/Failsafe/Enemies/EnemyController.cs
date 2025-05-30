@@ -26,6 +26,7 @@ public class EnemyController
         _navMeshAgent.SetDestination(point);
     }
 
+
     public void RunToPoint(Vector3 point)
     {
         _navMeshAgent.isStopped = false;
@@ -86,5 +87,17 @@ public class EnemyController
             0,
             UnityEngine.Random.Range(_transform.position.z - 10, _transform.position.z + 10)
         );
+    }
+
+    public void RotateToPoint(Vector3 targetPoint, float rotationSpeed = 5f)
+    {
+        Vector3 direction = targetPoint - _transform.position;
+        direction.y = 0f; // Игнорируем вертикаль (Y)
+
+        if (direction.sqrMagnitude < 0.001f)
+            return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+        _transform.rotation = Quaternion.Slerp(_transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
 }

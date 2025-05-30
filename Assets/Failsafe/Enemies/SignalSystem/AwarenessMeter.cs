@@ -7,7 +7,7 @@ public class AwarenessMeter
      private Sensor[] _sensors;
 
     [Header("Настройки")]
-    [SerializeField] private float _fillSpeed = 40f;
+    [SerializeField] private float _fillSpeed = 100f;
     [SerializeField] private float _decaySpeed = 10f;
     [SerializeField] private float _decayDelay = 2f;
 

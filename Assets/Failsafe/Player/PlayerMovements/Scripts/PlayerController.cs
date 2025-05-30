@@ -60,7 +60,7 @@ namespace Failsafe.PlayerMovements
 
             runState.AddTransition(walkState, () => !(_inputHandler.MoveForward && _inputHandler.SprintTriggered));
             runState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
-            runState.AddTransition(slideState, () => _inputHandler.CrouchTrigger.IsPressed && runState.CanSlide());
+            runState.AddTransition(slideState, () => _inputHandler.CrouchTrigger.IsTriggered && runState.CanSlide(), _inputHandler.CrouchTrigger.ReleaseTrigger);
             runState.AddTransition(fallState, () => _playerGravity.IsFalling);
 
             //slideState.AddTransition(runState, () => _inputHandler.SprintTriggered && slideState.SlideFinished());

@@ -1218,8 +1218,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1511383286313260163}
   - component: {fileID: 3749471888417903072}
-  - component: {fileID: 8993564496396878420}
   - component: {fileID: 202986098991734307}
+  - component: {fileID: 8993564496396878420}
   - component: {fileID: 1444448667796523294}
   - component: {fileID: 549660405066039400}
   m_Layer: 10
@@ -1267,23 +1267,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede54a7a9b7d0094486eac8cf22d2184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8993564496396878420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5441590585779604949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f627bb3990291ab4586fb1f4fd109496, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FocusingTime: 1
-  FocusingProgress: 0
-  Distance: 10
-  _minSoundStrength: 0.1
-  _maxSoundStrength: 10
+  _laserBeamPrefab: {fileID: 0}
+  _laserSpawnPoint: {fileID: 0}
+  _manualPoints: []
 --- !u!114 &202986098991734307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1305,6 +1291,23 @@ MonoBehaviour:
     m_Bits: 1056
   _eyePosition: {fileID: 2787837512202065222}
   Target: {fileID: 0}
+--- !u!114 &8993564496396878420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5441590585779604949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f627bb3990291ab4586fb1f4fd109496, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FocusingTime: 1
+  FocusingProgress: 0
+  Distance: 10
+  _minSoundStrength: 0.1
+  _maxSoundStrength: 10
 --- !u!195 &1444448667796523294
 NavMeshAgent:
   m_ObjectHideFlags: 0

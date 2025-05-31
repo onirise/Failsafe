@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c0c8a97a694237ac602caa686fa8ab, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  <MainMenuSceneName>k__BackingField: DataCenter
+  <MainMenuSceneName>k__BackingField: MainMenu

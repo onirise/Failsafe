@@ -35,7 +35,7 @@ public class InputHandler
     public Vector2 RotationInput { get; private set; }
     public bool JumpTriggered { get; private set; }
     public bool SprintTriggered { get; private set; }
-    public bool CrouchTriggered { get; private set; }
+    public InputTrigger CrouchTrigger { get; private set; } = new InputTrigger();
 
     /// <summary>
     /// Преобразовать MovementInput к нужному Transform
@@ -74,7 +74,40 @@ public class InputHandler
         _sprintAction.performed += inputInfo => SprintTriggered = true;
         _sprintAction.canceled += inputInfo => SprintTriggered = false;
 
-        _crouchAction.performed += inputInfo => CrouchTriggered = true;
-        _crouchAction.canceled += inputInfo => CrouchTriggered = false;
+        _crouchAction.performed += CrouchTrigger.OnInputStart;
+        _crouchAction.canceled += CrouchTrigger.OnInputCancel;
+    }
+    
+    public class InputTrigger
+    {
+        /// <summary>
+        /// Инпут активирован
+        /// </summary>
+        public bool IsTriggered { get; private set; }
+        /// <summary>
+        /// Инпут удерживается
+        /// </summary>
+        public bool IsPressed { get; private set; }
+
+        public void OnInputStart(InputAction.CallbackContext context)
+        {
+            IsTriggered = true;
+            IsPressed = true;
+        }
+
+        public void OnInputCancel(InputAction.CallbackContext context)
+        {
+            IsTriggered = false;
+            IsPressed = false;
+        }
+
+        /// <summary>
+        /// Вызывать когда инпут обработан.
+        /// </summary>
+        public void ReleaseTrigger()
+        {
+            IsTriggered = false;
+        }
     }
 }
+

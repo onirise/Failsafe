@@ -11,23 +11,23 @@ public abstract class BehaviorState
     /// </summary>
     /// <param name="to">Новое состояние</param>
     /// <param name="condition">Условие перехода</param>
-    public void AddTransition(BehaviorState to, Func<bool> condition)
+    /// <param name="action">Действие, выполняемое во время смены состояния</param>
+    public void AddTransition(BehaviorState to, Func<bool> condition, Action action = null)
     {
-        _transitions.Add(new Transition(this, to, condition));
+        _transitions.Add(new Transition(this, to, condition, action));
     }
 
     /// <summary>
-    /// Решить на основе переходов какое состояние следующее
+    /// Решить какой переход выполнить
     /// </summary>
-    /// <returns>Первое состояние для которого выполнено условие перехода, иначе текущее состояние</returns>
-    public virtual BehaviorState DecideNextState()
+    /// <returns>Первый переход для которого выполнено условие, иначе null</returns>
+    public virtual Transition DecideTransition()
     {
         foreach (var transition in _transitions)
         {
-            if (transition.Condition())
-                return transition.Next;
+            if (transition.Condition()) return transition;
         }
-        return this;
+        return null;
     }
 
     /// <summary>
@@ -41,6 +41,11 @@ public abstract class BehaviorState
     public virtual void Update() { }
 
     /// <summary>
+    /// Выполняется пока состояние активно
+    /// </summary>
+    public virtual void FixedUpdate() { }
+
+    /// <summary>
     /// Вызывается в момент когда текущее состояние меняется на другое
     /// </summary>
     public virtual void Exit() { }
@@ -48,17 +53,31 @@ public abstract class BehaviorState
     /// <summary>
     /// Переход от одного состояния к другому
     /// </summary>
-    private class Transition
+    public class Transition
     {
+        /// <summary>
+        /// Текущее состояние
+        /// </summary>
         public readonly BehaviorState Current;
+        /// <summary>
+        /// Следующие состояние
+        /// </summary>
         public readonly BehaviorState Next;
+        /// <summary>
+        /// Условие перехода в следующее состояние
+        /// </summary>
         public readonly Func<bool> Condition;
+        /// <summary>
+        /// Действие, выполняемое при переходе в следующее состояние
+        /// </summary>
+        public readonly Action ActionOnStateChange;
 
-        public Transition(BehaviorState current, BehaviorState next, Func<bool> condition)
+        public Transition(BehaviorState current, BehaviorState next, Func<bool> condition, Action action = null)
         {
-            this.Current = current;
-            this.Next = next;
-            this.Condition = condition;
+            Current = current;
+            Next = next;
+            Condition = condition;
+            ActionOnStateChange = action;
         }
     }
 }

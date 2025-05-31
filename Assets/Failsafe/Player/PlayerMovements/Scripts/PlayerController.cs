@@ -1,7 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Failsafe.PlayerMovements.Controllers;
 using Failsafe.PlayerMovements.States;
+using Failsafe.Scripts.Damage;
+using Failsafe.Scripts.Damage.Implementation;
+using Failsafe.Scripts.Damage.Providers;
+using Failsafe.Scripts.Health;
 
 namespace Failsafe.PlayerMovements
 {
@@ -16,9 +21,18 @@ namespace Failsafe.PlayerMovements
 
         [Header("Noise params")]
         [SerializeReference] private PlayerNoiseParameters _noiseParametrs = new PlayerNoiseParameters();
+        
+        [Header("Model params")]
+        [SerializeReference] private PlayerModelParameters _modelParameters = new ();
 
         private Transform _playerCamera;
         private Transform _playerGrabPoint;
+        
+        private DamageableComponent _damageableComponent;
+        
+        private IHealth _health;
+        private IDamageService _damageService;
+        
         private CharacterController _characterController;
         private PlayerRotationController _playerRotationController;
         private BehaviorStateMachine _behaviorStateMachine;
@@ -26,6 +40,25 @@ namespace Failsafe.PlayerMovements
         private LedgeDetector _ledgeDetector;
         private PlayerGravityController _playerGravity;
         private PlayerNoiseController _noiseController;
+        
+        private void Awake()
+        {
+            _health = new SimpleHealth(_modelParameters.MaxHealth);
+            
+            _damageService = CreateDamageService();
+            
+            _damageableComponent = transform.Find("Capsule").GetComponent<DamageableComponent>();
+        }
+
+        private void OnEnable()
+        {
+            _damageableComponent.OnTakeDamage += OnTakeDamage;
+        }
+
+        private void OnDisable()
+        {
+            _damageableComponent.OnTakeDamage -= OnTakeDamage;
+        }
 
         void Start()
         {
@@ -37,6 +70,7 @@ namespace Failsafe.PlayerMovements
             _ledgeDetector = new LedgeDetector(transform, _playerCamera, _playerGrabPoint);
             _playerGravity = new PlayerGravityController(_characterController, _movementParametrs);
             _noiseController = new PlayerNoiseController(transform, _noiseParametrs);
+            
             InitializeStateMachine();
         }
 
@@ -52,44 +86,68 @@ namespace Failsafe.PlayerMovements
             var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _ledgeDetector, _playerRotationController, _playerGrabPoint);
             var climbingState = new ClimbingState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _playerGrabPoint);
             var ledgeJumpState = new LedgeJumpState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
+            var deathState = new DeathState();
 
             walkState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered);
             walkState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
-            walkState.AddTransition(crouchState, () => _inputHandler.CrouchTriggered);
+            walkState.AddTransition(crouchState, () => _inputHandler.CrouchTrigger.IsTriggered, _inputHandler.CrouchTrigger.ReleaseTrigger);
             walkState.AddTransition(fallState, () => _playerGravity.IsFalling);
+            walkState.AddTransition(deathState, () => _health.IsDead);
 
             runState.AddTransition(walkState, () => !(_inputHandler.MoveForward && _inputHandler.SprintTriggered));
             runState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
-            runState.AddTransition(slideState, () => _inputHandler.CrouchTriggered && runState.CanSlide());
+            runState.AddTransition(slideState, () => _inputHandler.CrouchTrigger.IsTriggered && runState.CanSlide(), _inputHandler.CrouchTrigger.ReleaseTrigger);
             runState.AddTransition(fallState, () => _playerGravity.IsFalling);
+            runState.AddTransition(deathState, () => _health.IsDead);
 
             //slideState.AddTransition(runState, () => _inputHandler.SprintTriggered && slideState.SlideFinished());
-            slideState.AddTransition(crouchState, () => _inputHandler.CrouchTriggered && slideState.SlideFinished());
-            slideState.AddTransition(walkState, () => (!_inputHandler.CrouchTriggered && slideState.CanStand()) || slideState.SlideFinished());
+            slideState.AddTransition(crouchState, () => slideState.SlideFinished());
+            slideState.AddTransition(walkState, () => _inputHandler.CrouchTrigger.IsTriggered && slideState.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
             slideState.AddTransition(fallState, () => _playerGravity.IsFalling);
+            slideState.AddTransition(deathState, () => _health.IsDead);
 
             crouchState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered && crouchState.CanStand());
-            crouchState.AddTransition(walkState, () => !_inputHandler.CrouchTriggered && crouchState.CanStand());
+            crouchState.AddTransition(walkState, () => _inputHandler.CrouchTrigger.IsTriggered && crouchState.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
             crouchState.AddTransition(fallState, () => _playerGravity.IsFalling);
+            crouchState.AddTransition(deathState, () => _health.IsDead);
 
             jumpState.AddTransition(runState, () => _playerGravity.IsGrounded && _inputHandler.SprintTriggered);
             jumpState.AddTransition(walkState, () => _playerGravity.IsGrounded);
             jumpState.AddTransition(fallState, jumpState.InHightPoint);
             jumpState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
+            jumpState.AddTransition(deathState, () => _health.IsDead);
 
             fallState.AddTransition(walkState, () => _playerGravity.IsGrounded);
             fallState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
+            fallState.AddTransition(deathState, () => _health.IsDead);
 
             grabLedgeState.AddTransition(fallState, () => _inputHandler.MoveBack && grabLedgeState.CanFinish());
             grabLedgeState.AddTransition(climbingState, () => _inputHandler.MoveForward && grabLedgeState.CanFinish() && climbingState.CanClimb());
             grabLedgeState.AddTransition(ledgeJumpState, () => _inputHandler.JumpTriggered && grabLedgeState.CanFinish());
+            grabLedgeState.AddTransition(deathState, () => _health.IsDead);
 
             ledgeJumpState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
             ledgeJumpState.AddTransition(fallState, ledgeJumpState.InHightPoint);
+            ledgeJumpState.AddTransition(deathState, () => _health.IsDead);
 
             climbingState.AddTransition(walkState, () => climbingState.ClimbFinish());
+            climbingState.AddTransition(deathState, () => _health.IsDead);
 
             _behaviorStateMachine = new BehaviorStateMachine(walkState);
+        }
+        
+        private IDamageService CreateDamageService()
+        {
+            var damageService = new DamageService();
+            
+            damageService.Register(new FlatDamageProvider(_health));
+            
+            return damageService;
+        }
+
+        private void OnTakeDamage(IDamage damage)
+        {
+            _damageService.Provide(damage);
         }
 
         void Update()

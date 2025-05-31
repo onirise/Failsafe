@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Failsafe.Scripts.Damage;
+using Failsafe.Scripts.Damage.Implementation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,7 +16,7 @@ public class AttackState : BehaviorState
 
     private float _attackDelay = 3f;
     private float _rayDuration = 5f;
-    private float _rayDPS = 5f;
+    private float _rayDPS = 100f;
     private float _rayCooldown = 10f;
     private float _attackProgress = 0;
     private bool _delayOver = false;
@@ -110,6 +112,21 @@ public class AttackState : BehaviorState
                     if (sensor.SignalInAttackRay(_targetPosition.Value))
                     {
                         Debug.Log("Попал");
+
+                _targetPosition = sensor.SignalSourcePosition;
+                _enemyController.RotateToPoint(_targetPosition.Value, _transform.up);
+                
+                if (_delayOver && !_onCooldown)
+                {
+                    Debug.Log("Пиу");
+
+                    var damageableComponent = visualSensor.Target.GetComponentInChildren<DamageableComponent>();
+                    
+                    if (sensor.SignalInAttackRay((Vector3)_targetPosition) && damageableComponent is not null)
+                    {
+                        Debug.Log("damage");
+                        
+                        damageableComponent.TakeDamage(new FlatDamage(_rayDPS * Time.deltaTime));
                     }
                 }
             }

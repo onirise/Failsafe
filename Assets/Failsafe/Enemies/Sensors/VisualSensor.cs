@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
-
 /// <summary>
 /// Реализация визуального обнаружения игрока
 /// </summary>
@@ -84,7 +82,8 @@ public class VisualSensor : Sensor
 
     public override bool SignalInAttackRay(Vector3 targetPosition)
     {
-        Vector3 direction = targetPosition.normalized;
+        var direction = _eyePosition.forward;
+
         if (Physics.BoxCast(EyePosition, _attackRaySize, direction, out var hit, transform.rotation, Mathf.Infinity, ~_ignoreLayer))
         {
             // сейчас обнаружение игрока идет по тэгу Player
@@ -140,10 +139,10 @@ public class VisualSensor : Sensor
         Vector3 ray4 = origin;
         ray4.x += _rayWidth / 2;
         ray4.y += _rayHeight / 2;
-        Gizmos.DrawRay(ray1,transform.forward*Distance);
-        Gizmos.DrawRay(ray2, transform.forward * Distance);
-        Gizmos.DrawRay(ray3, transform.forward * Distance);
-        Gizmos.DrawRay(ray4, transform.forward * Distance);
+        Gizmos.DrawRay(ray1, _eyePosition.forward * Distance);
+        Gizmos.DrawRay(ray2, _eyePosition.forward * Distance);
+        Gizmos.DrawRay(ray3, _eyePosition.forward * Distance);
+        Gizmos.DrawRay(ray4, _eyePosition.forward * Distance);
 
         // === Визуализация луча до цели (при игре) ===
         if (Application.isPlaying)

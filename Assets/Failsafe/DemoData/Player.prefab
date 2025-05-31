@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 374109432967700041}
   - component: {fileID: 374109432967700040}
   - component: {fileID: 374109432967700043}
-  m_Layer: 6
+  - component: {fileID: 6522333870096678596}
+  m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +112,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6522333870096678596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374109432967700053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a9f10290fb40dba09100153c7f7e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &374109432981789084
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +135,7 @@ GameObject:
   - component: {fileID: 374109432981789085}
   - component: {fileID: 374109432981789075}
   - component: {fileID: 3056071954068415360}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +252,7 @@ GameObject:
   - component: {fileID: 3587987712684801882}
   - component: {fileID: -2348027190149931829}
   - component: {fileID: 5543863665210299431}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -353,24 +366,26 @@ MonoBehaviour:
   _inputActionAsset: {fileID: -944628639613478452, guid: 1f09f2f8cfa351946a2c010bb9946270, type: 3}
   _noiseParametrs:
     rid: 2287995151870591099
+  _modelParameters:
+    rid: 5390404808482226255
   references:
     version: 2
     RefIds:
     - rid: 2287995151870591098
       type: {class: PlayerMovementParameters, ns: Failsafe.PlayerMovements, asm: Assembly-CSharp}
       data:
-        WalkSpeed: 4
-        RunSpeed: 6.5
-        CrouchSpeed: 2.5
+        WalkSpeed: 2.7
+        RunSpeed: 4.2
+        CrouchSpeed: 1.8
         CrouchHeight: 0.5
-        SlideSpeed: 7
+        SlideSpeed: 5
         SlideHeight: 0.3
-        MaxSlideTime: 1.5
-        MinSlideTime: 0.75
-        JumpForce: 15
-        JumpForceFade: 12
+        MaxSlideTime: 1
+        MinSlideTime: 0.5
+        JumpForce: 19
+        JumpForceFade: 32
         GravityForce: 9
-        GrabLedgeSpeed: 2.5
+        GrabLedgeSpeed: 2.4
         GrabLedgeHeightDifference: 0.1
     - rid: 2287995151870591099
       type: {class: PlayerNoiseParameters, ns: Failsafe.PlayerMovements, asm: Assembly-CSharp}
@@ -379,6 +394,11 @@ MonoBehaviour:
         DefaultStrength: 5
         IncreasedStrength: 10
         ReducedStrength: 2
+    - rid: 5390404808482226255
+      type: {class: PlayerModelParameters, ns: Failsafe.PlayerMovements, asm: Assembly-CSharp}
+      data:
+        <MaxHealth>k__BackingField: 1000
+        <MaxStamina>k__BackingField: 100
 --- !u!1 &374109433356125759
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +411,7 @@ GameObject:
   - component: {fileID: 374109433356125747}
   - component: {fileID: 374109433356125746}
   - component: {fileID: 374109433356125757}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -512,7 +532,7 @@ Transform:
   m_GameObject: {fileID: 2082495522751311562}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.468, z: 0.998}
+  m_LocalPosition: {x: 0, y: 2, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -532,7 +552,7 @@ GameObject:
   - component: {fileID: 2632741281496896874}
   - component: {fileID: 185476466963446419}
   - component: {fileID: 5433976205981439677}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InventoryAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -763,7 +783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6033173754768017829}
   - component: {fileID: 4284899158147892210}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -920,8 +940,8 @@ MonoBehaviour:
     - \u0432\u043A\u043B/\u0432\u044B\u043A\u043B \u0441\u0447\u0435\u0442\u0447\u0438\u043A
     FPS\nESC - \u0437\u0430\u043A\u0440\u044B\u0442\u044C \u0438\u0433\u0440\u0443\nv0.0.3"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 99f2795ac882903478a1da0b17af609e, type: 2}
-  m_sharedMaterial: {fileID: 2885416551746965573, guid: 99f2795ac882903478a1da0b17af609e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1063,7 +1083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2a648aaf7f5dedc4fb1a41c5ef1969b0, type: 3}
       propertyPath: m_Layer
-      value: 5
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

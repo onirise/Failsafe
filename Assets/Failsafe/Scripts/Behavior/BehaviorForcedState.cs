@@ -16,9 +16,7 @@ public abstract class BehaviorForcedState : BehaviorState
     /// <param name="previousState">Предыдущее состояние на момент переключения на это состояние</param>
     public virtual void Enter(BehaviorState previousState)
     {
-        Enter();
         PreviousState = previousState;
+        Enter();
     }
-
-    public override abstract BehaviorState DecideNextState();
 }

@@ -64,6 +64,5 @@ public class ChasingState : BehaviorState
             return;
         }
         _enemyController.RunToPoint(_chasingPosition.Value);
-        _enemyController.RotateToPoint(_chasingPosition.Value, _transform.up);
     }
 }

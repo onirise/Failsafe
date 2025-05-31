@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 /// <summary>
@@ -19,7 +19,7 @@ public class SignalManager : MonoBehaviour
     public SignalChannel EnemyNoiseChanel;
 
     private float _lastRemoveExpireAt;
-    private const float RemoveExpireDelay = 5;
+    private const float _removeExpireDelay = 5;
 
     void Awake()
     {
@@ -32,7 +32,7 @@ public class SignalManager : MonoBehaviour
     void Update()
     {
         var currentTime = Time.time;
-        if (_lastRemoveExpireAt + RemoveExpireDelay > currentTime) return;
+        if (_lastRemoveExpireAt + _removeExpireDelay > currentTime) return;
 
         PlayerNoiseChanel.RemoveExpiredSignals(currentTime);
         EnemyNoiseChanel.RemoveExpiredSignals(currentTime);

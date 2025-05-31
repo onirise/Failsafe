@@ -9,7 +9,11 @@ public class DefaultState : BehaviorState
     private Sensor[] _sensors;
     private Transform _transform;
     EnemyController _enemyController;
-    private bool _ispatroling = true;
+
+    public bool IsPatroling()
+    {
+        return true;
+    }
     public DefaultState(Sensor[] sensors, Transform transform, EnemyController enemyController)
     {
         _sensors = sensors;
@@ -34,17 +38,11 @@ public class DefaultState : BehaviorState
     {
         foreach (var sensor in _sensors)
         {
-            Debug.Log($"Raw signal: {sensor.SignalStrength}, Activated: {sensor.IsActivated()}");
 
             if (sensor.IsActivated())
             {
-                _enemyController.RotateToPoint(sensor.SignalSourcePosition.Value, Vector3.up);
                 _warningProgress += sensor.SignalStrength * Time.deltaTime;
             }
         }
-    }
-    public bool IsPatroling()
-    {
-        return _ispatroling;
     }
 }

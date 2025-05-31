@@ -113,48 +113,49 @@ public class AttackState : BehaviorState
                     {
                         Debug.Log("Попал");
 
-                _targetPosition = sensor.SignalSourcePosition;
-                _enemyController.RotateToPoint(_targetPosition.Value, _transform.up);
-                
-                if (_delayOver && !_onCooldown)
-                {
-                    Debug.Log("Пиу");
+                        _targetPosition = sensor.SignalSourcePosition;
+                        _enemyController.RotateToPoint(_targetPosition.Value);
 
-                    var damageableComponent = visualSensor.Target.GetComponentInChildren<DamageableComponent>();
-                    
-                    if (sensor.SignalInAttackRay((Vector3)_targetPosition) && damageableComponent is not null)
-                    {
-                        Debug.Log("damage");
-                        
-                        damageableComponent.TakeDamage(new FlatDamage(_rayDPS * Time.deltaTime));
+                        if (_delayOver && !_onCooldown)
+                        {
+                            Debug.Log("Пиу");
+
+                            var damageableComponent = visual.Target.GetComponentInChildren<DamageableComponent>();
+
+                            if (sensor.SignalInAttackRay((Vector3)_targetPosition) && damageableComponent is not null)
+                            {
+                                Debug.Log("damage");
+
+                                damageableComponent.TakeDamage(new FlatDamage(_rayDPS * Time.deltaTime));
+                            }
+                        }
                     }
                 }
+
+                if (_attackFired && _attackProgress > _rayDuration)
+                {
+                    if (_activeLaser != null)
+                    {
+                        GameObject.Destroy(_activeLaser.gameObject);
+                        _activeLaser = null;
+                    }
+
+                    _onCooldown = true;
+                    _enemyAnimator.TryReload();
+                    _enemyAnimator.isReloading(true);
+                    Debug.Log("Атака на перезарядке");
+                }
+
+                if (_attackProgress > _rayDuration + _rayCooldown)
+                {
+                    _onCooldown = false;
+                    _enemyAnimator.isReloading(false);
+                    _attackProgress = 0;
+                    _attackFired = false;
+                }
+
             }
         }
-
-        if (_attackFired && _attackProgress > _rayDuration)
-        {
-            if (_activeLaser != null)
-            {
-                GameObject.Destroy(_activeLaser.gameObject);
-                _activeLaser = null;
-            }
-
-            _onCooldown = true;
-            _enemyAnimator.TryReload();
-            _enemyAnimator.isReloading(true);
-            Debug.Log("Атака на перезарядке");
-        }
-
-        if (_attackProgress > _rayDuration + _rayCooldown)
-        {
-            _onCooldown = false;
-            _enemyAnimator.isReloading(false);
-            _attackProgress = 0;
-            _attackFired = false;
-        }
-
-        base.Update();
     }
 
     public override void Exit()

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
-
 /// <summary>
 /// Реализация визуального обнаружения игрока
 /// </summary>

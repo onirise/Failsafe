@@ -18,13 +18,25 @@ public class BehaviorStateMachine
     public void Update()
     {
         _currentState.Update();
-        var nextState = _currentState.DecideNextState();
+        var transition = _currentState.DecideTransition();
+        if (transition == null) return;
+
+        var nextState = transition.Next;
         if (nextState != _currentState)
         {
             _currentState.Exit();
             _currentState = nextState;
             _currentState.Enter();
+            transition.ActionOnStateChange?.Invoke();
         }
+    }
+
+    /// <summary>
+    /// Вызывать в методе MonoBehaviour.FixedUpdate
+    /// </summary>
+    public void FixedUpdate()
+    {
+        _currentState.FixedUpdate();
     }
 
     /// <summary>

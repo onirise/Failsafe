@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SwapColorText : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class OnSelectEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     string _originalText;
     Color _originalColor;

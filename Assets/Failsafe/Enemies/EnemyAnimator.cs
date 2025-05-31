@@ -54,7 +54,6 @@ public class EnemyAnimator
         if (_waitingForTurnToFinish && !_isTurning)
         {
             _waitingForTurnToFinish = false;
-            _turningAnimationTriggered = false;
             _controller.ResumeMoving();
         }
     }
@@ -70,6 +69,12 @@ public class EnemyAnimator
         float velocity = _navMeshAgent.velocity.magnitude;
         _animator.SetFloat("Speed", velocity, 0.15f, Time.deltaTime);
     }
+    public void SetUseRootRotation(bool enabled)
+    {
+        UseRootRotation = enabled;
+        _animator.applyRootMotion = enabled;
+    }
+
     private bool _turningAnimationTriggered = false;
 
     private void HandleRotation()
@@ -124,14 +129,13 @@ public class EnemyAnimator
     public void ApplyRootMotion()
     {
         Vector3 rootPos = _animator.rootPosition;
-
-        // Поддерживать правильную высоту
         rootPos.y = _navMeshAgent.nextPosition.y;
-
         _transform.position = rootPos;
 
         if (UseRootRotation)
+        {
             _transform.rotation = _animator.rootRotation;
+        }
 
         _navMeshAgent.nextPosition = _transform.position;
     }

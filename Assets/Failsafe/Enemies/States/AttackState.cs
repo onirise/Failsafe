@@ -12,7 +12,6 @@ public class AttackState : BehaviorState
     private Transform _transform;
     private Vector3? _targetPosition;
 
-    //Параметры луча атаки
     private float _attackDelay = 3f;
     private float _rayDuration = 5f;
     private float _rayDPS = 5f;
@@ -20,10 +19,10 @@ public class AttackState : BehaviorState
     private float _attackProgress = 0;
     private bool _delayOver = false;
     private bool _onCooldown = false;
+    private bool _attackFired = false;
 
     private EnemyController _enemyController;
     private EnemyAnimator _enemyAnimator;
-
 
     private float _attackRangeMax = 15f;
     private float _distanceToPlayer;
@@ -31,7 +30,6 @@ public class AttackState : BehaviorState
     private LaserBeamController _activeLaser;
     private GameObject _laserPrefab;
     private Transform _laserOrigin;
-    private bool _attackFired = false;
 
     public AttackState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, EnemyAnimator enemyAnimator, LaserBeamController laserBeamController, GameObject laser, Transform laserOrigin)
     {
@@ -46,44 +44,30 @@ public class AttackState : BehaviorState
 
     public bool PlayerOutOfAttackRange()
     {
-        Debug.Log($"Attack → Chase? distance={_distanceToPlayer}, threshold={_attackRangeMax}, inAction={_enemyAnimator.IsInAction()}");
-        Debug.Log($"Check: {_distanceToPlayer} > {_attackRangeMax}, InAction: {_enemyAnimator.IsInAction()}");
-        return _distanceToPlayer > _attackRangeMax && !_enemyAnimator.IsInAction();
-
+        return _distanceToPlayer > _attackRangeMax;
     }
+
     public override void Enter()
     {
         base.Enter();
         _attackProgress = 0;
         _delayOver = false;
         _onCooldown = false;
+        _attackFired = false;
+        _enemyAnimator.SetUseRootRotation(false);
         Debug.Log("Enter AttackState");
-        _enemyAnimator.UseRootRotation = false; // Отключаем ротацию по корню, чтобы атака была более естественной
 
         if (_laserPrefab == null)
-        {
             Debug.LogError("Laser Prefab не назначен!");
-            return;
-        }
+
         if (_laserOrigin == null)
-        {
             Debug.LogError("Laser Origin не назначен!");
-            return;
-        }
     }
 
     public override void Update()
     {
-        base.Update();
         _attackProgress += Time.deltaTime;
-        foreach (var sensor in _sensors)
-        {
-            if (sensor.IsActivated() && sensor.SignalSourcePosition.HasValue)
-            {
-                _targetPosition = sensor.SignalSourcePosition;
-                _distanceToPlayer = Vector3.Distance(_transform.position, _targetPosition.Value);
-            }
-        }
+
         if (!_delayOver && _attackProgress > _attackDelay)
         {
             _delayOver = true;
@@ -92,14 +76,26 @@ public class AttackState : BehaviorState
 
         foreach (var sensor in _sensors)
         {
-            if (sensor is VisualSensor && sensor.IsActivated())
+            if (sensor is VisualSensor visual && visual.IsActivated())
             {
-                _distanceToPlayer = Vector3.Distance(sensor.SignalSourcePosition.Value, _transform.position);
-                _targetPosition = sensor.SignalSourcePosition;
-                _enemyController.RotateToPoint(_targetPosition.Value);
+                _targetPosition = visual.SignalSourcePosition;
 
+                if (_targetPosition == null)
+                    continue;
 
-                if (_delayOver && !_onCooldown && !_enemyAnimator.IsInAction())
+                _distanceToPlayer = Vector3.Distance(_transform.position, _targetPosition.Value);
+                _enemyController.RotateToPoint(_targetPosition.Value, 5f);
+
+                if (_distanceToPlayer > _attackRangeMax)
+                {
+                    _enemyController.RunToPoint(_targetPosition.Value);
+                }
+                else
+                {
+                    _enemyController.StopMoving();
+                }
+
+                if (_delayOver && !_onCooldown && !_enemyAnimator.IsInAction() && _distanceToPlayer <= _attackRangeMax)
                 {
                     if (_activeLaser == null)
                     {
@@ -113,8 +109,7 @@ public class AttackState : BehaviorState
 
                     if (sensor.SignalInAttackRay(_targetPosition.Value))
                     {
-                        Debug.Log("Попал"); // сюда добавить урон
-                       
+                        Debug.Log("Попал");
                     }
                 }
             }
@@ -127,11 +122,13 @@ public class AttackState : BehaviorState
                 GameObject.Destroy(_activeLaser.gameObject);
                 _activeLaser = null;
             }
+
             _onCooldown = true;
             _enemyAnimator.TryReload();
             _enemyAnimator.isReloading(true);
             Debug.Log("Атака на перезарядке");
         }
+
         if (_attackProgress > _rayDuration + _rayCooldown)
         {
             _onCooldown = false;
@@ -139,11 +136,13 @@ public class AttackState : BehaviorState
             _attackProgress = 0;
             _attackFired = false;
         }
+
+        base.Update();
     }
 
     public override void Exit()
     {
         base.Exit();
-        _enemyAnimator.UseRootRotation = true; // Включаем ротацию по root
+        _enemyAnimator.SetUseRootRotation(true);
     }
 }

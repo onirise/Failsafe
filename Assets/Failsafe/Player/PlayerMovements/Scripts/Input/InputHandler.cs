@@ -43,6 +43,7 @@ public class InputHandler
     public bool GrabOrDropTriggered { get; private set; }
     public bool AttackTriggered {get; private set;}
 
+
     /// <summary>
     /// Преобразовать MovementInput к нужному Transform
     /// </summary>
@@ -90,5 +91,39 @@ public class InputHandler
         
         _attackAction.performed += inputInfo => AttackTriggered = true;
         _attackAction.canceled += inputInfo => AttackTriggered = false;
+
+    }
+    
+    public class InputTrigger
+    {
+        /// <summary>
+        /// Инпут активирован
+        /// </summary>
+        public bool IsTriggered { get; private set; }
+        /// <summary>
+        /// Инпут удерживается
+        /// </summary>
+        public bool IsPressed { get; private set; }
+
+        public void OnInputStart(InputAction.CallbackContext context)
+        {
+            IsTriggered = true;
+            IsPressed = true;
+        }
+
+        public void OnInputCancel(InputAction.CallbackContext context)
+        {
+            IsTriggered = false;
+            IsPressed = false;
+        }
+
+        /// <summary>
+        /// Вызывать когда инпут обработан.
+        /// </summary>
+        public void ReleaseTrigger()
+        {
+            IsTriggered = false;
+        }
     }
 }
+

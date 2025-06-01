@@ -7,6 +7,7 @@ using Failsafe.Scripts.Damage;
 using Failsafe.Scripts.Damage.Implementation;
 using Failsafe.Scripts.Damage.Providers;
 using Failsafe.Scripts.Health;
+using Failsafe.Player.Interaction;
 
 namespace Failsafe.PlayerMovements
 {
@@ -40,6 +41,8 @@ namespace Failsafe.PlayerMovements
         private LedgeDetector _ledgeDetector;
         private PlayerGravityController _playerGravity;
         private PlayerNoiseController _noiseController;
+        public InputHandler InputHandler => _inputHandler;
+
 
         private void Awake()
         {
@@ -116,10 +119,11 @@ namespace Failsafe.PlayerMovements
             jumpState.AddTransition(walkState, () => _playerGravity.IsGrounded);
             jumpState.AddTransition(fallState, jumpState.InHightPoint);
             jumpState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
+            
 
             fallState.AddTransition(walkState, () => _playerGravity.IsGrounded);
             fallState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
-
+            
             grabLedgeState.AddTransition(fallState, () => _inputHandler.MoveBack && grabLedgeState.CanFinish());
             grabLedgeState.AddTransition(climbingState, () => _inputHandler.MoveForward && grabLedgeState.CanFinish() && climbingState.CanClimb());
             grabLedgeState.AddTransition(ledgeJumpState, () => _inputHandler.JumpTriggered && grabLedgeState.CanFinish());

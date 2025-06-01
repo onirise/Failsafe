@@ -455,7 +455,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518017a7c725d6646a44ecdadd54e1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dist: 1.5
+  _carryingDistance: 2.5
+  _maxPickupDistance: 5
+  _carryingObject: {fileID: 0}
+  _carryingBody: {fileID: 0}
+  _playerCameraTransform: {fileID: 0}
+  _draggablePositionOffset: {x: 0, y: 1, z: 0}
+  _dragSpeed: 10
+  _throwForce: 10
 --- !u!114 &3587987712684801882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,7 +772,6 @@ MonoBehaviour:
   lookDownThreshold: 0.9
   openInventoryOffset: 0.1
   PlayerCamera: {fileID: 374109432981789075}
-  physicsPickup: {fileID: 5564961472655603788}
 --- !u!114 &185476466963446419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -780,7 +786,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 0}
   playerCamera: {fileID: 0}
-  physicsPickup: {fileID: 0}
   inventoryLayer:
     serializedVersion: 2
     m_Bits: 16384

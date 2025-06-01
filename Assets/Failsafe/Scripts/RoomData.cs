@@ -1,13 +1,18 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using DMDungeonGenerator;
 using System;
+using System.Linq;
 
 namespace DMDungeonGenerator {
     [ExecuteInEditMode]
-    public class RoomData:MonoBehaviour {
+    public class RoomData : MonoBehaviour
+    {
+        public List<Transform> PatrolPoints = new(); // Заполняется автоматически
+        private Bounds _bounds;
+
         [HideInInspector]
-        public float debugTransparency = 0.2f;
+        public float DebugTransparency = 0.2f;
 
         public List<DMDungeonGenerator.Voxel> LocalVoxels = new List<Voxel>();
         public List<DMDungeonGenerator.Door> Doors = new List<DMDungeonGenerator.Door>();
@@ -16,7 +21,7 @@ namespace DMDungeonGenerator {
         public static bool DrawVolumes = true;
 
         public GraphNode node;
-
+        public Bounds RoomBounds => bounds;
         [HideInInspector]
         public float rotation = 0f; //used to store the rotation value once this room is committed
         public int roomTemplateID = 0; //auto generated at generation time
@@ -25,12 +30,69 @@ namespace DMDungeonGenerator {
         /// This runs both in editor and in playmode as per ExecuteInEditMode.  
         /// This just ensures we always have at least one voxel in the list to build off of using the editor tools
         /// </summary>
-        private void Awake() {
+        private void Awake() 
+        {
+            FitColliderToVoxels();
+
             //In the editor, when we add this script to a room, we always want at least one voxel in the list by default.  
             //So we add that here. 
-            if(LocalVoxels.Count == 0) {
+            if (LocalVoxels.Count == 0) {
                 LocalVoxels.Add(new Voxel(Vector3.zero));
             }
+        }
+        private void OnEnable()
+        {
+            AutoCollectPatrolPoints();
+        }
+        public List<Transform> GetPatrolPoints()
+        {
+            if (PatrolPoints == null || PatrolPoints.Count == 0)
+                AutoCollectPatrolPoints();
+
+            return PatrolPoints;
+        }
+        [ContextMenu("Fit Collider To Voxels")]
+        public void FitColliderToVoxels()
+        {
+            if (LocalVoxels == null || LocalVoxels.Count == 0)
+            {
+                Debug.LogWarning($"[{name}] Нет вокселей — коллайдер не подогнан.");
+                return;
+            }
+
+            float voxelSize = DMDungeonGenerator.DungeonGenerator.voxelScale;
+
+            // Построим bounds по всем вокселям в МИРОВОМ пространстве
+            Vector3 firstWorldPos = transform.TransformPoint(LocalVoxels[0].position * voxelSize);
+            Bounds worldBounds = new Bounds(firstWorldPos, Vector3.zero);
+
+            for (int i = 1; i < LocalVoxels.Count; i++)
+            {
+                Vector3 worldPos = transform.TransformPoint(LocalVoxels[i].position * voxelSize);
+                worldBounds.Encapsulate(worldPos);
+            }
+
+            // Переводим обратно в ЛОКАЛЬНЫЕ координаты для BoxCollider
+            Vector3 localCenter = transform.InverseTransformPoint(worldBounds.center);
+            Vector3 localSize = transform.InverseTransformVector(worldBounds.size);
+
+            BoxCollider box = GetComponent<BoxCollider>();
+            if (box == null)
+                box = gameObject.AddComponent<BoxCollider>();
+
+            box.isTrigger = true;
+            box.center = localCenter;
+            box.size = localSize;
+
+            Debug.Log($"[RoomData] '{name}' → BoxCollider fitted. Size = {box.size}, Center = {box.center}");
+        }
+        private void AutoCollectPatrolPoints()
+        {
+            PatrolPoints = GetComponentsInChildren<Transform>(true)
+                .Where(t => t.CompareTag("PatrolPoints") && t != transform)
+                .ToList();
+
+            Debug.Log($"[{name}] Patrol Points found: {PatrolPoints.Count}");
         }
 
         /// <summary>
@@ -156,6 +218,10 @@ namespace DMDungeonGenerator {
             Vector3 size = new Vector3(voxelSize, voxelSize, voxelSize);
             bounds = new Bounds(((min + max) / 2f) * voxelSize, ((max * voxelSize + size / 2f) - (min * voxelSize - size / 2f)));
         }
+        public bool Contains(Vector3 worldPosition)
+        {
+            return RoomBounds.Contains(worldPosition);
+        }
 
         /// <summary>
         /// 
@@ -195,7 +261,9 @@ namespace DMDungeonGenerator {
         public void ToggleBounds() {
             DrawRoomBounds = !DrawRoomBounds;
         }
+       
     }
+
 }
 
 

@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using DMDungeonGenerator;
 using Unity.AI.Navigation;
-
+using System.Linq;
 
 public class SpawnEnemiesCallback : MonoBehaviour
 {
     // Start is called before the first frame update
 
-
     public DMDungeonGenerator.DungeonGenerator generator;
 
     public GameObject PlayerPrefab;
-
-
     public GameObject spawnedPlayer;
     public GameObject EnemyPrefab;
     public NavMeshSurface NavMeshSurface;
@@ -24,8 +21,6 @@ public class SpawnEnemiesCallback : MonoBehaviour
     /// Шанс для каждой комнаты, что в ней заспавнится враг
     /// </summary>
     public float enemySpawnChance = 0.8f;
-
-
 
     void Awake()
     {

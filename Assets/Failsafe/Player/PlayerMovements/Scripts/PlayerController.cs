@@ -42,7 +42,6 @@ namespace Failsafe.PlayerMovements
         private PlayerGravityController _playerGravity;
         private PlayerNoiseController _noiseController;
         [SerializeField] private EventReference _footstepEvent;
-
         private StepController _stepController;
         private void Awake()
         {
@@ -74,7 +73,7 @@ namespace Failsafe.PlayerMovements
             _ledgeDetector = new LedgeDetector(transform, _playerCamera, _playerGrabPoint);
             _playerGravity = new PlayerGravityController(_characterController, _movementParametrs);
             _noiseController = new PlayerNoiseController(transform, _noiseParametrs);
-            _stepController = new StepController(_characterController, _noiseController, _footstepEvent);
+            _stepController = new StepController(_characterController,_movementParametrs, _footstepEvent);
 
 
             InitializeStateMachine();
@@ -83,10 +82,10 @@ namespace Failsafe.PlayerMovements
         private void InitializeStateMachine()
         {
             var standingState = new StandingState(_inputHandler);
-            var walkState = new WalkState(_inputHandler, _characterController, _movementParametrs, _noiseController);
-            var runState = new SprintState(_inputHandler, _characterController, _movementParametrs, _noiseController);
+            var walkState = new WalkState(_inputHandler, _characterController, _movementParametrs, _noiseController, _stepController);
+            var runState = new SprintState(_inputHandler, _characterController, _movementParametrs, _noiseController, _stepController);
             var slideState = new SlideState(_inputHandler, _characterController, _movementParametrs, _playerCamera, _playerRotationController);
-            var crouchState = new CrouchState(_inputHandler, _characterController, _movementParametrs, _playerCamera, _noiseController);
+            var crouchState = new CrouchState(_inputHandler, _characterController, _movementParametrs, _playerCamera, _noiseController, _stepController);
             var jumpState = new JumpState(_inputHandler, _characterController, _movementParametrs);
             var fallState = new FallState(_inputHandler, _characterController, _movementParametrs, _noiseController);
             var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _ledgeDetector, _playerRotationController, _playerGrabPoint);
@@ -98,6 +97,7 @@ namespace Failsafe.PlayerMovements
             walkState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
             walkState.AddTransition(crouchState, () => _inputHandler.CrouchTrigger.IsTriggered, _inputHandler.CrouchTrigger.ReleaseTrigger);
             walkState.AddTransition(fallState, () => _playerGravity.IsFalling);
+            walkState.AddTransition(standingState,() => _characterController.velocity.magnitude < 0.1f);
             walkState.AddTransition(deathState, () => _health.IsDead);
 
             runState.AddTransition(walkState, () => !(_inputHandler.MoveForward && _inputHandler.SprintTriggered));
@@ -139,6 +139,11 @@ namespace Failsafe.PlayerMovements
             climbingState.AddTransition(walkState, () => climbingState.ClimbFinish());
             climbingState.AddTransition(deathState, () => _health.IsDead);
 
+            standingState.AddTransition(walkState, () => !_inputHandler.MovementInput.Equals(Vector2.zero));
+            standingState.AddTransition(crouchState, () => _inputHandler.CrouchTrigger.IsTriggered, _inputHandler.CrouchTrigger.ReleaseTrigger);
+            standingState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
+            standingState.AddTransition(deathState, () => _health.IsDead);
+
             _behaviorStateMachine = new BehaviorStateMachine(walkState);
         }
         
@@ -162,11 +167,7 @@ namespace Failsafe.PlayerMovements
             _playerRotationController.HandlePlayerRotation();
             _playerGravity.HandleGravity();
             _behaviorStateMachine.Update();
-            bool isFootstepState = _behaviorStateMachine._currentState is WalkState
-                                || _behaviorStateMachine._currentState is SprintState
-                                || _behaviorStateMachine._currentState is CrouchState;
-
-            _stepController.Update(isFootstepState);
+            _stepController.Update();
         }
     }
 }

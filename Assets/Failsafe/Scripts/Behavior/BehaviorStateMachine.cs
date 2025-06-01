@@ -3,13 +3,15 @@ using System.Linq;
 
 public class BehaviorStateMachine
 {
-    public BehaviorState _currentState;
+    private BehaviorState _currentState;
+    public BehaviorState СurrentState => _currentState;
     private List<BehaviorForcedState> _forcedStates;
 
     public BehaviorStateMachine(BehaviorState initState, List<BehaviorForcedState> forcedStates = null)
     {
         _currentState = initState;
         _forcedStates = forcedStates ?? new List<BehaviorForcedState>();
+        _currentState.Enter();
     }
 
     /// <summary>

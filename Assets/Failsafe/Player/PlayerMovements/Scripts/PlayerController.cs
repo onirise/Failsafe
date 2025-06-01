@@ -97,6 +97,7 @@ namespace Failsafe.PlayerMovements
             var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _playerRotationController, _ledgeController);
             var climbingState = new ClimbingState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _ledgeController);
             var ledgeJumpState = new LedgeJumpState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
+            var CrouchIdle = new CrouchIdle(_playerCamera, _movementParametrs, _stepController);
 
             var deathState = new DeathState();
             var forcedStates = new List<BehaviorForcedState>
@@ -124,6 +125,7 @@ namespace Failsafe.PlayerMovements
             crouchState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered && crouchState.CanStand());
             crouchState.AddTransition(walkState, () => _inputHandler.CrouchTrigger.IsTriggered && crouchState.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
             crouchState.AddTransition(fallState, () => _playerGravity.IsFalling);
+            crouchState.AddTransition(CrouchIdle, () => _inputHandler.MovementInput.Equals(Vector2.zero));
 
             jumpState.AddTransition(runState, () => _playerGravity.IsGrounded && _inputHandler.SprintTriggered);
             jumpState.AddTransition(walkState, () => _playerGravity.IsGrounded);
@@ -142,10 +144,14 @@ namespace Failsafe.PlayerMovements
 
             climbingState.AddTransition(walkState, () => climbingState.ClimbFinish());
 
+            CrouchIdle.AddTransition(crouchState, () => !_inputHandler.MovementInput.Equals(Vector2.zero));
+            CrouchIdle.AddTransition(standingState, () => _inputHandler.CrouchTrigger.IsTriggered && crouchState.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
+
             standingState.AddTransition(walkState, () => !_inputHandler.MovementInput.Equals(Vector2.zero));
-            standingState.AddTransition(crouchState, () => _inputHandler.CrouchTrigger.IsTriggered, _inputHandler.CrouchTrigger.ReleaseTrigger);
+            standingState.AddTransition(CrouchIdle, () => _inputHandler.CrouchTrigger.IsTriggered, _inputHandler.CrouchTrigger.ReleaseTrigger);
             standingState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
-            
+
+
             _behaviorStateMachine = new BehaviorStateMachine(walkState, forcedStates);
 
         }

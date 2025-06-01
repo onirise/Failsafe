@@ -32,7 +32,7 @@ namespace Failsafe.PlayerMovements.Controllers
             _enabled = true;
             _minStepInterval = Mathf.Clamp(2f / speed - 0.1f, 0.1f, 1f);
             _maxStepInterval = Mathf.Clamp(2f / speed + 0.1f, 0.1f, 2f);
-            _stepTimer = _maxStepInterval;
+            _stepTimer = 0.1f;
 
         }
         public void Disable() => _enabled = false;

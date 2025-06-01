@@ -74,7 +74,7 @@ public class Profile : BaseMenu, IPointerEnterHandler, IPointerExitHandler, IPoi
 
     }
 
-    public void OnMouseExitToProfile()
+    public void OnMouseExitFromProfile()
     {
         _clickToSelectTextGO.SetActive(false);
         _clickToOpenSavesTextGO.SetActive(false);
@@ -91,7 +91,7 @@ public class Profile : BaseMenu, IPointerEnterHandler, IPointerExitHandler, IPoi
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        OnMouseExitToProfile();
+        OnMouseExitFromProfile();
     }
 
     public void OnPointerClick(PointerEventData eventData)

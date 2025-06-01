@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3406188600221659340}
   - component: {fileID: 4032751711279027398}
   m_Layer: 5
-  m_Name: Save
+  m_Name: SaveSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,19 +94,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af1f0fb180aac2a41bcfbf9ae82c4560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DATA:
-    seed: 0
-    time: 0
-    playerPosition: {x: 0, y: 0, z: 0}
-    screenshotLink: 
-    lastSave: 0
-    isEmpty: 1
-  nameTextLocEvent: {fileID: 2714455525112343335}
-  clickToSelectTextGO: {fileID: 5501076093613481770}
-  selectedTextGO: {fileID: 2630282045249889363}
-  clearButtonGO: {fileID: 6595815581586747735}
-  savePreview: {fileID: 7827307377295047788}
-  timeLocalizeStringEvent: {fileID: 3532502059384789571}
+  _nameTextLocEvent: {fileID: 0}
+  _timeLocalizeStringEvent: {fileID: 0}
+  _clickToSelectTextGO: {fileID: 0}
+  _lastSaveTextGO: {fileID: 0}
+  _clearButtonGO: {fileID: 0}
+  _savePreview: {fileID: 0}
 --- !u!1 &2443035843202419803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,7 +1166,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:80f3b641b39761644b4de4ccdaec3e87
     m_TableEntryReference:
-      m_KeyId: 6775925918900224
+      m_KeyId: 6858743231520768
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

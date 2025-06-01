@@ -6,7 +6,7 @@ using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 
-public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class SaveSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField]
     LocalizeStringEvent _nameTextLocEvent;
@@ -22,30 +22,30 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     RawImage _savePreview;
 
 
-    bool _isStartAutosave = false;
+    //bool _isStartAutosave = false;
 
 
 
-    public void SetDATA(GameplaySaveDATA _gSaveDATA, bool _setStartAutosave = false)
+    public void SetDATA(SaveSlotDATA _saveSlotData) // bool _setStartAutosave = false
     {
-        _isStartAutosave = _setStartAutosave;
-        if (_isStartAutosave)
-            _clearButtonGO.SetActive(false);
+        // _isStartAutosave = _setStartAutosave;
+        // if (_isStartAutosave)
+        //     _clearButtonGO.SetActive(false);
 
-        _lastSaveTextGO.SetActive(_gSaveDATA.LastSave);
-        _timeLocalizeStringEvent.StringReference.Arguments = new object[] { TimeSpan.FromSeconds(_gSaveDATA.Time) };
+        _lastSaveTextGO.SetActive(_saveSlotData.LastSave);
+        _timeLocalizeStringEvent.StringReference.Arguments = new object[] { TimeSpan.FromSeconds(_saveSlotData.Time) };
         _timeLocalizeStringEvent.RefreshString();
-        SetScreenshot(_gSaveDATA);
+        SetScreenshot(_saveSlotData);
         //DATA.IsEmpty = _isEmpty;
 
     }
 
-    void SetScreenshot(GameplaySaveDATA _gSaveDATA)
+    void SetScreenshot(SaveSlotDATA _saveSlotData)
     {
-        if (_gSaveDATA.ScreenshotLink != "")
+        if (_saveSlotData.ScreenshotLink != "")
         {
-            byte[] fileData = File.ReadAllBytes(_gSaveDATA.ScreenshotLink);
-            Texture2D loadedTexture = new Texture2D(2, 2); // Временные размеры (автоматически изменятся)
+            byte[] fileData = File.ReadAllBytes(_saveSlotData.ScreenshotLink);
+            Texture2D loadedTexture = new Texture2D(2, 2);
             loadedTexture.LoadImage(fileData);
             _savePreview.texture = loadedTexture;
         }
@@ -56,7 +56,7 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
 
-    public void ClearSave()
+    public void ClearSaveSlot()
     {
         //SetDATA(_gSaveDATA); // ну наверное так оно будет
         SaveManager.SaveAll();
@@ -66,23 +66,23 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
 
-    public void SetSaveName(string _entryName, int id)
-    {
-        _nameTextLocEvent.SetEntry(_entryName);
-        if (id != -1)
-            _nameTextLocEvent.StringReference.Arguments = new object[] { id };
-        _nameTextLocEvent.RefreshString();
-    }
+    // public void SetSaveName(string _entryName, int id)
+    // {
+    //     _nameTextLocEvent.SetEntry(_entryName);
+    //     if (id != -1)
+    //         _nameTextLocEvent.StringReference.Arguments = new object[] { id };
+    //     _nameTextLocEvent.RefreshString();
+    // }
 
 
-    public void DeselectGameplaySave()
+    public void DeselectSaveSlot()
     {
         //DATA.LastSave = false;
         _lastSaveTextGO.SetActive(false);
 
     }
 
-    public void OnSaveGameplaySave()
+    public void OnSaveSaveSlot()
     {
 
         // foreach (var item in _gameplaySavesHandler.GameplaySaves)
@@ -103,7 +103,7 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     }
 
-    public void OnLoadGameplaySave()
+    public void OnLoadSaveSlot()
     {
         // if (!DATA.IsEmpty)
         // {
@@ -117,7 +117,7 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 
 
-    public void OnMouseEnterToGameplaySave()
+    public void OnMouseEnterToSaveSlot()
     {
         // if ((!_isStartAutosave && _gameplaySavesHandler.CurrentSaveState == SaveState.Save) || (!DATA.IsEmpty && _gameplaySavesHandler.CurrentSaveState == SaveState.Load))
         // {
@@ -129,7 +129,7 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     }
 
-    public void OnMouseExitToGameplaySave()
+    public void OnMouseExitFromSaveSlot()
     {
 
         _clickToSelectTextGO.SetActive(false);
@@ -143,12 +143,12 @@ public class GameplaySave : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // то не будет работать скроллинг профилей пока мышка находится на одном из профилей
     public void OnPointerEnter(PointerEventData eventData)
     {
-        OnMouseEnterToGameplaySave();
+        OnMouseEnterToSaveSlot();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        OnMouseExitToGameplaySave();
+        OnMouseExitFromSaveSlot();
     }
 
     public void OnPointerClick(PointerEventData eventData)

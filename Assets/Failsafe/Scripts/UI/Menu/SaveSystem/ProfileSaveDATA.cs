@@ -25,7 +25,7 @@ public class ProfileDATA
 
     public bool IsNew = true;
 
-    public GameplaySaveDATA[] GameplaySaveDATAs = new GameplaySaveDATA[3] { new GameplaySaveDATA(), new GameplaySaveDATA(), new GameplaySaveDATA() };
+    public SaveSlotDATA[] SaveSlotsDATAs = new SaveSlotDATA[3] { new SaveSlotDATA(), new SaveSlotDATA(), new SaveSlotDATA() };
 
     // public void SetNewLocaleEntry()
     // {
@@ -44,7 +44,7 @@ public class ProfileDATA
 }
 
 [Serializable]
-public class GameplaySaveDATA
+public class SaveSlotDATA
 {
     public int Seed;
 
@@ -58,7 +58,7 @@ public class GameplaySaveDATA
 
     public bool IsEmpty;
 
-    public GameplaySaveDATA()
+    public SaveSlotDATA()
     {
         Seed = 0;
         Time = 0;

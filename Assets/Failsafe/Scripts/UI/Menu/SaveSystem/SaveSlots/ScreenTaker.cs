@@ -5,8 +5,8 @@ using UnityEngine;
 public class ScreenTaker : MonoBehaviour
 {
     Camera _cam;
-    //[Inject] GameplaySavesHandler gameplaySavesHandler;
-    public string SaveCameraView(GameplaySave _GSave)
+
+    public string SaveCameraView(SaveSlotDATA _GSave)
     {
         _cam.gameObject.SetActive(true);
         RenderTexture screenTexture = new RenderTexture(Screen.width, Screen.height, 16);
@@ -18,13 +18,13 @@ public class ScreenTaker : MonoBehaviour
         renderedTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
         RenderTexture.active = null;
 
-        // string link = Path.Combine(Application.persistentDataPath, $"Profile{Random.Range(1, 1000)}-" + //gameplaySavesHandler.profileParent.DATA.profileID
-        //                   $"Slot{gameplaySavesHandler.GameplaySaves.IndexOf(_GSave)}.jpg");
+        string link = Path.Combine(Application.persistentDataPath, $"Profile{ProfilesHandler.GetSelectedProfileIndex()}-" + //gameplaySavesHandler.profileParent.DATA.profileID
+                           $"Slot{SaveSlotsHandler.SaveSlots.IndexOf(_GSave)}.jpg");
         byte[] byteArray = renderedTexture.EncodeToJPG();
-        // File.WriteAllBytes(link, byteArray);
+        File.WriteAllBytes(link, byteArray);
         _cam.gameObject.SetActive(false);
-        // return link;
-        return null;
+        return link;
+
     }
 
 }

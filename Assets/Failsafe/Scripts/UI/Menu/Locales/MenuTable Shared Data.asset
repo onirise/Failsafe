@@ -100,7 +100,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6858743231520768
-    m_Key: gameplaySaveName
+    m_Key: SaveSlotName
     m_Metadata:
       m_Items: []
   - m_Id: 7573455158091776

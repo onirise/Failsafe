@@ -360,7 +360,7 @@ PrefabInstance:
       addedObject: {fileID: 3083063299979767379}
     - targetCorrespondingSourceObject: {fileID: 3298714706703331036, guid: d184c0559c037b545a4fd51781121311, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1809592993048795060}
+      addedObject: {fileID: 1296549685541648439}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d184c0559c037b545a4fd51781121311, type: 3}
 --- !u!224 &2511302269712062988 stripped
@@ -563,7 +563,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8191922240290544424, guid: 3f60c28bdfbb61048be3f288303de938, type: 3}
   m_PrefabInstance: {fileID: 2866945430417471457}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8600649606314413577
+--- !u!1001 &9203412684670132618
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -573,7 +573,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 50363260160303622, guid: bf50de8da1494f74d8cb2f10d9de1099, type: 3}
       propertyPath: m_Name
-      value: GameplaySavesWindowMAIN
+      value: SaveSlotsWindowMAIN
       objectReference: {fileID: 0}
     - target: {fileID: 7946410240345168317, guid: bf50de8da1494f74d8cb2f10d9de1099, type: 3}
       propertyPath: m_Pivot.x
@@ -660,8 +660,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf50de8da1494f74d8cb2f10d9de1099, type: 3}
---- !u!224 &1809592993048795060 stripped
+--- !u!224 &1296549685541648439 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7946410240345168317, guid: bf50de8da1494f74d8cb2f10d9de1099, type: 3}
-  m_PrefabInstance: {fileID: 8600649606314413577}
+  m_PrefabInstance: {fileID: 9203412684670132618}
   m_PrefabAsset: {fileID: 0}

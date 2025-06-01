@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Localization.Settings;
 
 public static class ProfilesHandler
 {
@@ -17,6 +18,7 @@ public static class ProfilesHandler
     public static ProfileDATA CreateNewProfile()
     {
         ProfileDATA newProfileData = new ProfileDATA();
+        newProfileData.LocaleEntryIndex = SetNewNameLocaleIndex();
         Profiles.Add(newProfileData);
         SelectedProfile = GetSelectedProfile() ? SelectedProfile : newProfileData;
         SaveManager.SaveAll();
@@ -24,6 +26,14 @@ public static class ProfilesHandler
         return newProfileData;
 
     }
+
+    static int SetNewNameLocaleIndex()
+    {
+        var stringTable = LocalizationSettings.StringDatabase.GetTable("ProfileNamesTable");
+        return UnityEngine.Random.Range(0, stringTable.Count);
+
+    }
+
     public static void RemoveFromProfilesList(int _index)
     {
         bool selectedIsDeleted = IsSelectedProfile(_index);

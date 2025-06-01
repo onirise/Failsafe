@@ -46,6 +46,7 @@ namespace Failsafe.PlayerMovements.States
         public override void Exit()
         {
             _playerNoiseController.SetNoiseStrength(PlayerNoiseVolume.Default);
+            _stepController.Disable();
         }
     }
 }

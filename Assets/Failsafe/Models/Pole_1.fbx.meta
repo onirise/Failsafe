@@ -3,11 +3,16 @@ guid: a3f7b0edd36d69840840d30e5468de35
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FS_FLOOR_TECH_TRIM_5
+    second: {fileID: 2100000, guid: 401ac297b9161054799cf801af01b6ae, type: 2}
   materials:
     materialImportMode: 2
-    materialName: 0
-    materialSearch: 1
+    materialName: 1
+    materialSearch: 2
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4

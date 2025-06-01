@@ -23,7 +23,7 @@ namespace Failsafe.PlayerMovements
         private PlayerRotationController _playerRotationController;
         private BehaviorStateMachine _behaviorStateMachine;
         private InputHandler _inputHandler;
-        private LedgeDetector _ledgeDetector;
+        private PlayerLedgeController _ledgeController;
         private PlayerGravityController _playerGravity;
         private PlayerNoiseController _noiseController;
 
@@ -34,7 +34,7 @@ namespace Failsafe.PlayerMovements
             _playerGrabPoint = transform.Find("ObstacleGrabPoint");
             _inputHandler = new InputHandler(_inputActionAsset);
             _playerRotationController = new PlayerRotationController(transform, _playerCamera, _inputHandler);
-            _ledgeDetector = new LedgeDetector(transform, _playerCamera, _playerGrabPoint);
+            _ledgeController = new PlayerLedgeController(transform, _playerCamera, _playerGrabPoint);
             _playerGravity = new PlayerGravityController(_characterController, _movementParametrs);
             _noiseController = new PlayerNoiseController(transform, _noiseParametrs);
             InitializeStateMachine();
@@ -49,8 +49,8 @@ namespace Failsafe.PlayerMovements
             var crouchState = new CrouchState(_inputHandler, _characterController, _movementParametrs, _playerCamera, _noiseController);
             var jumpState = new JumpState(_inputHandler, _characterController, _movementParametrs);
             var fallState = new FallState(_inputHandler, _characterController, _movementParametrs, _noiseController);
-            var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _ledgeDetector, _playerRotationController, _playerGrabPoint);
-            var climbingState = new ClimbingState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _playerGrabPoint);
+            var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _playerRotationController, _ledgeController);
+            var climbingState = new ClimbingState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _ledgeController);
             var ledgeJumpState = new LedgeJumpState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
 
             walkState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered);
@@ -75,16 +75,16 @@ namespace Failsafe.PlayerMovements
             jumpState.AddTransition(runState, () => _playerGravity.IsGrounded && _inputHandler.SprintTriggered);
             jumpState.AddTransition(walkState, () => _playerGravity.IsGrounded);
             jumpState.AddTransition(fallState, jumpState.InHightPoint);
-            jumpState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
+            jumpState.AddTransition(grabLedgeState, () => _ledgeController.CanGrabToLedgeGrabPointInView());
 
             fallState.AddTransition(walkState, () => _playerGravity.IsGrounded);
-            fallState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
+            fallState.AddTransition(grabLedgeState, () => _ledgeController.CanGrabToLedgeGrabPointInView());
 
             grabLedgeState.AddTransition(fallState, () => _inputHandler.MoveBack && grabLedgeState.CanFinish());
             grabLedgeState.AddTransition(climbingState, () => _inputHandler.MoveForward && grabLedgeState.CanFinish() && climbingState.CanClimb());
             grabLedgeState.AddTransition(ledgeJumpState, () => _inputHandler.JumpTriggered && grabLedgeState.CanFinish());
 
-            ledgeJumpState.AddTransition(grabLedgeState, () => { var ledge = _ledgeDetector.LedgeInView; return ledge.IsFound && ledge.InPlayerView && ledge.AroundGrabPoint; });
+            ledgeJumpState.AddTransition(grabLedgeState, () => _ledgeController.CanGrabToLedgeGrabPointInView());
             ledgeJumpState.AddTransition(fallState, ledgeJumpState.InHightPoint);
 
             climbingState.AddTransition(walkState, () => climbingState.ClimbFinish());
@@ -94,7 +94,7 @@ namespace Failsafe.PlayerMovements
 
         void Update()
         {
-            _ledgeDetector.HandleFindingLedge();
+            _ledgeController.HandleFindingLedge();
             _playerRotationController.HandlePlayerRotation();
             _playerGravity.HandleGravity();
             _behaviorStateMachine.Update();

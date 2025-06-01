@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,7 +8,9 @@ using Failsafe.Scripts.Damage;
 using Failsafe.Scripts.Damage.Implementation;
 using Failsafe.Scripts.Damage.Providers;
 using Failsafe.Scripts.Health;
+using FMODUnity;
 using Failsafe.Player.Interaction;
+
 
 namespace Failsafe.PlayerMovements
 {
@@ -44,6 +47,9 @@ namespace Failsafe.PlayerMovements
         public InputHandler InputHandler => _inputHandler;
 
 
+        [SerializeField] private EventReference _footstepEvent;
+        private StepController _stepController;
+
         private void Awake()
         {
             _health = new SimpleHealth(_modelParameters.MaxHealth);
@@ -51,6 +57,7 @@ namespace Failsafe.PlayerMovements
             _damageService = CreateDamageService();
 
             _damageableComponent = transform.Find("Capsule").GetComponent<DamageableComponent>();
+
         }
 
         private void OnEnable()
@@ -73,6 +80,7 @@ namespace Failsafe.PlayerMovements
             _ledgeController = new PlayerLedgeController(transform, _playerCamera, _playerGrabPoint);
             _playerGravity = new PlayerGravityController(_characterController, _movementParametrs);
             _noiseController = new PlayerNoiseController(transform, _noiseParametrs);
+            _stepController = new StepController(_characterController,_movementParametrs, _footstepEvent);
 
             InitializeStateMachine();
         }
@@ -80,15 +88,16 @@ namespace Failsafe.PlayerMovements
         private void InitializeStateMachine()
         {
             var standingState = new StandingState(_inputHandler);
-            var walkState = new WalkState(_inputHandler, _characterController, _movementParametrs, _noiseController);
-            var runState = new SprintState(_inputHandler, _characterController, _movementParametrs, _noiseController);
+            var walkState = new WalkState(_inputHandler, _characterController, _movementParametrs, _noiseController, _stepController);
+            var runState = new SprintState(_inputHandler, _characterController, _movementParametrs, _noiseController, _stepController);
             var slideState = new SlideState(_inputHandler, _characterController, _movementParametrs, _playerCamera, _playerRotationController);
-            var crouchState = new CrouchState(_inputHandler, _characterController, _movementParametrs, _playerCamera, _noiseController);
+            var crouchState = new CrouchState(_inputHandler, _characterController, _movementParametrs, _playerCamera, _noiseController, _stepController);
             var jumpState = new JumpState(_inputHandler, _characterController, _movementParametrs);
             var fallState = new FallState(_inputHandler, _characterController, _movementParametrs, _noiseController);
             var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _playerRotationController, _ledgeController);
             var climbingState = new ClimbingState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _ledgeController);
             var ledgeJumpState = new LedgeJumpState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
+            var CrouchIdle = new CrouchIdle(_playerCamera, _movementParametrs, _stepController);
 
             var deathState = new DeathState();
             var forcedStates = new List<BehaviorForcedState>
@@ -100,6 +109,8 @@ namespace Failsafe.PlayerMovements
             walkState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
             walkState.AddTransition(crouchState, () => _inputHandler.CrouchTrigger.IsTriggered, _inputHandler.CrouchTrigger.ReleaseTrigger);
             walkState.AddTransition(fallState, () => _playerGravity.IsFalling);
+            walkState.AddTransition(standingState,() => _characterController.velocity.magnitude < 0.1f);
+
 
             runState.AddTransition(walkState, () => !(_inputHandler.MoveForward && _inputHandler.SprintTriggered));
             runState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
@@ -114,6 +125,7 @@ namespace Failsafe.PlayerMovements
             crouchState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered && crouchState.CanStand());
             crouchState.AddTransition(walkState, () => _inputHandler.CrouchTrigger.IsTriggered && crouchState.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
             crouchState.AddTransition(fallState, () => _playerGravity.IsFalling);
+            crouchState.AddTransition(CrouchIdle, () => _inputHandler.MovementInput.Equals(Vector2.zero));
 
             jumpState.AddTransition(runState, () => _playerGravity.IsGrounded && _inputHandler.SprintTriggered);
             jumpState.AddTransition(walkState, () => _playerGravity.IsGrounded);
@@ -132,7 +144,16 @@ namespace Failsafe.PlayerMovements
 
             climbingState.AddTransition(walkState, () => climbingState.ClimbFinish());
 
+            CrouchIdle.AddTransition(crouchState, () => !_inputHandler.MovementInput.Equals(Vector2.zero));
+            CrouchIdle.AddTransition(standingState, () => _inputHandler.CrouchTrigger.IsTriggered && crouchState.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
+
+            standingState.AddTransition(walkState, () => !_inputHandler.MovementInput.Equals(Vector2.zero));
+            standingState.AddTransition(CrouchIdle, () => _inputHandler.CrouchTrigger.IsTriggered, _inputHandler.CrouchTrigger.ReleaseTrigger);
+            standingState.AddTransition(jumpState, () => _inputHandler.JumpTriggered);
+
+
             _behaviorStateMachine = new BehaviorStateMachine(walkState, forcedStates);
+
         }
 
         private IDamageService CreateDamageService()
@@ -155,6 +176,7 @@ namespace Failsafe.PlayerMovements
             _playerRotationController.HandlePlayerRotation();
             _playerGravity.HandleGravity();
             _behaviorStateMachine.Update();
+            _stepController.Update();
             if (_health.IsDead)
             {
                 _behaviorStateMachine.ForseChangeState<DeathState>();

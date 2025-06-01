@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Failsafe.PlayerMovements.Controllers;
@@ -7,6 +7,7 @@ using Failsafe.Scripts.Damage;
 using Failsafe.Scripts.Damage.Implementation;
 using Failsafe.Scripts.Damage.Providers;
 using Failsafe.Scripts.Health;
+using FMODUnity;
 
 namespace Failsafe.PlayerMovements
 {
@@ -40,7 +41,9 @@ namespace Failsafe.PlayerMovements
         private LedgeDetector _ledgeDetector;
         private PlayerGravityController _playerGravity;
         private PlayerNoiseController _noiseController;
-        
+        [SerializeField] private EventReference _footstepEvent;
+
+        private StepController _stepController;
         private void Awake()
         {
             _health = new SimpleHealth(_modelParameters.MaxHealth);
@@ -48,6 +51,7 @@ namespace Failsafe.PlayerMovements
             _damageService = CreateDamageService();
             
             _damageableComponent = transform.Find("Capsule").GetComponent<DamageableComponent>();
+
         }
 
         private void OnEnable()
@@ -70,7 +74,9 @@ namespace Failsafe.PlayerMovements
             _ledgeDetector = new LedgeDetector(transform, _playerCamera, _playerGrabPoint);
             _playerGravity = new PlayerGravityController(_characterController, _movementParametrs);
             _noiseController = new PlayerNoiseController(transform, _noiseParametrs);
-            
+            _stepController = new StepController(_characterController, _noiseController, _footstepEvent);
+
+
             InitializeStateMachine();
         }
 
@@ -156,6 +162,11 @@ namespace Failsafe.PlayerMovements
             _playerRotationController.HandlePlayerRotation();
             _playerGravity.HandleGravity();
             _behaviorStateMachine.Update();
+            bool isFootstepState = _behaviorStateMachine._currentState is WalkState
+                                || _behaviorStateMachine._currentState is SprintState
+                                || _behaviorStateMachine._currentState is CrouchState;
+
+            _stepController.Update(isFootstepState);
         }
     }
 }

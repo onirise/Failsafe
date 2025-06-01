@@ -1,40 +1,45 @@
-using UnityEngine;
+﻿using UnityEngine;
 using FMODUnity;
 
-[RequireComponent(typeof(CharacterController))]
-public class SimpleFootsteps : MonoBehaviour
+namespace Failsafe.PlayerMovements.Controllers
 {
-    [Tooltip("Перетащите сюда FMOD Event из FMOD Browser")]
-    public EventReference footstepEvent;    // <-- новое поле вместо строки
-
-    [Tooltip("Интервал между шагами (сек)")]
-    public float stepInterval = 0.4f;
-
-    private CharacterController cc;
-    private float stepTimer;
-
-    void Awake()
+    public class StepController
     {
-        cc = GetComponent<CharacterController>();
-        stepTimer = 0f;
-    }
+        private readonly CharacterController _cc;
+        private readonly PlayerNoiseController _noise;
+        private readonly EventReference _footstepEvent;
 
-    void Update()
-    {
-        Vector3 horizontalVel = new Vector3(cc.velocity.x, 0, cc.velocity.z);
-        if (horizontalVel.magnitude > 0.1f && cc.isGrounded)
+        private float _stepTimer;
+
+        private readonly float _fixedStepInterval = 0.4f;
+        private readonly float _minSpeedToStep = 0.2f;
+
+        public StepController(CharacterController cc, PlayerNoiseController noise, EventReference footstepEvent)
         {
-            stepTimer -= Time.deltaTime;
-            if (stepTimer <= 0f)
-            {
-                // теперь используем EventReference
-                RuntimeManager.PlayOneShot(footstepEvent, transform.position);
-                stepTimer = stepInterval;
-            }
+            _cc = cc;
+            _noise = noise;
+            _footstepEvent = footstepEvent;
         }
-        else
+
+        public void Update(bool isActive)
         {
-            stepTimer = 0f;
+            if (!isActive || _footstepEvent.IsNull || !_cc.isGrounded)
+                return;
+
+            Vector3 flatVel = new Vector3(_cc.velocity.x, 0, _cc.velocity.z);
+            float speed = flatVel.magnitude;
+
+            // Не двигаемся — ничего не делаем, но таймер не сбрасываем
+            if (speed < _minSpeedToStep)
+                return;
+
+            _stepTimer -= Time.deltaTime;
+            if (_stepTimer <= 0f)
+            {
+                RuntimeManager.PlayOneShot(_footstepEvent, _cc.transform.position);
+                _noise.CreateNoise(1f, 0.2f);
+                _stepTimer = _fixedStepInterval;
+            }
         }
     }
 }

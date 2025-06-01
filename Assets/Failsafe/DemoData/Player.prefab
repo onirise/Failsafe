@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 374109432967700041}
   - component: {fileID: 374109432967700040}
   - component: {fileID: 374109432967700043}
+  - component: {fileID: 6522333870096678596}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -111,6 +112,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6522333870096678596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374109432967700053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a9f10290fb40dba09100153c7f7e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &374109432981789084
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,24 +366,26 @@ MonoBehaviour:
   _inputActionAsset: {fileID: -944628639613478452, guid: 1f09f2f8cfa351946a2c010bb9946270, type: 3}
   _noiseParametrs:
     rid: 2287995151870591099
+  _modelParameters:
+    rid: 5390404808482226255
   references:
     version: 2
     RefIds:
     - rid: 2287995151870591098
       type: {class: PlayerMovementParameters, ns: Failsafe.PlayerMovements, asm: Assembly-CSharp}
       data:
-        WalkSpeed: 4
-        RunSpeed: 6.5
-        CrouchSpeed: 2.5
+        WalkSpeed: 2.7
+        RunSpeed: 4.2
+        CrouchSpeed: 1.8
         CrouchHeight: 0.5
-        SlideSpeed: 7
+        SlideSpeed: 5
         SlideHeight: 0.3
-        MaxSlideTime: 1.5
-        MinSlideTime: 0.75
-        JumpForce: 15
-        JumpForceFade: 12
+        MaxSlideTime: 1
+        MinSlideTime: 0.5
+        JumpForce: 19
+        JumpForceFade: 32
         GravityForce: 9
-        GrabLedgeSpeed: 2.5
+        GrabLedgeSpeed: 2.4
         GrabLedgeHeightDifference: 0.1
     - rid: 2287995151870591099
       type: {class: PlayerNoiseParameters, ns: Failsafe.PlayerMovements, asm: Assembly-CSharp}
@@ -379,6 +394,11 @@ MonoBehaviour:
         DefaultStrength: 5
         IncreasedStrength: 10
         ReducedStrength: 2
+    - rid: 5390404808482226255
+      type: {class: PlayerModelParameters, ns: Failsafe.PlayerMovements, asm: Assembly-CSharp}
+      data:
+        <MaxHealth>k__BackingField: 1000
+        <MaxStamina>k__BackingField: 100
 --- !u!1 &374109433356125759
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,7 +532,7 @@ Transform:
   m_GameObject: {fileID: 2082495522751311562}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.468, z: 0.998}
+  m_LocalPosition: {x: 0, y: 2, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

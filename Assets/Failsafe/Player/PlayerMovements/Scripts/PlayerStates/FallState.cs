@@ -20,8 +20,6 @@ namespace Failsafe.PlayerMovements.States
         private Vector3 _initialVelocity;
         private Vector3 _initialPosition;
 
-        public bool OnGround() => _characterController.isGrounded;
-
         public FallState(InputHandler inputHandler, CharacterController characterController, PlayerMovementController movementController, PlayerMovementParameters movementParametrs, PlayerNoiseController playerNoiseController)
         {
             _inputHandler = inputHandler;
@@ -35,7 +33,7 @@ namespace Failsafe.PlayerMovements.States
         {
             Debug.Log("Enter " + nameof(FallState));
             _fallProgress = 0;
-            _initialVelocity = new Vector3(_characterController.velocity.x, -_fallSpeed, _characterController.velocity.z);
+            _initialVelocity = new Vector3(_movementController.Velocity.x, -_fallSpeed, _movementController.Velocity.z);
             _initialPosition = _characterController.transform.position;
         }
 

@@ -89,17 +89,17 @@ namespace Failsafe.PlayerMovements
 
         private void InitializeStateMachine()
         {
-            var standingState = new StandingState(_inputHandler);
+            var standingState = new StandingState(_inputHandler, _movementController);
             var walkState = new WalkState(_inputHandler, _movementController, _movementParametrs, _noiseController, _stepController);
             var runState = new SprintState(_inputHandler, _movementController, _movementParametrs, _noiseController, _stepController);
             var slideState = new SlideState(_inputHandler, _movementController, _movementParametrs, _playerCamera, _playerRotationController);
             var crouchState = new CrouchState(_inputHandler, _movementController, _movementParametrs, _playerCamera, _noiseController, _stepController);
             var jumpState = new JumpState(_inputHandler, _characterController, _movementController, _movementParametrs);
             var fallState = new FallState(_inputHandler, _characterController, _movementController, _movementParametrs, _noiseController);
-            var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _playerRotationController, _ledgeController);
+            var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementController, _movementParametrs, _playerGravity, _playerRotationController, _ledgeController);
             var climbingState = new ClimbingState(_inputHandler, _characterController, _movementParametrs, _playerGravity, _ledgeController);
             var ledgeJumpState = new LedgeJumpState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
-            var crouchIdle = new CrouchIdle(_playerCamera, _movementParametrs, _noiseController, _stepController);
+            var crouchIdle = new CrouchIdle(_playerCamera, _movementController, _movementParametrs, _noiseController, _stepController);
 
             var deathState = new DeathState();
             var forcedStates = new List<BehaviorForcedState>
@@ -129,8 +129,8 @@ namespace Failsafe.PlayerMovements
             crouchState.AddTransition(fallState, () => _playerGravity.IsFalling);
             crouchState.AddTransition(crouchIdle, () => _inputHandler.MovementInput.Equals(Vector2.zero));
 
-            jumpState.AddTransition(runState, () => _playerGravity.IsGrounded && _inputHandler.MoveForward && _inputHandler.SprintTriggered);
-            jumpState.AddTransition(walkState, () => _playerGravity.IsGrounded);
+            jumpState.AddTransition(runState, () => jumpState.CanGround() && _playerGravity.IsGrounded && _inputHandler.MoveForward && _inputHandler.SprintTriggered);
+            jumpState.AddTransition(walkState, () => jumpState.CanGround() && _playerGravity.IsGrounded);
             jumpState.AddTransition(fallState, jumpState.InHightPoint);
             jumpState.AddTransition(grabLedgeState, () => _ledgeController.CanGrabToLedgeGrabPointInView());
 

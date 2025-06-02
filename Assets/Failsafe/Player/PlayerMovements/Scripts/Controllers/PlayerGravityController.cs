@@ -26,10 +26,15 @@ namespace Failsafe.PlayerMovements.Controllers
 
         public void HandleGravity()
         {
-            if (!_gravityEnabled) return;
-
-            var gravity = new Vector3(0, -_movementParametrs.GravityForce, 0);
-            _movementController.AddGravity(gravity);
+            if (_gravityEnabled)
+            {
+                var gravity = new Vector3(0, -_movementParametrs.GravityForce, 0);
+                _movementController.SetGravity(gravity);
+            }
+            else
+            {
+                _movementController.SetGravity(Vector3.zero);
+            }
         }
 
         public void CheckGrounded()

@@ -7,6 +7,7 @@ namespace Failsafe.PlayerMovements.Controllers
     /// </summary>
     public class PlayerMovementController
     {
+        public Vector3 Velocity { get; private set; }
         private readonly CharacterController _characterController;
         private Vector3 _movement;
         private Vector3 _gravity;
@@ -22,10 +23,13 @@ namespace Failsafe.PlayerMovements.Controllers
         }
 
         /// <summary>
-        /// Задать движение персонажа
-        /// Не умножать на Time.deltaTime перед применением движения
+        /// Задать движение персонажа. Перемещение выполнится методом <see cref="HandleMovement"/>
         /// </summary>
-        /// <param name="motion"></param>
+        /// <remarks>
+        /// Предыдущее заданое движение сохраняется, т.е. чтобы остановить персонажа нужно явно задать перемещение <see cref="Vector3.zero"/>
+        /// <para/>Не умножать на <see cref="Time.deltaTime"/> перед применением движения
+        /// </remarks>
+        /// <param name="motion">Перемещение</param>
         public void Move(Vector3 motion)
         {
             _movement = motion;
@@ -35,7 +39,7 @@ namespace Failsafe.PlayerMovements.Controllers
         /// Задать силу притяжения
         /// </summary>
         /// <param name="gravity"></param>
-        public void AddGravity(Vector3 gravity)
+        public void SetGravity(Vector3 gravity)
         {
             _gravity = gravity;
         }
@@ -43,9 +47,8 @@ namespace Failsafe.PlayerMovements.Controllers
         public void HandleMovement()
         {
             var motion = _movement + _gravity;
-            _movement = Vector3.zero;
-            _gravity = Vector3.zero;
             _characterController.Move(motion * Time.deltaTime);
+            Velocity = _characterController.velocity;
         }
     }
 }

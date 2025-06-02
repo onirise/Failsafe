@@ -18,13 +18,16 @@ namespace Failsafe.PlayerMovements.States
         private float _jumpProgress = 0;
         private Vector3 _initialVelocity;
 
-        public bool OnGround() => _characterController.isGrounded;
+        //Минимальное время прыжка, нужно чтобы не дергало между прыжком и ходьбой. Нужно найти решение лучше
+        public bool CanGround() => _jumpProgress > 0.1f;
         /// <summary>
         /// Находимся в высшей точке прыжка
         /// </summary>
         /// <returns></returns>
         // Формулу нужно подбирать чтобы было красиво
-        public bool InHightPoint() => (_jumpForce - _jumpProgress * _jumpForceFade) < _movementParametrs.GravityForce * 0.8;
+        public bool InHightPoint() => IsCollidedAbove() || (_jumpForce - _jumpProgress * _jumpForceFade) < _movementParametrs.GravityForce * 0.8;
+
+        private bool IsCollidedAbove() => (_characterController.collisionFlags & CollisionFlags.CollidedAbove) != 0;
 
         public JumpState(InputHandler inputHandler, CharacterController characterController, PlayerMovementController movementController, PlayerMovementParameters movementParametrs)
         {
@@ -38,7 +41,7 @@ namespace Failsafe.PlayerMovements.States
         {
             Debug.Log("Enter " + nameof(JumpState));
             _jumpProgress = 0;
-            _initialVelocity = new Vector3(_characterController.velocity.x, 0, _characterController.velocity.z);
+            _initialVelocity = new Vector3(_movementController.Velocity.x, 0, _movementController.Velocity.z);
         }
 
         public override void Update()

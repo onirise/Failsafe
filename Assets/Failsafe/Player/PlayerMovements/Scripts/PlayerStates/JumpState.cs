@@ -1,3 +1,4 @@
+using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
 namespace Failsafe.PlayerMovements.States
@@ -9,6 +10,7 @@ namespace Failsafe.PlayerMovements.States
     {
         private InputHandler _inputHandler;
         private CharacterController _characterController;
+        private PlayerMovementController _movementController;
         private readonly PlayerMovementParameters _movementParametrs;
 
         private float _jumpForce => _movementParametrs.JumpForce;
@@ -24,10 +26,11 @@ namespace Failsafe.PlayerMovements.States
         // Формулу нужно подбирать чтобы было красиво
         public bool InHightPoint() => (_jumpForce - _jumpProgress * _jumpForceFade) < _movementParametrs.GravityForce * 0.8;
 
-        public JumpState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParameters movementParametrs)
+        public JumpState(InputHandler inputHandler, CharacterController characterController, PlayerMovementController movementController, PlayerMovementParameters movementParametrs)
         {
             _inputHandler = inputHandler;
             _characterController = characterController;
+            _movementController = movementController;
             _movementParametrs = movementParametrs;
         }
 
@@ -41,8 +44,8 @@ namespace Failsafe.PlayerMovements.States
         public override void Update()
         {
             _jumpProgress += Time.deltaTime;
-            var jumpMovement = Vector3.up * (_jumpForce - _jumpProgress * _jumpForceFade) * Time.deltaTime;
-            _characterController.Move(jumpMovement + _initialVelocity * Time.deltaTime);
+            var jumpMovement = Vector3.up * (_jumpForce - _jumpProgress * _jumpForceFade);
+            _movementController.Move(jumpMovement + _initialVelocity);
         }
     }
 }

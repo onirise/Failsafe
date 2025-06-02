@@ -7,6 +7,7 @@ namespace Failsafe.PlayerMovements.Controllers
     /// </summary>
     public class PlayerGravityController
     {
+        private PlayerMovementController _movementController;
         private CharacterController _characterController;
         private PlayerMovementParameters _movementParametrs;
         private float _coyoteTime = 0.1f;
@@ -16,8 +17,9 @@ namespace Failsafe.PlayerMovements.Controllers
         public bool IsGrounded => _coyoteTimeProgress <= 0;
         public bool IsFalling => _coyoteTimeProgress > _coyoteTime;
 
-        public PlayerGravityController(CharacterController characterController, PlayerMovementParameters movementParametrs)
+        public PlayerGravityController(PlayerMovementController movementController, CharacterController characterController, PlayerMovementParameters movementParametrs)
         {
+            _movementController = movementController;
             _characterController = characterController;
             _movementParametrs = movementParametrs;
         }
@@ -26,8 +28,12 @@ namespace Failsafe.PlayerMovements.Controllers
         {
             if (!_gravityEnabled) return;
 
-            var gravity = new Vector3(0, -_movementParametrs.GravityForce, 0) * Time.deltaTime;
-            _characterController.Move(gravity);
+            var gravity = new Vector3(0, -_movementParametrs.GravityForce, 0);
+            _movementController.AddGravity(gravity);
+        }
+
+        public void CheckGrounded()
+        {
             if (_characterController.isGrounded)
             {
                 _coyoteTimeProgress = 0;

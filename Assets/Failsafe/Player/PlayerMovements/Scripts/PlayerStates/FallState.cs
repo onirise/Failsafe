@@ -10,6 +10,7 @@ namespace Failsafe.PlayerMovements.States
     {
         private InputHandler _inputHandler;
         private CharacterController _characterController;
+        private readonly PlayerMovementController _movementController;
         private readonly PlayerMovementParameters _movementParametrs;
         private readonly PlayerNoiseController _playerNoiseController;
 
@@ -21,10 +22,11 @@ namespace Failsafe.PlayerMovements.States
 
         public bool OnGround() => _characterController.isGrounded;
 
-        public FallState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParameters movementParametrs, PlayerNoiseController playerNoiseController)
+        public FallState(InputHandler inputHandler, CharacterController characterController, PlayerMovementController movementController, PlayerMovementParameters movementParametrs, PlayerNoiseController playerNoiseController)
         {
             _inputHandler = inputHandler;
             _characterController = characterController;
+            _movementController = movementController;
             _movementParametrs = movementParametrs;
             _playerNoiseController = playerNoiseController;
         }
@@ -40,7 +42,7 @@ namespace Failsafe.PlayerMovements.States
         public override void Update()
         {
             _fallProgress += Time.deltaTime;
-            _characterController.Move(_initialVelocity * Time.deltaTime);
+            _movementController.Move(_initialVelocity);
         }
 
         public override void Exit()

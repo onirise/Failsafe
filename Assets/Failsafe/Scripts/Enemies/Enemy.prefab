@@ -214,10 +214,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _focusingTime: 0.1
   _focusingProgress: 0
+<<<<<<< Updated upstream
   _minSoundStrength: 20
   _maxSoundStrength: 50
   _effectiveSoundDistance: 20
   _target: {fileID: 0}
+=======
+  _distance: 20
+  _minSoundStrength: 1
+  _maxSoundStrength: 10
+>>>>>>> Stashed changes
 --- !u!114 &2287972019786943806
 MonoBehaviour:
   m_ObjectHideFlags: 0

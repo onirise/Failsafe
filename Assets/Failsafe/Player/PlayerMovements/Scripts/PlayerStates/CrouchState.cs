@@ -9,7 +9,7 @@ namespace Failsafe.PlayerMovements.States
     public class CrouchState : BehaviorState
     {
         private readonly InputHandler _inputHandler;
-        private readonly CharacterController _characterController;
+        private readonly PlayerMovementController _movementController;
         private readonly PlayerMovementParameters _movementParametrs;
         private readonly Transform _camera;
         private readonly Vector3 _cameraOriginalPosition;
@@ -19,10 +19,10 @@ namespace Failsafe.PlayerMovements.States
 
         public bool CanStand() => true;
 
-        public CrouchState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParameters movementParametrs, Transform camera, PlayerNoiseController playerNoiseController , StepController stepController)
+        public CrouchState(InputHandler inputHandler, PlayerMovementController movementController, PlayerMovementParameters movementParametrs, Transform camera, PlayerNoiseController playerNoiseController , StepController stepController)
         {
             _inputHandler = inputHandler;
-            _characterController = characterController;
+            _movementController = movementController;
             _movementParametrs = movementParametrs;
             _camera = camera;
             _cameraOriginalPosition = camera.localPosition;
@@ -42,8 +42,8 @@ namespace Failsafe.PlayerMovements.States
 
         public override void Update()
         {
-            var movement = _inputHandler.GetRelativeMovement(_characterController.transform) * Speed;
-            _characterController.Move(movement * Time.deltaTime);
+            var movement = _movementController.GetRelativeMovement(_inputHandler.MovementInput) * Speed;
+            _movementController.Move(movement);
             _playerNoiseController.SetNoiseStrength(movement == Vector3.zero ? PlayerNoiseVolume.Minimum : PlayerNoiseVolume.Reduced);
         }
 

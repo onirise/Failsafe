@@ -12,6 +12,7 @@ namespace Failsafe.PlayerMovements.States
     {
         private readonly InputHandler _inputHandler;
         private readonly CharacterController _characterController;
+        private readonly PlayerMovementController _movementController;
         private readonly PlayerMovementParameters _movementParametrs;
         private readonly PlayerGravityController _playerGravityController;
         private readonly PlayerRotationController _playerRotationController;
@@ -24,6 +25,7 @@ namespace Failsafe.PlayerMovements.States
         public GrabLedgeState(
             InputHandler inputHandler,
             CharacterController characterController,
+            PlayerMovementController movementController,
             PlayerMovementParameters movementParametrs,
             PlayerGravityController playerGravityController,
             PlayerRotationController playerRotationController,
@@ -31,6 +33,7 @@ namespace Failsafe.PlayerMovements.States
         {
             _inputHandler = inputHandler;
             _characterController = characterController;
+            _movementController = movementController;
             _movementParametrs = movementParametrs;
             _playerGravityController = playerGravityController;
             _playerRotationController = playerRotationController;
@@ -49,6 +52,8 @@ namespace Failsafe.PlayerMovements.States
             _playerRotationController.RotateBodyToDirection(-_playerLedgeController.AttachedLedgeGrabPoint.Normal);
             StickToObstacle(_playerLedgeController.AttachedLedgeGrabPoint);
             _characterController.SimpleMove(Vector3.zero);
+            _movementController.Move(Vector3.zero);
+            //TODO: переделать все перемещение на PlayerMovementController
         }
 
         public override void Update()

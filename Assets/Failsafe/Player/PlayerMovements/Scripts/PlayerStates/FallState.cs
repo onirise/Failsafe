@@ -10,6 +10,7 @@ namespace Failsafe.PlayerMovements.States
     {
         private InputHandler _inputHandler;
         private CharacterController _characterController;
+        private readonly PlayerMovementController _movementController;
         private readonly PlayerMovementParameters _movementParametrs;
         private readonly PlayerNoiseController _playerNoiseController;
 
@@ -19,12 +20,11 @@ namespace Failsafe.PlayerMovements.States
         private Vector3 _initialVelocity;
         private Vector3 _initialPosition;
 
-        public bool OnGround() => _characterController.isGrounded;
-
-        public FallState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParameters movementParametrs, PlayerNoiseController playerNoiseController)
+        public FallState(InputHandler inputHandler, CharacterController characterController, PlayerMovementController movementController, PlayerMovementParameters movementParametrs, PlayerNoiseController playerNoiseController)
         {
             _inputHandler = inputHandler;
             _characterController = characterController;
+            _movementController = movementController;
             _movementParametrs = movementParametrs;
             _playerNoiseController = playerNoiseController;
         }
@@ -33,14 +33,14 @@ namespace Failsafe.PlayerMovements.States
         {
             Debug.Log("Enter " + nameof(FallState));
             _fallProgress = 0;
-            _initialVelocity = new Vector3(_characterController.velocity.x, -_fallSpeed, _characterController.velocity.z);
+            _initialVelocity = new Vector3(_movementController.Velocity.x, -_fallSpeed, _movementController.Velocity.z);
             _initialPosition = _characterController.transform.position;
         }
 
         public override void Update()
         {
             _fallProgress += Time.deltaTime;
-            _characterController.Move(_initialVelocity * Time.deltaTime);
+            _movementController.Move(_initialVelocity);
         }
 
         public override void Exit()

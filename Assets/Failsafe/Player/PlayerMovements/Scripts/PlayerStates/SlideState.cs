@@ -9,7 +9,7 @@ namespace Failsafe.PlayerMovements.States
     public class SlideState : BehaviorState
     {
         private readonly InputHandler _inputHandler;
-        private readonly CharacterController _characterController;
+        private readonly PlayerMovementController _movementController;
         private readonly PlayerMovementParameters _movementParametrs;
         private readonly Transform _camera;
         private readonly PlayerRotationController _playerRotationController;
@@ -25,13 +25,13 @@ namespace Failsafe.PlayerMovements.States
 
         public SlideState(
             InputHandler inputHandler,
-            CharacterController characterController,
+            PlayerMovementController movementController,
             PlayerMovementParameters movementParametrs,
             Transform camera,
             PlayerRotationController playerRotationController)
         {
             _inputHandler = inputHandler;
-            _characterController = characterController;
+            _movementController = movementController;
             _movementParametrs = movementParametrs;
             _camera = camera;
             _playerRotationController = playerRotationController;
@@ -44,14 +44,14 @@ namespace Failsafe.PlayerMovements.States
             _slideProgress = 0f;
             //TODO: Пока при приседании опускается толко камера, исправить
             _camera.localPosition += Vector3.down * (_cameraOriginalPosition.y * (1 - _movementParametrs.SlideHeight));
-            _playerRotationController.RotateBodyToDirection(_characterController.transform.forward);
+            _playerRotationController.RotateBodyToDirection(_movementController.GetRelativeMovement(Vector2.up));
         }
 
         public override void Update()
         {
             _slideProgress += Time.deltaTime;
-            var slideMovement = _characterController.transform.forward * GetCurrentSpeed() * Time.deltaTime;
-            _characterController.Move(slideMovement);
+            var movement = _movementController.GetRelativeMovement(Vector2.up) * GetCurrentSpeed();
+            _movementController.Move(movement);
         }
 
         public override void Exit()

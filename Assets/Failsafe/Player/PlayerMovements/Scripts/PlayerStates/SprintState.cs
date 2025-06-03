@@ -1,4 +1,4 @@
-using Failsafe.PlayerMovements.Controllers;
+﻿using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
 namespace Failsafe.PlayerMovements.States
@@ -9,22 +9,23 @@ namespace Failsafe.PlayerMovements.States
     public class SprintState : BehaviorState
     {
         private InputHandler _inputHandler;
-        private CharacterController _characterController;
+        private readonly PlayerMovementController _movementController;
         private PlayerMovementParameters _movementParametrs;
         private readonly PlayerNoiseController _playerNoiseController;
-
-        private float _speed => _movementParametrs.RunSpeed;
+        private StepController _stepController;
+        private float Speed => _movementParametrs.RunSpeed;
         private float _sprintProgress = 0f;
         private float _slideAfterTime = 1f;
 
         public bool CanSlide() => _sprintProgress > _slideAfterTime;
 
-        public SprintState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParameters movementParametrs, PlayerNoiseController playerNoiseController)
+        public SprintState(InputHandler inputHandler, PlayerMovementController movementController, PlayerMovementParameters movementParametrs, PlayerNoiseController playerNoiseController, StepController stepController)
         {
             _inputHandler = inputHandler;
-            _characterController = characterController;
+            _movementController = movementController;
             _movementParametrs = movementParametrs;
             _playerNoiseController = playerNoiseController;
+            _stepController = stepController;
         }
 
         public override void Enter()
@@ -32,18 +33,20 @@ namespace Failsafe.PlayerMovements.States
             Debug.Log("Enter " + nameof(SprintState));
             _sprintProgress = 0f;
             _playerNoiseController.SetNoiseStrength(PlayerNoiseVolume.Increased);
+            _stepController.Enable(Speed);
         }
 
         public override void Update()
         {
             _sprintProgress += Time.deltaTime;
-            var deltaMovement = _inputHandler.GetRelativeMovement(_characterController.transform) * _speed * Time.deltaTime;
-            _characterController.Move(deltaMovement);
+            var movement = _movementController.GetRelativeMovement(_inputHandler.MovementInput) * Speed;
+            _movementController.Move(movement);
         }
 
         public override void Exit()
         {
             _playerNoiseController.SetNoiseStrength(PlayerNoiseVolume.Default);
+            _stepController.Disable();
         }
     }
 }

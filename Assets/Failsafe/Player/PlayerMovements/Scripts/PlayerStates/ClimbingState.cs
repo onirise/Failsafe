@@ -1,3 +1,4 @@
+using Failsafe.Obstacles;
 using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
@@ -12,20 +13,22 @@ namespace Failsafe.PlayerMovements.States
         private readonly CharacterController _characterController;
         private readonly PlayerMovementParameters _movementParametrs;
         private readonly PlayerGravityController _playerGravityController;
-        private readonly Transform _grabPoint;
+        private readonly PlayerLedgeController _playerLedgeController;
         private float _duration = 0.5f;
         private float _climbingProgress = 0f;
         private float _climbSpeed = 10f;
         private Vector3 _targetPosition;
 
+        private LedgeGrabPoint LedgeGrabPoint => !_playerLedgeController.AttachedLedgeGrabPoint.IsEmpty ? _playerLedgeController.AttachedLedgeGrabPoint : _playerLedgeController.LedgeGrabPointInView;
+
         public bool CanClimb()
         {
-            var capsuleBottomPoint = _grabPoint.position + _characterController.transform.forward * 0.2f + Vector3.up * 0.51f;
+            var capsuleBottomPoint = LedgeGrabPoint.Position + Vector3.up * 0.51f;
             var collide = Physics.SphereCast(capsuleBottomPoint, 0.5f, Vector3.up, out var hitInfo, 1);
             if (collide)
             {
                 Debug.Log("Cant Climb " + hitInfo.point);
-                Debug.DrawLine(_grabPoint.position, hitInfo.point, Color.black);
+                Debug.DrawLine(LedgeGrabPoint.Position, hitInfo.point, Color.black);
             }
             return !collide;
         }
@@ -37,20 +40,20 @@ namespace Failsafe.PlayerMovements.States
             CharacterController characterController,
             PlayerMovementParameters movementParametrs,
             PlayerGravityController playerGravityController,
-            Transform grabPoint)
+            PlayerLedgeController playerLedgeController)
         {
             _inputHandler = inputHandler;
             _characterController = characterController;
             _movementParametrs = movementParametrs;
             _playerGravityController = playerGravityController;
-            _grabPoint = grabPoint;
+            _playerLedgeController = playerLedgeController;
         }
 
         public override void Enter()
         {
             Debug.Log("Enter " + nameof(ClimbingState));
             _climbingProgress = 0;
-            _targetPosition = _grabPoint.position + _characterController.transform.forward * 0.2f;
+            _targetPosition = LedgeGrabPoint.Position;
             _playerGravityController.DisableGravity();
         }
 
@@ -73,6 +76,7 @@ namespace Failsafe.PlayerMovements.States
         public override void Exit()
         {
             _playerGravityController.EnableGravity();
+            _playerLedgeController.AttachedLedgeGrabPoint = LedgeGrabPoint.Empty;
         }
     }
 }

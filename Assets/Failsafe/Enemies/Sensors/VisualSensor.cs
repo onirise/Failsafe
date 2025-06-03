@@ -4,6 +4,7 @@
 /// </summary>
 public class VisualSensor : Sensor
 {
+    public bool SeenPlayer => IsActivated() && Target != null;  
     [SerializeField]
     private float _viewAngle;
     /// <summary>

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using SteamAudio;
 using UnityEngine.UIElements;
+using Vector3 = UnityEngine.Vector3;
 
 public class Enemy : MonoBehaviour
 {
@@ -70,7 +71,6 @@ public class Enemy : MonoBehaviour
             RoomCheck();
         }
 
-        _enemyAnimator.SetUseRootRotation(true); // Включаем root motion, если нужно
     }
 
     void Update()
@@ -116,7 +116,7 @@ public class Enemy : MonoBehaviour
     {
 
         _enemyAnimator.ApplyRootMotion(); // Всё управление Root Motion'ом теперь централизовано здесь
-       
+      
     }
 }
 

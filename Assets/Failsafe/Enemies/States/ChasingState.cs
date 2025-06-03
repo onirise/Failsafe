@@ -41,6 +41,7 @@ public class ChasingState : BehaviorState
 
     public override void Update()
     {
+        
         bool anySensorIsActive = false;
         foreach (var sensor in _sensors)
         {
@@ -64,5 +65,6 @@ public class ChasingState : BehaviorState
             return;
         }
         _enemyController.RunToPoint(_chasingPosition.Value);
+        _enemyController.RotateToPoint(_chasingPosition.Value, 5f);
     }
 }

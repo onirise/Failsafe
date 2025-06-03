@@ -4,7 +4,7 @@ using System.Linq;
 public class BehaviorStateMachine
 {
     private BehaviorState _currentState;
-    public BehaviorState СurrentState => _currentState;
+    public BehaviorState CurrentState => _currentState;
     private List<BehaviorForcedState> _forcedStates;
 
     public BehaviorStateMachine(BehaviorState initState, List<BehaviorForcedState> forcedStates = null)

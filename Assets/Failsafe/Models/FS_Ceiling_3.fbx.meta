@@ -13,7 +13,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: FS_WALL_TECH_TRIM_2
-    second: {fileID: 2100000, guid: 94caf68e3019e824c9a3f1f1235be9be, type: 2}
+    second: {fileID: 2100000, guid: 2b2b8962046b9004e8f34130b890ff3a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 1

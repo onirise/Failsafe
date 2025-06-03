@@ -14,7 +14,6 @@ public class AttackState : BehaviorState
     private Transform _transform;
     private Vector3? _targetPosition;
 
-    //Параметры луча атаки
     private float _attackDelay = 3f;
     private float _rayDuration = 5f;
     private float _rayDPS = 100f;
@@ -22,20 +21,33 @@ public class AttackState : BehaviorState
     private float _attackProgress = 0;
     private bool _delayOver = false;
     private bool _onCooldown = false;
+    private bool _attackFired = false;
 
     private EnemyController _enemyController;
+    private EnemyAnimator _enemyAnimator;
 
     private float _attackRangeMax = 15f;
     private float _distanceToPlayer;
 
-    public AttackState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController)
+    private LaserBeamController _activeLaser;
+    private GameObject _laserPrefab;
+    private Transform _laserOrigin;
+
+    public AttackState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, EnemyAnimator enemyAnimator, LaserBeamController laserBeamController, GameObject laser, Transform laserOrigin)
     {
         _sensors = sensors;
         _transform = currentTransform;
         _enemyController = enemyController;
+        _enemyAnimator = enemyAnimator;
+        _activeLaser = laserBeamController;
+        _laserPrefab = laser;
+        _laserOrigin = laserOrigin;
     }
 
-    public bool PlayerOutOfAttackRange() => _distanceToPlayer > _attackRangeMax;
+    public bool PlayerOutOfAttackRange()
+    {
+        return _distanceToPlayer > _attackRangeMax;
+    }
 
     public override void Enter()
     {
@@ -43,11 +55,21 @@ public class AttackState : BehaviorState
         _attackProgress = 0;
         _delayOver = false;
         _onCooldown = false;
+        _attackFired = false;
+        _enemyAnimator.SetUseRootRotation(false);
         Debug.Log("Enter AttackState");
+
+        if (_laserPrefab == null)
+            Debug.LogError("Laser Prefab не назначен!");
+
+        if (_laserOrigin == null)
+            Debug.LogError("Laser Origin не назначен!");
     }
 
     public override void Update()
     {
+        _attackProgress += Time.deltaTime;
+
         if (!_delayOver && _attackProgress > _attackDelay)
         {
             _delayOver = true;
@@ -56,41 +78,89 @@ public class AttackState : BehaviorState
 
         foreach (var sensor in _sensors)
         {
-            if (sensor is VisualSensor visualSensor && sensor.IsActivated())
+            if (sensor is VisualSensor visual && visual.IsActivated())
             {
-                _distanceToPlayer = ((Vector3)(sensor.SignalSourcePosition - _transform.position)).magnitude;
+                _targetPosition = visual.SignalSourcePosition;
 
-                _targetPosition = sensor.SignalSourcePosition;
-                _enemyController.RotateToPoint(_targetPosition.Value, _transform.up);
-                
-                if (_delayOver && !_onCooldown)
+                if (_targetPosition == null)
+                    continue;
+
+                _distanceToPlayer = Vector3.Distance(_transform.position, _targetPosition.Value);
+                _enemyController.RotateToPoint(_targetPosition.Value, 5f);
+
+                if (_distanceToPlayer > _attackRangeMax)
                 {
-                    Debug.Log("Пиу");
+                    _enemyController.RunToPoint(_targetPosition.Value);
+                }
+                else
+                {
+                    _enemyController.StopMoving();
+                }
 
-                    var damageableComponent = visualSensor.Target.GetComponentInChildren<DamageableComponent>();
-                    
-                    if (sensor.SignalInAttackRay((Vector3)_targetPosition) && damageableComponent is not null)
+                if (_delayOver && !_onCooldown && !_enemyAnimator.IsInAction() && _distanceToPlayer <= _attackRangeMax)
+                {
+                    if (_activeLaser == null)
                     {
-                        Debug.Log("damage");
-                        
-                        damageableComponent.TakeDamage(new FlatDamage(_rayDPS * Time.deltaTime));
+                        GameObject laserGO = GameObject.Instantiate(_laserPrefab, _laserOrigin.position, _laserOrigin.rotation);
+                        _activeLaser = laserGO.GetComponent<LaserBeamController>();
+                        _activeLaser.Initialize(_laserOrigin, _targetPosition.Value);
+                    }
+
+                    _enemyAnimator.TryAttack();
+                    _attackFired = true;
+
+                    if (sensor.SignalInAttackRay(_targetPosition.Value))
+                    {
+                        Debug.Log("Попал");
+
+                        _targetPosition = sensor.SignalSourcePosition;
+                        _enemyController.RotateToPoint(_targetPosition.Value);
+
+                        if (_delayOver && !_onCooldown)
+                        {
+                            Debug.Log("Пиу");
+
+                            var damageableComponent = visual.Target.GetComponentInChildren<DamageableComponent>();
+
+                            if (sensor.SignalInAttackRay((Vector3)_targetPosition) && damageableComponent is not null)
+                            {
+                                Debug.Log("damage");
+
+                                damageableComponent.TakeDamage(new FlatDamage(_rayDPS * Time.deltaTime));
+                            }
+                        }
                     }
                 }
+
+                if (_attackFired && _attackProgress > _rayDuration)
+                {
+                    if (_activeLaser != null)
+                    {
+                        GameObject.Destroy(_activeLaser.gameObject);
+                        _activeLaser = null;
+                    }
+
+                    _onCooldown = true;
+                    _enemyAnimator.TryReload();
+                    _enemyAnimator.isReloading(true);
+                    Debug.Log("Атака на перезарядке");
+                }
+
+                if (_attackProgress > _rayDuration + _rayCooldown)
+                {
+                    _onCooldown = false;
+                    _enemyAnimator.isReloading(false);
+                    _attackProgress = 0;
+                    _attackFired = false;
+                }
+
             }
         }
+    }
 
-        if (_attackProgress > _rayDuration)
-        {
-            _onCooldown = true;
-            Debug.Log("Пиу КД");
-        }
-
-        if (_attackProgress > _rayDuration + _rayCooldown)
-        {
-            _onCooldown = false;
-            _attackProgress = 0;
-        }
-
-        _attackProgress += Time.deltaTime;
+    public override void Exit()
+    {
+        base.Exit();
+        _enemyAnimator.SetUseRootRotation(true);
     }
 }

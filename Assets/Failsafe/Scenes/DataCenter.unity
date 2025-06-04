@@ -89200,6 +89200,26 @@ PrefabInstance:
       value: 5.765e-42
       objectReference: {fileID: 0}
     - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: _footstepEvent.Path
+      value: event:/SFX/MAIN CHARACTER/MOVEMENT/WALK/METAL
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: _footstepEvent.Guid.Data1
+      value: 645672247
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: _footstepEvent.Guid.Data2
+      value: 1210137235
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: _footstepEvent.Guid.Data3
+      value: -1357825636
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      propertyPath: _footstepEvent.Guid.Data4
+      value: 640958622
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
       propertyPath: managedReferences[2287995151870591098].RunSpeed
       value: 4.4
       objectReference: {fileID: 0}

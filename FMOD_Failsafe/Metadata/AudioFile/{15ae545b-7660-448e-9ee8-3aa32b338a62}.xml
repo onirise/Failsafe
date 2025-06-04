@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{15ae545b-7660-448e-9ee8-3aa32b338a62}">
+		<property name="assetPath">
+			<value>CROUCHING_PLASTIC_1.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.8465625000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2bee4d2d-a272-4277-bab5-159242a81bc7}</destination>
+		</relationship>
+	</object>
+</objects>

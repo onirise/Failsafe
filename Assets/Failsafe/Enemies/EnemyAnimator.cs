@@ -8,7 +8,7 @@ public class EnemyAnimator
     private readonly Animator _animator;
     private readonly Transform _transform;
     private EnemyController _controller;
-
+    private EnemyAudioManager _audioManager;
     private bool _isTurning = false;
 
     private bool _waitingForTurnToFinish = false;
@@ -20,7 +20,6 @@ public class EnemyAnimator
         _navMeshAgent = navMeshAgent;
         _animator = animator;
         _transform = transform;
-
         _navMeshAgent.updatePosition = false;
         _navMeshAgent.updateRotation = false;
     }
@@ -48,6 +47,7 @@ public class EnemyAnimator
         }
 
         float velocity = _navMeshAgent.velocity.magnitude;
+        
         _animator.SetFloat("Speed", velocity);
     }
 
@@ -93,4 +93,6 @@ public class EnemyAnimator
         _inCooldown = isReloading;
         _animator.SetBool("isReloading", isReloading);
     }
+    
+    
 }

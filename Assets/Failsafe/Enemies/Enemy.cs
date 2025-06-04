@@ -1,4 +1,5 @@
 ﻿using DMDungeonGenerator;
+using Failsafe.Enemies.Sensors;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,7 +21,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform _laserSpawnPoint; // Точка спавна лазера, если нужно
    [SerializeField] private List<Transform> _manualPoints; // Привязать вручную через инспектор
 
-
     private void Awake()
     {
         // Основные компоненты
@@ -36,7 +36,6 @@ public class Enemy : MonoBehaviour
         _controller = new EnemyController(transform, _navMeshAgent);
         _awarenessMeter = new AwarenessMeter(_sensors);
         _enemyAnimator = new EnemyAnimator(_navMeshAgent, _animator, transform, _controller);
-
 
     }
 

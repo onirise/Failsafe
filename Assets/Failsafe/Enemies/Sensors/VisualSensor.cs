@@ -44,7 +44,7 @@ public class VisualSensor : Sensor
         if (Target == null)
             return 0f;
 
-        Vector3 toTarget = Target.position - transform.position;
+        Vector3 toTarget = Target.position - EyePosition;
         float distance = toTarget.magnitude;
         if (distance > Distance)
             return 0f;
@@ -82,7 +82,7 @@ public class VisualSensor : Sensor
 
     public override bool SignalInAttackRay(Vector3 targetPosition)
     {
-        var direction = _eyePosition.forward;
+        Vector3 direction = _eyePosition.forward;
         _attackRaySize = new Vector3(_rayWidth / 2, _rayHeight / 2, 1);
 
         if (Physics.BoxCast(EyePosition, _attackRaySize, direction, out var hit, transform.rotation, Mathf.Infinity, ~_ignoreLayer))

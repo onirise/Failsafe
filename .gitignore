@@ -127,3 +127,4 @@ ProjectSettings/Packages/com.unity.probuilder/Settings.json
 # TODO: Find and fix problem with this .mets file
 # Ignore TextMesh Pro meta useless file
 /[Aa]ssets/TextMesh Pro.meta
+/FMOD_Failsafe/.cache

@@ -80,81 +80,51 @@ public class AttackState : BehaviorState
         {
             if (sensor is VisualSensor visual && visual.IsActivated())
             {
-                _targetPosition = visual.SignalSourcePosition;
+                    _targetPosition = visual.SignalSourcePosition;
+                    _distanceToPlayer = Vector3.Distance(_transform.position, _targetPosition.Value);
+                    _enemyController.RotateToPoint(_targetPosition.Value, 5f);
 
-                if (_targetPosition == null)
-                    continue;
-
-                _distanceToPlayer = Vector3.Distance(_transform.position, _targetPosition.Value);
-                _enemyController.RotateToPoint(_targetPosition.Value, 5f);
-
-                if (_distanceToPlayer > _attackRangeMax)
-                {
-                    _enemyController.RunToPoint(_targetPosition.Value);
-                }
-                else
-                {
-                    _enemyController.StopMoving();
-                }
-
-                if (_delayOver && !_onCooldown && !_enemyAnimator.IsInAction() && _distanceToPlayer <= _attackRangeMax)
-                {
-                    if (_activeLaser == null)
+                    if (_delayOver && !_onCooldown)
                     {
-                        GameObject laserGO = GameObject.Instantiate(_laserPrefab, _laserOrigin.position, _laserOrigin.rotation);
-                        _activeLaser = laserGO.GetComponent<LaserBeamController>();
-                        _activeLaser.Initialize(_laserOrigin, _targetPosition.Value);
-                    }
-
-                    _enemyAnimator.TryAttack();
-                    _attackFired = true;
-
-                    if (sensor.SignalInAttackRay(_targetPosition.Value))
-                    {
-                        Debug.Log("Попал");
-
-                        _targetPosition = sensor.SignalSourcePosition;
-                        _enemyController.RotateToPoint(_targetPosition.Value);
-
-                        if (_delayOver && !_onCooldown)
+                        if (_activeLaser == null)
                         {
-                            Debug.Log("Пиу");
+                            GameObject laserGO = GameObject.Instantiate(_laserPrefab, _laserOrigin.position, _laserOrigin.rotation);
+                            _activeLaser = laserGO.GetComponent<LaserBeamController>();
+                            _activeLaser.Initialize(_laserOrigin, _targetPosition.Value);
+                        }
 
-                            var damageableComponent = visual.Target.GetComponentInChildren<DamageableComponent>();
+                        _enemyAnimator.TryAttack();
+                        _attackFired = true;
 
-                            if (sensor.SignalInAttackRay((Vector3)_targetPosition) && damageableComponent is not null)
-                            {
-                                Debug.Log("damage");
-
-                                damageableComponent.TakeDamage(new FlatDamage(_rayDPS * Time.deltaTime));
-                            }
+                        var damageableComponent = visual.Target.GetComponentInChildren<DamageableComponent>();
+                        if (sensor.SignalInAttackRay((Vector3)_targetPosition) && damageableComponent is not null)
+                        {
+                            Debug.Log("damage");
+                            damageableComponent.TakeDamage(new FlatDamage(_rayDPS * Time.deltaTime));
                         }
                     }
-                }
-
-                if (_attackFired && _attackProgress > _rayDuration)
-                {
-                    if (_activeLaser != null)
-                    {
-                        GameObject.Destroy(_activeLaser.gameObject);
-                        _activeLaser = null;
-                    }
-
-                    _onCooldown = true;
-                    _enemyAnimator.TryReload();
-                    _enemyAnimator.isReloading(true);
-                    Debug.Log("Атака на перезарядке");
-                }
-
-                if (_attackProgress > _rayDuration + _rayCooldown)
-                {
-                    _onCooldown = false;
-                    _enemyAnimator.isReloading(false);
-                    _attackProgress = 0;
-                    _attackFired = false;
-                }
-
             }
+        }
+
+        if (_attackFired && _attackProgress > _rayDuration)
+        {
+            if (_activeLaser != null)
+            {
+                GameObject.Destroy(_activeLaser.gameObject);
+                _activeLaser = null;
+            }
+            _onCooldown = true;
+            _enemyAnimator.TryReload();
+            _enemyAnimator.isReloading(true);
+            Debug.Log("Атака на перезарядке");
+        }
+
+        if (_attackProgress > _rayDuration + _rayCooldown)
+        {
+            _onCooldown = false;
+            _enemyAnimator.isReloading(false);
+            _attackProgress = 0;
+            _attackFired = false;
         }
     }
 

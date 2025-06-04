@@ -151,11 +151,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 298808205
-      Data2: 1193573693
-      Data3: 1274138509
-      Data4: 1688183700
-    Path: event:/Menu/1
+      Data1: -417772593
+      Data2: 1262837343
+      Data3: 896688792
+      Data4: -1315469946
+    Path: event:/MUSIC/OST/OST_4_RED
   Event: 
   EventPlayTrigger: 1
   EventStopTrigger: 2

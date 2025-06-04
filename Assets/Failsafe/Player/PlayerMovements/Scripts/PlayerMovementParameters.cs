@@ -50,6 +50,15 @@ namespace Failsafe.PlayerMovements
         /// Сила притяжения
         /// </summary>
         public float GravityForce = 8f;
+
+        /// <summary>
+        /// Расстояние до точки за
+        /// </summary>
+        public float GrabLedgeMaxDistance = 0.5f;
+        /// <summary>
+        /// Минимальная высота препятствия, за которое можно ухватиться
+        /// </summary>
+        public float GrabLedgeMinHeight = 2f;
         /// <summary>
         /// Скорость передвижения при зацепдении
         /// </summary>
@@ -58,5 +67,27 @@ namespace Failsafe.PlayerMovements
         /// На какую высоту игрок может подняться/опуститься пока движется по выступу
         /// </summary>
         public float GrabLedgeHeightDifference = 0.1f;
+
+        /// <summary>
+        /// Расстояние до препятствия, с которого можно начать перелезать
+        /// </summary>
+        public float ClimbOverMaxDistanceToLedge = 1f;
+        /// <summary>
+        /// Максимальная ширина препятствия, через которое можно перелезать
+        /// </summary>
+        public float ClimbOverLedgeMaxWidth = 0.5f;
+        /// <summary>
+        /// Максимальная высота препятствия, через которое можно перелезать
+        /// </summary>
+        public float ClimbOverLedgeMaxHeight = 1.5f;
+
+        /// <summary>
+        /// Расстояние до препятствия, с которого можно начать залезать
+        /// </summary>
+        public float ClimbOnMaxDistanceToLedge = 1f;
+        /// <summary>
+        /// Максимальная высота препятствия, на которое можно залезть
+        /// </summary>
+        public float ClimbOnLedgeMaxHeight = 2f;
     }
 }

@@ -32,6 +32,7 @@ public class AttackState : BehaviorState
     private LaserBeamController _activeLaser;
     private GameObject _laserPrefab;
     private Transform _laserOrigin;
+    private bool _playerInSight;
 
     public AttackState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, EnemyAnimator enemyAnimator, LaserBeamController laserBeamController, GameObject laser, Transform laserOrigin)
     {
@@ -46,7 +47,7 @@ public class AttackState : BehaviorState
 
     public bool PlayerOutOfAttackRange()
     {
-        return _distanceToPlayer > _attackRangeMax;
+        return (_distanceToPlayer > _attackRangeMax || !_playerInSight) && !_onCooldown;
     }
 
     public override void Enter()
@@ -57,6 +58,7 @@ public class AttackState : BehaviorState
         _onCooldown = false;
         _attackFired = false;
         _enemyAnimator.SetUseRootRotation(false);
+        _playerInSight = true;
         Debug.Log("Enter AttackState");
 
         if (_laserPrefab == null)
@@ -78,8 +80,10 @@ public class AttackState : BehaviorState
 
         foreach (var sensor in _sensors)
         {
-            if (sensor is VisualSensor visual && visual.IsActivated())
-            {
+            if (sensor is VisualSensor visual)
+                if(visual.IsActivated())
+                {
+                    _playerInSight = true;
                     _targetPosition = visual.SignalSourcePosition;
                     _distanceToPlayer = Vector3.Distance(_transform.position, _targetPosition.Value);
                     _enemyController.RotateToPoint(_targetPosition.Value, 5f);
@@ -103,7 +107,11 @@ public class AttackState : BehaviorState
                             damageableComponent.TakeDamage(new FlatDamage(_rayDPS * Time.deltaTime));
                         }
                     }
-            }
+                }
+                else
+                {
+                    _playerInSight = false;
+                }
         }
 
         if (_attackFired && _attackProgress > _rayDuration)

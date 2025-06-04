@@ -496,11 +496,11 @@ MonoBehaviour:
     rid: 5390404808482226255
   _footstepEvent:
     Guid:
-      Data1: -1050583892
-      Data2: 1246083191
-      Data3: -1439842664
-      Data4: 1628696724
-    Path: event:/SFX/Footstep
+      Data1: -1362921849
+      Data2: 1073791315
+      Data3: -1220606587
+      Data4: -1805872764
+    Path: event:/SFX/MAIN CHARACTER/MOVEMENT/WALK/WALK
   references:
     version: 2
     RefIds:

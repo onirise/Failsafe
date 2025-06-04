@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 namespace Failsafe.Enemies.Sensors
@@ -7,7 +7,7 @@ namespace Failsafe.Enemies.Sensors
     {
         [Header("Sensors")] private Sensor[] _sensors;
 
-        [Header("Настройки")] [SerializeField] private float _fillSpeed = 100f;
+        [Header("Настройки")] [SerializeField] private float _fillSpeed = 80f;
         [SerializeField] private float _decaySpeed = 10f;
         [SerializeField] private float _decayDelay = 2f;
 

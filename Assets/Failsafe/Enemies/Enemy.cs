@@ -1,9 +1,11 @@
 ﻿using DMDungeonGenerator;
+using Failsafe.Enemies.Sensors;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using SteamAudio;
 using UnityEngine.UIElements;
+using Vector3 = UnityEngine.Vector3;
 
 public class Enemy : MonoBehaviour
 {
@@ -18,7 +20,6 @@ public class Enemy : MonoBehaviour
     private LaserBeamController _activeLaser;
     [SerializeField] private Transform _laserSpawnPoint; // Точка спавна лазера, если нужно
    [SerializeField] private List<Transform> _manualPoints; // Привязать вручную через инспектор
-
 
     private void Awake()
     {
@@ -35,7 +36,6 @@ public class Enemy : MonoBehaviour
         _controller = new EnemyController(transform, _navMeshAgent);
         _awarenessMeter = new AwarenessMeter(_sensors);
         _enemyAnimator = new EnemyAnimator(_navMeshAgent, _animator, transform, _controller);
-
 
     }
 
@@ -70,7 +70,6 @@ public class Enemy : MonoBehaviour
             RoomCheck();
         }
 
-        _enemyAnimator.SetUseRootRotation(true); // Включаем root motion, если нужно
     }
 
     void Update()
@@ -116,7 +115,7 @@ public class Enemy : MonoBehaviour
     {
 
         _enemyAnimator.ApplyRootMotion(); // Всё управление Root Motion'ом теперь централизовано здесь
-       
+      
     }
 }
 

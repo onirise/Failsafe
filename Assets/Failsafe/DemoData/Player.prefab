@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 374109432981789085}
   - component: {fileID: 374109432981789075}
   - component: {fileID: 3056071954068415360}
-  - component: {fileID: 5835808948147152267}
+  - component: {fileID: 1888879049700977294}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -192,7 +192,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 85
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -239,7 +239,7 @@ MonoBehaviour:
         z: 0
       radius: 0
   mProbeBatchesUsed: []
---- !u!114 &5835808948147152267
+--- !u!114 &1888879049700977294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -260,16 +260,16 @@ MonoBehaviour:
   volumeAnchorOverride: {fileID: 0}
   antialiasing: 0
   SMAAQuality: 2
-  dithering: 0
+  dithering: 1
   stopNaNs: 0
   taaSharpenStrength: 0.5
-  TAAQuality: 1
-  taaSharpenMode: 0
+  TAAQuality: 2
+  taaSharpenMode: 2
   taaRingingReduction: 0
   taaHistorySharpening: 0.35
   taaAntiFlicker: 0.5
   taaMotionVectorRejection: 0
-  taaAntiHistoryRinging: 0
+  taaAntiHistoryRinging: 1
   taaBaseBlendFactor: 0.875
   taaJitterScale: 1
   physicalParameters:
@@ -285,7 +285,7 @@ MonoBehaviour:
   xrRendering: 1
   fullscreenPassthrough: 0
   allowDynamicResolution: 0
-  customRenderingSettings: 0
+  customRenderingSettings: 1
   invertFaceCulling: 0
   probeLayerMask:
     serializedVersion: 2
@@ -313,23 +313,23 @@ MonoBehaviour:
   m_RenderingPathCustomFrameSettings:
     bitDatas:
       data1: 5770166122053453
-      data2: 12934340311651418136
+      data2: 17546026330078822424
     lodBias: 1
     lodBiasMode: 0
-    lodBiasQualityLevel: 0
+    lodBiasQualityLevel: 2
     maximumLODLevel: 0
     maximumLODLevelMode: 0
-    maximumLODLevelQualityLevel: 0
+    maximumLODLevelQualityLevel: 2
     sssQualityMode: 0
-    sssQualityLevel: 0
+    sssQualityLevel: 2
     sssCustomSampleBudget: 20
     sssCustomDownsampleSteps: 0
     msaaMode: 1
     materialQuality: 0
   renderingPathCustomFrameSettingsOverrideMask:
     mask:
-      data1: 0
-      data2: 0
+      data1: 1153343717071912960
+      data2: 4611686018427387904
   defaultFrameSettings: 0
   m_Version: 9
   m_ObsoleteRenderingPath: 0
@@ -391,6 +391,7 @@ GameObject:
   - component: {fileID: 5564961472655603788}
   - component: {fileID: 3587987712684801882}
   - component: {fileID: 5543863665210299431}
+  - component: {fileID: 6003168246341229848}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -515,7 +516,7 @@ MonoBehaviour:
         SlideHeight: 0.3
         MaxSlideTime: 1
         MinSlideTime: 0.5
-        JumpForce: 20
+        JumpForce: 18
         JumpForceFade: 31
         GravityForce: 9
         GrabLedgeSpeed: 2.4
@@ -532,6 +533,19 @@ MonoBehaviour:
       data:
         <MaxHealth>k__BackingField: 1000
         <MaxStamina>k__BackingField: 100
+--- !u!114 &6003168246341229848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374109433352817464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d8747dcf0912c64b970be1945d15b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lockCursor: 1
 --- !u!1 &374109433356125759
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,7 +928,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6033173754768017829}
   - component: {fileID: 4284899158147892210}
-  - component: {fileID: 6649220071485427479}
+  - component: {fileID: 4807465755024647153}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -1002,7 +1016,7 @@ Light:
   m_LightUnit: 0
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!114 &6649220071485427479
+--- !u!114 &4807465755024647153
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

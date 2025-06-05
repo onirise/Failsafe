@@ -119,11 +119,17 @@
 	<object class="MixerBusPanner" id="{4c54dc19-d301-489a-8532-be1d7ac77ce2}" />
 	<object class="MixerBusFader" id="{36de54bf-7590-4b8a-b1b7-750bd886a291}" />
 	<object class="SingleSound" id="{8dedb5f0-5eeb-410c-8d1d-755438efece7}">
+		<property name="startOffset">
+			<value>2.5</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{7077717c-cf19-4f73-9f88-34733a0190ed}</destination>
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{c9d1b381-0337-42d5-a842-b39065d861f7}">
+		<property name="startOffset">
+			<value>2.5</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{05983577-48b7-4dbd-9fb9-9f2a4b5a0275}</destination>
 		</relationship>

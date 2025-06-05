@@ -219,6 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2787837512202065222}
   - component: {fileID: 5616825689175965733}
+  - component: {fileID: 7784792964136311328}
   m_Layer: 10
   m_Name: Spot
   m_TagString: Untagged
@@ -252,7 +253,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 0.64454615, g: 0.033711813, b: 0.033711813, a: 1}
-  m_Intensity: 246.39998
+  m_Intensity: 1254.4979
   m_Range: 10
   m_SpotAngle: 45
   m_InnerSpotAngle: 21.80208
@@ -292,20 +293,162 @@ Light:
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
+  m_LightShadowCasterMode: 2
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
+  m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
-  m_LightUnit: 1
+  m_LightUnit: 0
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &7784792964136311328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433091506679707695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PointlightHDType: 0
+  m_SpotLightShape: 0
+  m_AreaLightShape: 0
+  m_EnableSpotReflector: 1
+  m_LightUnit: 0
+  m_LuxAtDistance: 1
+  m_Intensity: 0
+  m_InnerSpotPercent: 0
+  m_SpotIESCutoffPercent: 100
+  m_LightDimmer: 1
+  m_VolumetricDimmer: 1
+  m_FadeDistance: 10000
+  m_VolumetricFadeDistance: 10000
+  m_AffectDiffuse: 1
+  m_AffectSpecular: 1
+  m_NonLightmappedOnly: 0
+  m_ShapeWidth: 0.5
+  m_ShapeHeight: 0.5
+  m_AspectRatio: 1
+  m_ShapeRadius: 0.025
+  m_SoftnessScale: 1
+  m_UseCustomSpotLightShadowCone: 0
+  m_CustomSpotLightShadowCone: 30
+  m_MaxSmoothness: 0.99
+  m_ApplyRangeAttenuation: 1
+  m_DisplayAreaLightEmissiveMesh: 0
+  m_AreaLightCookie: {fileID: 0}
+  m_IESPoint: {fileID: 0}
+  m_IESSpot: {fileID: 0}
+  m_IncludeForRayTracing: 1
+  m_IncludeForPathTracing: 1
+  m_AreaLightShadowCone: 120
+  m_UseScreenSpaceShadows: 0
+  m_InteractsWithSky: 1
+  m_AngularDiameter: 0.5
+  diameterMultiplerMode: 0
+  diameterMultiplier: 1
+  diameterOverride: 0.5
+  celestialBodyShadingSource: 1
+  sunLightOverride: {fileID: 0}
+  sunColor: {r: 1, g: 1, b: 1, a: 1}
+  sunIntensity: 130000
+  moonPhase: 0.2
+  moonPhaseRotation: 0
+  earthshine: 1
+  flareSize: 2
+  flareTint: {r: 1, g: 1, b: 1, a: 1}
+  flareFalloff: 4
+  flareMultiplier: 1
+  surfaceTexture: {fileID: 0}
+  surfaceTint: {r: 1, g: 1, b: 1, a: 1}
+  m_Distance: 1.5e+11
+  m_UseRayTracedShadows: 0
+  m_NumRayTracingSamples: 4
+  m_FilterTracedShadow: 1
+  m_FilterSizeTraced: 16
+  m_SunLightConeAngle: 0.5
+  m_LightShadowRadius: 0.5
+  m_SemiTransparentShadow: 0
+  m_ColorShadow: 1
+  m_DistanceBasedFiltering: 0
+  m_EvsmExponent: 15
+  m_EvsmLightLeakBias: 0
+  m_EvsmVarianceBias: 0.00001
+  m_EvsmBlurPasses: 0
+  m_LightlayersMask: 1
+  m_LinkShadowLayers: 1
+  m_ShadowNearPlane: 0.1
+  m_BlockerSampleCount: 24
+  m_FilterSampleCount: 16
+  m_MinFilterSize: 0.1
+  m_DirLightPCSSBlockerSampleCount: 24
+  m_DirLightPCSSFilterSampleCount: 16
+  m_DirLightPCSSMaxPenumbraSize: 0.56
+  m_DirLightPCSSMaxSamplingDistance: 0.5
+  m_DirLightPCSSMinFilterSizeTexels: 1.5
+  m_DirLightPCSSMinFilterMaxAngularDiameter: 10
+  m_DirLightPCSSBlockerSearchAngularDiameter: 12
+  m_DirLightPCSSBlockerSamplingClumpExponent: 2
+  m_KernelSize: 5
+  m_LightAngle: 1
+  m_MaxDepthBias: 0.001
+  m_ShadowResolution:
+    m_Override: 512
+    m_UseOverride: 1
+    m_Level: 0
+  m_ShadowDimmer: 1
+  m_VolumetricShadowDimmer: 1
+  m_ShadowFadeDistance: 10000
+  m_UseContactShadow:
+    m_Override: 0
+    m_UseOverride: 1
+    m_Level: 0
+  m_RayTracedContactShadow: 0
+  m_ShadowTint: {r: 0, g: 0, b: 0, a: 1}
+  m_PenumbraTint: 0
+  m_NormalBias: 0.75
+  m_SlopeBias: 0.5
+  m_ShadowUpdateMode: 0
+  m_AlwaysDrawDynamicShadows: 0
+  m_UpdateShadowOnLightMovement: 0
+  m_CachedShadowTranslationThreshold: 0.01
+  m_CachedShadowAngularThreshold: 0.5
+  m_BarnDoorAngle: 90
+  m_BarnDoorLength: 0.05
+  m_preserveCachedShadow: 0
+  m_OnDemandShadowRenderOnPlacement: 1
+  m_ShadowCascadeRatios:
+  - 0.05
+  - 0.2
+  - 0.3
+  m_ShadowCascadeBorders:
+  - 0.2
+  - 0.2
+  - 0.2
+  - 0.2
+  m_ShadowAlgorithm: 0
+  m_ShadowVariant: 0
+  m_ShadowPrecision: 0
+  useOldInspector: 0
+  useVolumetric: 1
+  featuresFoldout: 1
+  m_AreaLightEmissiveMeshShadowCastingMode: 0
+  m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
+  m_AreaLightEmissiveMeshLayer: -1
+  m_Version: 13
+  m_ObsoleteShadowResolutionTier: 1
+  m_ObsoleteUseShadowQualitySettings: 0
+  m_ObsoleteCustomShadowResolution: 512
+  m_ObsoleteContactShadows: 0
 --- !u!1 &800398885149518059
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,6 +458,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6382771369531776977}
+  - component: {fileID: 6137719068691716678}
   m_Layer: 10
   m_Name: Patrol_Bot_Body
   m_TagString: Untagged
@@ -340,7 +484,28 @@ Transform:
   - {fileID: 475251584834042431}
   - {fileID: 2787837512202065222}
   m_Father: {fileID: 8676018224302908071}
-  m_LocalEulerAnglesHint: {x: 0.16541973, y: -58.515137, z: -0.09054139}
+  m_LocalEulerAnglesHint: {x: 7.954983, y: -31.197365, z: -6.4497695}
+--- !u!65 &6137719068691716678
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800398885149518059}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0022710701, y: 0.008166324, z: 0.0072036195}
+  m_Center: {x: 0.000135127, y: 0.0008709062, z: 0.000739204}
 --- !u!1 &951937005826697015
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4065101176749063078}
+  - component: {fileID: 6393608937142317766}
   m_Layer: 10
   m_Name: Patrol_Bot_LegUpper_L
   m_TagString: Untagged
@@ -372,7 +538,28 @@ Transform:
   m_Children:
   - {fileID: 5252322116160407251}
   m_Father: {fileID: 9111299131299554155}
-  m_LocalEulerAnglesHint: {x: 0.7491846, y: -13.738328, z: 98.27387}
+  m_LocalEulerAnglesHint: {x: 0.34245992, y: -7.4473844, z: 84.1631}
+--- !u!65 &6393608937142317766
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951937005826697015}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0022710701, y: 0.012181029, z: 0.0026905115}
+  m_Center: {x: 0.00013512585, y: 0.004368633, z: 0.00014230305}
 --- !u!1 &991322826742515057
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,6 +881,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4919089848495422104}
+  - component: {fileID: 1217172721805219905}
   m_Layer: 10
   m_Name: Patrol_Bot_LegLower_R
   m_TagString: Untagged
@@ -715,7 +903,28 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2394800270987738458}
-  m_LocalEulerAnglesHint: {x: 85.65572, y: -0.46305823, z: 0.055711508}
+  m_LocalEulerAnglesHint: {x: 67.68802, y: -0.9643307, z: 0.5556135}
+--- !u!65 &1217172721805219905
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171343364606929384}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0022710701, y: 0.0072122584, z: 0.0022917124}
+  m_Center: {x: 0.00013512697, y: 0.0003938723, z: -0.00079050154}
 --- !u!1 &1477733711356934000
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,6 +934,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6027148187367383525}
+  - component: {fileID: 4316154320964640941}
   m_Layer: 10
   m_Name: Patrol_Bot_Laser
   m_TagString: Untagged
@@ -746,7 +956,28 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6382771369531776977}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.00000036673734, y: -0.00000078989586, z: -0.000000112842265}
+--- !u!65 &4316154320964640941
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477733711356934000}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0022710701, y: 0.003325698, z: 0.0074147326}
+  m_Center: {x: 0.000135127, y: 0.0004068783, z: -0.004329896}
 --- !u!1 &2493954839956907277
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +987,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5252322116160407251}
+  - component: {fileID: 8769958226945923327}
   m_Layer: 10
   m_Name: Patrol_Bot_LegMiddle_L
   m_TagString: Untagged
@@ -778,7 +1010,28 @@ Transform:
   m_Children:
   - {fileID: 3909945133532888999}
   m_Father: {fileID: 4065101176749063078}
-  m_LocalEulerAnglesHint: {x: -45.628876, y: -6.353945, z: 7.8640046}
+  m_LocalEulerAnglesHint: {x: -44.991177, y: 1.9869359, z: -3.0408084}
+--- !u!65 &8769958226945923327
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2493954839956907277}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0022710701, y: 0.0069223777, z: 0.0019143897}
+  m_Center: {x: 0.00013512692, y: 0.0020770142, z: -0.000028129967}
 --- !u!1 &2670925638146573174
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,7 +1062,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8676018224302908071}
-  m_LocalEulerAnglesHint: {x: -90, y: 121.425514, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98021, y: -179.99998, z: 0}
 --- !u!1 &3227563577942078480
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,13 +1087,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3227563577942078480}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00000018831393, y: 0.7071068, z: -0.7071067, w: -0.00000018831392}
-  m_LocalPosition: {x: 0.0053448877, y: 0.007024998, z: -0.0073325937}
+  m_LocalRotation: {x: -0.034846567, y: 0.5198311, z: -0.853294, w: 0.02122856}
+  m_LocalPosition: {x: 0.00655, y: 0.00683, z: -0.00782}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8676018224302908071}
-  m_LocalEulerAnglesHint: {x: 71.216576, y: -175.63953, z: -35.079414}
+  m_LocalEulerAnglesHint: {x: 89.98021, y: -179.99995, z: 0}
 --- !u!1 &3386243057955697254
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,6 +1207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3909945133532888999}
+  - component: {fileID: 4709842747119060137}
   m_Layer: 10
   m_Name: Patrol_Bot_LegLower_L
   m_TagString: Untagged
@@ -975,7 +1229,28 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5252322116160407251}
-  m_LocalEulerAnglesHint: {x: 41.26667, y: 177.93712, z: -177.28891}
+  m_LocalEulerAnglesHint: {x: 68.26547, y: 0.9562963, z: -0.5412214}
+--- !u!65 &4709842747119060137
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4252047786076210062}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0022710701, y: 0.0072122584, z: 0.0022917124}
+  m_Center: {x: 0.00013512697, y: 0.0003938723, z: -0.00079050154}
 --- !u!1 &4262086920840963472
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,6 +1260,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2394800270987738458}
+  - component: {fileID: 3806440206864788167}
   m_Layer: 10
   m_Name: Patrol_Bot_LegMiddle_R
   m_TagString: Untagged
@@ -1007,7 +1283,28 @@ Transform:
   m_Children:
   - {fileID: 4919089848495422104}
   m_Father: {fileID: 7758459831222804948}
-  m_LocalEulerAnglesHint: {x: -47.954796, y: -0.7371131, z: 1.0189707}
+  m_LocalEulerAnglesHint: {x: -44.25869, y: -1.9764665, z: 3.129507}
+--- !u!65 &3806440206864788167
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4262086920840963472}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0022710701, y: 0.0074197333, z: 0.002275452}
+  m_Center: {x: 0.00013512681, y: 0.0018659653, z: 0.00003470541}
 --- !u!1 &4513440909931086257
 GameObject:
   m_ObjectHideFlags: 0
@@ -1017,6 +1314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 475251584834042431}
+  - component: {fileID: 84083411450592784}
   m_Layer: 10
   m_Name: Patrol_Bot_LegShoulder_R
   m_TagString: Untagged
@@ -1039,7 +1337,28 @@ Transform:
   m_Children:
   - {fileID: 7758459831222804948}
   m_Father: {fileID: 6382771369531776977}
-  m_LocalEulerAnglesHint: {x: 14.141508, y: 61.93239, z: -88.08575}
+  m_LocalEulerAnglesHint: {x: 7.0007553, y: 32.599262, z: -91.908005}
+--- !u!65 &84083411450592784
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4513440909931086257}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0022710701, y: 0.0026564228, z: 0.0022917124}
+  m_Center: {x: 0.00013512689, y: -0.0003839431, z: -0.0007905017}
 --- !u!1 &4950050020440885143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,13 +1488,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5004039930736974988}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00000018831393, y: 0.7071068, z: -0.7071067, w: 0.00000018831392}
-  m_LocalPosition: {x: -0.0053448877, y: 0.007024998, z: -0.0073325937}
+  m_LocalRotation: {x: 0.053280916, y: 0.52921057, z: -0.8467025, w: -0.013861513}
+  m_LocalPosition: {x: -0.005225997, y: 0.006645487, z: -0.007672091}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8676018224302908071}
-  m_LocalEulerAnglesHint: {x: 48.25573, y: -171.31952, z: 55.169743}
+  m_LocalEulerAnglesHint: {x: 89.98021, y: 179.99995, z: 0}
 --- !u!1 &5152437543043185170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,6 +1504,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9111299131299554155}
+  - component: {fileID: 1242546035971903874}
   m_Layer: 10
   m_Name: Patrol_Bot_LegShoulder_L
   m_TagString: Untagged
@@ -1207,7 +1527,28 @@ Transform:
   m_Children:
   - {fileID: 4065101176749063078}
   m_Father: {fileID: 6382771369531776977}
-  m_LocalEulerAnglesHint: {x: 15.797362, y: 13.160356, z: 70.60955}
+  m_LocalEulerAnglesHint: {x: -45.270798, y: 32.425014, z: 92.41113}
+--- !u!65 &1242546035971903874
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5152437543043185170}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0019490621, y: 0.0022745708, z: 0.003338146}
+  m_Center: {x: -0.000025877727, y: 0.00007401608, z: -0.0002672842}
 --- !u!1 &5441590585779604949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,6 +1563,8 @@ GameObject:
   - component: {fileID: 8993564496396878420}
   - component: {fileID: 1444448667796523294}
   - component: {fileID: 549660405066039400}
+  - component: {fileID: 6775870886951891066}
+  - component: {fileID: 3325948451869141101}
   m_Layer: 10
   m_Name: Walker_Patrol_Bot_1 1
   m_TagString: Enemy
@@ -1267,8 +1610,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede54a7a9b7d0094486eac8cf22d2184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _laserBeamPrefab: {fileID: 0}
-  _laserSpawnPoint: {fileID: 0}
+  _laserBeamPrefab: {fileID: 7565026735645175051, guid: 6dde5c04a18cc734c8a0900d8498b580, type: 3}
+  _laserSpawnPoint: {fileID: 2787837512202065222}
   _manualPoints: []
 --- !u!114 &202986098991734307
 MonoBehaviour:
@@ -1284,7 +1627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FocusingTime: 1
   FocusingProgress: 0
-  Distance: 15
+  Distance: 10
   _viewAngle: 45
   _ignoreLayer:
     serializedVersion: 2
@@ -1324,7 +1667,7 @@ NavMeshAgent:
   m_AngularSpeed: 120
   m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -1352,6 +1695,59 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6775870886951891066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5441590585779604949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce3f99b8b2e5ece4ba22e4841ca69696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walk:
+    Guid:
+      Data1: 1450731233
+      Data2: 1294633938
+      Data3: 1935908264
+      Data4: 1560691874
+    Path: event:/SFX/ENEMIES/WALKER/WALK
+  run:
+    Guid:
+      Data1: -1324622343
+      Data2: 1150955697
+      Data3: -1934170732
+      Data4: -1054884654
+    Path: event:/SFX/ENEMIES/WALKER/RUN
+  reload:
+    Guid:
+      Data1: 1263476782
+      Data2: 1166652601
+      Data3: 1178802572
+      Data4: 193561070
+    Path: event:/SFX/ENEMIES/WALKER/RELOAD
+--- !u!114 &3325948451869141101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5441590585779604949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &5568232610338988830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,6 +1757,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7758459831222804948}
+  - component: {fileID: 7724793213003113916}
   m_Layer: 10
   m_Name: Patrol_Bot_LegUpper_R
   m_TagString: Untagged
@@ -1383,7 +1780,28 @@ Transform:
   m_Children:
   - {fileID: 2394800270987738458}
   m_Father: {fileID: 475251584834042431}
-  m_LocalEulerAnglesHint: {x: 0.038377564, y: 8.843285, z: -88.30051}
+  m_LocalEulerAnglesHint: {x: 0.42395183, y: 7.418027, z: -83.62637}
+--- !u!65 &7724793213003113916
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5568232610338988830}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.00228211, y: 0.010291866, z: 0.0034630033}
+  m_Center: {x: -0.000090369394, y: 0.0035384563, z: -0.000053702825}
 --- !u!1 &5725726205389977903
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,7 +1832,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8676018224302908071}
-  m_LocalEulerAnglesHint: {x: 0, y: -1.5148846, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.000013568707, z: 0}
 --- !u!1 &6384887915764601299
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,7 +1973,7 @@ Transform:
   - {fileID: 2914892922016538092}
   - {fileID: 9192675006005834965}
   m_Father: {fileID: 1605119131048351053}
-  m_LocalEulerAnglesHint: {x: 66.41371, y: -84.24001, z: -84.24001}
+  m_LocalEulerAnglesHint: {x: 89.98021, y: 0, z: 0}
 --- !u!1 &7181724803848741599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,7 +2005,7 @@ Transform:
   m_Children:
   - {fileID: 8676018224302908071}
   m_Father: {fileID: 1511383286313260163}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98021, y: 0, z: 0}
 --- !u!1 &7706700921138645137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,6 +2119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2851224875620126094}
+  - component: {fileID: 4555860280612143551}
   m_Layer: 10
   m_Name: Patrol_Bot_FootIK_R
   m_TagString: Untagged
@@ -1722,7 +2141,28 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8676018224302908071}
-  m_LocalEulerAnglesHint: {x: -90, y: -162.45612, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98021, y: -179.99998, z: 0}
+--- !u!65 &4555860280612143551
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8559569841675231415}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0031639617, y: 0.005295949, z: 0.0032195966}
+  m_Center: {x: -0.000062702165, y: 0.0007261536, z: -0.00081288425}
 --- !u!1 &9042723809042740089
 GameObject:
   m_ObjectHideFlags: 0

@@ -81,7 +81,7 @@ namespace Failsafe.PlayerMovements
             _inputHandler = new InputHandler(_inputActionAsset);
             _playerRotationController = new PlayerRotationController(transform, _playerCamera, _inputHandler);
             _playerBodyController = new PlayerBodyController(_playerCamera, _characterController, transform.Find("Capsule"), this);
-            _ledgeController = new PlayerLedgeController(transform, _playerCamera, _playerGrabPoint);
+            _ledgeController = new PlayerLedgeController(transform, _playerCamera, _playerGrabPoint, _movementParametrs);
             _playerGravity = new PlayerGravityController(_movementController, _characterController, _movementParametrs);
             _noiseController = new PlayerNoiseController(transform, _noiseParametrs);
             _stepController = new StepController(_characterController, _movementParametrs, _footstepEvent);

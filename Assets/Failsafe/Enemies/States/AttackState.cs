@@ -13,7 +13,8 @@ public class AttackState : BehaviorState
     private Sensor[] _sensors;
     private Transform _transform;
     private Vector3? _targetPosition;
-
+    private Transform _target;
+    
     private float _attackDelay = 3f;
     private float _rayDuration = 5f;
     private float _rayDPS = 100f;
@@ -57,8 +58,8 @@ public class AttackState : BehaviorState
         _delayOver = false;
         _onCooldown = false;
         _attackFired = false;
-        _enemyAnimator.SetUseRootRotation(false);
         _playerInSight = true;
+        _enemyController.StopMoving();
         Debug.Log("Enter AttackState");
 
         if (_laserPrefab == null)
@@ -83,6 +84,7 @@ public class AttackState : BehaviorState
             if (sensor is VisualSensor visual)
                 if(visual.IsActivated())
                 {
+                    _target = visual.Target.transform;
                     _playerInSight = true;
                     _targetPosition = visual.SignalSourcePosition;
                     _distanceToPlayer = Vector3.Distance(_transform.position, _targetPosition.Value);
@@ -94,7 +96,7 @@ public class AttackState : BehaviorState
                         {
                             GameObject laserGO = GameObject.Instantiate(_laserPrefab, _laserOrigin.position, _laserOrigin.rotation);
                             _activeLaser = laserGO.GetComponent<LaserBeamController>();
-                            _activeLaser.Initialize(_laserOrigin, _targetPosition.Value);
+                            _activeLaser.Initialize(_laserOrigin, _target);
                         }
 
                         _enemyAnimator.TryAttack();
@@ -139,6 +141,6 @@ public class AttackState : BehaviorState
     public override void Exit()
     {
         base.Exit();
-        _enemyAnimator.SetUseRootRotation(true);
+        _enemyController.ResumeMoving();
     }
 }

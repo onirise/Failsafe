@@ -58,6 +58,7 @@ public class EnemyAnimator
         Vector3 rootPos = _animator.rootPosition;
         rootPos.y = _navMeshAgent.nextPosition.y;
         _transform.position = rootPos;
+        _navMeshAgent.nextPosition = rootPos;
 
         // Поворот к направлению движения
         Vector3 desiredVelocity = _navMeshAgent.desiredVelocity;

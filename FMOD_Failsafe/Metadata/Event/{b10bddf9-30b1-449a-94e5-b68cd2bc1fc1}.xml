@@ -53,7 +53,7 @@
 			<destination>{e920bc08-04aa-4f52-b8a2-cb54342e898f}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{38249ee9-d82a-4b40-a423-c507973bef92}</destination>
+			<destination>{95a9f072-a7b4-4afa-aaaa-cf58b716f795}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{557ac6c0-f5bf-47da-b54d-32780134904b}" />
@@ -142,7 +142,6 @@
 	<object class="MixerBusEffectChain" id="{e959ff7b-35d3-4d6c-9748-e996ae04e47c}">
 		<relationship name="effects">
 			<destination>{6b44fcc4-caf4-4bb3-a709-ed5c3c11cf50}</destination>
-			<destination>{1d8b68b3-382d-4168-a780-007f5a199e51}</destination>
 			<destination>{7f8b5cff-0c48-4243-a911-1248fad104e5}</destination>
 		</relationship>
 	</object>
@@ -191,14 +190,6 @@
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{6b44fcc4-caf4-4bb3-a709-ed5c3c11cf50}" />
-	<object class="CompressorEffect" id="{1d8b68b3-382d-4168-a780-007f5a199e51}">
-		<property name="ratio">
-			<value>50</value>
-		</property>
-		<property name="gain">
-			<value>14</value>
-		</property>
-	</object>
 	<object class="PluginEffect" id="{7f8b5cff-0c48-4243-a911-1248fad104e5}">
 		<relationship name="plugin">
 			<destination>{b6bd81de-0935-4041-962c-76ec95fe5f7b}</destination>

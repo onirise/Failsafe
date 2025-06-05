@@ -5,7 +5,7 @@
 			<value>LASER</value>
 		</property>
 		<property name="outputFormat">
-			<value>5</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{ed3e122c-c269-41e5-950f-32be4a71c418}</destination>
@@ -53,7 +53,7 @@
 			<destination>{04e02b9d-60e3-4be9-ab77-a98d73705936}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{38249ee9-d82a-4b40-a423-c507973bef92}</destination>
+			<destination>{95a9f072-a7b4-4afa-aaaa-cf58b716f795}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{7a90fed2-81db-4689-979c-2255fd82f447}" />
@@ -94,7 +94,6 @@
 		</property>
 		<relationship name="sounds">
 			<destination>{f93bc33f-46a7-4210-8a29-993015c654ca}</destination>
-			<destination>{80a9c997-2595-48c7-a9fe-b433a59f0512}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{c4b9db3c-2977-40f9-8790-1478042fc276}">
@@ -121,14 +120,6 @@
 	<object class="SingleSound" id="{f93bc33f-46a7-4210-8a29-993015c654ca}">
 		<relationship name="audioFile">
 			<destination>{f9dcfa2f-16c7-4896-a0af-fc434b5cef2f}</destination>
-		</relationship>
-	</object>
-	<object class="SingleSound" id="{80a9c997-2595-48c7-a9fe-b433a59f0512}">
-		<property name="volume">
-			<value>6</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{45723e7e-a833-407a-8809-393fa042a203}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{067f9ecc-75ba-47c1-b825-af7d68fa3bec}">
@@ -191,7 +182,6 @@
 		<property name="name">
 			<value>SourcePos</value>
 		</property>
-		<property name="value" />
 		<property name="dataType">
 			<value>-2</value>
 		</property>
@@ -200,7 +190,6 @@
 		<property name="name">
 			<value>OverallGain</value>
 		</property>
-		<property name="value" />
 		<property name="dataType">
 			<value>-1</value>
 		</property>
@@ -321,7 +310,7 @@
 			<value>DAType</value>
 		</property>
 		<property name="value">
-			<value>2</value>
+			<value>4</value>
 		</property>
 		<property name="minimumValue">
 			<value>0</value>
@@ -529,7 +518,6 @@
 		<property name="name">
 			<value>SimOutputs</value>
 		</property>
-		<property name="value" />
 		<property name="dataType">
 			<value>0</value>
 		</property>
@@ -546,7 +534,6 @@
 		<property name="name">
 			<value>DistRange</value>
 		</property>
-		<property name="value" />
 		<property name="dataType">
 			<value>-6</value>
 		</property>
@@ -570,7 +557,7 @@
 			<value>OutputFormat</value>
 		</property>
 		<property name="value">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<property name="minimumValue">
 			<value>0</value>

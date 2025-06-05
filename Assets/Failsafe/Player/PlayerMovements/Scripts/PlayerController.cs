@@ -40,6 +40,7 @@ namespace Failsafe.PlayerMovements
         private CharacterController _characterController;
         private PlayerMovementController _movementController;
         private PlayerRotationController _playerRotationController;
+        private PlayerBodyController _playerBodyController;
         private BehaviorStateMachine _behaviorStateMachine;
         private InputHandler _inputHandler;
         private PlayerLedgeController _ledgeController;
@@ -79,7 +80,8 @@ namespace Failsafe.PlayerMovements
             _playerGrabPoint = transform.Find("ObstacleGrabPoint");
             _inputHandler = new InputHandler(_inputActionAsset);
             _playerRotationController = new PlayerRotationController(transform, _playerCamera, _inputHandler);
-            _ledgeController = new PlayerLedgeController(transform, _playerCamera, _playerGrabPoint, _movementParametrs);
+            _playerBodyController = new PlayerBodyController(_playerCamera, _characterController, transform.Find("Capsule"), this);
+            _ledgeController = new PlayerLedgeController(transform, _playerCamera, _playerGrabPoint);
             _playerGravity = new PlayerGravityController(_movementController, _characterController, _movementParametrs);
             _noiseController = new PlayerNoiseController(transform, _noiseParametrs);
             _stepController = new StepController(_characterController, _movementParametrs, _footstepEvent);
@@ -92,8 +94,8 @@ namespace Failsafe.PlayerMovements
             var standingState = new StandingState(_inputHandler, _movementController);
             var walkState = new WalkState(_inputHandler, _movementController, _movementParametrs, _noiseController, _stepController);
             var runState = new SprintState(_inputHandler, _movementController, _movementParametrs, _noiseController, _stepController);
-            var slideState = new SlideState(_inputHandler, _movementController, _movementParametrs, _playerCamera, _playerRotationController);
-            var crouchState = new CrouchState(_inputHandler, _movementController, _movementParametrs, _playerCamera, _noiseController, _stepController);
+            var slideState = new SlideState(_inputHandler, _movementController, _movementParametrs, _playerBodyController, _playerRotationController);
+            var crouchState = new CrouchState(_inputHandler, _movementController, _movementParametrs, _playerBodyController, _noiseController, _stepController);
             var jumpState = new JumpState(_inputHandler, _characterController, _movementController, _movementParametrs);
             var fallState = new FallState(_inputHandler, _characterController, _movementController, _movementParametrs, _noiseController);
             var grabLedgeState = new GrabLedgeState(_inputHandler, _characterController, _movementController, _movementParametrs, _playerGravity, _playerRotationController, _ledgeController);
@@ -101,7 +103,7 @@ namespace Failsafe.PlayerMovements
             var climbingOnState = new ClimbingOnState(_inputHandler, _characterController, _movementController, _movementParametrs, _playerGravity, _ledgeController);
             var climbingOverState = new ClimbingOverState(_inputHandler, _characterController, _movementController, _movementParametrs, _playerGravity, _ledgeController);
             var ledgeJumpState = new LedgeJumpState(_inputHandler, _characterController, _movementParametrs, _playerCamera);
-            var crouchIdle = new CrouchIdle(_playerCamera, _movementController, _movementParametrs, _noiseController, _stepController);
+            var crouchIdle = new CrouchIdle(_playerBodyController, _movementController, _movementParametrs, _noiseController, _stepController);
 
             var deathState = new DeathState();
             var forcedStates = new List<BehaviorForcedState>
@@ -126,11 +128,11 @@ namespace Failsafe.PlayerMovements
 
             //slideState.AddTransition(runState, () => _inputHandler.SprintTriggered && slideState.SlideFinished());
             slideState.AddTransition(crouchState, () => slideState.SlideFinished());
-            slideState.AddTransition(walkState, () => _inputHandler.CrouchTrigger.IsTriggered && slideState.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
+            slideState.AddTransition(walkState, () => _inputHandler.CrouchTrigger.IsTriggered && slideState.CanStand() && _playerBodyController.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
             slideState.AddTransition(fallState, () => _playerGravity.IsFalling);
 
-            crouchState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered && crouchState.CanStand());
-            crouchState.AddTransition(walkState, () => _inputHandler.CrouchTrigger.IsTriggered && crouchState.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
+            crouchState.AddTransition(runState, () => _inputHandler.MoveForward && _inputHandler.SprintTriggered && _playerBodyController.CanStand());
+            crouchState.AddTransition(walkState, () => _inputHandler.CrouchTrigger.IsTriggered && _playerBodyController.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
             crouchState.AddTransition(fallState, () => _playerGravity.IsFalling);
             crouchState.AddTransition(crouchIdle, () => _inputHandler.MovementInput.Equals(Vector2.zero));
 
@@ -154,7 +156,7 @@ namespace Failsafe.PlayerMovements
             climbingOverState.AddTransition(fallState, () => climbingOverState.ClimbFinish());
 
             crouchIdle.AddTransition(crouchState, () => !_inputHandler.MovementInput.Equals(Vector2.zero));
-            crouchIdle.AddTransition(standingState, () => _inputHandler.CrouchTrigger.IsTriggered && crouchState.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
+            crouchIdle.AddTransition(standingState, () => _inputHandler.CrouchTrigger.IsTriggered && _playerBodyController.CanStand(), _inputHandler.CrouchTrigger.ReleaseTrigger);
 
             standingState.AddTransition(walkState, () => !_inputHandler.MovementInput.Equals(Vector2.zero));
             standingState.AddTransition(crouchIdle, () => _inputHandler.CrouchTrigger.IsTriggered, _inputHandler.CrouchTrigger.ReleaseTrigger);

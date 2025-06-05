@@ -11,9 +11,8 @@ namespace Failsafe.PlayerMovements.States
         private readonly InputHandler _inputHandler;
         private readonly PlayerMovementController _movementController;
         private readonly PlayerMovementParameters _movementParametrs;
-        private readonly Transform _camera;
+        private readonly PlayerBodyController _playerBodyController;
         private readonly PlayerRotationController _playerRotationController;
-        private readonly Vector3 _cameraOriginalPosition;
 
         private float _maxSpeed => _movementParametrs.SlideSpeed;
         private float _minSpeed => _movementParametrs.WalkSpeed;
@@ -27,23 +26,21 @@ namespace Failsafe.PlayerMovements.States
             InputHandler inputHandler,
             PlayerMovementController movementController,
             PlayerMovementParameters movementParametrs,
-            Transform camera,
+            PlayerBodyController playerBodyController,
             PlayerRotationController playerRotationController)
         {
             _inputHandler = inputHandler;
             _movementController = movementController;
             _movementParametrs = movementParametrs;
-            _camera = camera;
+            _playerBodyController = playerBodyController;
             _playerRotationController = playerRotationController;
-            _cameraOriginalPosition = _camera.localPosition;
         }
 
         public override void Enter()
         {
             Debug.Log("Enter " + nameof(SlideState));
             _slideProgress = 0f;
-            //TODO: Пока при приседании опускается толко камера, исправить
-            _camera.localPosition += Vector3.down * (_cameraOriginalPosition.y * (1 - _movementParametrs.SlideHeight));
+            _playerBodyController.Slide();
             _playerRotationController.RotateBodyToDirection(_movementController.GetRelativeMovement(Vector2.up));
         }
 
@@ -56,7 +53,7 @@ namespace Failsafe.PlayerMovements.States
 
         public override void Exit()
         {
-            _camera.localPosition = _cameraOriginalPosition;
+            _playerBodyController.Stand();
             _playerRotationController.SyncBodyRotationToHead();
             _playerRotationController.RotateBodyToHead();
         }

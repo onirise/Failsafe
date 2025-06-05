@@ -14,6 +14,7 @@ namespace Failsafe.Obstacles
         public Vector3 Position;
         public Vector3 LocalNormal;
         public Vector3 Normal;
+        public float Width;
         public List<LedgeGrabPointTransition> Transitions;
 
         public bool IsEmpty => LocalNormal == Vector3.zero;

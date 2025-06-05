@@ -14,6 +14,8 @@ namespace Failsafe.Obstacles
 
         private float _distanceToLedge = 0.1f;
 
+        // Если грань уступа упирается в стену/другой объект и игрок не должен за нее цепляться то отключить грань
+        [Header("Какие грани будут активны для взаимодействия.")]
         [SerializeField] private bool _enableFront = true;
         [SerializeField] private bool _enableBack = true;
         [SerializeField] private bool _enableLeft = true;
@@ -143,6 +145,7 @@ namespace Failsafe.Obstacles
                 result.LocalNormal = signZ * Vector3.forward;
                 result.LocalPosition.z = signZ * maxZ;
                 result.Edge = signZ > 0 ? FrontEdge : BackEdge;
+                result.Width = signZ < 0 && _enableFront || signZ > 0 && _enableBack ? maxZ * 2 : float.MaxValue;
                 distZ = 0;
             }
             else
@@ -150,6 +153,7 @@ namespace Failsafe.Obstacles
                 result.LocalNormal = signX * Vector3.right;
                 result.LocalPosition.x = signX * maxX;
                 result.Edge = signX > 0 ? RightEdge : LeftEdge;
+                result.Width = signX < 0 && _enableRight || signX > 0 && _enableLeft ? maxX * 2 : float.MaxValue;
                 distX = 0;
             }
 

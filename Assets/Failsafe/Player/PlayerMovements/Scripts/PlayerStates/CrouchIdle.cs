@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class CrouchIdle : BehaviorState
 {
-    private readonly Transform _camera;
+    private readonly PlayerBodyController _playerBodyController;
     private readonly PlayerMovementController _movementController;
     private readonly Vector3 _cameraOriginalPosition;
     private readonly PlayerMovementParameters _movementParametrs;
     private readonly PlayerNoiseController _playerNoiseController;
     private readonly StepController _stepController;
-    public CrouchIdle(Transform camera, PlayerMovementController movementController, PlayerMovementParameters movementParametrs, PlayerNoiseController playerNoiseController, StepController stepController)
+    public CrouchIdle(PlayerBodyController playerBodyController, PlayerMovementController movementController, PlayerMovementParameters movementParametrs, PlayerNoiseController playerNoiseController, StepController stepController)
     {
-        _camera = camera;
+        _playerBodyController = playerBodyController;
         _movementController = movementController;
         _movementParametrs = movementParametrs;
         _playerNoiseController = playerNoiseController;
-        _cameraOriginalPosition = camera.localPosition;
         _stepController = stepController;
 
     }
@@ -25,7 +24,7 @@ public class CrouchIdle : BehaviorState
     {
         base.Enter();
         Debug.Log("Enter " + nameof(CrouchIdle));
-        _camera.localPosition += Vector3.down * (_cameraOriginalPosition.y * (1 - _movementParametrs.CrouchHeight));
+        _playerBodyController.Crouch();
         _playerNoiseController.SetNoiseStrength(PlayerNoiseVolume.Minimum);
         _stepController.Disable();
         _movementController.Move(Vector3.zero);
@@ -33,7 +32,6 @@ public class CrouchIdle : BehaviorState
 
     public override void Exit()
     {
-        _camera.localPosition = _cameraOriginalPosition;
-
+        _playerBodyController.Stand();
     }
 }

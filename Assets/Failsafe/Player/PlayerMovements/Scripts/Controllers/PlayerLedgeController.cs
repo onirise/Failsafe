@@ -106,9 +106,9 @@ namespace Failsafe.PlayerMovements.Controllers
                     return LedgeGrabPoint.Empty;
                 }
             }
-            var ledge = viewHitInfo.transform.gameObject.GetComponent<Ledge>();
-            distance = viewHitInfo.distance;
-            return ledge.ProjectToGrabPoint(viewHitInfo.point);
+            return viewHitInfo.transform.gameObject.TryGetComponent(out Ledge ledge)
+                ? ledge.ProjectToGrabPoint(viewHitInfo.point)
+                : LedgeGrabPoint.Empty;
         }
     }
 }

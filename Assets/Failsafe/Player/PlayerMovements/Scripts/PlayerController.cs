@@ -9,6 +9,7 @@ using Failsafe.Scripts.Damage.Implementation;
 using Failsafe.Scripts.Damage.Providers;
 using Failsafe.Scripts.Health;
 using FMODUnity;
+using TMPro;
 using Failsafe.Player.Interaction;
 
 
@@ -28,7 +29,7 @@ namespace Failsafe.PlayerMovements
 
         [Header("Model params")]
         [SerializeReference] private PlayerModelParameters _modelParameters = new();
-
+        [SerializeField] private TextMeshProUGUI HealthText;
         private Transform _playerCamera;
         private Transform _playerGrabPoint;
 
@@ -200,6 +201,7 @@ namespace Failsafe.PlayerMovements
         {
             _movementController.HandleMovement();
             _playerGravity.CheckGrounded();
+
         }
     }
 }

@@ -683,11 +683,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4391793959714917101, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: EventReference.Path
+      value: event:/UI/MENU/CLICK
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391793959714917101, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: -1447891096
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391793959714917101, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1149741275
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391793959714917101, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: 817555868
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391793959714917101, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: 1564608852
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571753582756696136, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5094595323410784145, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
       propertyPath: m_Name
       value: RunButton
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7239420578982060602, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7239420578982060602, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+    - {fileID: 4571753582756696136, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1300,7 +1330,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -25.001404, y: 10}
+  m_AnchoredPosition: {x: -25.001343, y: 10}
   m_SizeDelta: {x: -190, y: -120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1673078609
@@ -1844,11 +1874,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4391793959714917101, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: EventReference.Path
+      value: event:/UI/MENU/CLICK
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391793959714917101, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: -1447891096
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391793959714917101, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1149741275
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391793959714917101, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: 817555868
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391793959714917101, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: 1564608852
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571753582756696136, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5094595323410784145, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
       propertyPath: m_Name
       value: ExitButton
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7239420578982060602, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4571753582756696136, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+    - {fileID: 7239420578982060602, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

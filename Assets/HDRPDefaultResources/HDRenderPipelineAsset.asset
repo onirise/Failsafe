@@ -83,8 +83,8 @@ MonoBehaviour:
     supportProbeVolumeScenarioBlending: 1
     probeVolumeBlendingMemoryBudget: 128
     supportRayTracing: 1
-    supportVFXRayTracing: 0
-    supportedRayTracingMode: 3
+    supportVFXRayTracing: 1
+    supportedRayTracingMode: 2
     lightLoopSettings:
       cookieAtlasSize: 2048
       cookieFormat: 74

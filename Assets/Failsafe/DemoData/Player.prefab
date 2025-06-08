@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &374109432967700042
 Transform:
@@ -75,7 +75,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
+  m_ReceiveGI: 2
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 374109432981789085}
   - component: {fileID: 374109432981789075}
   - component: {fileID: 3056071954068415360}
-  - component: {fileID: 1888879049700977294}
+  - component: {fileID: 4818429670264337021}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -192,7 +192,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 90
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -239,7 +239,7 @@ MonoBehaviour:
         z: 0
       radius: 0
   mProbeBatchesUsed: []
---- !u!114 &1888879049700977294
+--- !u!114 &4818429670264337021
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -329,7 +329,7 @@ MonoBehaviour:
   renderingPathCustomFrameSettingsOverrideMask:
     mask:
       data1: 1153343717071912960
-      data2: 4611686018427387904
+      data2: 4611686087415300096
   defaultFrameSettings: 0
   m_Version: 9
   m_ObsoleteRenderingPath: 0
@@ -392,6 +392,7 @@ GameObject:
   - component: {fileID: 3587987712684801882}
   - component: {fileID: 5543863665210299431}
   - component: {fileID: 6003168246341229848}
+  - component: {fileID: 7008143577885109403}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -457,10 +458,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _carryingDistance: 2.5
-  _maxPickupDistance: 5
+  _maxPickupDistance: 7
   _carryingObject: {fileID: 0}
   _carryingBody: {fileID: 0}
-  _playerCameraTransform: {fileID: 0}
+  _playerCameraTransform: {fileID: 374109432981789085}
   _draggablePositionOffset: {x: 0, y: 1, z: 0}
   _dragSpeed: 10
   _throwForce: 10
@@ -497,26 +498,26 @@ MonoBehaviour:
     rid: 5390404808482226255
   _footstepEvent:
     Guid:
-      Data1: -1050583892
-      Data2: 1246083191
-      Data3: -1439842664
-      Data4: 1628696724
-    Path: event:/SFX/Footstep
+      Data1: 645672247
+      Data2: 1210137235
+      Data3: -1357825636
+      Data4: 640958622
+    Path: event:/SFX/MAIN CHARACTER/MOVEMENT/WALK/METAL
   references:
     version: 2
     RefIds:
     - rid: 2287995151870591098
       type: {class: PlayerMovementParameters, ns: Failsafe.PlayerMovements, asm: Assembly-CSharp}
       data:
-        WalkSpeed: 2.7
-        RunSpeed: 5.6
+        WalkSpeed: 2.5
+        RunSpeed: 4.4
         CrouchSpeed: 1.5
         CrouchHeight: 0.5
         SlideSpeed: 4.2
         SlideHeight: 0.3
         MaxSlideTime: 1
         MinSlideTime: 0.5
-        JumpForce: 17.5
+        JumpForce: 18
         JumpForceFade: 31
         GravityForce: 9
         GrabLedgeMaxDistance: 1.5
@@ -553,6 +554,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lockCursor: 1
+--- !u!114 &7008143577885109403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374109433352817464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &374109433356125759
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,7 +591,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &374109433356125756
 Transform:
@@ -626,7 +647,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
+  m_ReceiveGI: 2
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -935,14 +956,14 @@ GameObject:
   m_Component:
   - component: {fileID: 6033173754768017829}
   - component: {fileID: 4284899158147892210}
-  - component: {fileID: 4807465755024647153}
+  - component: {fileID: 7605037900187639347}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6033173754768017829
 Transform:
   m_ObjectHideFlags: 0
@@ -975,7 +996,7 @@ Light:
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -1010,7 +1031,7 @@ Light:
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 2
-  m_AreaSize: {x: 1, y: 1}
+  m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 0.7
   m_ColorTemperature: 6570
   m_UseColorTemperature: 1
@@ -1023,7 +1044,7 @@ Light:
   m_LightUnit: 0
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!114 &4807465755024647153
+--- !u!114 &7605037900187639347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1155,7 +1176,7 @@ MonoBehaviour:
   m_ShadowVariant: 0
   m_ShadowPrecision: 0
   useOldInspector: 0
-  useVolumetric: 1
+  useVolumetric: 0
   featuresFoldout: 1
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
@@ -1365,6 +1386,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 2a648aaf7f5dedc4fb1a41c5ef1969b0, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2a648aaf7f5dedc4fb1a41c5ef1969b0, type: 3}
       propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
@@ -1379,6 +1404,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2a648aaf7f5dedc4fb1a41c5ef1969b0, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2a648aaf7f5dedc4fb1a41c5ef1969b0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

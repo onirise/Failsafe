@@ -10,7 +10,7 @@ using Failsafe.Scripts.Damage.Providers;
 using Failsafe.Scripts.Health;
 using FMODUnity;
 using TMPro;
-using Failsafe.Player.Interaction;
+using VContainer;
 
 
 namespace Failsafe.PlayerMovements
@@ -27,8 +27,6 @@ namespace Failsafe.PlayerMovements
         [Header("Noise params")]
         [SerializeReference] private PlayerNoiseParameters _noiseParametrs = new PlayerNoiseParameters();
 
-        [Header("Model params")]
-        [SerializeReference] private PlayerModelParameters _modelParameters = new();
         [SerializeField] private TextMeshProUGUI HealthText;
         private Transform _playerCamera;
         private Transform _playerGrabPoint;
@@ -53,10 +51,14 @@ namespace Failsafe.PlayerMovements
         [SerializeField] private EventReference _footstepEvent;
         private StepController _stepController;
 
+        [Inject]
+        public void Construct(IHealth health)
+        {
+            _health = health;
+        }
+        
         private void Awake()
         {
-            _health = new SimpleHealth(_modelParameters.MaxHealth);
-
             _damageService = CreateDamageService();
 
             _damageableComponent = transform.Find("Capsule").GetComponent<DamageableComponent>();

@@ -4,6 +4,7 @@
 /// </summary>
 public class VisualSensor : Sensor
 {
+    public bool SeenPlayer => IsActivated() && Target != null;  
     [SerializeField]
     private float _viewAngle;
     /// <summary>
@@ -22,10 +23,8 @@ public class VisualSensor : Sensor
     /// <summary>
     /// Размеры атакующего луча, идущего из глаз врага
     /// </summary>
-    private static float _rayWidth = 1f;
-    private static float _rayHeight = 0.5f;
-
-    private Vector3 _attackRaySize = new Vector3(_rayWidth/2, _rayHeight/2, 1);
+    private float _rayWidth = 0.15f;
+    private float _rayHeight = 0.2f;
 
     /// <summary>
     /// Объект, который нужно обнаружить, в данном случае игрок
@@ -35,6 +34,8 @@ public class VisualSensor : Sensor
 
     private Ray _rayToPlayer;
 
+    private Vector3 _attackRaySize;
+
     float _nearDistance;
     protected override float SignalInFieldOfView()
     {
@@ -43,7 +44,7 @@ public class VisualSensor : Sensor
         if (Target == null)
             return 0f;
 
-        Vector3 toTarget = Target.position - transform.position;
+        Vector3 toTarget = Target.position - EyePosition;
         float distance = toTarget.magnitude;
         if (distance > Distance)
             return 0f;
@@ -81,7 +82,8 @@ public class VisualSensor : Sensor
 
     public override bool SignalInAttackRay(Vector3 targetPosition)
     {
-        var direction = _eyePosition.forward;
+        Vector3 direction = _eyePosition.forward;
+        _attackRaySize = new Vector3(_rayWidth / 2, _rayHeight / 2, 1);
 
         if (Physics.BoxCast(EyePosition, _attackRaySize, direction, out var hit, transform.rotation, Mathf.Infinity, ~_ignoreLayer))
         {

@@ -1,4 +1,6 @@
+using Failsafe.Obstacles;
 using Failsafe.PlayerMovements.Controllers;
+using System.Linq;
 using UnityEngine;
 
 namespace Failsafe.PlayerMovements.States
@@ -10,31 +12,32 @@ namespace Failsafe.PlayerMovements.States
     {
         private readonly InputHandler _inputHandler;
         private readonly CharacterController _characterController;
+        private readonly PlayerMovementController _movementController;
         private readonly PlayerMovementParameters _movementParametrs;
         private readonly PlayerGravityController _playerGravityController;
         private readonly PlayerRotationController _playerRotationController;
-        private readonly Transform _grabPoint;
-        private readonly LedgeDetector _obstacleDetector;
-        private LedgeData _obstacleData;
+        private readonly PlayerLedgeController _playerLedgeController;
+        private Ledge _ledge;
         private float _minDuration = 0.5f;
         private float _stateProgress = 0f;
+        private float _directionAngleThreathfold = 10f;
 
         public GrabLedgeState(
             InputHandler inputHandler,
             CharacterController characterController,
+            PlayerMovementController movementController,
             PlayerMovementParameters movementParametrs,
             PlayerGravityController playerGravityController,
-            LedgeDetector obstacleDetector,
             PlayerRotationController playerRotationController,
-            Transform grabPoint)
+            PlayerLedgeController playerLedgeController)
         {
             _inputHandler = inputHandler;
             _characterController = characterController;
+            _movementController = movementController;
             _movementParametrs = movementParametrs;
             _playerGravityController = playerGravityController;
             _playerRotationController = playerRotationController;
-            _obstacleDetector = obstacleDetector;
-            _grabPoint = grabPoint;
+            _playerLedgeController = playerLedgeController;
         }
 
         public bool CanFinish() => _stateProgress >= _minDuration;
@@ -43,30 +46,40 @@ namespace Failsafe.PlayerMovements.States
         {
             Debug.Log("Enter " + nameof(GrabLedgeState));
             _stateProgress = 0;
-            _obstacleData = _obstacleDetector.LedgeInView;
+            _playerLedgeController.AttachedLedgeGrabPoint = _playerLedgeController.LedgeGrabPointInView;
+            _ledge = _playerLedgeController.AttachedLedgeGrabPoint.Ledge;
             _playerGravityController.DisableGravity();
-            _playerRotationController.RotateBodyToDirection(-_obstacleData.FrontSideNormal);
-            StickToObstacle(_obstacleData);
+            _playerRotationController.RotateBodyToDirection(-_playerLedgeController.AttachedLedgeGrabPoint.Normal);
+            StickToObstacle(_playerLedgeController.AttachedLedgeGrabPoint);
             _characterController.SimpleMove(Vector3.zero);
+            _movementController.Move(Vector3.zero);
+            //TODO: переделать все перемещение на PlayerMovementController
         }
 
         public override void Update()
         {
             _stateProgress += Time.deltaTime;
-            _obstacleData = _obstacleDetector.FindLedgeInFront();
             var movementInput = _inputHandler.MovementInput;
+            _playerLedgeController.AttachedLedgeGrabPoint = _ledge.ProjectToGrabPoint(_characterController.transform.position);
+            StickToObstacle(_playerLedgeController.AttachedLedgeGrabPoint);
             if (movementInput.x != 0)
             {
                 var movementX = movementInput.x;
-                var checkObstacleDirection = _characterController.transform.right * movementX * 0.2f;
-                var sideObstacle = _obstacleDetector.FindLedgeOnDirection(checkObstacleDirection);
-                var heghtDiff = sideObstacle.Height - _obstacleData.Height;
-                if (Mathf.Abs(heghtDiff) < _movementParametrs.GrabLedgeHeightDifference)
+                var movementDirection = _characterController.transform.right * Mathf.Sign(movementX);
+                var transition = _playerLedgeController.AttachedLedgeGrabPoint.Transitions.FirstOrDefault(x => Vector3.Angle(x.Direction, movementDirection) < _directionAngleThreathfold);
+                if (transition != null && transition.Type == LedgeGrabPointTransition.TransidiotnType.Straight)
                 {
                     var movement = _movementParametrs.GrabLedgeSpeed * movementX * Time.deltaTime * _characterController.transform.right;
                     _characterController.Move(movement);
-                    _playerRotationController.RotateBodyToDirection(-_obstacleData.FrontSideNormal);
-                    //StickToObstacle(_obstacleData);
+                    _playerRotationController.RotateBodyToDirection(-_playerLedgeController.AttachedLedgeGrabPoint.Normal);
+                }
+                if (transition != null && transition.Type == LedgeGrabPointTransition.TransidiotnType.OuterCorner)
+                {
+                    if (transition.Next.Edge.DownDistance > 2f)
+                    {
+                        StickToObstacle(transition.Next);
+                        _playerRotationController.RotateBodyToDirection(-transition.Next.Normal);
+                    }
                 }
             }
         }
@@ -87,9 +100,9 @@ namespace Failsafe.PlayerMovements.States
             _characterController.velocity.Set(0, 0, 0);
         }
 
-        private void StickToObstacle(LedgeData obstacle)
+        private void StickToObstacle(LedgeGrabPoint ledgeGrabPoint)
         {
-            var pathToGrabPoint = obstacle.GrabPointPosition - _grabPoint.position;
+            var pathToGrabPoint = ledgeGrabPoint.Position - _playerLedgeController.GrabPoint.position;
             // TODO Этот способ задает большие значения velocity у игрока, исправить перемежение в точку захвата
             _characterController.Move(pathToGrabPoint);
         }

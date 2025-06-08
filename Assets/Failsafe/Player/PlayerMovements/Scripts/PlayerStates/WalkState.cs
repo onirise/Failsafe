@@ -1,4 +1,4 @@
-using Failsafe.PlayerMovements.Controllers;
+﻿using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
 namespace Failsafe.PlayerMovements.States
@@ -9,31 +9,41 @@ namespace Failsafe.PlayerMovements.States
     public class WalkState : BehaviorState
     {
         private InputHandler _inputHandler;
-        private CharacterController _characterController;
+        private PlayerMovementController _movementController;
         private PlayerMovementParameters _movementParametrs;
-        private readonly PlayerNoiseController _playerNoiseController;
+        private  PlayerNoiseController _playerNoiseController;
+        private  StepController _stepController;
+        private float Speed => _movementParametrs.WalkSpeed;
 
-        private float _speed => _movementParametrs.WalkSpeed;
-
-        public WalkState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParameters movementParametrs, PlayerNoiseController playerNoiseController)
+        public WalkState(InputHandler inputHandler, PlayerMovementController movementController, PlayerMovementParameters movementParametrs, PlayerNoiseController playerNoiseController, StepController stepController)
         {
             _inputHandler = inputHandler;
-            _characterController = characterController;
+            _movementController = movementController;
             _movementParametrs = movementParametrs;
             _playerNoiseController = playerNoiseController;
+            _stepController = stepController;
         }
 
         public override void Enter()
         {
             Debug.Log("Enter " + nameof(WalkState));
             _playerNoiseController.SetNoiseStrength(PlayerNoiseVolume.Default);
+            _stepController.Enable(Speed);
+
         }
 
         public override void Update()
         {
-            var movement = _inputHandler.GetRelativeMovement(_characterController.transform) * _speed;
-            _characterController.Move(movement * Time.deltaTime);
+            var movement = _movementController.GetRelativeMovement(_inputHandler.MovementInput) * Speed;
+            _movementController.Move(movement);
             _playerNoiseController.SetNoiseStrength(movement == Vector3.zero ? PlayerNoiseVolume.Minimum : PlayerNoiseVolume.Default);
         }
+
+        public override void Exit()
+        {
+            _stepController.Disable();
+        }
+
+
     }
 }

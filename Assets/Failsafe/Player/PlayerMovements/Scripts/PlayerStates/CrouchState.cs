@@ -1,4 +1,4 @@
-using Failsafe.PlayerMovements.Controllers;
+﻿using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
 namespace Failsafe.PlayerMovements.States
@@ -9,44 +9,45 @@ namespace Failsafe.PlayerMovements.States
     public class CrouchState : BehaviorState
     {
         private readonly InputHandler _inputHandler;
-        private readonly CharacterController _characterController;
+        private readonly PlayerMovementController _movementController;
         private readonly PlayerMovementParameters _movementParametrs;
-        private readonly Transform _camera;
-        private readonly Vector3 _cameraOriginalPosition;
+        private readonly PlayerBodyController _playerBodyController;
         private readonly PlayerNoiseController _playerNoiseController;
-        private float _speed => _movementParametrs.CrouchSpeed;
+        private readonly StepController _stepController;
+        private float Speed => _movementParametrs.CrouchSpeed;
 
         public bool CanStand() => true;
 
-        public CrouchState(InputHandler inputHandler, CharacterController characterController, PlayerMovementParameters movementParametrs, Transform camera, PlayerNoiseController playerNoiseController)
+        public CrouchState(InputHandler inputHandler, PlayerMovementController movementController, PlayerMovementParameters movementParametrs, PlayerBodyController playerBodyController, PlayerNoiseController playerNoiseController, StepController stepController)
         {
             _inputHandler = inputHandler;
-            _characterController = characterController;
+            _movementController = movementController;
             _movementParametrs = movementParametrs;
-            _camera = camera;
-            _cameraOriginalPosition = camera.localPosition;
+            _playerBodyController = playerBodyController;
             _playerNoiseController = playerNoiseController;
+            _stepController = stepController;
         }
 
         public override void Enter()
         {
             Debug.Log("Enter " + nameof(CrouchState));
-            //TODO: Пока при приседании опускается толко камера, исправить
-            _camera.localPosition += Vector3.down * (_cameraOriginalPosition.y * (1 - _movementParametrs.CrouchHeight));
+            _playerBodyController.Crouch();
             _playerNoiseController.SetNoiseStrength(PlayerNoiseVolume.Reduced);
+            _stepController.Enable(Speed);
         }
 
         public override void Update()
         {
-            var movement = _inputHandler.GetRelativeMovement(_characterController.transform) * _speed;
-            _characterController.Move(movement * Time.deltaTime);
+            var movement = _movementController.GetRelativeMovement(_inputHandler.MovementInput) * Speed;
+            _movementController.Move(movement);
             _playerNoiseController.SetNoiseStrength(movement == Vector3.zero ? PlayerNoiseVolume.Minimum : PlayerNoiseVolume.Reduced);
         }
 
         public override void Exit()
         {
-            _camera.localPosition = _cameraOriginalPosition;
+            _playerBodyController.Stand();
             _playerNoiseController.SetNoiseStrength(PlayerNoiseVolume.Default);
+            _stepController.Disable();
         }
     }
 }

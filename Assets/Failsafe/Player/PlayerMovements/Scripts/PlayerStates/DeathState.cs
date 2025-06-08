@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Failsafe.PlayerMovements.States
 {
-	public class DeathState : BehaviorState
+	public class DeathState : BehaviorForcedState
 	{
 		public override void Enter()
 		{

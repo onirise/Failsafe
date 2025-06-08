@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
 /// <summary>
 /// Преследование объекта, попавшего в сенсор
@@ -19,6 +17,7 @@ public class ChasingState : BehaviorState
 
     private float _attackRangeMin = 10f;
     private float _distanceToPlayer;
+    private bool _playerInSight;
 
     public ChasingState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController)
     {
@@ -28,7 +27,7 @@ public class ChasingState : BehaviorState
     }
 
     public bool PlayerLost() => _loseProgress >= _loseTime;
-    public bool PlayerInAttackRange() => _distanceToPlayer < _attackRangeMin;
+    public bool PlayerInAttackRange() => _playerInSight && (_distanceToPlayer < _attackRangeMin);
 
 
 
@@ -36,16 +35,27 @@ public class ChasingState : BehaviorState
     {
         base.Enter();
         _loseProgress = 0;
+        _playerInSight = false;
         Debug.Log("Enter ChasingState");
     }
 
     public override void Update()
     {
+        
         bool anySensorIsActive = false;
         foreach (var sensor in _sensors)
         {
-            if (sensor.GetType() == typeof(VisualSensor) && sensor.IsActivated())
-                _distanceToPlayer = ((Vector3)(sensor.SignalSourcePosition - _transform.position)).magnitude;
+            if (sensor is VisualSensor)
+                if (sensor.IsActivated())
+                {
+                    _distanceToPlayer = ((Vector3)sensor.SignalSourcePosition - _transform.position).magnitude;
+                    _playerInSight = true;
+                    
+                }
+                else
+                {
+                    _playerInSight = false;
+                }
 
             if (sensor.IsActivated())
             {
@@ -64,6 +74,6 @@ public class ChasingState : BehaviorState
             return;
         }
         _enemyController.RunToPoint(_chasingPosition.Value);
-        _enemyController.RotateToPoint(_chasingPosition.Value, _transform.up);
+        _enemyController.RotateToPoint(_chasingPosition.Value, 5f);
     }
 }

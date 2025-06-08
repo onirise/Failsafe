@@ -1587,58 +1587,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4161287245272060702, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.077
-      objectReference: {fileID: 0}
-    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: managedReferences[2287995151870591098].RunSpeed
-      value: 5.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: managedReferences[2287995151870591098].JumpForce
-      value: 17.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: managedReferences[2287995151870591098].WalkSpeed
-      value: 2.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: managedReferences[2287995151870591098].GrabLedgeMinHeight
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: managedReferences[2287995151870591098].GrabLedgeMaxDistance
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: managedReferences[2287995151870591098].ClimbOnLedgeMaxHeight
-      value: 100000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: managedReferences[2287995151870591098].ClimbOverLedgeMaxWidth
-      value: 100000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: managedReferences[2287995151870591098].ClimbOverLedgeMaxHeight
-      value: 100000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: managedReferences[2287995151870591098].ClimbOnMaxDistanceToLedge
-      value: 100000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: managedReferences[2287995151870591098].GrabLedgeHeightDifference
-      value: 1000000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5543863665210299431, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: managedReferences[2287995151870591098].ClimbOverMaxDistanceToLedge
-      value: 100000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5564961472655603788, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
-      propertyPath: _carryingObject
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

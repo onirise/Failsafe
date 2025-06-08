@@ -194,6 +194,7 @@ namespace Failsafe.PlayerMovements
             {
                 _behaviorStateMachine.ForseChangeState<DeathState>();
             }
+            Debug.Log(_ledgeController.CanClimbOnLedge());
         }
 
         void FixedUpdate()

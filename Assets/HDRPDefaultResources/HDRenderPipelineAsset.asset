@@ -84,7 +84,7 @@ MonoBehaviour:
     probeVolumeBlendingMemoryBudget: 128
     supportRayTracing: 1
     supportVFXRayTracing: 1
-    supportedRayTracingMode: 2
+    supportedRayTracingMode: 1
     lightLoopSettings:
       cookieAtlasSize: 2048
       cookieFormat: 74
@@ -115,7 +115,7 @@ MonoBehaviour:
       maxLocalVolumetricFogSize: 0
       maxLocalVolumetricFogOnScreen: 256
     hdShadowInitParams:
-      maxShadowRequests: 128
+      maxShadowRequests: 64
       directionalShadowsDepthBits: 32
       punctualShadowFilteringQuality: 1
       directionalShadowFilteringQuality: 1

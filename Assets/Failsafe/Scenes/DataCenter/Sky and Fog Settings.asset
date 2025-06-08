@@ -28,55 +28,6 @@ MonoBehaviour:
   saturation:
     m_OverrideState: 1
     m_Value: 0
---- !u!114 &-6007495515424066734
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56b145d2b9ee1ac4f846968484e7485a, type: 3}
-  m_Name: ContactShadows
-  m_EditorClassIdentifier: 
-  active: 1
-  quality:
-    m_OverrideState: 1
-    m_Value: 1
-  enable:
-    m_OverrideState: 1
-    m_Value: 0
-  length:
-    m_OverrideState: 1
-    m_Value: 0.15
-  opacity:
-    m_OverrideState: 1
-    m_Value: 1
-  distanceScaleFactor:
-    m_OverrideState: 1
-    m_Value: 0.5
-  maxDistance:
-    m_OverrideState: 1
-    m_Value: 50
-  minDistance:
-    m_OverrideState: 1
-    m_Value: 0
-  fadeDistance:
-    m_OverrideState: 1
-    m_Value: 5
-  fadeInDistance:
-    m_OverrideState: 1
-    m_Value: 0
-  rayBias:
-    m_OverrideState: 1
-    m_Value: 0.2
-  thicknessScale:
-    m_OverrideState: 1
-    m_Value: 0.15
-  m_SampleCount:
-    m_OverrideState: 1
-    m_Value: 10
 --- !u!114 &-4957676627178504691
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -572,8 +523,6 @@ MonoBehaviour:
   - {fileID: -4957676627178504691}
   - {fileID: 311684515633724050}
   - {fileID: -4428554505580115503}
-  - {fileID: -6007495515424066734}
-  - {fileID: 7481335077102047010}
   - {fileID: -651334923544353528}
 --- !u!114 &311684515633724050
 MonoBehaviour:
@@ -590,13 +539,13 @@ MonoBehaviour:
   active: 1
   quality:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 1
   rayTracing:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 3.07
+    m_Value: 1.5
   directLightingStrength:
     m_OverrideState: 1
     m_Value: 0
@@ -619,7 +568,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 18391
   specularOcclusion:
     m_OverrideState: 0
     m_Value: 0.5
@@ -639,23 +588,23 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 40
   m_BilateralUpsample:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   m_DirectionCount:
     m_OverrideState: 1
     m_Value: 2
   m_RayLength:
     m_OverrideState: 1
-    m_Value: 50
+    m_Value: 3
   m_SampleCount:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   m_Denoise:
     m_OverrideState: 1
     m_Value: 1
   m_DenoiserRadius:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.5
 --- !u!114 &1060696549438325119
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -871,13 +820,13 @@ MonoBehaviour:
     m_Value: 3
   enabled:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   enabledTransparent:
     m_OverrideState: 1
     m_Value: 1
   tracing:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   m_MinSmoothness:
     m_OverrideState: 1
     m_Value: 0.75
@@ -970,22 +919,3 @@ MonoBehaviour:
   m_RayMaxIterationsRT:
     m_OverrideState: 1
     m_Value: 48
---- !u!114 &7481335077102047010
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32b6af8f7ad32324cb6941c3290e5895, type: 3}
-  m_Name: MicroShadowing
-  m_EditorClassIdentifier: 
-  active: 1
-  enable:
-    m_OverrideState: 1
-    m_Value: 1
-  opacity:
-    m_OverrideState: 1
-    m_Value: 1

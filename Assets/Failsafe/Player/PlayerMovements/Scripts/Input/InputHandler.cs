@@ -24,6 +24,7 @@ public class InputHandler
     private const string _crouch = "Crouch";
     private const string _grabOrDrop = "GrabOrDrop";
     private const string _attack = "Attack";
+    private const string _grabLedge = "GrabLedge";
 
     private InputAction _movementAction;
     private InputAction _rotationAction;
@@ -32,6 +33,7 @@ public class InputHandler
     private InputAction _crouchAction;
     private InputAction _grabOrDropAction;
     private InputAction _attackAction;
+    private InputAction _grabLedgeAction;
 
     public Vector2 MovementInput { get; private set; }
     public bool MoveForward => MovementInput.y > 0;
@@ -39,8 +41,10 @@ public class InputHandler
     public Vector2 RotationInput { get; private set; }
     public bool JumpTriggered { get; private set; }
     public bool SprintTriggered { get; private set; }
-    public InputTrigger CrouchTrigger { get; private set; } = new InputTrigger(); public bool GrabOrDropTriggered { get; private set; }
+    public InputTrigger CrouchTrigger { get; private set; } = new InputTrigger();
+    public bool GrabOrDropTriggered { get; private set; }
     public bool AttackTriggered {get; private set;}
+    public InputTrigger GrabLedgeTrigger { get; private set; } = new InputTrigger();
 
 
     /// <summary>
@@ -64,6 +68,7 @@ public class InputHandler
         _crouchAction = mapReference.FindAction(_crouch);
         _grabOrDropAction = mapReference.FindAction(_grabOrDrop);
         _attackAction = mapReference.FindAction(_attack);
+        _grabLedgeAction = mapReference.FindAction(_grabLedge);
 
         SubscribeActionValuesToInputEvents();
     }
@@ -87,9 +92,12 @@ public class InputHandler
 
         _grabOrDropAction.performed += inputInfo => GrabOrDropTriggered = true;
         _grabOrDropAction.canceled += inputInfo => GrabOrDropTriggered = false;
-        
+
         _attackAction.performed += inputInfo => AttackTriggered = true;
         _attackAction.canceled += inputInfo => AttackTriggered = false;
+        
+        _grabLedgeAction.performed += GrabLedgeTrigger.OnInputStart;
+        _grabLedgeAction.canceled += GrabLedgeTrigger.OnInputCancel;
 
     }
     

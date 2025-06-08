@@ -11,6 +11,15 @@ namespace Failsafe.PlayerMovements.Controllers
         private float _ledgeFindDistance = 3f;
         private float _forwardSpereRadius = 0.2f;
         private float _bottomFrontRayHeight = 0.6f;
+        /// <summary>
+        /// Угол в градусах между нормалью уступа и направлением игрока
+        /// Нужно чтобы игрок смотрел под определенным углом на уступ чтобы на него забраться
+        /// </summary>
+        private float _angleToLedgeNormalInDegree = 60;
+        /// <summary>
+        /// Минус косинус угла <seealso cref="_angleToLedgeNormalInDegree"/>. Используется для оптимизации определения угла по Vector3.Dot
+        /// </summary>
+        private readonly float _angleToLedgeNormal;
 
         private PlayerMovementParameters _movementParameters;
 
@@ -34,6 +43,7 @@ namespace Failsafe.PlayerMovements.Controllers
             _playerGrabPoint = playerGrabPoint;
             _ledgeLayer = ~LayerMask.NameToLayer("Ledge");
             _movementParameters = movementParameters;
+            _angleToLedgeNormal = -Mathf.Cos(_angleToLedgeNormalInDegree * Mathf.Deg2Rad);
         }
 
         public void HandleFindingLedge()
@@ -47,7 +57,8 @@ namespace Failsafe.PlayerMovements.Controllers
             if (_ledgeGrabPointInView.IsEmpty) return false;
             var distance = Vector3.Distance(_ledgeGrabPointInView.Position, _playerGrabPoint.transform.position);
             return distance < _movementParameters.GrabLedgeMaxDistance
-                && _ledgeGrabPointInView.Edge.DownDistance > _movementParameters.GrabLedgeMinHeight;
+                && _ledgeGrabPointInView.Edge.DownDistance > _movementParameters.GrabLedgeMinHeight
+                && Vector3.Dot(_ledgeGrabPointInView.Normal, _playerTransform.forward) <= _angleToLedgeNormal;
         }
 
         public bool CanClimbOverLedge()
@@ -57,7 +68,8 @@ namespace Failsafe.PlayerMovements.Controllers
 
             return _distanceToLedgeGrabPointInFrontBottom <= _movementParameters.ClimbOverMaxDistanceToLedge
                 && _ledgeGrabPointInFrontBottom.Width <= _movementParameters.ClimbOverLedgeMaxWidth
-                && _ledgeGrabPointInFrontBottom.Edge.DownDistance <= _movementParameters.ClimbOverLedgeMaxHeight;
+                && _ledgeGrabPointInFrontBottom.Edge.DownDistance <= _movementParameters.ClimbOverLedgeMaxHeight
+                && Vector3.Dot(_ledgeGrabPointInFrontBottom.Normal, _playerTransform.forward) <= _angleToLedgeNormal;
         }
 
         public bool CanClimbOnLedge()
@@ -67,7 +79,8 @@ namespace Failsafe.PlayerMovements.Controllers
 
             return _distanceToLedgeGrabPointInFrontBottom <= _movementParameters.ClimbOnMaxDistanceToLedge
                 && _ledgeGrabPointInFrontBottom.Width > _movementParameters.ClimbOverLedgeMaxWidth
-                && _ledgeGrabPointInFrontBottom.Edge.DownDistance <= _movementParameters.ClimbOnLedgeMaxHeight;
+                && _ledgeGrabPointInFrontBottom.Edge.DownDistance <= _movementParameters.ClimbOnLedgeMaxHeight
+                && Vector3.Dot(_ledgeGrabPointInFrontBottom.Normal, _playerTransform.forward) <= _angleToLedgeNormal;
         }
 
         private LedgeGrabPoint DetectLedgeFromViewDirection()
@@ -84,9 +97,10 @@ namespace Failsafe.PlayerMovements.Controllers
                     return LedgeGrabPoint.Empty;
                 }
             }
-            if (viewHitInfo.transform.gameObject.TryGetComponent<Ledge>(out var ledge))
-                return ledge.ProjectToGrabPoint(viewHitInfo.point);
-            return LedgeGrabPoint.Empty;
+            if (!viewHitInfo.transform.gameObject.TryGetComponent<Ledge>(out var ledge))
+                return LedgeGrabPoint.Empty;
+
+            return ledge.ProjectToGrabPoint(viewHitInfo.point);
         }
 
         private LedgeGrabPoint DetectLedgeFromForwardDirection(Vector3 originPosition, ref float distance)
@@ -106,9 +120,14 @@ namespace Failsafe.PlayerMovements.Controllers
                     return LedgeGrabPoint.Empty;
                 }
             }
-            return viewHitInfo.transform.gameObject.TryGetComponent(out Ledge ledge)
-                ? ledge.ProjectToGrabPoint(viewHitInfo.point)
-                : LedgeGrabPoint.Empty;
+            if (!viewHitInfo.transform.gameObject.TryGetComponent<Ledge>(out var ledge))
+            {
+                distance = -1;
+                return LedgeGrabPoint.Empty;
+            }
+
+            distance = viewHitInfo.distance;
+            return ledge.ProjectToGrabPoint(viewHitInfo.point);
         }
     }
 }

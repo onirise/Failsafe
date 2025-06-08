@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GrabLedge",
+                    "type": "Button",
+                    "id": "72f2b72a-34fe-4387-800e-a343eb0a35a1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -180,6 +189,17 @@
                 },
                 {
                     "name": "",
+                    "id": "8c2552b3-0478-4592-b1a4-46b5138cd0bf",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "90bc8667-6231-48cb-963a-26939f05f9e5",
                     "path": "<Keyboard>/f",
                     "interactions": "",
@@ -208,6 +228,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de594e4a-a68c-4eeb-8cd9-453bbe426c2d",
+                    "path": "<Keyboard>/space",
+                    "interactions": "Hold(pressPoint=0.1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrabLedge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

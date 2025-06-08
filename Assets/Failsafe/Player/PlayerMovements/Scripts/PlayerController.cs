@@ -139,10 +139,10 @@ namespace Failsafe.PlayerMovements
             jumpState.AddTransition(runState, () => jumpState.CanGround() && _playerGravity.IsGrounded && _inputHandler.MoveForward && _inputHandler.SprintTriggered);
             jumpState.AddTransition(walkState, () => jumpState.CanGround() && _playerGravity.IsGrounded);
             jumpState.AddTransition(fallState, jumpState.InHightPoint);
-            jumpState.AddTransition(grabLedgeState, () => _ledgeController.CanGrabToLedgeGrabPointInView());
+            jumpState.AddTransition(grabLedgeState, () => _inputHandler.GrabLedgeTrigger.IsTriggered && _ledgeController.CanGrabToLedgeGrabPointInView());
 
             fallState.AddTransition(walkState, () => _playerGravity.IsGrounded);
-            fallState.AddTransition(grabLedgeState, () => _ledgeController.CanGrabToLedgeGrabPointInView());
+            fallState.AddTransition(grabLedgeState, () => _inputHandler.GrabLedgeTrigger.IsTriggered && _ledgeController.CanGrabToLedgeGrabPointInView());
 
             grabLedgeState.AddTransition(fallState, () => _inputHandler.MoveBack && grabLedgeState.CanFinish());
             grabLedgeState.AddTransition(climbingUpState, () => _inputHandler.MoveForward && grabLedgeState.CanFinish() && climbingUpState.CanClimb());

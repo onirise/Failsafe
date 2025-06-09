@@ -1290,7 +1290,7 @@ MonoBehaviour:
   active: 1
   cameraClusterRange:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 8
 --- !u!114 &-4865593137773446997
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -3525,7 +3525,7 @@ MonoBehaviour:
   active: 1
   quality:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 3
   enabled:
     m_OverrideState: 1
     m_Value: 1
@@ -3534,13 +3534,13 @@ MonoBehaviour:
     m_Value: 1
   tracing:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   m_MinSmoothness:
     m_OverrideState: 1
-    m_Value: 0.9
+    m_Value: 0.4
   m_SmoothnessFadeStart:
     m_OverrideState: 1
-    m_Value: 0.9
+    m_Value: 0.5
   reflectSky:
     m_OverrideState: 1
     m_Value: 1
@@ -3617,7 +3617,7 @@ MonoBehaviour:
     m_Value: 2
   m_FullResolution:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   sampleCount:
     m_OverrideState: 1
     m_Value: 1
@@ -3716,7 +3716,7 @@ MonoBehaviour:
     m_Value: 0
   directionalShadowRayLength:
     m_OverrideState: 1
-    m_Value: 1000
+    m_Value: 400
   directionalShadowFallbackIntensity:
     m_OverrideState: 1
     m_Value: 1
@@ -3987,7 +3987,7 @@ MonoBehaviour:
     m_Value: 1
   rayTracing:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   intensity:
     m_OverrideState: 1
     m_Value: 0
@@ -4593,7 +4593,7 @@ MonoBehaviour:
       m_Bits: 4294967295
   maximumSamples:
     m_OverrideState: 1
-    m_Value: 256
+    m_Value: 8
   minimumDepth:
     m_OverrideState: 1
     m_Value: 1
@@ -5268,7 +5268,7 @@ MonoBehaviour:
     m_Value: 1
   leakReductionMode:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 1
   minValidDotProductValue:
     m_OverrideState: 1
     m_Value: 0.1

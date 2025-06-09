@@ -16,4 +16,4 @@ VFXManager:
   m_CompiledVersion: 7
   m_RuntimeVersion: 38
   m_RuntimeResources: {fileID: 11400000, guid: bc10b42afe3813544bffd38ae2cd893d, type: 2}
-  m_BatchEmptyLifetime: 300
+  m_BatchEmptyLifetime: 4

@@ -17,7 +17,7 @@ MonoBehaviour:
     supportSSR: 1
     supportSSRTransparent: 1
     supportSSAO: 1
-    supportSSGI: 0
+    supportSSGI: 1
     supportSubsurfaceScattering: 1
     sssSampleBudget:
       m_Values: 140000002800000050000000
@@ -83,7 +83,7 @@ MonoBehaviour:
     supportProbeVolumeScenarioBlending: 1
     probeVolumeBlendingMemoryBudget: 128
     supportRayTracing: 1
-    supportVFXRayTracing: 1
+    supportVFXRayTracing: 0
     supportedRayTracingMode: 1
     lightLoopSettings:
       cookieAtlasSize: 2048
@@ -99,7 +99,7 @@ MonoBehaviour:
       reflectionProbeTexCacheSize: 4096
       reflectionProbeTexLastValidCubeMip: 3
       reflectionProbeTexLastValidPlanarMip: 0
-      reflectionProbeDecreaseResToFit: 1
+      reflectionProbeDecreaseResToFit: 0
       skyReflectionSize: 256
       skyLightingOverrideLayerMask:
         serializedVersion: 2
@@ -111,9 +111,9 @@ MonoBehaviour:
       maxCubeReflectionOnScreen: 32
       maxPlanarReflectionOnScreen: 8
       maxDecalsOnScreen: 512
-      maxLightsPerClusterCell: 8
+      maxLightsPerClusterCell: 6
       maxLocalVolumetricFogSize: 0
-      maxLocalVolumetricFogOnScreen: 256
+      maxLocalVolumetricFogOnScreen: 64
     hdShadowInitParams:
       maxShadowRequests: 64
       directionalShadowsDepthBits: 32
@@ -163,16 +163,16 @@ MonoBehaviour:
       lutFormat: 48
       bufferFormat: 74
     dynamicResolutionSettings:
-      enabled: 0
+      enabled: 1
       useMipBias: 0
-      advancedUpscalersByPriority: 02
-      DLSSPerfQualitySetting: 0
-      DLSSInjectionPoint: 0
+      advancedUpscalersByPriority: 00
+      DLSSPerfQualitySetting: 3
+      DLSSInjectionPoint: 2
       TAAUInjectionPoint: 0
       STPInjectionPoint: 0
       defaultInjectionPoint: 2
-      DLSSUseOptimalSettings: 1
-      DLSSSharpness: 0.5
+      DLSSUseOptimalSettings: 0
+      DLSSSharpness: 0.7
       FSR2EnableSharpness: 0
       FSR2Sharpness: 0
       FSR2UseOptimalSettings: 0
@@ -187,9 +187,9 @@ MonoBehaviour:
       forceResolution: 0
       forcedPercentage: 100
       lowResTransparencyMinimumThreshold: 0
-      rayTracingHalfResThreshold: 50
+      rayTracingHalfResThreshold: 35
       lowResSSGIMinimumThreshold: 0
-      lowResVolumetricCloudsMinimumThreshold: 50
+      lowResVolumetricCloudsMinimumThreshold: 35
       enableDLSS: 0
     lowresTransparentSettings:
       enabled: 1
@@ -226,7 +226,7 @@ MonoBehaviour:
       ChromaticAberrationMaxSamples: 03000000060000000c000000
     lightSettings:
       useContactShadow:
-        m_Values: 000001
+        m_Values: 000100
         m_SchemaId:
           m_Id: With3Levels
     maximumLODLevel:
@@ -259,7 +259,7 @@ MonoBehaviour:
       RTAORayLength:
       - 0.5
       - 3
-      - 20
+      - 15
       RTAOSampleCount: 010000000200000008000000
       RTAODenoise: 010101
       RTAODenoiserRadius:

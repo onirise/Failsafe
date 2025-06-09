@@ -13,8 +13,8 @@ namespace Failsafe.PlayerMovements.States
         private readonly PlayerMovementParameters _movementParametrs;
         private readonly Transform _headTransform;
 
-        private float _jumpForce => _movementParametrs.JumpForce * 0.5f;
-        private float _jumpForceFade => _movementParametrs.JumpForceFade * 0.5f;
+        private float _jumpForce => _movementParametrs.JumpMaxSpeed * 0.5f;
+        private float _jumpForceFade => _movementParametrs.JumpMaxSpeed * 0.5f;
         private float _jumpProgress = 0;
         private Vector3 _initialVelocity;
 

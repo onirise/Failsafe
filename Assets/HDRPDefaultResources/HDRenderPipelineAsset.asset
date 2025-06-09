@@ -165,7 +165,7 @@ MonoBehaviour:
     dynamicResolutionSettings:
       enabled: 1
       useMipBias: 0
-      advancedUpscalersByPriority: 00
+      advancedUpscalersByPriority: 02
       DLSSPerfQualitySetting: 3
       DLSSInjectionPoint: 2
       TAAUInjectionPoint: 0

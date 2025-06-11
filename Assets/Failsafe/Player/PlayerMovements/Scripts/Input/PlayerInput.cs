@@ -175,7 +175,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Zoom"",
                     ""type"": ""Button"",
-                    ""id"": ""f645e834-b54c-4c1c-aaeb-bba10797c9dc"",
+                    ""id"": ""ce963049-12c1-44e3-a106-1abfebdb6291"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -339,7 +339,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""345cb451-a117-4c92-a076-6a0957bfad57"",
+                    ""id"": ""e6b4213e-ff52-49d2-b3be-4f07201f946a"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",

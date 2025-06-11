@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
 /// <summary>
 /// Преследование объекта, попавшего в сенсор
@@ -50,8 +48,9 @@ public class ChasingState : BehaviorState
             if (sensor is VisualSensor)
                 if (sensor.IsActivated())
                 {
-                    _distanceToPlayer = ((Vector3)(sensor.SignalSourcePosition - _transform.position)).magnitude;
+                    _distanceToPlayer = ((Vector3)sensor.SignalSourcePosition - _transform.position).magnitude;
                     _playerInSight = true;
+                    
                 }
                 else
                 {

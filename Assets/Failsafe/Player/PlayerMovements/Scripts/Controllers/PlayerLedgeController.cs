@@ -84,8 +84,9 @@ namespace Failsafe.PlayerMovements.Controllers
                     return LedgeGrabPoint.Empty;
                 }
             }
-            var ledge = viewHitInfo.transform.gameObject.GetComponent<Ledge>();
-            return ledge.ProjectToGrabPoint(viewHitInfo.point);
+            if (viewHitInfo.transform.gameObject.TryGetComponent<Ledge>(out var ledge))
+                return ledge.ProjectToGrabPoint(viewHitInfo.point);
+            return LedgeGrabPoint.Empty;
         }
 
         private LedgeGrabPoint DetectLedgeFromForwardDirection(Vector3 originPosition, ref float distance)
@@ -105,9 +106,9 @@ namespace Failsafe.PlayerMovements.Controllers
                     return LedgeGrabPoint.Empty;
                 }
             }
-            var ledge = viewHitInfo.transform.gameObject.GetComponent<Ledge>();
-            distance = viewHitInfo.distance;
-            return ledge.ProjectToGrabPoint(viewHitInfo.point);
+            return viewHitInfo.transform.gameObject.TryGetComponent(out Ledge ledge)
+                ? ledge.ProjectToGrabPoint(viewHitInfo.point)
+                : LedgeGrabPoint.Empty;
         }
     }
 }

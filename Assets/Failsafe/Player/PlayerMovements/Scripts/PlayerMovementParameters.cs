@@ -18,18 +18,11 @@ namespace Failsafe.PlayerMovements
         /// Скорость ходьбы в присяди
         /// </summary>
         public float CrouchSpeed = 3f;
-        /// <summary>
-        /// Высота в присяди относительно нормальной высоты
-        /// </summary>
-        public float CrouchHeight = 0.5f;
+        
         /// <summary>
         /// Скорость скольжения
         /// </summary>
         public float SlideSpeed = 12f;
-        /// <summary>
-        /// Высота в скольжении относительно нормальной высоты
-        /// </summary>
-        public float SlideHeight = 0.3f;
         /// <summary>
         /// Максимальное время скольжения
         /// </summary>
@@ -38,14 +31,24 @@ namespace Failsafe.PlayerMovements
         /// Минимальное время скольжения
         /// </summary>
         public float MinSlideTime = 0.5f;
+
         /// <summary>
-        /// Сила прыжка
+        /// Высота прыжка
         /// </summary>
-        public float JumpForce = 20f;
+        public float JumpMaxHeight = 1.5f;
         /// <summary>
-        /// Сила угасания прыжка
+        /// Максимальная скорость прыжка
         /// </summary>
-        public float JumpForceFade = 30f;
+        public float JumpMaxSpeed = 8f;
+        /// <summary>
+        /// Минимальная длительность прыжка
+        /// </summary>
+        public float JumpMinDuration = 0.1f;
+        /// <summary>
+        /// Длительность прыжка
+        /// </summary>
+        public float JumpDuration = 0.5f;
+
         /// <summary>
         /// Сила притяжения
         /// </summary>

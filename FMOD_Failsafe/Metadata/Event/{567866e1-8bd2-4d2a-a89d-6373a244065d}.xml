@@ -463,7 +463,7 @@
 			<value>ApplyOccl</value>
 		</property>
 		<property name="value">
-			<value>1</value>
+			<value>0</value>
 		</property>
 		<property name="minimumValue">
 			<value>0</value>
@@ -499,7 +499,7 @@
 			<value>ApplyPath</value>
 		</property>
 		<property name="value">
-			<value>false</value>
+			<value>true</value>
 		</property>
 	</object>
 	<object class="IntPluginParameter" id="{9281ce39-2242-42ab-ac24-02ce9487fb09}">
@@ -557,7 +557,7 @@
 			<value>DAMaxDist</value>
 		</property>
 		<property name="value">
-			<value>20</value>
+			<value>0</value>
 		</property>
 		<property name="curve">
 			<value>{(0.000000,0.000000)(1.000000,10000.000000)}</value>

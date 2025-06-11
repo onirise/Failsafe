@@ -26,13 +26,13 @@ namespace Failsafe.PlayerMovements.Controllers
         private Transform _playerTransform;
         private Transform _headTransform;
         private Transform _playerGrabPoint;
-        private LayerMask _ledgeLayer;
+        private int _ledgeMask;
         private LedgeGrabPoint _ledgeGrabPointInView;
         private LedgeGrabPoint _ledgeGrabPointInFrontBottom;
         private float _distanceToLedgeGrabPointInFrontBottom;
+
         public LedgeGrabPoint LedgeGrabPointInView => _ledgeGrabPointInView;
         public LedgeGrabPoint LedgeGrabPointInFrontBottom => _ledgeGrabPointInFrontBottom;
-
         public LedgeGrabPoint AttachedLedgeGrabPoint;
         public Transform GrabPoint => _playerGrabPoint;
 
@@ -41,7 +41,7 @@ namespace Failsafe.PlayerMovements.Controllers
             _playerTransform = playerTransform;
             _headTransform = headTransform;
             _playerGrabPoint = playerGrabPoint;
-            _ledgeLayer = ~LayerMask.NameToLayer("Ledge");
+            _ledgeMask = LayerMask.GetMask("Ledge");
             _movementParameters = movementParameters;
             _angleToLedgeNormal = -Mathf.Cos(_angleToLedgeNormalInDegree * Mathf.Deg2Rad);
         }
@@ -86,42 +86,38 @@ namespace Failsafe.PlayerMovements.Controllers
         private LedgeGrabPoint DetectLedgeFromViewDirection()
         {
             Debug.DrawRay(_headTransform.position, _headTransform.forward * _ledgeFindDistance, Color.white);
-            if (!Physics.SphereCast(_headTransform.position, _forwardSpereRadius, _headTransform.forward, out var ledgeHitInfo, _ledgeFindDistance, _ledgeLayer))
+            if (!Physics.SphereCast(_headTransform.position, _forwardSpereRadius, _headTransform.forward, out var ledgeHitInfo, _ledgeFindDistance, _ledgeMask))
             {
                 return LedgeGrabPoint.Empty;
             }
-            if (Physics.SphereCast(_headTransform.position, _forwardSpereRadius, _headTransform.forward, out var viewHitInfo, _ledgeFindDistance))
-            {
-                if (viewHitInfo.collider.gameObject != ledgeHitInfo.collider.gameObject)
-                {
-                    return LedgeGrabPoint.Empty;
-                }
-            }
-            if (!viewHitInfo.transform.gameObject.TryGetComponent<Ledge>(out var ledge))
-                return LedgeGrabPoint.Empty;
-
-            return ledge.ProjectToGrabPoint(viewHitInfo.point);
+            return CheckLedgeCandidate(_headTransform.position, _headTransform.forward, out _, ledgeHitInfo);
         }
 
         private LedgeGrabPoint DetectLedgeFromForwardDirection(Vector3 originPosition, ref float distance)
         {
             Debug.DrawRay(originPosition, _playerTransform.forward * _ledgeFindDistance, Color.grey);
-            if (!Physics.SphereCast(originPosition, _forwardSpereRadius, _playerTransform.forward, out var ledgeHitInfo, _ledgeFindDistance, _ledgeLayer))
+            if (!Physics.SphereCast(originPosition, _forwardSpereRadius, _playerTransform.forward, out var ledgeHitInfo, _ledgeFindDistance, _ledgeMask))
             {
                 distance = -1;
                 return LedgeGrabPoint.Empty;
             }
-            if (Physics.SphereCast(originPosition, _forwardSpereRadius, _playerTransform.forward, out var viewHitInfo, _ledgeFindDistance))
+            return CheckLedgeCandidate(originPosition, _playerTransform.forward, out distance, ledgeHitInfo);
+        }
+
+        private LedgeGrabPoint CheckLedgeCandidate(Vector3 originPosition, Vector3 direction, out float distance, RaycastHit ledgeHitInfo)
+        {
+            if (Physics.SphereCast(originPosition, _forwardSpereRadius, direction, out var viewHitInfo, _ledgeFindDistance))
             {
                 if (viewHitInfo.collider.gameObject != ledgeHitInfo.collider.gameObject)
                 {
-                    Debug.Log($"NotSameObject {viewHitInfo.collider.gameObject.name} {ledgeHitInfo.collider.gameObject.name} ");
+                    Debug.Log($"Not same objects viewHitInfo: {viewHitInfo.collider.gameObject.name} ledgeHitInfo: {ledgeHitInfo.collider.gameObject.name}");
                     distance = -1;
                     return LedgeGrabPoint.Empty;
                 }
             }
             if (!viewHitInfo.transform.gameObject.TryGetComponent<Ledge>(out var ledge))
             {
+                Debug.Log("Ledge component not exists");
                 distance = -1;
                 return LedgeGrabPoint.Empty;
             }

@@ -16197,7 +16197,7 @@ Transform:
   m_GameObject: {fileID: 1681617455}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15, y: 3, z: 30}
+  m_LocalPosition: {x: 17, y: 3, z: 33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16218,11 +16218,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -584843698
-      Data2: 1290670335
-      Data3: 807331975
-      Data4: 2127771764
-    Path: event:/MUSIC/AMBIENT/TEST WHITE NOISE
+      Data1: 1450731233
+      Data2: 1294633938
+      Data3: 1935908264
+      Data4: 1560691874
+    Path: event:/SFX/ENEMIES/WALKER/WALK
   Event: 
   EventPlayTrigger: 1
   EventStopTrigger: 0
@@ -19157,7 +19157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1511383286313260163, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 21.04478
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 1511383286313260163, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19194,7 +19194,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5441590585779604949, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2057337882}
+    - targetCorrespondingSourceObject: {fileID: 5441590585779604949, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2057337883}
   m_SourcePrefab: {fileID: 100100000, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
 --- !u!1 &1995252199
 GameObject:
@@ -19932,6 +19938,124 @@ MonoBehaviour:
   material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
   exportAllChildren: 0
   terrainSimplificationLevel: 0
+--- !u!1 &2057337873 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5441590585779604949, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}
+  m_PrefabInstance: {fileID: 1945633753}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2057337882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057337873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c3684b22f00604a97bb68037fcf4cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directBinaural: 1
+  interpolation: 0
+  perspectiveCorrection: 0
+  distanceAttenuation: 0
+  distanceAttenuationInput: 0
+  distanceAttenuationValue: 1
+  airAbsorption: 0
+  airAbsorptionInput: 0
+  airAbsorptionLow: 1
+  airAbsorptionMid: 1
+  airAbsorptionHigh: 1
+  directivity: 0
+  directivityInput: 0
+  dipoleWeight: 0
+  dipolePower: 0
+  directivityValue: 1
+  occlusion: 1
+  occlusionInput: 0
+  occlusionType: 0
+  occlusionRadius: 1
+  occlusionSamples: 16
+  occlusionValue: 1
+  transmission: 1
+  transmissionType: 0
+  transmissionInput: 0
+  transmissionLow: 1
+  transmissionMid: 1
+  transmissionHigh: 1
+  maxTransmissionSurfaces: 1
+  directMixLevel: 1
+  reflections: 1
+  reflectionsType: 0
+  useDistanceCurveForReflections: 0
+  currentBakedSource: {fileID: 0}
+  reverbTimeLow: 0
+  reverbTimeMid: 0
+  reverbTimeHigh: 0
+  hybridReverbEQLow: 1
+  hybridReverbEQMid: 1
+  hybridReverbEQHigh: 1
+  hybridReverbDelay: 0
+  applyHRTFToReflections: 0
+  reflectionsMixLevel: 1
+  pathing: 1
+  pathingProbeBatch: {fileID: 0}
+  pathValidation: 1
+  findAlternatePaths: 1
+  pathingEQ:
+  - 1
+  - 1
+  - 1
+  pathingSH:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  applyHRTFToPathing: 0
+  pathingMixLevel: 1
+--- !u!114 &2057337883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057337873}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -584843698
+      Data2: 1290670335
+      Data3: 807331975
+      Data4: 2127771764
+    Path: event:/MUSIC/AMBIENT/TEST WHITE NOISE
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &2072234111
 GameObject:
   m_ObjectHideFlags: 0

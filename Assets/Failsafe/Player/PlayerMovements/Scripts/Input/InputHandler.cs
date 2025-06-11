@@ -24,8 +24,7 @@ public class InputHandler
     private const string _crouch = "Crouch";
     private const string _grabOrDrop = "GrabOrDrop";
     private const string _attack = "Attack";
-    private const string _zoom = "Zoom";
-    
+
     private InputAction _movementAction;
     private InputAction _rotationAction;
     private InputAction _jumpAction;
@@ -33,7 +32,7 @@ public class InputHandler
     private InputAction _crouchAction;
     private InputAction _grabOrDropAction;
     private InputAction _attackAction;
-    private InputAction _zoomAction;    
+
     public Vector2 MovementInput { get; private set; }
     public bool MoveForward => MovementInput.y > 0;
     public bool MoveBack => MovementInput.y < 0;
@@ -42,7 +41,7 @@ public class InputHandler
     public bool SprintTriggered { get; private set; }
     public InputTrigger CrouchTrigger { get; private set; } = new InputTrigger(); public bool GrabOrDropTriggered { get; private set; }
     public bool AttackTriggered {get; private set;}
-    public bool ZoomTriggered {get; private set;}
+
 
     /// <summary>
     /// Преобразовать MovementInput к нужному Transform
@@ -65,7 +64,7 @@ public class InputHandler
         _crouchAction = mapReference.FindAction(_crouch);
         _grabOrDropAction = mapReference.FindAction(_grabOrDrop);
         _attackAction = mapReference.FindAction(_attack);
-        _zoomAction = mapReference.FindAction(_zoom);
+
         SubscribeActionValuesToInputEvents();
     }
 
@@ -91,9 +90,6 @@ public class InputHandler
         
         _attackAction.performed += inputInfo => AttackTriggered = true;
         _attackAction.canceled += inputInfo => AttackTriggered = false;
-        
-        _zoomAction.performed += inputInfo => ZoomTriggered = true;
-        _zoomAction.canceled += inputInfo => ZoomTriggered = false;
 
     }
     

@@ -134,9 +134,8 @@ GameObject:
   m_Component:
   - component: {fileID: 374109432981789085}
   - component: {fileID: 374109432981789075}
-  - component: {fileID: 2618289896654470987}
   - component: {fileID: 3056071954068415360}
-  - component: {fileID: 4751387878632057945}
+  - component: {fileID: 662603141925215067}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -211,20 +210,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &2618289896654470987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 374109432981789084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db64b111c7629a244b1e966665afb0d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zoom: 50
-  m_Camera: {fileID: 0}
 --- !u!114 &3056071954068415360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +239,7 @@ MonoBehaviour:
         z: 0
       radius: 0
   mProbeBatchesUsed: []
---- !u!114 &4751387878632057945
+--- !u!114 &662603141925215067
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -407,8 +392,8 @@ GameObject:
   - component: {fileID: 3587987712684801882}
   - component: {fileID: 5543863665210299431}
   - component: {fileID: 6003168246341229848}
-  - component: {fileID: 8406886069167695128}
-  - component: {fileID: 7623893399856682050}
+  - component: {fileID: 6639970985315062989}
+  - component: {fileID: 4174544833214933422}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -514,11 +499,11 @@ MonoBehaviour:
     rid: 5390404808482226255
   _footstepEvent:
     Guid:
-      Data1: 645672247
-      Data2: 1210137235
-      Data3: -1357825636
-      Data4: 640958622
-    Path: event:/SFX/MAIN CHARACTER/MOVEMENT/WALK/METAL
+      Data1: -1362921849
+      Data2: 1073791315
+      Data3: -1220606587
+      Data4: -1805872764
+    Path: event:/SFX/MAIN CHARACTER/MOVEMENT/WALK/WALK
   references:
     version: 2
     RefIds:
@@ -570,7 +555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lockCursor: 1
---- !u!114 &8406886069167695128
+--- !u!114 &6639970985315062989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -590,7 +575,7 @@ MonoBehaviour:
   m_IgnoreFromBuild: 1
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
---- !u!114 &7623893399856682050
+--- !u!114 &4174544833214933422
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -599,11 +584,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 374109433352817464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db64b111c7629a244b1e966665afb0d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoom: 50
-  m_Camera: {fileID: 374109432981789075}
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &374109433356125759
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,7 +971,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6033173754768017829}
   - component: {fileID: 4284899158147892210}
-  - component: {fileID: 155531118089260985}
+  - component: {fileID: 5409228000622152288}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -1074,7 +1059,7 @@ Light:
   m_LightUnit: 0
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!114 &155531118089260985
+--- !u!114 &5409228000622152288
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

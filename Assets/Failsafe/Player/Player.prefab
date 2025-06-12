@@ -403,7 +403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 374109433352817470}
   - component: {fileID: 374109433352817471}
-  - component: {fileID: 3599507343278272512}
+  - component: {fileID: 3685481300793825505}
   - component: {fileID: 5564961472655603788}
   - component: {fileID: 3587987712684801882}
   - component: {fileID: 5543863665210299431}
@@ -432,7 +432,7 @@ Transform:
   m_Children:
   - {fileID: 374109432967700042}
   - {fileID: 374109432981789085}
-  - {fileID: 2125709159591363054}
+  - {fileID: 3382437479846267488}
   - {fileID: 4441873055141444099}
   - {fileID: 4161287245272060702}
   m_Father: {fileID: 0}
@@ -462,7 +462,7 @@ CharacterController:
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &3599507343278272512
+--- !u!114 &3685481300793825505
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -471,17 +471,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 374109433352817464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c45a98b66cd7cc427ad826102af38594, type: 3}
+  m_Script: {fileID: 11500000, guid: 386a06b260e7bb944adf19dc60979cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: Failsafe.DI.GameLifetimeScope
+    TypeName: Failsafe.GameSceneServices.GameSceneLifetimeScope
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 374109433352817464}
-  playerParameters:
-    <MaxHealth>k__BackingField: 1000
-    <MaxStamina>k__BackingField: 100
 --- !u!114 &5564961472655603788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,7 +528,6 @@ MonoBehaviour:
   _inputActionAsset: {fileID: -944628639613478452, guid: 1f09f2f8cfa351946a2c010bb9946270, type: 3}
   _noiseParametrs:
     rid: 2287995151870591099
-  HealthText: {fileID: 0}
   _footstepEvent:
     Guid:
       Data1: 645672247
@@ -1215,7 +1211,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2a648aaf7f5dedc4fb1a41c5ef1969b0, type: 3}
   m_PrefabInstance: {fileID: 2316339926891887643}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &6772834139688480348
+--- !u!1001 &7966072812413494738
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1360,8 +1356,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2af6a35dab3266b4d9c50cdecd15f02d, type: 3}
---- !u!224 &2125709159591363054 stripped
+--- !u!224 &3382437479846267488 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4647145215876526002, guid: 2af6a35dab3266b4d9c50cdecd15f02d, type: 3}
-  m_PrefabInstance: {fileID: 6772834139688480348}
+  m_PrefabInstance: {fileID: 7966072812413494738}
   m_PrefabAsset: {fileID: 0}

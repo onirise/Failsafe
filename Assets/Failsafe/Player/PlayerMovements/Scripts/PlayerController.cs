@@ -27,7 +27,6 @@ namespace Failsafe.PlayerMovements
         [Header("Noise params")]
         [SerializeReference] private PlayerNoiseParameters _noiseParametrs = new PlayerNoiseParameters();
 
-        [SerializeField] private TextMeshProUGUI HealthText;
         private Transform _playerCamera;
         private Transform _playerGrabPoint;
 

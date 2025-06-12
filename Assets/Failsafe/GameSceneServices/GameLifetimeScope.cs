@@ -8,11 +8,9 @@ namespace Failsafe.DI
 {
     public class GameLifetimeScope : LifetimeScope
     {   
-        [SerializeField] private PlayerModelParameters playerParameters;
-
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<SimpleHealth>(Lifetime.Singleton).As<IHealth>().WithParameter(playerParameters.MaxHealth);
+            
         }
     }
 }

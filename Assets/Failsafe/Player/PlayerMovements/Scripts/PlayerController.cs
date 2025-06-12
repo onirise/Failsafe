@@ -55,12 +55,11 @@ namespace Failsafe.PlayerMovements
         public void Construct(IHealth health)
         {
             _health = health;
+            _damageService = new DamageService(new FlatDamageProvider(_health));
         }
         
         private void Awake()
         {
-            _damageService = CreateDamageService();
-
             _damageableComponent = transform.Find("Capsule").GetComponent<DamageableComponent>();
 
         }
@@ -170,15 +169,6 @@ namespace Failsafe.PlayerMovements
 
             _behaviorStateMachine = new BehaviorStateMachine(walkState, forcedStates);
 
-        }
-
-        private IDamageService CreateDamageService()
-        {
-            var damageService = new DamageService();
-
-            damageService.Register(new FlatDamageProvider(_health));
-
-            return damageService;
         }
 
         private void OnTakeDamage(IDamage damage)

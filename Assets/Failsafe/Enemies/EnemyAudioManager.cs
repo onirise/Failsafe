@@ -1,18 +1,25 @@
 using FMODUnity;
 using UnityEngine;
 
-[RequireComponent(typeof(StudioEventEmitter))]
 public class EnemyAudioManager : MonoBehaviour
 {
-    [SerializeField] private EventReference Step, Run, Reload;
+    [SerializeField] private FMODUnity.EventReference walk;
+    [SerializeField] private FMODUnity.EventReference run;
+    [SerializeField] private FMODUnity.EventReference reload;
+
+
     public void StepEvent()
     {
-        SoundUtils3D.Play(this.gameObject, Step);
+        RuntimeManager.PlayOneShot(walk, transform.position);
+    }
+
+    public void RunStep()
+    {
+        RuntimeManager.PlayOneShot(run, transform.position);
     }
 
     public void ReloadEvent()
     {
-        SoundUtils3D.Play(this.gameObject, Reload);
+        RuntimeManager.PlayOneShot(reload, transform.position);
     }
-    
 }

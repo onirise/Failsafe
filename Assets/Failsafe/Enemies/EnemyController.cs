@@ -37,6 +37,7 @@ public class EnemyController
     public void StopMoving()
     {
         _navMeshAgent.isStopped = true;
+        _navMeshAgent.speed = 0f;
     }
 
     public void ResumeMoving()
@@ -69,7 +70,7 @@ public class EnemyController
 
     public bool IsPointReached()
     {
-        if (Vector3.Distance(_navMeshAgent.destination, _transform.position) <= 2.5f)
+        if (Vector3.Distance(_navMeshAgent.destination, _transform.position) <= _navMeshAgent.stoppingDistance)
         {
             if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude < 0.05f)
             {

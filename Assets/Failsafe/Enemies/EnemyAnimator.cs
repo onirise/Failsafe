@@ -8,7 +8,6 @@ public class EnemyAnimator
     private readonly Animator _animator;
     private readonly Transform _transform;
     private EnemyController _controller;
-    private EnemyAudioManager _audioManager;
     private bool _isTurning = false;
 
     private bool _waitingForTurnToFinish = false;

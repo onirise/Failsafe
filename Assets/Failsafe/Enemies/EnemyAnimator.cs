@@ -8,7 +8,6 @@ public class EnemyAnimator
     private readonly Animator _animator;
     private readonly Transform _transform;
     private EnemyController _controller;
-    private EnemyAudioManager _audioManager;
     private bool _isTurning = false;
 
     private bool _waitingForTurnToFinish = false;
@@ -58,7 +57,6 @@ public class EnemyAnimator
         Vector3 rootPos = _animator.rootPosition;
         rootPos.y = _navMeshAgent.nextPosition.y;
         _transform.position = rootPos;
-        _navMeshAgent.nextPosition = rootPos;
 
         // Поворот к направлению движения
         Vector3 desiredVelocity = _navMeshAgent.desiredVelocity;

@@ -9,7 +9,8 @@ using Failsafe.Scripts.Damage.Implementation;
 using Failsafe.Scripts.Damage.Providers;
 using Failsafe.Scripts.Health;
 using FMODUnity;
-using Failsafe.Player.Interaction;
+using TMPro;
+using VContainer;
 
 
 namespace Failsafe.PlayerMovements
@@ -25,9 +26,6 @@ namespace Failsafe.PlayerMovements
 
         [Header("Noise params")]
         [SerializeReference] private PlayerNoiseParameters _noiseParametrs = new PlayerNoiseParameters();
-
-        [Header("Model params")]
-        [SerializeReference] private PlayerModelParameters _modelParameters = new();
 
         private Transform _playerCamera;
         private Transform _playerGrabPoint;
@@ -52,12 +50,15 @@ namespace Failsafe.PlayerMovements
         [SerializeField] private EventReference _footstepEvent;
         private StepController _stepController;
 
+        [Inject]
+        public void Construct(IHealth health)
+        {
+            _health = health;
+            _damageService = new DamageService(new FlatDamageProvider(_health));
+        }
+        
         private void Awake()
         {
-            _health = new SimpleHealth(_modelParameters.MaxHealth);
-
-            _damageService = CreateDamageService();
-
             _damageableComponent = transform.Find("Capsule").GetComponent<DamageableComponent>();
 
         }
@@ -169,15 +170,6 @@ namespace Failsafe.PlayerMovements
 
         }
 
-        private IDamageService CreateDamageService()
-        {
-            var damageService = new DamageService();
-
-            damageService.Register(new FlatDamageProvider(_health));
-
-            return damageService;
-        }
-
         private void OnTakeDamage(IDamage damage)
         {
             _damageService.Provide(damage);
@@ -200,6 +192,7 @@ namespace Failsafe.PlayerMovements
         {
             _movementController.HandleMovement();
             _playerGravity.CheckGrounded();
+
         }
     }
 }

@@ -16,8 +16,11 @@ namespace Failsafe.Scripts.Bootstrap
         
         public async void Start()
         {
-            //logic after container build & IInitializable
+            #if UNITY_EDITOR
+                return;
+            #endif
             
+            //logic after container build & IInitializable
             await _sceneLoader.LoadSceneAsync(_gameConfig.MainMenuSceneName);
             
             //game started, main scene loaded

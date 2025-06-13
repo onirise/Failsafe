@@ -3,7 +3,6 @@ using Failsafe.Enemies.Sensors;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using SteamAudio;
 using UnityEngine.UIElements;
 using Vector3 = UnityEngine.Vector3;
 

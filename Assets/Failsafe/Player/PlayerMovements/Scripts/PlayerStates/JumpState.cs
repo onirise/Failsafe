@@ -11,21 +11,18 @@ namespace Failsafe.PlayerMovements.States
         private InputHandler _inputHandler;
         private CharacterController _characterController;
         private PlayerMovementController _movementController;
-        private readonly PlayerMovementParameters _movementParametrs;
-
-        private float _jumpForce => _movementParametrs.JumpForce;
-        private float _jumpForceFade => _movementParametrs.JumpForceFade;
+        private readonly PlayerMovementParameters _movementParameters;
         private float _jumpProgress = 0;
         private Vector3 _initialVelocity;
+        private float _targetHeight;
 
         //Минимальное время прыжка, нужно чтобы не дергало между прыжком и ходьбой. Нужно найти решение лучше
-        public bool CanGround() => _jumpProgress > 0.1f;
+        public bool CanGround() => _jumpProgress >= _movementParameters.JumpMinDuration;
         /// <summary>
         /// Находимся в высшей точке прыжка
         /// </summary>
         /// <returns></returns>
-        // Формулу нужно подбирать чтобы было красиво
-        public bool InHightPoint() => IsCollidedAbove() || (_jumpForce - _jumpProgress * _jumpForceFade) < _movementParametrs.GravityForce * 0.8;
+        public bool InHightPoint() => IsCollidedAbove() || _jumpProgress >= _movementParameters.JumpDuration;
 
         private bool IsCollidedAbove() => (_characterController.collisionFlags & CollisionFlags.CollidedAbove) != 0;
 
@@ -34,20 +31,26 @@ namespace Failsafe.PlayerMovements.States
             _inputHandler = inputHandler;
             _characterController = characterController;
             _movementController = movementController;
-            _movementParametrs = movementParametrs;
+            _movementParameters = movementParametrs;
         }
 
         public override void Enter()
         {
+            base.Enter();
             Debug.Log("Enter " + nameof(JumpState));
             _jumpProgress = 0;
             _initialVelocity = new Vector3(_movementController.Velocity.x, 0, _movementController.Velocity.z);
+            _targetHeight = _characterController.transform.position.y + _movementParameters.JumpMaxHeight;
         }
 
         public override void Update()
         {
             _jumpProgress += Time.deltaTime;
-            var jumpMovement = Vector3.up * (_jumpForce - _jumpProgress * _jumpForceFade);
+
+            var deltaHeight = _targetHeight - _characterController.transform.position.y;
+            var upForce = deltaHeight * _movementParameters.GravityForce;
+            upForce = Mathf.Min(upForce, _movementParameters.JumpMaxSpeed);
+            var jumpMovement = Vector3.up * (upForce + _movementParameters.GravityForce);//Добавляем GravityForce к силе прыжка чтобы компенсировать гравитацию
             _movementController.Move(jumpMovement + _initialVelocity);
         }
     }

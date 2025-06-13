@@ -388,6 +388,7 @@ GameObject:
   m_Component:
   - component: {fileID: 374109433352817470}
   - component: {fileID: 374109433352817471}
+  - component: {fileID: 3685481300793825505}
   - component: {fileID: 5564961472655603788}
   - component: {fileID: 3587987712684801882}
   - component: {fileID: 5543863665210299431}
@@ -446,6 +447,22 @@ CharacterController:
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3685481300793825505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374109433352817464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 386a06b260e7bb944adf19dc60979cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: Failsafe.GameSceneServices.GameSceneLifetimeScope
+  autoRun: 1
+  autoInjectGameObjects: []
 --- !u!114 &5564961472655603788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,13 +530,13 @@ MonoBehaviour:
         WalkSpeed: 2.5
         RunSpeed: 4.4
         CrouchSpeed: 1.5
-        CrouchHeight: 0.5
         SlideSpeed: 4.2
-        SlideHeight: 0.3
         MaxSlideTime: 1
         MinSlideTime: 0.5
-        JumpForce: 18
-        JumpForceFade: 31
+        JumpMaxHeight: 1.5
+        JumpMaxSpeed: 8
+        JumpMinDuration: 0.1
+        JumpDuration: 0.5
         GravityForce: 9
         GrabLedgeMaxDistance: 0.5
         GrabLedgeMinHeight: 2

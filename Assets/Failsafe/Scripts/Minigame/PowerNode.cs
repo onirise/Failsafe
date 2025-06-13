@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,15 +13,15 @@ public enum Direction { Forward, Right, Back, Left }
 
 public abstract class PowerNode : MonoBehaviour
 {
-    // Соседи по направлениям
+    // РЎРѕСЃРµРґРё РїРѕ РЅР°РїСЂР°РІР»РµРЅРёСЏРј
     protected Dictionary<Direction, PowerNode> Neighbors;
     [SerializeField] protected List<DirectionNodePair> NeighborsSerialized = new List<DirectionNodePair>();
 
-    // Какие направления соединены в этом узле (например, вход и выход)
+    // РљР°РєРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ СЃРѕРµРґРёРЅРµРЅС‹ РІ СЌС‚РѕРј СѓР·Р»Рµ (РЅР°РїСЂРёРјРµСЂ, РІС…РѕРґ Рё РІС‹С…РѕРґ)
     protected HashSet<Direction> ConnectedDirections;
     [SerializeField] protected List<Direction> ConnectedDirectionsSerialized = new List<Direction>();
 
-    // Получил ли питание
+    // РџРѕР»СѓС‡РёР» Р»Рё РїРёС‚Р°РЅРёРµ
     protected bool IsPowered = false;
     //public Direction FromDirection;
     protected bool PowerReceivedThisCycle = false;
@@ -37,7 +37,7 @@ public abstract class PowerNode : MonoBehaviour
         ConnectedDirections = new HashSet<Direction>(ConnectedDirectionsSerialized);
     }
 
-    // Метод запуска распространения питания
+    // РњРµС‚РѕРґ Р·Р°РїСѓСЃРєР° СЂР°СЃРїСЂРѕСЃС‚СЂР°РЅРµРЅРёСЏ РїРёС‚Р°РЅРёСЏ
     public void ReceivePower(Direction fromDirection)
     {
         if (IsPowered) return;
@@ -45,13 +45,13 @@ public abstract class PowerNode : MonoBehaviour
         if (!ConnectedDirections.Contains(Opposite(fromDirection)))
         {
             Debug.Log(ConnectedDirections.Contains(Opposite(fromDirection)));
-            return; // Питание пришло не с подключенной стороны
+            return; // РџРёС‚Р°РЅРёРµ РїСЂРёС€Р»Рѕ РЅРµ СЃ РїРѕРґРєР»СЋС‡РµРЅРЅРѕР№ СЃС‚РѕСЂРѕРЅС‹
         }
         Debug.Log(gameObject.name + "+");
         IsPowered = true;
         OnPowered();
 
-        // Распространяем дальше по другим направлениям (кроме того, откуда пришли)
+        // Р Р°СЃРїСЂРѕСЃС‚СЂР°РЅСЏРµРј РґР°Р»СЊС€Рµ РїРѕ РґСЂСѓРіРёРј РЅР°РїСЂР°РІР»РµРЅРёСЏРј (РєСЂРѕРјРµ С‚РѕРіРѕ, РѕС‚РєСѓРґР° РїСЂРёС€Р»Рё)
         foreach (var connectedDirection in ConnectedDirections)
         {
             if (connectedDirection == Opposite(fromDirection)) 
@@ -63,7 +63,7 @@ public abstract class PowerNode : MonoBehaviour
         }
     }
 
-    // Метод для запуска питания снаружи (например, у начальной точки)
+    // РњРµС‚РѕРґ РґР»СЏ Р·Р°РїСѓСЃРєР° РїРёС‚Р°РЅРёСЏ СЃРЅР°СЂСѓР¶Рё (РЅР°РїСЂРёРјРµСЂ, Сѓ РЅР°С‡Р°Р»СЊРЅРѕР№ С‚РѕС‡РєРё)
     public void StartPower()
     {
         if (IsPowered) return;
@@ -84,7 +84,7 @@ public abstract class PowerNode : MonoBehaviour
         Debug.Log($"{name} powered");
         gameObject.GetComponent<Renderer>().material.color = Color.red;
     }
-    // Метод для сброса питания (отключение)
+    // РњРµС‚РѕРґ РґР»СЏ СЃР±СЂРѕСЃР° РїРёС‚Р°РЅРёСЏ (РѕС‚РєР»СЋС‡РµРЅРёРµ)
     public virtual void ResetPower()
     {
         IsPowered = false;
@@ -92,7 +92,7 @@ public abstract class PowerNode : MonoBehaviour
         OnPowerLost();
     }
 
-    // Метод, вызываемый при отключении питания (можно переопределять)
+    // РњРµС‚РѕРґ, РІС‹Р·С‹РІР°РµРјС‹Р№ РїСЂРё РѕС‚РєР»СЋС‡РµРЅРёРё РїРёС‚Р°РЅРёСЏ (РјРѕР¶РЅРѕ РїРµСЂРµРѕРїСЂРµРґРµР»СЏС‚СЊ)
     protected virtual void OnPowerLost()
     {
         Debug.Log($"{name} lost power"); 

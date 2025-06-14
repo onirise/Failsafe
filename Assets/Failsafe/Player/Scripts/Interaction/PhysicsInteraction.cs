@@ -1,8 +1,7 @@
 using Failsafe.PlayerMovements;
-using System;
 using UnityEngine;
 
-namespace Failsafe.Player.Interaction
+namespace Failsafe.Player.Scripts.Interaction
 {
     public class PhysicsInteraction : MonoBehaviour
     {
@@ -16,9 +15,11 @@ namespace Failsafe.Player.Interaction
         [SerializeField] private Vector3 _draggablePositionOffset;
         [SerializeField] private float _dragSpeed = 10f;
         
-        [Tooltip("Данная сила умножается на число от 1 до 3 при зажатии кнопки броска.")]
+        [Tooltip("Данная сила умножается на число от 0 до 3 при зажатии кнопки броска.")]
         [SerializeField] private float _throwForce = 3f;
-
+        [SerializeField] private LayerMask _carryingObjectLayer;
+        
+        
         private Quaternion _relativeRotation;
         
         private PlayerController _playerController;
@@ -28,6 +29,7 @@ namespace Failsafe.Player.Interaction
         private const float _maxForceMultiplier = 3f;
         
         private bool _allowToGrabOrDrop = true;
+        private int _cachedCarryingLayer;
         
         public bool IsDragging { get; private set; }
 
@@ -115,6 +117,9 @@ namespace Failsafe.Player.Interaction
             _carryingObject = hitInfo.rigidbody.gameObject;
             
             _carryingObject.transform.parent = transform;
+            _cachedCarryingLayer = _carryingObject.layer;
+            
+            _carryingObject.layer = _carryingObjectLayer.value >> 1;
             _relativeRotation = _carryingObject.transform.localRotation;
             _carryingObject.transform.parent = null;
             
@@ -129,6 +134,8 @@ namespace Failsafe.Player.Interaction
             
             _carryingBody.AddForce(_playerCameraTransform.forward * (_throwForce * throwForceMultiplier), ForceMode.Impulse);
             
+            _carryingObject.layer = _cachedCarryingLayer;
+            
             _carryingBody = null;
             _carryingObject = null;
             IsDragging = false;
@@ -138,6 +145,8 @@ namespace Failsafe.Player.Interaction
         
         private void DropItem()
         {
+            _carryingObject.layer = _cachedCarryingLayer;
+            
             _carryingBody.useGravity = true;
             _carryingBody = null;
             _carryingObject = null;

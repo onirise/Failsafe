@@ -1,24 +1,35 @@
 using Failsafe.PlayerMovements;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Failsafe.Player.Scripts.Interaction
 {
     public class PhysicsInteraction : MonoBehaviour
     {
-        [SerializeField] private float _carryingDistance = 2.5f;
+        [Header("Picking Up")]
         [SerializeField] private float _maxPickupDistance = 5f;
         
+        [Header("Carrying")]
+        [SerializeField] private float _carryingDistance = 2.5f;
+        [SerializeField] private float _carrySpeed = 10f;
+        [SerializeField] private LayerMask _carryingObjectLayer;
+        
+        [Header("Throwing")]
+        [Tooltip("Данная сила умножается на число от 0 до 3 при зажатии кнопки броска.")]
+        [SerializeField] private float _throwForce = 3f;
+        [SerializeField] private float _throwTorqueForce = 3f;
+        [Tooltip("[при зарядке броска] Линейное сокращение дистанции переноски с Carrying Distance до указанного значения.")]
+        [SerializeField] private float _carryingDistanceShorteningTo = 0.8f;
+        
+        [Header("Additional Options")]
+        [SerializeField] private Vector3 _draggablePositionOffset;
+        
+        [Header("Debug")]
         [SerializeField] private GameObject _carryingObject;
         [SerializeField] private Rigidbody _carryingBody;
         [SerializeField] private Transform _playerCameraTransform;
-        
-        [SerializeField] private Vector3 _draggablePositionOffset;
-        [SerializeField] private float _dragSpeed = 10f;
-        
-        [Tooltip("Данная сила умножается на число от 0 до 3 при зажатии кнопки броска.")]
-        [SerializeField] private float _throwForce = 3f;
-        [SerializeField] private LayerMask _carryingObjectLayer;
-        
+        [SerializeField] [ReadOnly] private float _currentCarryingDistance;
         
         private Quaternion _relativeRotation;
         
@@ -35,6 +46,8 @@ namespace Failsafe.Player.Scripts.Interaction
 
         private void Awake()
         {
+            _currentCarryingDistance = _carryingDistance;
+
             if (!_playerCameraTransform)
             {
                 Camera playerCamera = transform.root.GetComponentInChildren<Camera>();
@@ -62,6 +75,11 @@ namespace Failsafe.Player.Scripts.Interaction
                 {
                     _throwForceMultiplier = Mathf.Clamp(_throwForceMultiplier + Time.deltaTime, _throwForceMultiplier, _maxForceMultiplier);
                     _isPreparingToThrow = true;
+
+                    if (_throwForceMultiplier < _maxForceMultiplier)
+                    {
+                        _currentCarryingDistance = Mathf.Lerp(_currentCarryingDistance, _carryingDistanceShorteningTo, Time.deltaTime);
+                    }
                 }
                 else if (_isPreparingToThrow)
                 {
@@ -94,10 +112,11 @@ namespace Failsafe.Player.Scripts.Interaction
         
         private void DragObject()
         {
-            Vector3 targetPosition = transform.position + _playerCameraTransform.forward * _carryingDistance;
-            Quaternion targetRotation = transform.rotation * _relativeRotation;
+            Vector3 targetPosition = _playerCameraTransform.position + _playerCameraTransform.forward * _currentCarryingDistance;
             
-            _carryingBody.linearVelocity = (targetPosition - _carryingBody.position + _draggablePositionOffset) * _dragSpeed;
+            Quaternion targetRotation = _playerCameraTransform.rotation * _relativeRotation;
+            
+            _carryingBody.linearVelocity = (targetPosition - _carryingBody.position) * _carrySpeed;
             
             _carryingBody.rotation = targetRotation;
             
@@ -106,7 +125,12 @@ namespace Failsafe.Player.Scripts.Interaction
         
         private void GrabObject()
         {
-            Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, _maxPickupDistance);
+            Physics.Raycast(
+                _playerCameraTransform.position,
+                _playerCameraTransform.forward,
+                out RaycastHit hitInfo,
+                _maxPickupDistance
+            );
 
             if (!hitInfo.rigidbody)
                 return;
@@ -116,12 +140,13 @@ namespace Failsafe.Player.Scripts.Interaction
             
             _carryingObject = hitInfo.rigidbody.gameObject;
             
-            _carryingObject.transform.parent = transform;
+            _carryingObject.transform.parent = _playerCameraTransform;
+            _relativeRotation = _carryingObject.transform.localRotation;
+            _carryingObject.transform.parent = null;
+            
             _cachedCarryingLayer = _carryingObject.layer;
             
             _carryingObject.layer = _carryingObjectLayer.value >> 1;
-            _relativeRotation = _carryingObject.transform.localRotation;
-            _carryingObject.transform.parent = null;
             
             IsDragging = true;
             _isPreparingToThrow = false;
@@ -133,6 +158,7 @@ namespace Failsafe.Player.Scripts.Interaction
             _carryingBody.useGravity = true;
             
             _carryingBody.AddForce(_playerCameraTransform.forward * (_throwForce * throwForceMultiplier), ForceMode.Impulse);
+            _carryingBody.AddTorque(_playerCameraTransform.forward * (_throwTorqueForce * throwForceMultiplier), ForceMode.Impulse);
             
             _carryingObject.layer = _cachedCarryingLayer;
             
@@ -141,6 +167,7 @@ namespace Failsafe.Player.Scripts.Interaction
             IsDragging = false;
             _isPreparingToThrow = false;
             _throwForceMultiplier = 0f;
+            _currentCarryingDistance = _carryingDistance;
         }
         
         private void DropItem()
@@ -151,6 +178,7 @@ namespace Failsafe.Player.Scripts.Interaction
             _carryingBody = null;
             _carryingObject = null;
             IsDragging = false;
+            _currentCarryingDistance = _carryingDistance;
         }
     }
 }

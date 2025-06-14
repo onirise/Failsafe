@@ -1,0 +1,122 @@
+:root {
+    --main-orange: rgb(224, 99, 33);
+    --main-black: rgb(0, 0, 0);
+}
+
+.container {
+    justify-content: center;
+    align-items: center;
+    align-self: auto;
+    align-content: auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    visibility: visible;
+}
+
+.popup {
+    flex-grow: 0;
+    border-top-width: 0;
+    border-right-width: 14px;
+    border-bottom-width: 14px;
+    border-left-width: 14px;
+    border-color: var(--main-orange);
+    background-color: var(--main-black);
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&guid=8d0d0d6555c74ca92a0973baa0100b38&type=3#NotInter-Regular");
+    padding-left: 0;
+    color: var(--main-orange);
+    width: 760px;
+    height: 516px;
+    align-content: auto;
+    justify-content: flex-start;
+    align-items: stretch;
+    font-size: 30px;
+    min-height: 516px;
+    min-width: 760px;
+}
+
+.header {
+    flex-grow: 0;
+    background-color: var(--main-orange);
+    align-self: stretch;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: auto;
+    margin: 0 -1px;
+    padding-left: 43px;
+    height: 125px;
+    color: var(--main-black);
+}
+
+.title {
+    color: var(--main-black);
+    background-color: transparent;
+    margin: 0;
+    font-size: 90px;
+    -unity-text-align: middle-left;
+    text-overflow: clip;
+    padding: 0;
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&guid=8d0d0d6555c74ca92a0973baa0100b38&type=3#NotInter-Regular");
+}
+
+.content {
+    flex-grow: 1;
+    padding-left: 47px;
+    font-size: 30px;
+    padding-top: 35px;
+}
+
+.text {
+    color: var(--main-orange);
+    padding: 0;
+    margin: 0;
+}
+
+.options {
+    flex-grow: 0;
+    align-items: flex-end;
+    min-height: 160px;
+}
+
+.option {
+    flex-grow: 1;
+    min-width: 195px;
+    min-height: 64px;
+    align-content: auto;
+    align-self: flex-end;
+    justify-content: center;
+    align-items: stretch;
+    background-color: transparent;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    font-size: 50px;
+    flex-direction: row;
+    right: -2px;
+}
+
+.button {
+    background-color: transparent;
+    border-width: 0;
+    border-color: transparent;
+    -unity-text-align: middle-right;
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+    padding-right: 34px;
+}
+
+.marker {
+    visibility: hidden;
+    flex-grow: 0;
+    background-color: var(--main-orange);
+    width: 10px;
+    margin-left: 20px;
+}
+
+.option:hover > .marker {
+    visibility: visible;
+}
+
+.option:hover > .button {
+    background-color: var(--main-orange);
+    color: var(--main-black);
+}

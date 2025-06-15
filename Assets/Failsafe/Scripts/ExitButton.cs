@@ -1,23 +1,19 @@
+using Failsafe.UI.MainMenu.Popup;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ExitButton : MonoBehaviour
 {
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] public Popup popup;
+    public void OnClick()
     {
-        
+        popup.Show();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void ExitGame()
     {
+        # if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #endif
         Application.Quit();
     }
 }

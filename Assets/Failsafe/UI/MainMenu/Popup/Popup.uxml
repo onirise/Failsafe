@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Failsafe/UI/MainMenu/Popup/Popup.uss?fileID=7433441132597879392&amp;guid=2b8a095de1c9181a485ca6078d11ff99&amp;type=3#Popup" />
+    <ui:VisualElement name="Container" focusable="true" class="container">
+        <ui:VisualElement name="Popup" class="popup glitch">
+            <ui:VisualElement name="Header" class="header">
+                <ui:Label text="TITLE" name="Title" class="title" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Content" class="content">
+                <ui:Label text="Text Content " name="Text" class="text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Options" class="options">
+                <ui:VisualElement name="CancelOption" class="option">
+                    <ui:VisualElement name="FreeSpace" style="flex-grow: 1;" />
+                    <ui:Label text="&gt;" name="Arrow" class="arrow" />
+                    <ui:Button text="No" name="CancelButton" class="button" />
+                    <ui:VisualElement name="Marker" class="marker" />
+                </ui:VisualElement>
+                <ui:VisualElement name="SubmitOption" class="option" style="flex-grow: 1;">
+                    <ui:VisualElement name="FreeSpace" style="flex-grow: 1;" />
+                    <ui:Label text="&gt;" name="Arrow" class="arrow" />
+                    <ui:Button text="Yes" name="SubmitButton" class="button" />
+                    <ui:VisualElement name="Marker" class="marker" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

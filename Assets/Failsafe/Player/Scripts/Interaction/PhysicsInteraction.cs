@@ -24,6 +24,9 @@ namespace Failsafe.Player.Scripts.Interaction
         
         [Header("Additional Options")]
         [SerializeField] private Vector3 _draggablePositionOffset;
+        [Tooltip("Данный вектор введёт для исправления бага, при котором на некоторых поверхностях объект застревал в текстуре." +
+                 "Может быть удалён в будущем.")]
+        [SerializeField] private Vector3 _grabHelperVector = new Vector3(0f,0.01f,0f);
         
         [Header("Debug")]
         [SerializeField] private GameObject _carryingObject;
@@ -117,7 +120,6 @@ namespace Failsafe.Player.Scripts.Interaction
             Quaternion targetRotation = _playerCameraTransform.rotation * _relativeRotation;
             
             _carryingBody.linearVelocity = (targetPosition - _carryingBody.position) * _carrySpeed;
-            
             _carryingBody.rotation = targetRotation;
             
             _carryingBody.angularVelocity = Vector3.zero;
@@ -143,6 +145,8 @@ namespace Failsafe.Player.Scripts.Interaction
             _carryingObject.transform.parent = _playerCameraTransform;
             _relativeRotation = _carryingObject.transform.localRotation;
             _carryingObject.transform.parent = null;
+
+            _carryingObject.transform.position += _grabHelperVector;
             
             _cachedCarryingLayer = _carryingObject.layer;
             

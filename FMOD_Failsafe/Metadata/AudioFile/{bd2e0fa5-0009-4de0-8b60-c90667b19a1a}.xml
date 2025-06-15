@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{bd2e0fa5-0009-4de0-8b60-c90667b19a1a}">
+		<property name="assetPath">
+			<value>UntitledBASSEE2_HIGH.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>32.727291666666666</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2bee4d2d-a272-4277-bab5-159242a81bc7}</destination>
+		</relationship>
+	</object>
+</objects>

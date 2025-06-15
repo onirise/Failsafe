@@ -30,8 +30,8 @@ namespace Failsafe.Player.Scripts.Interaction
         [SerializeField] private Vector3 _grabHelperVector = new Vector3(0f,0.01f,0f);
         
         [Header("Debug")]
-        [SerializeField] private GameObject _carryingObject;
-        [SerializeField] private Rigidbody _carryingBody;
+        [SerializeField] public GameObject _carryingObject;
+        [SerializeField] public Rigidbody _carryingBody;
         [SerializeField] private Transform _playerCameraTransform;
         [SerializeField] [ReadOnly] private float _currentCarryingDistance;
         

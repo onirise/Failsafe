@@ -3,6 +3,7 @@
     --main-black: rgb(0, 0, 0);
     --source-code-pro: url("project://database/Assets/Failsafe/UI/Fonts/SourceCodePro-VariableFont_wght.ttf?fileID=12800000&guid=6ffe14098813a881cb86f079e4a3b8b9&type=3#SourceCodePro-VariableFont_wght");
     --share-tech-mono: url("project://database/Assets/Failsafe/UI/Fonts/ShareTechMono-Regular.ttf?fileID=12800000&guid=d34f73a2bfc5432fa84afb0d80af1143&type=3#ShareTechMono-Regular");
+    --glitch-image: url("project://database/Assets/Failsafe/UI/Menu/Sprites/glitch.png?fileID=21300000&guid=67adb7e5bf7af414982e19e13058964d&type=3#glitch");
 }
 
 .container {
@@ -20,9 +21,9 @@
 .popup {
     flex-grow: 0;
     border-top-width: 0;
-    border-right-width: 14px;
-    border-bottom-width: 14px;
-    border-left-width: 14px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
     border-color: var(--main-orange);
     background-color: var(--main-black);
     padding-left: 0;
@@ -35,6 +36,13 @@
     font-size: 30px;
     min-height: 516px;
     min-width: 760px;
+    padding-bottom: 53px;
+}
+
+.glitch {
+    background-image: var(--glitch-image);
+    background-size: 100% 200%;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.12);
 }
 
 .header {
@@ -48,7 +56,7 @@
     padding-left: 43px;
     height: 125px;
     color: var(--main-black);
-    -unity-font-definition: var(--share-tech-mono)
+    -unity-font-definition: var(--share-tech-mono);
 }
 
 .title {
@@ -82,17 +90,16 @@
 
 .option {
     flex-grow: 1;
-    min-width: 195px;
+    min-width: 201px;
     min-height: 64px;
     align-content: auto;
     align-self: flex-end;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: stretch;
     background-color: transparent;
     -unity-background-image-tint-color: rgb(255, 255, 255);
     font-size: 50px;
     flex-direction: row;
-    right: -2px;
 }
 
 .button {
@@ -100,10 +107,10 @@
     border-width: 0;
     border-color: transparent;
     -unity-text-align: middle-right;
-    flex-grow: 1;
+    flex-grow: 0;
     margin: 0;
     padding: 0;
-    padding-right: 34px;
+    padding-right: 33px;
 }
 
 .marker {
@@ -114,11 +121,26 @@
     margin-left: 20px;
 }
 
+.arrow {
+    visibility: hidden;
+    -unity-text-align: middle-center;
+    margin: 0;
+    padding: 0;
+}
+
+
+.option:hover > .arrow {
+    visibility: visible;
+}
+
 .option:hover > .marker {
     visibility: visible;
 }
 
-.option:hover > .button {
+.option:hover > * {
     background-color: var(--main-orange);
     color: var(--main-black);
+    -unity-font-style: bold;
 }
+
+

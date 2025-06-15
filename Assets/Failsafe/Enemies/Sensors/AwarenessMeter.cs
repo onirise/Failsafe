@@ -84,4 +84,5 @@ namespace Failsafe.Enemies.Sensors
                 _alertness = Mathf.Max(_alertness, _alertThreshold);
         }
     }
+    
 }

@@ -1,7 +1,8 @@
 :root {
     --main-orange: rgb(224, 99, 33);
     --main-black: rgb(0, 0, 0);
-    -unity-font-definition: url("project://database/Assets/Failsafe/UI/Fonts/SourceCodePro-VariableFont_wght.ttf?fileID=12800000&guid=6ffe14098813a881cb86f079e4a3b8b9&type=3#SourceCodePro-VariableFont_wght");
+    --source-code-pro: url("project://database/Assets/Failsafe/UI/Fonts/SourceCodePro-VariableFont_wght.ttf?fileID=12800000&guid=6ffe14098813a881cb86f079e4a3b8b9&type=3#SourceCodePro-VariableFont_wght");
+    --share-tech-mono: url("project://database/Assets/Failsafe/UI/Fonts/ShareTechMono-Regular.ttf?fileID=12800000&guid=d34f73a2bfc5432fa84afb0d80af1143&type=3#ShareTechMono-Regular");
 }
 
 .container {
@@ -13,6 +14,7 @@
     height: 100%;
     display: flex;
     visibility: visible;
+    -unity-font-definition: var(--source-code-pro);
 }
 
 .popup {
@@ -46,6 +48,7 @@
     padding-left: 43px;
     height: 125px;
     color: var(--main-black);
+    -unity-font-definition: var(--share-tech-mono)
 }
 
 .title {
@@ -56,7 +59,6 @@
     -unity-text-align: middle-left;
     text-overflow: clip;
     padding: 0;
-    -unity-font-definition: url("project://database/Assets/Failsafe/UI/Fonts/ShareTechMono-Regular.ttf?fileID=12800000&guid=d34f73a2bfc5432fa84afb0d80af1143&type=3#ShareTechMono-Regular");
 }
 
 .content {

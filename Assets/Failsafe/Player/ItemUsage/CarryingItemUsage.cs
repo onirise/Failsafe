@@ -1,6 +1,4 @@
-
 using Failsafe.Player.Scripts.Interaction;
-using Failsafe.PlayerMovements;
 using UnityEngine;
 using VContainer;
 
@@ -16,7 +14,7 @@ namespace Failsafe.Player.ItemUsage
         {
             _inputHandler = inputHandler;
         }
-        
+
         private void Start()
         {
             _physicsInteraction = GetComponent<PhysicsInteraction>();
@@ -24,9 +22,9 @@ namespace Failsafe.Player.ItemUsage
 
         private void Update()
         {
-            if (_physicsInteraction._carryingObject is null) return;
             if (!_inputHandler.UseTriggered) return;
-        
+            if (!_physicsInteraction._carryingObject) return;
+
             if (_physicsInteraction._carryingObject.TryGetComponent(out Item item))
             {
                 item.ActionsGroups.ForEach(group => group.Event.Invoke());

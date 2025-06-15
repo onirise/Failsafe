@@ -86,6 +86,11 @@ namespace Failsafe.Player.Scripts.Interaction
 
             if (IsDragging)
             {
+                if (!_carryingObject || !_carryingBody)
+                {
+                    DropItem();
+                    return;
+                }
                 if (_inputHandler.AttackTriggered)
                 {
                     _throwForceMultiplier = Mathf.Clamp(_throwForceMultiplier + Time.deltaTime, _throwForceMultiplier, _maxForceMultiplier);
@@ -171,13 +176,18 @@ namespace Failsafe.Player.Scripts.Interaction
 
         public void ThrowObject(float throwForceMultiplier)
         {
-            _carryingBody.useGravity = true;
-            
-            _carryingBody.AddForce(_playerCameraTransform.forward * (_throwForce * throwForceMultiplier), ForceMode.Impulse);
-            _carryingBody.AddTorque(_playerCameraTransform.forward * (_throwTorqueForce * throwForceMultiplier), ForceMode.Impulse);
-            
-            _carryingObject.layer = _cachedCarryingLayer;
-            
+            if (_carryingBody)
+            {
+                _carryingBody.useGravity = true;
+
+                _carryingBody.AddForce(_playerCameraTransform.forward * (_throwForce * throwForceMultiplier),
+                    ForceMode.Impulse);
+                _carryingBody.AddTorque(_playerCameraTransform.forward * (_throwTorqueForce * throwForceMultiplier),
+                    ForceMode.Impulse);
+            }
+
+            if (_carryingObject)  _carryingObject.layer = _cachedCarryingLayer;
+
             _carryingBody = null;
             _carryingObject = null;
             IsDragging = false;
@@ -188,9 +198,9 @@ namespace Failsafe.Player.Scripts.Interaction
         
         private void DropItem()
         {
-            _carryingObject.layer = _cachedCarryingLayer;
-            
-            _carryingBody.useGravity = true;
+            if (_carryingObject) _carryingObject.layer = _cachedCarryingLayer;
+            if (_carryingBody) _carryingBody.useGravity = true;
+
             _carryingBody = null;
             _carryingObject = null;
             IsDragging = false;

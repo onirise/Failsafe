@@ -27,7 +27,7 @@ namespace Failsafe.Player.ItemUsage
 
             if (_physicsInteraction._carryingObject.TryGetComponent(out Item item))
             {
-                item.ActionsGroups.ForEach(group => group.Event.Invoke());
+                item.Use();
             }
         }
     }

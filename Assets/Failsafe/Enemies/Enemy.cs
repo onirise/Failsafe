@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
 
         // Создаём состояния (уже можно брать патрульные точки из Room)
         var defaultState = new DefaultState(_sensors, transform, _controller);
-        var chasingState = new ChasingState(_sensors, transform, _controller,_navMeshAgent, enemyConfig);
+        var chasingState = new ChasingState(_sensors, transform, _controller,_navMeshAgent, enemyConfig, _enemyAnimator );
         var patrolState = new PatrolState(_sensors, _controller,_navMeshAgent,enemyConfig);
         var attackState = new AttackState(_sensors, transform, _controller, _enemyAnimator, _activeLaser, _laserBeamPrefab, _laserSpawnPoint, _navMeshAgent, enemyConfig);
 

@@ -158,4 +158,9 @@ public class EnemyAnimator
         _inAttack = isAttacking;
     }
 
+    public void StartMove(float speed)
+    {
+        _animator.SetFloat("Speed", speed );
+    }
+
 }

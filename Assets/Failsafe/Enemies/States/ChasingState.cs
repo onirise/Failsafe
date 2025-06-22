@@ -12,7 +12,7 @@ public class ChasingState : BehaviorState
     private Vector3? _chasingPosition;
     private NavMeshAgent _navMeshAgent;
     private Enemy_ScriptableObject _enemyConfig;
-
+    private EnemyAnimator _enemyAnimator;
     private EnemyController _enemyController;
 
     private float _loseProgress;
@@ -20,13 +20,14 @@ public class ChasingState : BehaviorState
     private float _distanceToPlayer;
     private bool _playerInSight;
 
-    public ChasingState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, NavMeshAgent navMeshAgent, Enemy_ScriptableObject enemyConfig)
+    public ChasingState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, NavMeshAgent navMeshAgent, Enemy_ScriptableObject enemyConfig, EnemyAnimator enemyAnimator)
     {
         _sensors = sensors;
         _transform = currentTransform;
         _enemyController = enemyController;
         _navMeshAgent = navMeshAgent;   
         _enemyConfig = enemyConfig;
+        _enemyAnimator = enemyAnimator;
     }
 
     public bool PlayerLost() => _loseProgress >= _enemyConfig.enemyLostPlayerTime;
@@ -40,6 +41,7 @@ public class ChasingState : BehaviorState
         _loseProgress = 0;
         _playerInSight = false;
         _navMeshAgent.stoppingDistance = _enemyConfig.enemyAttackRangeMin;
+        _enemyAnimator.StartMove(_enemyConfig.enemyChaseSpeed);
         Debug.Log("Enter ChasingState");
     }
 
@@ -65,6 +67,7 @@ public class ChasingState : BehaviorState
             {
                 anySensorIsActive = true;
                 _loseProgress = 0;
+                _enemyController.RotateToPoint((Vector3)sensor.SignalSourcePosition, 5f);
                 _chasingPosition = sensor.SignalSourcePosition;
                 break;
             }

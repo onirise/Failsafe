@@ -12,8 +12,7 @@ namespace Failsafe.PlayerMovements.States
         private readonly InputHandler _inputHandler;
         private readonly CharacterController _characterController;
         private readonly PlayerMovementController _movementController;
-        private readonly PlayerMovementParameters _movementParametrs;
-        private readonly PlayerGravityController _playerGravityController;
+        private readonly PlayerMovementParameters _movementParameters;
         private readonly PlayerLedgeController _playerLedgeController;
 
         private LedgeGrabPoint _ledgeGrabPoint;
@@ -27,15 +26,13 @@ namespace Failsafe.PlayerMovements.States
             InputHandler inputHandler,
             CharacterController characterController,
             PlayerMovementController movementController,
-            PlayerMovementParameters movementParametrs,
-            PlayerGravityController playerGravityController,
+            PlayerMovementParameters movementParameters,
             PlayerLedgeController playerLedgeController)
         {
             _inputHandler = inputHandler;
             _characterController = characterController;
             _movementController = movementController;
-            _movementParametrs = movementParametrs;
-            _playerGravityController = playerGravityController;
+            _movementParameters = movementParameters;
             _playerLedgeController = playerLedgeController;
         }
 
@@ -43,12 +40,12 @@ namespace Failsafe.PlayerMovements.States
 
         public override void Enter()
         {
+            base.Enter();
             Debug.Log("Enter " + nameof(ClimbingOnState));
             _climbingProgress = 0;
             _ledgeGrabPoint = _playerLedgeController.LedgeGrabPointInFrontBottom;
             _targetPosition = _ledgeGrabPoint.Position;
-            _playerGravityController.DisableGravity();
-            base.Enter();
+            _movementController.SetGravity(Vector3.zero);
         }
 
         public override void Update()
@@ -66,8 +63,8 @@ namespace Failsafe.PlayerMovements.States
 
         public override void Exit()
         {
-            _playerGravityController.EnableGravity();
             base.Exit();
+            _movementController.SetGravityDefault();
         }
     }
 }

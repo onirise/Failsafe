@@ -65,6 +65,14 @@ namespace Failsafe.PlayerMovements
         /// </summary>
         public float GravityForce = 8f;
         /// <summary>
+        /// Сила притяжения в начале падения
+        /// </summary>
+        public float InitialGravityStrength = 0.1f;
+        /// <summary>
+        /// Время до разгона
+        /// </summary>
+        public float TimeToFullGravityForce = 0.5f;
+        /// <summary>
         /// Высота падения для замедления
         /// </summary>
         public float FallDistanceToSlow = 2f;

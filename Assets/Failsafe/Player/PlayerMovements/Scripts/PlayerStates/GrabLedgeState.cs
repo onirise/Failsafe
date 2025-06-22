@@ -13,8 +13,7 @@ namespace Failsafe.PlayerMovements.States
         private readonly InputHandler _inputHandler;
         private readonly CharacterController _characterController;
         private readonly PlayerMovementController _movementController;
-        private readonly PlayerMovementParameters _movementParametrs;
-        private readonly PlayerGravityController _playerGravityController;
+        private readonly PlayerMovementParameters _movementParameters;
         private readonly PlayerRotationController _playerRotationController;
         private readonly PlayerLedgeController _playerLedgeController;
         private Ledge _ledge;
@@ -26,16 +25,14 @@ namespace Failsafe.PlayerMovements.States
             InputHandler inputHandler,
             CharacterController characterController,
             PlayerMovementController movementController,
-            PlayerMovementParameters movementParametrs,
-            PlayerGravityController playerGravityController,
+            PlayerMovementParameters movementParameters,
             PlayerRotationController playerRotationController,
             PlayerLedgeController playerLedgeController)
         {
             _inputHandler = inputHandler;
             _characterController = characterController;
             _movementController = movementController;
-            _movementParametrs = movementParametrs;
-            _playerGravityController = playerGravityController;
+            _movementParameters = movementParameters;
             _playerRotationController = playerRotationController;
             _playerLedgeController = playerLedgeController;
         }
@@ -48,11 +45,11 @@ namespace Failsafe.PlayerMovements.States
             _stateProgress = 0;
             _playerLedgeController.AttachedLedgeGrabPoint = _playerLedgeController.LedgeGrabPointInView;
             _ledge = _playerLedgeController.AttachedLedgeGrabPoint.Ledge;
-            _playerGravityController.DisableGravity();
             _playerRotationController.RotateBodyToDirection(-_playerLedgeController.AttachedLedgeGrabPoint.Normal);
             StickToObstacle(_playerLedgeController.AttachedLedgeGrabPoint);
             _characterController.SimpleMove(Vector3.zero);
             _movementController.Move(Vector3.zero);
+            _movementController.SetGravity(Vector3.zero);
             //TODO: переделать все перемещение на PlayerMovementController
         }
 
@@ -69,7 +66,7 @@ namespace Failsafe.PlayerMovements.States
                 var transition = _playerLedgeController.AttachedLedgeGrabPoint.Transitions.FirstOrDefault(x => Vector3.Angle(x.Direction, movementDirection) < _directionAngleThreathfold);
                 if (transition != null && transition.Type == LedgeGrabPointTransition.TransidiotnType.Straight)
                 {
-                    var movement = _movementParametrs.GrabLedgeSpeed * movementX * Time.deltaTime * _characterController.transform.right;
+                    var movement = _movementParameters.GrabLedgeSpeed * movementX * Time.deltaTime * _characterController.transform.right;
                     _characterController.Move(movement);
                     _playerRotationController.RotateBodyToDirection(-_playerLedgeController.AttachedLedgeGrabPoint.Normal);
                 }
@@ -86,7 +83,7 @@ namespace Failsafe.PlayerMovements.States
 
         public override void Exit()
         {
-            _playerGravityController.EnableGravity();
+            _movementController.SetGravityDefault();
             if (_inputHandler.MoveForward)
             {
                 _playerRotationController.RotateHeadToBody();

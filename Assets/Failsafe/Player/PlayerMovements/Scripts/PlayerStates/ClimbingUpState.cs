@@ -12,8 +12,7 @@ namespace Failsafe.PlayerMovements.States
         private readonly InputHandler _inputHandler;
         private readonly CharacterController _characterController;
         private readonly PlayerMovementController _movementController;
-        private readonly PlayerMovementParameters _movementParametrs;
-        private readonly PlayerGravityController _playerGravityController;
+        private readonly PlayerMovementParameters _movementParameters;
         private readonly PlayerLedgeController _playerLedgeController;
         private float _duration = 0.5f;
         private float _climbingProgress = 0f;
@@ -42,15 +41,13 @@ namespace Failsafe.PlayerMovements.States
             InputHandler inputHandler,
             CharacterController characterController,
             PlayerMovementController movementController,
-            PlayerMovementParameters movementParametrs,
-            PlayerGravityController playerGravityController,
+            PlayerMovementParameters movementParameters,
             PlayerLedgeController playerLedgeController)
         {
             _inputHandler = inputHandler;
             _characterController = characterController;
             _movementController = movementController;
-            _movementParametrs = movementParametrs;
-            _playerGravityController = playerGravityController;
+            _movementParameters = movementParameters;
             _playerLedgeController = playerLedgeController;
         }
 
@@ -59,7 +56,7 @@ namespace Failsafe.PlayerMovements.States
             Debug.Log("Enter " + nameof(ClimbingUpState));
             _climbingProgress = 0;
             _targetPosition = LedgeGrabPoint.Position;
-            _playerGravityController.DisableGravity();
+            _movementController.SetGravity(Vector3.zero);
         }
 
         public override void Update()
@@ -77,7 +74,7 @@ namespace Failsafe.PlayerMovements.States
 
         public override void Exit()
         {
-            _playerGravityController.EnableGravity();
+            _movementController.SetGravityDefault();
             _playerLedgeController.AttachedLedgeGrabPoint = LedgeGrabPoint.Empty;
         }
     }

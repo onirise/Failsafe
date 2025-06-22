@@ -27,6 +27,8 @@ MonoBehaviour:
   JumpDuration: 0.5
   AirMovementSpeed: 0.5
   GravityForce: 8
+  InitialGravityStrength: 0.1
+  TimeToFullGravityForce: 0.5
   FallDistanceToSlow: 2
   SlowMultiplierOnLanding: 0.5
   SlowDurationOnLanding: 5

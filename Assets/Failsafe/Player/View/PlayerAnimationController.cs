@@ -54,7 +54,7 @@ namespace Failsafe.Player
             _animator.SetBool(_runningId, _playerController.StateMachine.CurrentState is SprintState);
             _animator.SetBool(_crouchingId, _playerController.StateMachine.CurrentState is CrouchState || _playerController.StateMachine.CurrentState is CrouchIdle);
             _animator.SetBool(_fallingId, _playerController.StateMachine.CurrentState is FallState);
-            _animator.SetBool(_groundedId, _playerController.PlayerGravityController.IsGrounded);
+            _animator.SetBool(_groundedId, _playerController.PlayerMovementController.IsGrounded);
         }
 
         public void Initialize()

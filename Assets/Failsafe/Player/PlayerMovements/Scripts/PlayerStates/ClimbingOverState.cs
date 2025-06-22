@@ -13,7 +13,6 @@ namespace Failsafe.PlayerMovements.States
         private readonly CharacterController _characterController;
         private readonly PlayerMovementController _movementController;
         private readonly PlayerMovementParameters _movementParametrs;
-        private readonly PlayerGravityController _playerGravityController;
         private readonly PlayerLedgeController _playerLedgeController;
 
         private LedgeGrabPoint _ledgeGrabPoint;
@@ -30,14 +29,12 @@ namespace Failsafe.PlayerMovements.States
             CharacterController characterController,
             PlayerMovementController movementController,
             PlayerMovementParameters movementParametrs,
-            PlayerGravityController playerGravityController,
             PlayerLedgeController playerLedgeController)
         {
             _inputHandler = inputHandler;
             _characterController = characterController;
             _movementController = movementController;
             _movementParametrs = movementParametrs;
-            _playerGravityController = playerGravityController;
             _playerLedgeController = playerLedgeController;
         }
 
@@ -47,7 +44,7 @@ namespace Failsafe.PlayerMovements.States
             _climbingProgress = 0;
             _ledgeGrabPoint = _playerLedgeController.LedgeGrabPointInFrontBottom;
             _targetPosition = _ledgeGrabPoint.Position + (_ledgeGrabPoint.Width + 0.5f) * -_ledgeGrabPoint.Normal;
-            _playerGravityController.DisableGravity();
+            _movementController.SetGravity(Vector3.zero);
             base.Enter();
         }
 
@@ -66,7 +63,7 @@ namespace Failsafe.PlayerMovements.States
 
         public override void Exit()
         {
-            _playerGravityController.EnableGravity();
+            _movementController.SetGravity(_movementParametrs.GravityForce * Vector3.down);
             base.Exit();
         }
     }

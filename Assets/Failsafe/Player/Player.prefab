@@ -373,14 +373,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518017a7c725d6646a44ecdadd54e1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carryingDistance: 2.5
   _maxPickupDistance: 7
+  _carryingDistance: 2.5
+  _carrySpeed: 10
+  _carryingObjectLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _throwForce: 10
+  _throwTorqueForce: 3
+  _carryingDistanceShorteningTo: 0.8
+  _grabHelperVector: {x: 0, y: 0.01, z: 0}
   _carryingObject: {fileID: 0}
   _carryingBody: {fileID: 0}
   _playerCameraTransform: {fileID: 374109432981789085}
+  _currentCarryingDistance: 0
   _draggablePositionOffset: {x: 0, y: 1, z: 0}
   _dragSpeed: 10
-  _throwForce: 10
   _crosshairImage: {fileID: 4000581551284009262}
   _normalSize: 0.2
   _hoverSize: 0.5
@@ -1627,6 +1635,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1615477473312663351}
     m_Modifications:
+    - target: {fileID: 2252796123046043212, guid: f35bba5c90efd904aaaace83ff6bbe07, type: 3}
+      propertyPath: m_Data.m_ConstrainedObject
+      value: 
+      objectReference: {fileID: 2108089394731268789}
     - target: {fileID: 2376789520480278813, guid: f35bba5c90efd904aaaace83ff6bbe07, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1668,8 +1680,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2683771580372819656, guid: f35bba5c90efd904aaaace83ff6bbe07, type: 3}
-      propertyPath: m_Data.m_ConstrainedAxes.z
-      value: 1
+      propertyPath: m_Weight
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2683771580372819656, guid: f35bba5c90efd904aaaace83ff6bbe07, type: 3}
       propertyPath: m_Data.m_ConstrainedObject
@@ -1682,7 +1694,7 @@ PrefabInstance:
     - target: {fileID: 7153579232791445654, guid: f35bba5c90efd904aaaace83ff6bbe07, type: 3}
       propertyPath: m_Data.m_ConstrainedObject
       value: 
-      objectReference: {fileID: 2108089394731268789}
+      objectReference: {fileID: 3140975849499585732}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

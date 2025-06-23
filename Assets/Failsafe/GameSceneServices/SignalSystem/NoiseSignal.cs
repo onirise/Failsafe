@@ -47,6 +47,12 @@ public class TempNoiseSignal : NoiseSignal, ITemporarySignal
         ExpireAt = _createtAt + duration;
     }
 
+    public void Decay(float deltaTime)
+    {
+        var decayPerSecond = SignalStrength * 0.2f;
+        SignalStrength -= decayPerSecond * deltaTime;
+    }
+
     public void OnExpier()
     {
     }
@@ -55,34 +61,4 @@ public class TempNoiseSignal : NoiseSignal, ITemporarySignal
 
     public override string ToString() =>
         $"[{SourcePosition}] ({SignalStrength}) {nameof(ITemporarySignal)} Created at {_createtAt}; Expire at {ExpireAt}";
-}
-
-
-/// <summary>
-/// Реализация сигнала на GameObject с колайдером в виде сферы
-/// ХЗ зачем, может удалить
-/// </summary>
-[RequireComponent(typeof(Collider))]
-public class NoiseSignalObject : MonoBehaviour, ITemporarySignal
-{
-    public SignalType Type => SignalType.Noise;
-    public Vector3 SourcePosition => transform.position;
-
-    public float SignalStrength => _collider.radius;
-
-    public float ExpireAt { get; private set; }
-
-    private SphereCollider _collider;
-
-
-    public void Initialize(Vector3 position, float strength, float duration = 1)
-    {
-        transform.position = position;
-        _collider.radius = strength;
-        ExpireAt = Time.time + duration;
-    }
-
-    public void OnExpier()
-    {
-    }
 }

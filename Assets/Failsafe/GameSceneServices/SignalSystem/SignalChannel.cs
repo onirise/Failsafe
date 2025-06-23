@@ -42,15 +42,29 @@ public class SignalChannel
     }
 
     /// <summary>
-    /// Удилсть из канала просроченные сигналы
+    /// Уменьшить силу сигналов
     /// </summary>
-    /// <param name="currentTick">Время когда запучщена операция</param>
+    /// <param name="deltaTime">Время с последнего вызова</param>
+    public void DecaySignals(float deltaTime)
+    {
+        for (int i = _activeSignals.Count - 1; i >= 0; i--)
+        {
+            var tempSignal = _activeSignals[i] as ITemporarySignal;
+            if (tempSignal == null) continue;
+
+            tempSignal.Decay(deltaTime);
+        }
+    }
+
+    /// <summary>
+    /// Удалить из канала просроченные сигналы
+    /// </summary>
+    /// <param name="currentTick">Время когда запущена операция</param>
     public void RemoveExpiredSignals(float currentTick)
     {
         for (int i = _activeSignals.Count - 1; i >= 0; i--)
         {
-            ISignal activeSignal = _activeSignals[i];
-            var tempSignal = activeSignal as ITemporarySignal;
+            var tempSignal = _activeSignals[i] as ITemporarySignal;
             if (tempSignal == null) continue;
             if (tempSignal.ExpireAt > currentTick) continue;
 

@@ -26,10 +26,13 @@ public class SignalManager : MonoBehaviour
         Instance = this;
     }
 
-    // Update is called once per frame
     void Update()
     {
         var currentTime = Time.time;
+
+        PlayerNoiseChanel.DecaySignals(Time.deltaTime);
+        EnemyNoiseChanel.DecaySignals(Time.deltaTime);
+
         if (_lastRemoveExpireAt + _removeExpireDelay > currentTime) return;
 
         PlayerNoiseChanel.RemoveExpiredSignals(currentTime);

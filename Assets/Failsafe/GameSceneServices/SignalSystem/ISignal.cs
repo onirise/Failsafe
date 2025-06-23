@@ -50,6 +50,12 @@ public interface ITemporarySignal : ISignal
     public float ExpireAt { get; }
 
     /// <summary>
+    /// Уменьшить силу сигнала со временем
+    /// </summary>
+    /// <param name="deltaTime">Время с последнего обновления</param>
+    public void Decay(float deltaTime);
+
+    /// <summary>
     /// </summary>
     /// <param name="duration">Время жизни сигнала</param>
     public void Initialize(Vector3 position, float strength, float duration = 1);

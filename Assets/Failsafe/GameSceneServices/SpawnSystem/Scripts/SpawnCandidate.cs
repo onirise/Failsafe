@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SpawnSystem
+namespace Failsafe.GameSceneServices.SpawnSystem
 {
     /// <summary>
     /// Данные противника, которые используются системой спауна врагов
@@ -24,14 +24,17 @@ namespace SpawnSystem
         /// </summary>
         public SpawnPointType SpawnPointType { get; private set; }
 
-        public SpawnAgent spawnAgent;
+        public SpawnPoint[] SpecificSpawnPoints { get; private set; }
 
-        public SpawnCandidate(string name, GameObject enemyPrefab, int weight, SpawnPointType spawnPointType)
+        public SpawnAgent SpawnAgent;
+
+        public SpawnCandidate(string name, GameObject enemyPrefab, int weight, SpawnPointType spawnPointType, SpawnPoint[] specificSpawnPoints = null)
         {
             Name = name;
             EnemyPrefab = enemyPrefab;
             Weight = weight;
             SpawnPointType = spawnPointType;
+            SpecificSpawnPoints = specificSpawnPoints?.Length > 0 ? specificSpawnPoints : null;
         }
 
         public bool Equals(SpawnCandidate x, SpawnCandidate y)

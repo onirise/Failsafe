@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
-namespace SpawnSystem
+namespace Failsafe.GameSceneServices.SpawnSystem
 {
     /// <summary>
     /// Система спауна врагов
@@ -19,9 +22,8 @@ namespace SpawnSystem
     /// <summary>
     /// Система спауна врагов
     /// </summary>
-    public class EnemySpawnSystem : MonoBehaviour, IEnemySpawnSystem
+    public class EnemySpawnSystem : IStartable, ITickable, IEnemySpawnSystem
     {
-        [SerializeField]
         private SpawnPoint[] _spawnPoints;
         private Dictionary<SpawnPointType, bool> _spawnPointTypePresent = new Dictionary<SpawnPointType, bool>();
         private List<SpawnCandidate> _spawnedEnemies = new List<SpawnCandidate>();
@@ -30,9 +32,7 @@ namespace SpawnSystem
         private List<SpawnCandidate> _spawnCandidates = new List<SpawnCandidate>();
 
         private bool OnDelay => _lastSpawnCheckAt + _spawnCheckDelay > Time.time;
-        [SerializeField]
         private float _spawnCheckDelay = 1;
-        [SerializeField]
         private float _lastSpawnCheckAt;
 
         private bool IsActive => _activateAt < Time.time;
@@ -41,12 +41,17 @@ namespace SpawnSystem
         private WeightMeter _weightMeter = new WeightMeter();
         public WeightMeter WeightMeter => _weightMeter;
 
-        [SerializeField]
-        private SpawnSystemSpreadsheetContainer _spawnSystemSpreadsheet;
-        [SerializeField]
-        private EnemyPrefabsSO _enemyPrefabsSO;
+        private EnemySpawnSystemBuilder _enemySpawnSystemBuilder;
+        private readonly IObjectResolver _objectResolver;
 
         public List<SpawnCandidate> SpawnedEnemies => _spawnedEnemies;
+
+
+        public EnemySpawnSystem(EnemySpawnSystemBuilder enemySpawnSystemBuilder, IObjectResolver objectResolver)
+        {
+            _enemySpawnSystemBuilder = enemySpawnSystemBuilder;
+            _objectResolver = objectResolver;
+        }
 
         public void Deactivate(float duration)
         {
@@ -58,33 +63,34 @@ namespace SpawnSystem
             _spawnAgents.Add(spawnAgent);
         }
 
-        void Start()
+        public void Start()
         {
-            _spawnPoints = FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None);
+            Debug.Log("EnemySpawnSystem Start");
+            _spawnPoints = LifetimeScope.FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None);
             foreach (SpawnPointType spawnPointType in Enum.GetValues(typeof(SpawnPointType)))
             {
                 _spawnPointTypePresent.Add(spawnPointType, false);
             }
             foreach (var spawnPoint in _spawnPoints)
             {
-                _spawnPointTypePresent[spawnPoint.type] = true;
+                _spawnPointTypePresent[spawnPoint.Type] = true;
             }
-            var builder = new SpawnSystemSpreadsheetBuilder(_enemyPrefabsSO.ToDictionary());
-            builder.BuildSpawnSystem(_spawnSystemSpreadsheet.Content.enemySpawnDatas, this);
+            if (_enemySpawnSystemBuilder != null)
+                _enemySpawnSystemBuilder.BuildSpawnSystem(this);
         }
 
         private void TestBuild()
         {
             var candidate1 = new SpawnCandidate("Enemy1", null, 5, SpawnPointType.Default);
-            var condition1 = new OrCondition(
-                new AndCondition(
-                    new RandomCondition(0.5f),
-                    new TimerCondition(2)),
-                new TimerCondition(5));
+            var condition1 = new Or(
+                new And(
+                    new Random(0.5f),
+                    new Timer(2)),
+                new Timer(5));
             var agent1 = new SpawnAgent(condition1, candidate1, 2);
 
             var candidate2 = new SpawnCandidate("Enemy2", null, 10, SpawnPointType.Default);
-            var condition2 = new EnemySpawnedCondition(_spawnedEnemies, candidate1);
+            var condition2 = new OtherEnemySpawned(_spawnedEnemies, candidate1);
             var agent2 = new SpawnAgent(condition2, candidate2, 5);
 
             _spawnAgents.Add(agent1);
@@ -105,10 +111,11 @@ namespace SpawnSystem
             return hasCandidate;
         }
 
-        void Update()
+        public void Tick()
         {
             if (!IsActive) return;
             if (OnDelay) return;
+            if (_spawnPoints.Length == 0) return;
 
             _lastSpawnCheckAt = Time.time;
             if (_spawnCandidates.Count == 0)
@@ -117,13 +124,7 @@ namespace SpawnSystem
             }
             var (candidate, spawnPoint) = ChooseCandidateAndSpawnPoint();
 
-            //Instantiate(candidate.EnemyPrefab, spawnPoint.Position, spawnPoint.Rotation);
-            Debug.Log($"[{nameof(EnemySpawnSystem)}] Spawned enemy {candidate.Name} at position {spawnPoint.Position}");
-
-            _spawnedEnemies.Add(candidate);
-            _weightMeter.AddWeight(candidate.Weight);
-            candidate.spawnAgent.Spawned();
-            _spawnCandidates.Clear();
+            SpawnEnemy(candidate, spawnPoint);
 
             foreach (var agent in _spawnAgents)
             {
@@ -132,20 +133,36 @@ namespace SpawnSystem
             }
         }
 
+        private void SpawnEnemy(SpawnCandidate candidate, SpawnPoint spawnPoint)
+        {
+            Debug.Log($"[{nameof(EnemySpawnSystem)}] Try spawn enemy {candidate?.Name} at position {spawnPoint?.Position}");
+            if (spawnPoint == null)
+                return;
+            var enemy = _objectResolver.Instantiate(candidate.EnemyPrefab, spawnPoint.Position, spawnPoint.Rotation);
+
+            _spawnedEnemies.Add(candidate);
+            _weightMeter.AddWeight(candidate.Weight);
+            candidate.SpawnAgent.Spawned();
+            spawnPoint.EnemySpawned();
+            _spawnCandidates.Clear();
+        }
+
         private (SpawnCandidate, SpawnPoint) ChooseCandidateAndSpawnPoint()
         {
-            // TODO: переписать выбор врага и точки спауна
             var spawnCandidate = GetRandom(_spawnCandidates);
-            var spawnPoint = GetRandom(_spawnPoints);
+            var spawnPoints = spawnCandidate.SpecificSpawnPoints.AsEnumerable()
+                ?? _spawnPoints.Where(x => x.Type == spawnCandidate.SpawnPointType);
+            var spawnPoint = GetRandom(spawnPoints.Where(x => x.Enabled));
 
             return (spawnCandidate, spawnPoint);
         }
 
-        private static T GetRandom<T>(IReadOnlyList<T> list)
+        private static T GetRandom<T>(IEnumerable<T> list)
         {
-            if (list.Count == 0) return default;
-            var i = UnityEngine.Random.Range(0, list.Count);
-            return list[i];
+            var countLength = list.Count();
+            if (countLength <= 1) return list.FirstOrDefault();
+            var i = UnityEngine.Random.Range(0, countLength);
+            return list.ElementAt(i);
         }
     }
 

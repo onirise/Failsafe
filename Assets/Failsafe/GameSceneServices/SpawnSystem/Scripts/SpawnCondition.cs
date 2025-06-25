@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-namespace SpawnSystem
+namespace Failsafe.GameSceneServices.SpawnSystem
 {
     /// <summary>
     /// Условие появления противника
@@ -18,6 +19,7 @@ namespace SpawnSystem
         /// Сбросить параметры условия
         /// </summary>
         public void Reset();
+        public IEnumerable<ISpawnCondition> GetChildren();
     }
 
     public abstract class SpawnCondition : ISpawnCondition
@@ -27,12 +29,14 @@ namespace SpawnSystem
         public virtual void Reset()
         {
         }
+
+        public virtual IEnumerable<ISpawnCondition> GetChildren() => Enumerable.Empty<ISpawnCondition>();
     }
 
-    public class ConstantCondition : SpawnCondition
+    public class Constant : SpawnCondition
     {
         private bool _value;
-        public ConstantCondition(bool value)
+        public Constant(bool value)
         {
             _value = value;
         }
@@ -40,7 +44,7 @@ namespace SpawnSystem
         public override bool IsTriggered() => _value;
     }
 
-    public class TimerCondition : SpawnCondition
+    public class Timer : SpawnCondition
     {
         private float _startTime = -1;
         private float _delay;
@@ -51,7 +55,7 @@ namespace SpawnSystem
         /// </summary>
         /// <param name="delay"></param>
         /// <param name="startCondition">Тригер после которого начать таймер, если не указан таймер запускается при создании</param>
-        public TimerCondition(float delay, ISpawnCondition startCondition = null)
+        public Timer(float delay, ISpawnCondition startCondition = null)
         {
             _delay = delay;
             if (startCondition != null)
@@ -83,30 +87,30 @@ namespace SpawnSystem
         }
     }
 
-    public class RandomCondition : ISpawnCondition
+    public class Random : SpawnCondition
     {
         private float _chance;
 
-        public RandomCondition(float chance)
+        public Random(float chance)
         {
             _chance = chance;
             Reset();
         }
 
         private float _randomNumber;
-        public bool IsTriggered() => _chance >= _randomNumber;
+        public override bool IsTriggered() => _chance >= _randomNumber;
 
-        public void Reset()
+        public override void Reset()
         {
             _randomNumber = UnityEngine.Random.value;
         }
     }
 
-    public class AndCondition : ISpawnCondition
+    public class And : ISpawnCondition
     {
         private ISpawnCondition[] _triggers;
 
-        public AndCondition(params ISpawnCondition[] triggers)
+        public And(params ISpawnCondition[] triggers)
         {
             _triggers = triggers;
         }
@@ -130,13 +134,15 @@ namespace SpawnSystem
                 trigger.Reset();
             }
         }
+
+        public IEnumerable<ISpawnCondition> GetChildren() => _triggers;
     }
 
-    public class OrCondition : ISpawnCondition
+    public class Or : ISpawnCondition
     {
         private ISpawnCondition[] _triggers;
 
-        public OrCondition(params ISpawnCondition[] triggers)
+        public Or(params ISpawnCondition[] triggers)
         {
             _triggers = triggers;
         }
@@ -160,14 +166,16 @@ namespace SpawnSystem
                 trigger.Reset();
             }
         }
+
+        public IEnumerable<ISpawnCondition> GetChildren() => _triggers;
     }
 
-    public class EnemySpawnedCondition : SpawnCondition
+    public class OtherEnemySpawned : SpawnCondition
     {
         private List<SpawnCandidate> _spawnedEnemies;
         private SpawnCandidate _enemy;
 
-        public EnemySpawnedCondition(List<SpawnCandidate> spawnedEnemies, SpawnCandidate enemy)
+        public OtherEnemySpawned(List<SpawnCandidate> spawnedEnemies, SpawnCandidate enemy)
         {
             _spawnedEnemies = spawnedEnemies;
             _enemy = enemy;
@@ -183,12 +191,12 @@ namespace SpawnSystem
         }
     }
 
-    public class SpawnPointPresentCondition : SpawnCondition
+    public class SpawnPointPresent : SpawnCondition
     {
         private Dictionary<SpawnPointType, bool> _spawnPoints;
         private SpawnPointType _spawnPointType;
 
-        public SpawnPointPresentCondition(Dictionary<SpawnPointType, bool> spawnPoints, SpawnPointType spawnPointType)
+        public SpawnPointPresent(Dictionary<SpawnPointType, bool> spawnPoints, SpawnPointType spawnPointType)
         {
             _spawnPoints = spawnPoints;
             _spawnPointType = spawnPointType;
@@ -197,20 +205,20 @@ namespace SpawnSystem
         public override bool IsTriggered() => _spawnPoints[_spawnPointType];
     }
 
-    public class TriggerCondition : ISpawnCondition
+    public class Trigger : SpawnCondition
     {
         private Func<bool> _trigger;
         private Action _resetTrigger;
 
-        public TriggerCondition(Func<bool> trigger, Action resetTrigger = null)
+        public Trigger(Func<bool> trigger, Action resetTrigger = null)
         {
             _trigger = trigger;
             _resetTrigger = resetTrigger;
         }
 
-        public bool IsTriggered() => _trigger();
+        public override bool IsTriggered() => _trigger();
 
-        public void Reset()
+        public override void Reset()
         {
             _resetTrigger?.Invoke();
         }

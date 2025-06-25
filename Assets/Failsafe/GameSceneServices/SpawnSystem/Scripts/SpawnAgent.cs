@@ -1,4 +1,6 @@
-namespace SpawnSystem
+using System.Linq;
+
+namespace Failsafe.GameSceneServices.SpawnSystem
 {
     /// <summary>
     /// Агент отвечающий за спаун определенного противника
@@ -22,7 +24,7 @@ namespace SpawnSystem
             _repeat = repeat;
             _condition = condition;
             _candidate = candidate;
-            _candidate.spawnAgent = this;
+            _candidate.SpawnAgent = this;
         }
 
         /// <summary>
@@ -55,6 +57,26 @@ namespace SpawnSystem
         public void Spawned()
         {
             _repeat--;
+        }
+
+        public override string ToString()
+        {
+            var result = $"SpawnAgent for {_candidate.Name} with conditions: {_condition.GetType().Name} ";
+            result = ToStringChilds(result, _condition);
+            return result;
+        }
+
+        private string ToStringChilds(string result, ISpawnCondition condition)
+        {
+            if (!condition.GetChildren().Any()) return result;
+            result += "( ";
+            foreach (var child in condition.GetChildren())
+            {
+                result += child.GetType().Name + ", ";
+                ToStringChilds(result, child);
+            }
+
+            return result += ") ";
         }
     }
 }

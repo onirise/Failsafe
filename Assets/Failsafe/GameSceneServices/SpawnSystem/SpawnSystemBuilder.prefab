@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1235017853507686513
+--- !u!1 &572457780246017177
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1411668669387526944}
-  - component: {fileID: 7429283931296747029}
+  - component: {fileID: 175394237989763051}
+  - component: {fileID: 6504668550751240824}
   m_Layer: 0
-  m_Name: EnemySpawnSystem
+  m_Name: SpawnSystemBuilder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1411668669387526944
+--- !u!4 &175394237989763051
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1235017853507686513}
+  m_GameObject: {fileID: 572457780246017177}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,19 +32,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7429283931296747029
+--- !u!114 &6504668550751240824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1235017853507686513}
+  m_GameObject: {fileID: 572457780246017177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac0b45153b9a12e42b9e6b6bca51c160, type: 3}
+  m_Script: {fileID: 11500000, guid: a78c6159655391d49a3d1582de257380, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnPoints: []
-  _spawnCheckDelay: 1
-  _lastSpawnCheckAt: 0
-  _spawnSystemSpreadsheet: {fileID: 11400000, guid: bbc36621787fe9e43b56f55193828b5b, type: 2}
+  _enemySpawnDatas:
+  - EnemySpawnPrefab: {fileID: 11400000, guid: 3529ad5b5c3890c498895827ba22fa9c, type: 2}
+    Weight: -1
+    MaxCount: 1
+    SpawnPointType: 0
+    SpecificSpawnPoints: []
+    Constant: 1
+    Random: -1
+    Timer: -1
+    Level: -1
+    OtherEnemyName: 
+    UseWeightSystem: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SpawnSystem
+namespace Failsafe.GameSceneServices.SpawnSystem
 {
     /// <summary>
     /// Тип точки спауна, разные противники могу спавниться на определенных точках
@@ -20,7 +20,16 @@ namespace SpawnSystem
     {
         public Vector3 Position => transform.position;
         public Quaternion Rotation => transform.rotation;
-        public SpawnPointType type;
+        public SpawnPointType Type;
+        public bool Enabled => _spawnedAt + _spawnDelay < Time.time;
+
+        [SerializeField] private float _spawnDelay = 5f;
+        [SerializeField] private float _spawnedAt = -1000;
+
+        public void EnemySpawned()
+        {
+            _spawnedAt = Time.time;
+        }
 
         void OnDrawGizmos()
         {

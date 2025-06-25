@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 5360267827737777482}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.381754, y: -15.63909, z: 28.951485}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -48,3 +48,4 @@ MonoBehaviour:
     TypeName: Failsafe.Scripts.DependencyInjection.RootLifetimeScope
   autoRun: 1
   autoInjectGameObjects: []
+  _enemySpawnSystemBuilder: {fileID: 6504668550751240824, guid: dc0ba49eac487a641a5967fffdef513f, type: 3}

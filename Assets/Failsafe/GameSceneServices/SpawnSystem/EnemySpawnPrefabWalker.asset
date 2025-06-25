@@ -10,10 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 617b216bf21c5f94d841b718618eea2e, type: 3}
-  m_Name: EnemyPrefabsSO
+  m_Name: EnemySpawnPrefabWalker
   m_EditorClassIdentifier: 
-  enemyPrefabDatas:
-  - Name: "\u0442\u0435\u0441\u0442"
-    EnemyPrefab: {fileID: 374109433352817464, guid: 5685bc93efcffac45b001b5f4f52f93f, type: 3}
-  - Name: "\u0442\u0435\u0441\u04422"
-    EnemyPrefab: {fileID: 374109433352817464, guid: 5685bc93efcffac45b001b5f4f52f93f, type: 3}
+  Name: Walker
+  EnemyPrefab: {fileID: 5441590585779604949, guid: b1f7861a101a6664689a7308f0d62b7b, type: 3}

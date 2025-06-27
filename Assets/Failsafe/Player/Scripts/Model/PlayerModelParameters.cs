@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Failsafe.Player.Model
 {
-	[CreateAssetMenu(fileName = "PlayerModelParameters", menuName = "Parameters/PlayerModelParameters")]
+	[CreateAssetMenu(fileName = "PlayerModelParameters", menuName = "Player/Parameters/PlayerModelParameters")]
 	public class PlayerModelParameters : ScriptableObject
 	{
 		[field: SerializeField]

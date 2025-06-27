@@ -280,13 +280,16 @@ GameObject:
   - component: {fileID: 374109433352817470}
   - component: {fileID: 374109433352817471}
   - component: {fileID: 3685481300793825505}
+  - component: {fileID: 6390597872253412037}
   - component: {fileID: 5564961472655603788}
   - component: {fileID: 3587987712684801882}
   - component: {fileID: 6003168246341229848}
   - component: {fileID: 8406886069167695128}
   - component: {fileID: 7623893399856682050}
+  - component: {fileID: 7568143321741062789}
   - component: {fileID: 5474980340744432184}
   - component: {fileID: 7931588658094996424}
+  - component: {fileID: 4433844160611423408}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -361,6 +364,19 @@ MonoBehaviour:
   _playerNoiseParameters: {fileID: 11400000, guid: 5adbcf9fd798d4741a6f383bf3c579fc, type: 2}
   _playerView: {fileID: 345903572760889237}
   _inputActionAsset: {fileID: -944628639613478452, guid: 1f09f2f8cfa351946a2c010bb9946270, type: 3}
+  _config: {fileID: 11400000, guid: 8eeac2ba0490f224aa13b33387604f98, type: 2}
+--- !u!114 &6390597872253412037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374109433352817464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7b90c6b933654a4bb1d2f585e6e2a0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5564961472655603788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,8 +399,8 @@ MonoBehaviour:
   _throwTorqueForce: 3
   _carryingDistanceShorteningTo: 0.8
   _grabHelperVector: {x: 0, y: 0.01, z: 0}
-  _carryingObject: {fileID: 0}
-  _carryingBody: {fileID: 0}
+  CarryingObject: {fileID: 0}
+  CarryingBody: {fileID: 0}
   _playerCameraTransform: {fileID: 374109432981789085}
   _currentCarryingDistance: 0
   _draggablePositionOffset: {x: 0, y: 1, z: 0}
@@ -452,6 +468,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoom: 50
   m_Camera: {fileID: 374109432981789075}
+--- !u!114 &7568143321741062789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374109433352817464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d6042dd3a1d6f8595beac021b85cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5474980340744432184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,6 +515,60 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &4433844160611423408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374109433352817464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd53e6ad5cd1e124bb9f4a08621bd336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: InterfaceTypes
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[System.Type, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 1|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Failsafe.Scripts.Health.IHealth, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: InjectedInstances
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[System.Object, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &2082495522751311562
 GameObject:
   m_ObjectHideFlags: 0

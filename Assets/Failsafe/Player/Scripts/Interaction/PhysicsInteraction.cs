@@ -43,6 +43,7 @@ namespace Failsafe.Player.Scripts.Interaction
         
         [Inject]
         private InputHandler _inputHandler;
+        private DependencyInjector _dependencyInjector;
         
         private bool _isPreparingToThrow; 
         private float _throwForceMultiplier;
@@ -66,14 +67,17 @@ namespace Failsafe.Player.Scripts.Interaction
             if (!_playerCameraTransform)
             {
                 Camera playerCamera = transform.root.GetComponentInChildren<Camera>();
-                
+
                 _playerCameraTransform = playerCamera.transform;
             }
             
+            _dependencyInjector = GetComponent<DependencyInjector>();
         }
 
         private void Update()
         {
+            if (CarryingObject == null) ClearCarryingObject();
+
             UpdateCrosshairScale();
             if (_inputHandler.GrabOrDropTriggered && _allowToGrabOrDrop)
             {
@@ -88,7 +92,7 @@ namespace Failsafe.Player.Scripts.Interaction
             {
                 if (!CarryingObject || !CarryingBody)
                 {
-                    DropItem();
+                    DropObject();
                     return;
                 }
                 if (_inputHandler.AttackTriggered)
@@ -126,7 +130,7 @@ namespace Failsafe.Player.Scripts.Interaction
             }
             else
             {
-                DropItem();
+                DropObject();
             }
         }
         
@@ -141,7 +145,7 @@ namespace Failsafe.Player.Scripts.Interaction
             
             CarryingBody.angularVelocity = Vector3.zero;
         }
-        
+
         private void GrabObject()
         {
             Physics.Raycast(
@@ -153,25 +157,27 @@ namespace Failsafe.Player.Scripts.Interaction
 
             if (!hitInfo.rigidbody)
                 return;
-            
+
             CarryingBody = hitInfo.rigidbody;
             CarryingBody.useGravity = false;
-            
+
             CarryingObject = hitInfo.rigidbody.gameObject;
-            
+
             CarryingObject.transform.parent = _playerCameraTransform;
             _relativeRotation = CarryingObject.transform.localRotation;
             CarryingObject.transform.parent = null;
 
             CarryingObject.transform.position += _grabHelperVector;
-            
+
             _cachedCarryingLayer = CarryingObject.layer;
-            
+
             CarryingObject.layer = _carryingObjectLayer.value >> 1;
-            
+
             IsDragging = true;
             _isPreparingToThrow = false;
             _throwForceMultiplier = 0f;
+            
+            _dependencyInjector.InjectDependencies(CarryingObject);
         }
 
         public void ThrowObject(float throwForceMultiplier)
@@ -195,12 +201,22 @@ namespace Failsafe.Player.Scripts.Interaction
             _throwForceMultiplier = 0f;
             _currentCarryingDistance = _carryingDistance;
         }
-        
-        private void DropItem()
+
+        private void DropObject()
         {
+            _dependencyInjector.ClearDependencies(CarryingObject);
+
             if (CarryingObject) CarryingObject.layer = _cachedCarryingLayer;
             if (CarryingBody) CarryingBody.useGravity = true;
 
+            CarryingBody = null;
+            CarryingObject = null;
+            IsDragging = false;
+            _currentCarryingDistance = _carryingDistance;
+        }
+
+        private void ClearCarryingObject()
+        {
             CarryingBody = null;
             CarryingObject = null;
             IsDragging = false;

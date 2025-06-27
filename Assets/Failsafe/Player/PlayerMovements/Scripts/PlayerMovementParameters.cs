@@ -6,7 +6,7 @@ namespace Failsafe.PlayerMovements
     /// <summary>
     /// Параметры настройки движения игрока
     /// </summary>
-    [CreateAssetMenu(fileName = "PlayerMovementParameters", menuName = "Parameters/PlayerMovementParameters")]
+    [CreateAssetMenu(fileName = "PlayerMovementParameters", menuName = "Player/Parameters/PlayerMovementParameters")]
     public class PlayerMovementParameters : ScriptableObject
     {
         [Header("Скорость передвижения")]

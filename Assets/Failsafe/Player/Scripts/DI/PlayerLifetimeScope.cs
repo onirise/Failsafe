@@ -23,6 +23,8 @@ namespace Failsafe.Player
         [SerializeField] private PlayerView _playerView;
         [SerializeField] private InputActionAsset _inputActionAsset;
 
+        [SerializeField] private PlayerDependenciesConfig _config;
+
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterInstance(_playerModelParameters);
@@ -34,8 +36,8 @@ namespace Failsafe.Player
 
             builder.Register<InputHandler>(Lifetime.Scoped);
 
-            builder.Register<PlayerHealth>(Lifetime.Singleton).As<IHealth>().WithParameter(_playerModelParameters.MaxHealth);
-            builder.Register<PlayerStamina>(Lifetime.Singleton).As<IStamina>().WithParameter(_playerModelParameters.MaxStamina);
+            builder.Register(_config.HealthType, Lifetime.Singleton).As<IHealth>().WithParameter(_playerModelParameters.MaxHealth);
+            builder.Register(_config.StaminaType, Lifetime.Singleton).As<IStamina>().WithParameter(_playerModelParameters.MaxStamina);
             builder.RegisterEntryPoint<PlayerDamageable>(Lifetime.Scoped);
             builder.RegisterEntryPoint<PlayerStaminaController>(Lifetime.Scoped).AsSelf();
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using VContainer;
 
 /// <summary>
 /// Реализация обнаружения игрока на слух
@@ -15,6 +16,9 @@ public class NoiseSensor : Sensor
     /// </summary>
     [SerializeField]
     private float _maxSoundStrength = 10;
+    [Inject] private SignalManager _signalManager;
+    //TODO: Раскомментировать эту строку, когда враги на всех сценах будут создаваться через Спаунер
+    //private List<ISignal> AudioSignals => _signalManager.PlayerNoiseChanel.GetAllActive();
     private List<ISignal> AudioSignals => SignalManager.Instance.PlayerNoiseChanel.GetAllActive();
     private ISignal _detectedSignal;
 

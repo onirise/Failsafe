@@ -1659,12 +1659,7 @@ MonoBehaviour:
   DebugMode: 0
   _laserBeamPrefab: {fileID: 7565026735645175051, guid: 6dde5c04a18cc734c8a0900d8498b580, type: 3}
   _laserSpawnPoint: {fileID: 2787837512202065222}
-  _manualPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _manualPoints: []
   seePlayer: 0
   hearPlayer: 0
   enemyConfig: {fileID: 11400000, guid: 724be6a3266871249b346fdf1bb26a46, type: 2}
@@ -1704,7 +1699,7 @@ MonoBehaviour:
   FocusingTime: 1
   FocusingProgress: 0
   Distance: 10
-  _minSoundStrength: 0.1
+  _minSoundStrength: 1
   _maxSoundStrength: 10
 --- !u!195 &1444448667796523294
 NavMeshAgent:

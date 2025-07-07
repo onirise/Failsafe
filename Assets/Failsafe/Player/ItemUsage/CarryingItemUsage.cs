@@ -25,12 +25,13 @@ namespace Failsafe.Player.ItemUsage
 
         private void Update()
         {
-            if (!_inputHandler.UseTriggered) return;
+            if (!(_inputHandler.UseTriggered || _inputHandler.ZoomTriggered)) return;
             if (!_physicsInteraction.CarryingObject) return;
 
             if (_physicsInteraction.CarryingObject.TryGetComponent(out Item item))
             {
                 foreach (var action in _inputHandler.PerformedActions)
+                    //if(action != false)
                     item.ActionsGroups.Where(x => x.Actions.FirstOrDefault(z => z.action.id == action.id))?.ForEach(x => x.Invoke());
             }
         }

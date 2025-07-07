@@ -359,10 +359,11 @@ MonoBehaviour:
   _playerModelParameters: {fileID: 11400000, guid: d61294178bcc7154cb7580e8388e3060, type: 2}
   _playerMovementParameters: {fileID: 11400000, guid: 6f3a29936aab9d246a187306e3f01e7f, type: 2}
   _playerNoiseParameters: {fileID: 11400000, guid: 5adbcf9fd798d4741a6f383bf3c579fc, type: 2}
-  _playerView: {fileID: 345903572760889237}
-  _inputActionAsset: {fileID: -944628639613478452, guid: 1f09f2f8cfa351946a2c010bb9946270, type: 3}
   _playerItemsData:
   - {fileID: 11400000, guid: d23fc15e8911a1e428cdf8b5fbbc36f3, type: 2}
+  - {fileID: 11400000, guid: 2974ccbf76f0db6449b3b0f0cf1615db, type: 2}
+  _playerView: {fileID: 345903572760889237}
+  _inputActionAsset: {fileID: -944628639613478452, guid: 1f09f2f8cfa351946a2c010bb9946270, type: 3}
 --- !u!114 &5564961472655603788
 MonoBehaviour:
   m_ObjectHideFlags: 0

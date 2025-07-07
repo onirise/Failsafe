@@ -56,6 +56,7 @@ namespace Failsafe.Player
                 builder.RegisterInstance(itemData).As(itemData.GetType());
             }
             builder.Register<Stimpack>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
+            builder.Register<StasisGun>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
         }
     }
 }

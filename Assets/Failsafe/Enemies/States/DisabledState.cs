@@ -20,6 +20,7 @@ public class DisabledState : BehaviorForcedState
     public override void Update()
     {
         _disableProgress += Time.deltaTime;
+        Debug.Log(_disableProgress);
     }
 
     private bool IsStateFinished() => _disableProgress >= _disableTime;

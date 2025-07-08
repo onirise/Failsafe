@@ -18,7 +18,9 @@ namespace Failsafe.Player
         [ValueDropdown("_itemNames")]
         public string ItemName;
         public GameObject ItemPrefab;
-        public string UseOnKey = "E";
+        public string UseOnKey = "F";
+
+        [SerializeField] string _startItem;
 
         private string[] _itemNames;
         private KeyCode _useKeyCode;
@@ -44,8 +46,8 @@ namespace Failsafe.Player
             }
             Debug.Log($"({nameof(TestItemUse)}) был использован {itemName}");
 
-            if (item is IShootable shootable)
-                shootable.Shoot(GetComponentInChildren<Camera>().ScreenPointToRay(Input.mousePosition));
+            if (item is ITargetable targetable)
+                targetable.TargetAction(GetComponentInChildren<Camera>().ScreenPointToRay(Input.mousePosition));
 
 
             item.Use();
@@ -55,7 +57,7 @@ namespace Failsafe.Player
         {
             _itemNames = _items.Select(x => x.GetType().Name).Concat(new string[1] { "" }).ToArray();
             //пока вписываю конкретный итем чтобы сразу можно было тестить как только запустился
-            ItemName = "StasisGun";
+            ItemName = _startItem;
         }
 
         void Update()

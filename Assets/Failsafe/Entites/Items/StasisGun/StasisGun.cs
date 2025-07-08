@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Failsafe.Items
 {
-    public class StasisGun : IUsable, IUpdatable, IShootable, IAltUsable
+    public class StasisGun : IUsable, IUpdatable, ITargetable, IAltUsable
     {
         StasisGunData _data;
         EnergyContainer _energyContainer;
@@ -48,7 +48,7 @@ namespace Failsafe.Items
         }
 
 
-        public void Shoot(Ray ray)
+        public void TargetAction(Ray ray)
         {
             if (_fireRateTimer <= 0 && !_energyContainer.IsEmpty())
             {

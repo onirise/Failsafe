@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IShootable
+public interface ITargetable
 {
-    public void Shoot(Ray ray);
+    public void TargetAction(Ray ray);
 }

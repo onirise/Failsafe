@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     public AwarenessMeter _awarenessMeter;
     public bool seePlayer;
     public bool hearPlayer;
-    [SerializeField] private Enemy_ScriptableObject _enemyConfig;
+    [SerializeField] public Enemy_ScriptableObject _enemyConfig;
 
     private void Awake()
     {

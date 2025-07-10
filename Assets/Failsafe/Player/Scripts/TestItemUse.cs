@@ -51,8 +51,8 @@ namespace Failsafe.Player
             }
             Debug.Log($"({nameof(TestItemUse)}) был использован {itemName}");
 
-            if (item is IShootable shootable)
-                shootable.Shoot(RaycastUniversal());
+            if (item is ITargetable shootable)
+                shootable.TargetAction(RaycastUniversal());
 
 
             if (item is ILimitedEffect limitedEffect)
@@ -101,6 +101,8 @@ namespace Failsafe.Player
                 ItemName = "Tushkan";
             else if (Input.GetKeyDown(KeyCode.Alpha5))
                 ItemName = "Gorilla";
+            else if (Input.GetKeyDown(KeyCode.Alpha6))
+                ItemName = "MasterKey";
 
             if (_items.FirstOrDefault(x => x.GetType().Name == SelectItem()) is IUpdatable updatable) updatable.Update();
 

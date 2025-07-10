@@ -48,7 +48,7 @@ namespace Failsafe.Items
         }
 
 
-        public void Shoot(RaycastHit hit)
+        public void TargetAction(RaycastHit hit)
         {
             if (_fireRateTimer <= 0 && !_energyContainer.IsEmpty())
             {

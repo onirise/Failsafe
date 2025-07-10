@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Failsafe.Items
 {
-    public interface IShootable
+    public interface ITargetable
     {
-        public void Shoot(RaycastHit hit);
+        public void TargetAction(RaycastHit hit);
     }
 }

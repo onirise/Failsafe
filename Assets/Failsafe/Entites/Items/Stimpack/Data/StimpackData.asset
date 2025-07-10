@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: StimpackData
   m_EditorClassIdentifier: 
   HealAmount: 50
-  MaxHealthDelta: 100
+  MaxHealthBonus: 10

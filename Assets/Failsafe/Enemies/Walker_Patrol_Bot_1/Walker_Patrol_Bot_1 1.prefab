@@ -1662,7 +1662,7 @@ MonoBehaviour:
   _manualPoints: []
   seePlayer: 0
   hearPlayer: 0
-  enemyConfig: {fileID: 11400000, guid: 724be6a3266871249b346fdf1bb26a46, type: 2}
+  _enemyConfig: {fileID: 11400000, guid: 724be6a3266871249b346fdf1bb26a46, type: 2}
 --- !u!114 &202986098991734307
 MonoBehaviour:
   m_ObjectHideFlags: 0

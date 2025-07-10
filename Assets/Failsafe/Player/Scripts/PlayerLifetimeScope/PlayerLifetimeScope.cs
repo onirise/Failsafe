@@ -57,7 +57,9 @@ namespace Failsafe.Player
             }
             builder.Register<Stimpack>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
             builder.Register<StasisGun>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
-            builder.Register<MasterKey>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
+            builder.Register<Adrenaline>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
+            builder.Register<Tushkan>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
+            builder.Register<Gorilla>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
         }
     }
 }

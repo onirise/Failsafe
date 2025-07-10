@@ -19,21 +19,21 @@ MonoBehaviour:
   AlertDistanceSight: 30
   OrginAngleViev: 45
   AlertAngleViev: 65
-  VisualFocusTime: 1
+  VisualFocusTime: 3
   AlertVisualFocusTime: 0.2
   OriginDistanceHearing: 10
   AlertDistanceHearing: 20
   MinSoundStr: 0.5
   MaxSoundStr: 10
   AlertMinSoundStr: 0.1
-  HearFocusTime: 1
+  HearFocusTime: 0.5
   AlertHearFocusTime: 0.2
-  FillSpeed: 0
-  DecaySpeed: 0
-  DecayDelay: 0
-  AlertThreshold: 0
-  ChaseThreshold: 0
-  ChaseExitThreshold: 0
+  FillSpeed: 80
+  DecaySpeed: 10
+  DecayDelay: 2
+  AlertThreshold: 10
+  ChaseThreshold: 100
+  ChaseExitThreshold: 30
   CheckRadius: 0
   CheckDuration: 0
   CheckInterval: 0

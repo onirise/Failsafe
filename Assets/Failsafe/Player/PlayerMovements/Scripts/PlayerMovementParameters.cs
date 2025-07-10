@@ -45,11 +45,11 @@ namespace Failsafe.PlayerMovements
         /// <summary>
         /// Высота прыжка
         /// </summary>
-        public float JumpMaxHeight = 1.5f;
+        public ModifiableField<float> JumpMaxHeight = 1.5f;
         /// <summary>
         /// Максимальная скорость прыжка
         /// </summary>
-        public float JumpMaxSpeed = 8f;
+        public ModifiableField<float> JumpMaxSpeed = 8f;
         /// <summary>
         /// Минимальная длительность прыжка
         /// </summary>

@@ -11,7 +11,7 @@ public class SwitcherScript : MonoBehaviour
     public List<string> options;
     public UnityEvent<Int32> OnValueChange;
 
-    public int currentOption = 0;
+    int currentOption = 0;
 
     public void AddOptions(List<string> options)
     {
@@ -51,4 +51,15 @@ public class SwitcherScript : MonoBehaviour
     }
 
 
+
+    public void SetCurrentOption(int option)
+    {
+        currentOption = option;
+        OutputDataText.text = options[currentOption];
+    }
+
+    public int GetCurrentOption()
+    {
+        return currentOption;
+    }
 }

@@ -77,7 +77,7 @@ public class GraphicsMenuSettings : MonoBehaviour
         postProcessVolume.profile.TryGetSettings(out bloom);
 
 
-        StartResolution();
+        
         InitializeScreenModeDropdown();
         InitializeVSyncToggle();
         InitializeMotionBlurToggle();
@@ -85,6 +85,7 @@ public class GraphicsMenuSettings : MonoBehaviour
         InitializeMaxFPSDropdown();
         InitializeShadowDropdown();
         InitializeModelDropdown();
+        StartResolution();
     }
 
 
@@ -294,12 +295,12 @@ public class GraphicsMenuSettings : MonoBehaviour
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetInt("ResolutionPreference", resolution.currentOption);
-        PlayerPrefs.SetInt("ScreenModePreference", screenModeDropdown.currentOption);
+        PlayerPrefs.SetInt("ResolutionPreference", resolution.GetCurrentOption());
+        PlayerPrefs.SetInt("ScreenModePreference", screenModeDropdown.GetCurrentOption());
         PlayerPrefs.SetInt("VSyncEnabled", vSyncToggle.isOn ? 1 : 0);
-        PlayerPrefs.SetInt("ShadowQualityPreference", shadowQuallity.currentOption);
-        PlayerPrefs.SetInt("ModelQualityPreference", modelQuality.currentOption);
-        PlayerPrefs.SetInt("MaxFPS", MaxFPS.currentOption);
+        PlayerPrefs.SetInt("ShadowQualityPreference", shadowQuallity.GetCurrentOption());
+        PlayerPrefs.SetInt("ModelQualityPreference", modelQuality.GetCurrentOption());
+        PlayerPrefs.SetInt("MaxFPS", MaxFPS.GetCurrentOption());
         PlayerPrefs.SetInt("motionBlurEnabled", motionBlurToggle.isOn ? 1 : 0);
         PlayerPrefs.SetInt("bloomToggleEnabled", bloomToggle.isOn ? 1 : 0);
 
@@ -309,21 +310,21 @@ public class GraphicsMenuSettings : MonoBehaviour
     public void LoadSettings(int currentResolutionIndex)
     {
         if (PlayerPrefs.HasKey("ResolutionPreference"))
-            resolution.currentOption = PlayerPrefs.GetInt("ResolutionPreference");
+            resolution.SetCurrentOption(PlayerPrefs.GetInt("ResolutionPreference"));
         else
-            resolution.currentOption = currentResolutionIndex;
+            resolution.SetCurrentOption(currentResolutionIndex);
 
         if (PlayerPrefs.HasKey("ScreenModePreference"))
-            screenModeDropdown.currentOption = PlayerPrefs.GetInt("ScreenModePreference");
+            screenModeDropdown.SetCurrentOption(PlayerPrefs.GetInt("ScreenModePreference"));
         
         if (PlayerPrefs.HasKey("ShadowQualityPreference"))
-            shadowQuallity.currentOption = PlayerPrefs.GetInt("ShadowQualityPreference");
+            shadowQuallity.SetCurrentOption(PlayerPrefs.GetInt("ShadowQualityPreference"));
         
         if (PlayerPrefs.HasKey("ModelQualityPreference"))
-            modelQuality.currentOption = PlayerPrefs.GetInt("ModelQualityPreference");
+            modelQuality.SetCurrentOption(PlayerPrefs.GetInt("ModelQualityPreference"));
         
         if (PlayerPrefs.HasKey("MaxFPS"))
-            MaxFPS.currentOption = PlayerPrefs.GetInt("MaxFPS");
+            MaxFPS.SetCurrentOption(PlayerPrefs.GetInt("MaxFPS"));
 
         if (PlayerPrefs.HasKey("VSyncEnabled"))
             vSyncToggle.isOn=PlayerPrefs.GetInt("VSyncEnabled") > 0;

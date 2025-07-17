@@ -629,6 +629,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeleteProfilePopup
       objectReference: {fileID: 0}
+    - target: {fileID: 7317744941451455079, guid: dc35896c274914e2687a4b9d9d891ed6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8145262372717467654, guid: dc35896c274914e2687a4b9d9d891ed6, type: 3}
       propertyPath: textContent
       value: 'Select a button <b>>Yes</b> or <b>>No</b>
@@ -3245,7 +3249,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -25.001343, y: 10}
+  m_AnchoredPosition: {x: -25.001465, y: 10}
   m_SizeDelta: {x: -190, y: -120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1673078609
@@ -11398,7 +11402,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.5269775, y: 3.5059814}
+  m_AnchoredPosition: {x: 2.5268555, y: 3.5059814}
   m_SizeDelta: {x: -57.26, y: -59.898}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3946548759445024651
@@ -12401,8 +12405,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3359624914045397804}
   m_HandleRect: {fileID: 8415695145766254537}
   m_Direction: 2
-  m_Value: 0.5000004
-  m_Size: 0.93629396
+  m_Value: 0.50000054
+  m_Size: 0.9445389
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14258,7 +14262,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 8.499878, y: 0}
+  m_AnchoredPosition: {x: 8.499756, y: 0}
   m_SizeDelta: {x: 17, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5430885054432709202
@@ -19478,10 +19482,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3921799233694154199}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -318.13, y: 0.00069234}
-  m_SizeDelta: {x: 7, y: 997.79}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 592.7, y: 0}
+  m_SizeDelta: {x: 7, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8057951857081735086
 CanvasRenderer:

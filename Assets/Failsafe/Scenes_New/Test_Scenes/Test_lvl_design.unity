@@ -55928,7 +55928,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NeighborsSerialized: []
-  ConnectedDirectionsSerialized: 
 --- !u!114 &1099192604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55942,7 +55941,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NeighborsSerialized: []
-  ConnectedDirectionsSerialized: 
 --- !u!64 &1099192605
 MeshCollider:
   m_ObjectHideFlags: 0

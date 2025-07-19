@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Check : BehaviorState
+public class CheckState : BehaviorState
 {
     private Vector3 _originPoint;
     private Vector3 _targetPoint;
@@ -17,7 +17,7 @@ public class Check : BehaviorState
     private Transform _transform;
     
     public bool CheckEnd() => _checkTimer >= _config.CheckDuration;
-    public Check(Sensor[] sensors, Transform transform, EnemyController enemyController, Enemy_ScriptableObject config)
+    public CheckState(Sensor[] sensors, Transform transform, EnemyController enemyController, Enemy_ScriptableObject config)
     {
         _sensors = sensors;
         _transform = transform;

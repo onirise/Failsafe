@@ -56,15 +56,18 @@ public class Enemy : MonoBehaviour
         var patrolState = new PatrolState(_sensors, transform, _enemyController,_navMeshAgent, _enemyConfig);
         var attackState = new AttackState(_sensors, transform, _enemyController, _enemyAnimator, _activeLaser, _laserBeamPrefab, _laserSpawnPoint, _navMeshAgent, _enemyConfig);
         var searchingState = new SearchingState(_sensors, transform, _enemyController, _navMeshAgent, _enemyConfig);
+        var checkState = new CheckState(_sensors, transform, _enemyController, _enemyConfig);
         
         defaultState.AddTransition(chasingState, _awarenessMeter.IsChasing);
         patrolState.AddTransition(chasingState, _awarenessMeter.IsChasing);
+        patrolState.AddTransition(checkState, _awarenessMeter.IsAlerted);
         defaultState.AddTransition(patrolState, defaultState.IsPatroling);
         chasingState.AddTransition(searchingState, _awarenessMeter.IsPlayerLost);
         chasingState.AddTransition(attackState, chasingState.PlayerInAttackRange);
         attackState.AddTransition(chasingState, attackState.PlayerOutOfAttackRange);
         searchingState.AddTransition(patrolState, searchingState.SearchingEnd);
         searchingState.AddTransition(chasingState, _awarenessMeter.IsChasing);
+        checkState.AddTransition(chasingState, _awarenessMeter.IsChasing);
 
         var disabledStates = new List<BehaviorForcedState> { new DisabledState() };
         _stateMachine = new BehaviorStateMachine(defaultState, disabledStates);

@@ -1,41 +1,50 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class OnSelectEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    string _originalText;
+    List<string> _originalText;
     Color _originalColor;
     Material _originMaterial;
     Image _buttonBackground;
     [SerializeField] Material _targetMaterial;
     [SerializeField] Color _targetColor;
-    [SerializeField] TextMeshProUGUI _textMeshProUGUI;
+    [SerializeField] List<TextMeshProUGUI> _textMeshProUGUI;
 
     private void Start()
     {
         _buttonBackground = GetComponent<Image>();
-        _originMaterial = _textMeshProUGUI.fontSharedMaterial;
-        _originalText = _textMeshProUGUI.text;
+        _originMaterial = _textMeshProUGUI[0].fontSharedMaterial;
+        _originalText[0] = _textMeshProUGUI[0].text;
 
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         Debug.Log("Pointer Entered");
-        _textMeshProUGUI.fontSharedMaterial = _targetMaterial;
-        _textMeshProUGUI.fontWeight = FontWeight.SemiBold;
-        _textMeshProUGUI.text = ">" + _originalText;
+        foreach (var item in _textMeshProUGUI)
+        {
+            item.fontSharedMaterial = _targetMaterial;
+            item.fontWeight = FontWeight.SemiBold;
+            item.text = ">" + _originalText[0];
+        }
+
         _buttonBackground.color = new Color(1, 1, 1, 1);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         Debug.Log("Pointer Exited");
-        _textMeshProUGUI.fontSharedMaterial = _originMaterial;
-        _textMeshProUGUI.fontWeight = FontWeight.Regular;
-        _textMeshProUGUI.text = _originalText;
+        foreach (var item in _textMeshProUGUI)
+        {
+            item.fontSharedMaterial = _originMaterial;
+            item.fontWeight = FontWeight.Regular;
+            item.text = _originalText[0];
+        }
+
         _buttonBackground.color = new Color(1, 1, 1, 0);
 
     }

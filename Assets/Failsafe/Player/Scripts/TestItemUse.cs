@@ -83,7 +83,7 @@ namespace Failsafe.Player
 
         void Update()
         {
-            Debug.Log("Активных эффектов " + _activeEffects1.Count);
+            //Debug.Log("Активных эффектов " + _activeEffects1.Count);
             if (_activeEffects1.Count > 0)
             {
                 Debug.Log(_activeEffects1[0].GetType());

@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5575298867460987258, guid: e1bd825c8f7fcab42b16e35fe73ae419, type: 3}
       propertyPath: m_Name
-      value: Brick_3 Variant
+      value: Brick_3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -80,9 +80,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5575298867460987258, guid: e1bd825c8f7fcab42b16e35fe73ae419, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3517596927486936909}
-    - targetCorrespondingSourceObject: {fileID: 5575298867460987258, guid: e1bd825c8f7fcab42b16e35fe73ae419, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5067875414906667360}
   m_SourcePrefab: {fileID: 100100000, guid: e1bd825c8f7fcab42b16e35fe73ae419, type: 3}
 --- !u!1 &4204678351754095505 stripped
 GameObject:
@@ -190,23 +187,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0024374025, y: 0.0044671576, z: 0.002437403}
   m_Center: {x: 3.5182527e-11, y: -4.3244405e-12, z: 0.0012187015}
---- !u!114 &5067875414906667360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4204678351754095505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SerializedVersion: 0
-  m_OverrideArea: 0
-  m_Area: 0
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
-  m_IgnoreFromBuild: 1
-  m_ApplyToChildren: 1
-  m_AffectedAgents: ffffffff

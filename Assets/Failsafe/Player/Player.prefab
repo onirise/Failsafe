@@ -368,6 +368,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e06ba66b175978b4fb45ae17c7731ec9, type: 2}
   _playerView: {fileID: 345903572760889237}
   _inputActionAsset: {fileID: -944628639613478452, guid: 1f09f2f8cfa351946a2c010bb9946270, type: 3}
+  _playerCam: {fileID: 374109432981789075}
 --- !u!114 &5564961472655603788
 MonoBehaviour:
   m_ObjectHideFlags: 0

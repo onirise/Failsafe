@@ -1,13 +1,16 @@
 using UnityEngine;
+using VContainer;
 
 namespace Failsafe.Items
 {
-    public class StasisGun : IUsable, IUpdatable, IShootable, IAltUsable
+    public class StasisGun : IUsable, IUpdatable, IAltUsable
     {
         StasisGunData _data;
         EnergyContainer _energyContainer;
         private bool _isDefaultMode = true;
         float _fireRateTimer = 0;
+
+        [Inject] Camera _playerCam;
 
         public StasisGun(StasisGunData data)
         {
@@ -33,7 +36,7 @@ namespace Failsafe.Items
 
         public void Use()
         {
-
+            Shoot(Raycast());
         }
 
         public void AltUse()
@@ -90,6 +93,24 @@ namespace Failsafe.Items
             {
                 hit.collider.GetComponentInParent<Enemy>().DisableState();
             }
+        }
+
+        RaycastHit Raycast()
+        {
+            Ray ray = _playerCam.ScreenPointToRay(Input.mousePosition);
+            //маска чтобы рейкаст точно игнорировал игрока
+            LayerMask mask = ~(1 << 5);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 100, mask))
+            {
+                Debug.Log("Object ahead: " + hit.collider.name);
+            }
+            else
+            {
+
+                Debug.Log("No Object!");
+            }
+            return hit;
         }
 
 

@@ -225,16 +225,16 @@ public class GraphicsMenuSettings : MonoBehaviour
         switch (Screen.fullScreenMode)
         {
             case FullScreenMode.ExclusiveFullScreen:
-                screenModeDropdown.changeCurrentOption(0);
+                screenModeDropdown.SetCurrentOption(0);
                 break;
             case FullScreenMode.FullScreenWindow:
-                screenModeDropdown.changeCurrentOption(1);
+                screenModeDropdown.SetCurrentOption(1);
                 break;
             case FullScreenMode.Windowed:
-                screenModeDropdown.changeCurrentOption(2);
+                screenModeDropdown.SetCurrentOption(2);
                 break;
             default:
-                screenModeDropdown.changeCurrentOption(1);
+                screenModeDropdown.SetCurrentOption(1);
                 break;
         }
         
@@ -261,7 +261,7 @@ public class GraphicsMenuSettings : MonoBehaviour
     {
         if (shadowIndex >= 0 && shadowIndex < shadowQList.Length)
         {
-            shadowQuallity.changeCurrentOption(shadowIndex);
+            shadowQuallity.SetCurrentOption(shadowIndex);
             Debug.Log($"Shadow quality was set to: {shadowQList[shadowIndex]}");
 
         }
@@ -271,7 +271,7 @@ public class GraphicsMenuSettings : MonoBehaviour
     {
         if (modelIndex >= 0 && modelIndex < modelQList.Length)
         {
-            modelQuality.changeCurrentOption(modelIndex);
+            modelQuality.SetCurrentOption(modelIndex);
             Debug.Log($"Model quality was set to: {modelQList[modelIndex]}");
 
         }
@@ -281,7 +281,7 @@ public class GraphicsMenuSettings : MonoBehaviour
     {
         if (FPSIndex >= 0 && FPSIndex < FPSList.Length)
         {
-            MaxFPS.changeCurrentOption(FPSIndex);
+            MaxFPS.SetCurrentOption(FPSIndex);
             Debug.Log($"FPS was set to: {modelQList[FPSIndex]}");
 
         }

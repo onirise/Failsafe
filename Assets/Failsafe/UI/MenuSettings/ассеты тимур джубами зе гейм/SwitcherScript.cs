@@ -19,9 +19,11 @@ public class SwitcherScript : MonoBehaviour
         OutputDataText.text = options[currentOption];
     }
 
-    public void changeCurrentOption(Int32 index)
+
+    
+    public void SetCurrentOption(int option)
     {
-        currentOption = index;
+        currentOption = option;
         OutputDataText.text = options[currentOption];
     }
 
@@ -50,13 +52,6 @@ public class SwitcherScript : MonoBehaviour
         
     }
 
-
-
-    public void SetCurrentOption(int option)
-    {
-        currentOption = option;
-        OutputDataText.text = options[currentOption];
-    }
 
     public int GetCurrentOption()
     {

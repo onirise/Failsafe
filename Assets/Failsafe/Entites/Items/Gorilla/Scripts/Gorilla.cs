@@ -1,4 +1,4 @@
-using Failsafe.Player.Model;
+using Failsafe.Player.Scripts.Model;
 using Failsafe.Scripts.Modifiebles;
 using System;
 using System.Collections;

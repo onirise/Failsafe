@@ -1,3 +1,4 @@
+using Failsafe.Player.Scripts.Input;
 using UnityEngine;
 
 namespace Failsafe.PlayerMovements.Controllers

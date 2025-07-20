@@ -10,7 +10,9 @@ using TMPro;
 using VContainer;
 using Failsafe.Player.View;
 using VContainer.Unity;
-using Failsafe.Player.Model;
+
+using Failsafe.Player.Scripts.Input;
+using Failsafe.Player.Scripts.Model;
 using Failsafe.Scripts.EffectSystem;
 
 

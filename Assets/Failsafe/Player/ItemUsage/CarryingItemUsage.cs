@@ -1,3 +1,4 @@
+using Failsafe.Player.Scripts.Input;
 using Failsafe.Player.Scripts.Interaction;
 using UnityEngine;
 using VContainer;

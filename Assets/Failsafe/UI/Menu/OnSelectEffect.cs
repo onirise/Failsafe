@@ -12,9 +12,11 @@ public class OnSelectEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     Image _buttonBackground;
     [SerializeField] Material _targetMaterial;
     [SerializeField] Color _targetColor;
+    // это текст, у которого должна появляться стрелочка при наведении
     [SerializeField] TextMeshProUGUI _mainTextMeshProUGUI;
 
-
+    // это тексты в случае если у объекта несколько текстов (как у профилей) и им не нужна стрелочка при наведении
+    //  у профилей вообще только эти тексты и заполнены, mainTextMeshProUGUI пуст
     [SerializeField] List<TextMeshProUGUI> _optionalTextsGO;
 
     private void Start()

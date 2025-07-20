@@ -6,31 +6,52 @@ using UnityEngine.UI;
 
 public class OnSelectEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    List<string> _originalText;
+    string _mainOriginalText;
     Color _originalColor;
     Material _originMaterial;
     Image _buttonBackground;
     [SerializeField] Material _targetMaterial;
     [SerializeField] Color _targetColor;
-    [SerializeField] List<TextMeshProUGUI> _textMeshProUGUI;
+    [SerializeField] TextMeshProUGUI _mainTextMeshProUGUI;
+
+
+    [SerializeField] List<TextMeshProUGUI> _optionalTextsGO;
 
     private void Start()
     {
         _buttonBackground = GetComponent<Image>();
-        _originMaterial = _textMeshProUGUI[0].fontSharedMaterial;
-        _originalText[0] = _textMeshProUGUI[0].text;
+        if (_mainTextMeshProUGUI != null)
+        {
+            _originMaterial = _mainTextMeshProUGUI.fontSharedMaterial;
+            _mainOriginalText = _mainTextMeshProUGUI.text;
+        }
+        else
+        {
+            _originMaterial = _optionalTextsGO[0].fontSharedMaterial;
+        }
+
 
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         Debug.Log("Pointer Entered");
-        foreach (var item in _textMeshProUGUI)
+
+
+        for (int i = 0; i < _optionalTextsGO.Count; i++)
         {
-            item.fontSharedMaterial = _targetMaterial;
-            item.fontWeight = FontWeight.SemiBold;
-            item.text = ">" + _originalText[0];
+            _optionalTextsGO[i].fontSharedMaterial = _targetMaterial;
+            _optionalTextsGO[i].fontWeight = FontWeight.SemiBold;
+
         }
+
+        if (_mainTextMeshProUGUI != null)
+        {
+            _mainTextMeshProUGUI.fontSharedMaterial = _targetMaterial;
+            _mainTextMeshProUGUI.fontWeight = FontWeight.SemiBold;
+            _mainTextMeshProUGUI.text = ">" + _mainOriginalText;
+        }
+
 
         _buttonBackground.color = new Color(1, 1, 1, 1);
     }
@@ -38,12 +59,22 @@ public class OnSelectEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerExit(PointerEventData eventData)
     {
         Debug.Log("Pointer Exited");
-        foreach (var item in _textMeshProUGUI)
+
+
+        for (int i = 0; i < _optionalTextsGO.Count; i++)
         {
-            item.fontSharedMaterial = _originMaterial;
-            item.fontWeight = FontWeight.Regular;
-            item.text = _originalText[0];
+            _optionalTextsGO[i].fontSharedMaterial = _originMaterial;
+            _optionalTextsGO[i].fontWeight = FontWeight.Regular;
+
         }
+
+        if (_mainTextMeshProUGUI != null)
+        {
+            _mainTextMeshProUGUI.fontSharedMaterial = _originMaterial;
+            _mainTextMeshProUGUI.fontWeight = FontWeight.Regular;
+            _mainTextMeshProUGUI.text = _mainOriginalText;
+        }
+
 
         _buttonBackground.color = new Color(1, 1, 1, 0);
 

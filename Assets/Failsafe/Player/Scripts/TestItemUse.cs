@@ -1,13 +1,12 @@
 using Failsafe.Items;
+using Failsafe.Player.Scripts.Input;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using VContainer;
 
-namespace Failsafe.Player
+namespace Failsafe.Player.Scripts
 {
     /// <summary>
     /// Используется для тестирования логики предметов без необходимости их спаунить и подбирать
@@ -61,15 +60,15 @@ namespace Failsafe.Player
         void Update()
         {
 
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha1))
                 ItemName = "Stimpack";
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha2))
                 ItemName = "Adrenaline";
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha3))
                 ItemName = "StasisGun";
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha4))
                 ItemName = "Tushkan";
-            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha5))
                 ItemName = "Gorilla";
 
             if (_items.FirstOrDefault(x => x.GetType().Name == SelectItem()) is IUpdatable updatable) updatable.Update();
@@ -83,7 +82,7 @@ namespace Failsafe.Player
                 _allowToAltUse = true;
 
 
-            if (Input.GetKeyDown(_useKeyCode))
+            if (UnityEngine.Input.GetKeyDown(_useKeyCode))
             {
                 TestUse();
             }

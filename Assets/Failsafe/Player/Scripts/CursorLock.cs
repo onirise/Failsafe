@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class CursorLock : MonoBehaviour
+namespace Failsafe.Player.Scripts
 {
-    [SerializeField] private bool _lockCursor = true;
-
-
-    private void Start()
+    public class CursorLock : MonoBehaviour
     {
-        if (_lockCursor)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-    }
+        [SerializeField] private bool _lockCursor = true;
 
+
+        private void Start()
+        {
+            if (_lockCursor)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
+
+    }
 }

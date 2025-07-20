@@ -1,4 +1,5 @@
 using Failsafe.Obstacles;
+using Failsafe.Player.Scripts.Input;
 using Failsafe.PlayerMovements.Controllers;
 using System.Linq;
 using UnityEngine;

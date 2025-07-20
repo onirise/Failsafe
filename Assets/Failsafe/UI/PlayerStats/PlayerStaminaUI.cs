@@ -1,4 +1,4 @@
-using Failsafe.Player.Model;
+using Failsafe.Player.Scripts.Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

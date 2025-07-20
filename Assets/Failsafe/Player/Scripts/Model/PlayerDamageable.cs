@@ -1,11 +1,11 @@
+using Failsafe.Player.View;
 using Failsafe.Scripts.Damage;
 using Failsafe.Scripts.Damage.Implementation;
 using Failsafe.Scripts.Damage.Providers;
 using Failsafe.Scripts.Health;
-using Failsafe.Player.View;
 using VContainer.Unity;
 
-namespace Failsafe.Player.Model
+namespace Failsafe.Player.Scripts.Model
 {
     /// <summary>
     /// Получение урона

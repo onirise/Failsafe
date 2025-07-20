@@ -1,41 +1,41 @@
-using Failsafe.PlayerMovements;
-using Sirenix.OdinInspector.Editor;
-using System;
+using Failsafe.Player.Scripts.Input;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using VContainer;
 
-public class ZoomEffect : MonoBehaviour
+namespace Failsafe.Player.Scripts
 {
-    private bool zooming = false;
-    public int zoom = 50;
-    private float normal;
-    private float smooth = 5f;
-    [SerializeField] private Camera m_Camera;
-    [Inject] private InputHandler _inputHandler;
-
-    private void Awake()
+    public class ZoomEffect : MonoBehaviour
     {
-        if (m_Camera == null)
+        private bool zooming = false;
+        public int zoom = 50;
+        private float normal;
+        private float smooth = 5f;
+        [SerializeField] private Camera m_Camera;
+        [Inject] private InputHandler _inputHandler;
+
+        private void Awake()
         {
-            m_Camera = Camera.main; // запасной вариант
+            if (m_Camera == null)
+            {
+                m_Camera = Camera.main; // запасной вариант
+            }
+
+            normal = m_Camera.fieldOfView; // сохраняем обычное поле зрения
         }
 
-        normal = m_Camera.fieldOfView; // сохраняем обычное поле зрения
-    }
-
-    void Update()
-    {
-        // Считаем "зажата ли кнопка" прямо в апдейте
-        zooming = _inputHandler.ZoomTriggered;
-
-        if (zooming)
+        void Update()
         {
-            m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, zoom, Time.deltaTime * smooth);
-        }
-        else
-        {
-            m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, normal, Time.deltaTime * smooth);
+            // Считаем "зажата ли кнопка" прямо в апдейте
+            zooming = _inputHandler.ZoomTriggered;
+
+            if (zooming)
+            {
+                m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, zoom, Time.deltaTime * smooth);
+            }
+            else
+            {
+                m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, normal, Time.deltaTime * smooth);
+            }
         }
     }
 }

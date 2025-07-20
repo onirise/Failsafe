@@ -1,8 +1,7 @@
 using Failsafe.Scripts.Modifiebles;
-using System;
 using UnityEngine;
 
-namespace Failsafe.Player.Model
+namespace Failsafe.Player.Scripts.Model
 {
 	[CreateAssetMenu(fileName = "PlayerModelParameters", menuName = "Parameters/PlayerModelParameters")]
 	public class PlayerModelParameters : ScriptableObject

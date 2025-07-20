@@ -1,15 +1,15 @@
 using Failsafe.Items;
-using Failsafe.Player.Model;
+using Failsafe.Player.Scripts.Input;
+using Failsafe.Player.Scripts.Model;
 using Failsafe.Player.View;
 using Failsafe.PlayerMovements;
 using Failsafe.Scripts.Health;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
 using VContainer.Unity;
 
-namespace Failsafe.Player
+namespace Failsafe.Player.Scripts.PlayerLifetimeScope
 {
     /// <summary>
     /// Регистрация компонентов игрового персонажа

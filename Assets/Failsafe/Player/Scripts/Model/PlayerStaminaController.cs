@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using VContainer.Unity;
 
-namespace Failsafe.Player.Model
+namespace Failsafe.Player.Scripts.Model
 {
     /// <summary>
     /// Контроллер выносливости персонажа: регенерация, трата на действия 

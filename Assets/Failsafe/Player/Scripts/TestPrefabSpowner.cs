@@ -3,7 +3,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Failsafe.Player
+namespace Failsafe.Player.Scripts
 {
     public class TestPrefabSpowner : MonoBehaviour
     {
@@ -14,7 +14,7 @@ namespace Failsafe.Player
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.T))
+            if (UnityEngine.Input.GetKeyDown(KeyCode.T))
             {
                 var position = _playerView.transform.position + _playerView.transform.forward + Vector3.up;
                 var testObject = _objectResolver.Instantiate(_testPrefab, position, Quaternion.identity);

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Failsafe.Player.Model
+namespace Failsafe.Player.Scripts.Model
 {
     /// <summary>
     /// Выносливость персонажа

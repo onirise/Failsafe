@@ -1,4 +1,5 @@
-using Failsafe.Player.Model;
+using Failsafe.Player.Scripts.Input;
+using Failsafe.Player.Scripts.Model;
 using Failsafe.PlayerMovements;
 using Sirenix.OdinInspector;
 using UnityEngine;

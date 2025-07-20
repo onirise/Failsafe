@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 5474980340744432184}
   - component: {fileID: 7931588658094996424}
   - component: {fileID: 8355542254377614154}
+  - component: {fileID: 3209687002636049246}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -387,8 +388,6 @@ MonoBehaviour:
   _carryingObjectLayer:
     serializedVersion: 2
     m_Bits: 0
-  _throwForce: 10
-  _throwTorqueForce: 3
   _carryingDistanceShorteningTo: 0.8
   _grabHelperVector: {x: 0, y: 0.01, z: 0}
   CarryingObject: {fileID: 0}
@@ -510,6 +509,18 @@ MonoBehaviour:
   ItemName: 
   ItemPrefab: {fileID: 0}
   UseOnKey: F
+--- !u!114 &3209687002636049246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374109433352817464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61be2fb81ac47cc418e21f87bc3cbda7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2082495522751311562
 GameObject:
   m_ObjectHideFlags: 0

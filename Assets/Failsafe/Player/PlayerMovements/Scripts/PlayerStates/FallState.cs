@@ -1,3 +1,4 @@
+using Failsafe.Player.Scripts.Input;
 using Failsafe.Scripts.EffectSystem;
 using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;

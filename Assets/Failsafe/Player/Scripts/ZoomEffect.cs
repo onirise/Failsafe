@@ -1,8 +1,4 @@
-using Failsafe.PlayerMovements;
-using Sirenix.OdinInspector.Editor;
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using VContainer;
 
 public class ZoomEffect : MonoBehaviour

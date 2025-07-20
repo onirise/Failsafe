@@ -16,7 +16,7 @@ public class OnSelectEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] TextMeshProUGUI _mainTextMeshProUGUI;
 
     // это тексты в случае если у объекта несколько текстов (как у профилей) и им не нужна стрелочка при наведении
-    //  у профилей вообще только эти тексты и заполнены, mainTextMeshProUGUI пуст    
+    //  у профилей вообще только эти тексты и заполнены, mainTextMeshProUGUI пуст
     [SerializeField] List<TextMeshProUGUI> _optionalTextsGO;
     // задумка в том, что объекту могут быть одновременно нужны как изменения текста с добавлением стрелочки
     // так и как раз дополнительные тексты, которым стрелка не нужна

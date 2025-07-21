@@ -803,8 +803,12 @@ PrefabInstance:
       value: ProfilesScreen
       objectReference: {fileID: 0}
     - target: {fileID: 6321771699468215196, guid: 0b0f479346c1a0e4d9e1493647efc02f, type: 3}
+      propertyPath: _mainTextMeshProUGUI
+      value: 
+      objectReference: {fileID: 1814807591}
+    - target: {fileID: 6321771699468215196, guid: 0b0f479346c1a0e4d9e1493647efc02f, type: 3}
       propertyPath: _optionalTextsGO.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6321771699468215196, guid: 0b0f479346c1a0e4d9e1493647efc02f, type: 3}
       propertyPath: '_optionalTextsGO.Array.data[0]'

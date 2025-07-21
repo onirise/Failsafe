@@ -395,6 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a646b7f55a8c51b46a48e02fad5233b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _addArrow: 0
   _targetMaterial: {fileID: 2100000, guid: 13a27b3fff2f59448a8a4fec8fa23cb9, type: 2}
   _targetColor: {r: 0, g: 0, b: 0, a: 1}
   _mainTextMeshProUGUI: {fileID: 6837082554743474105}

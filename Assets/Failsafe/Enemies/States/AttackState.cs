@@ -78,7 +78,6 @@ public class AttackState : BehaviorState
             if (sensor is VisualSensor visual)
                 if(visual.IsActivated())
                 {
-                    _target = visual.Target.transform;
                     _playerInSight = true;
                     _targetPosition = visual.SignalSourcePosition;
                     _distanceToPlayer = Vector3.Distance(_transform.position, _targetPosition.Value);
@@ -90,7 +89,7 @@ public class AttackState : BehaviorState
                         {
                             GameObject laserGO = GameObject.Instantiate(_laserPrefab, _laserOrigin.position, _laserOrigin.rotation);
                             _activeLaser = laserGO.GetComponent<LaserBeamController>();
-                            _activeLaser.Initialize(_laserOrigin, _target);
+                            _activeLaser.Initialize(_laserOrigin, _targetPosition.Value);
                         }
 
                         _enemyAnimator.TryAttack();
@@ -100,7 +99,7 @@ public class AttackState : BehaviorState
                         if (sensor.SignalInAttackRay((Vector3)_targetPosition) && damageableComponent is not null)
                         {
                             damageableComponent.TakeDamage(new FlatDamage(_enemyConfig.Damage * Time.deltaTime));
-                            Debug.Log($"Урон: {_enemyConfig.Damage * Time.deltaTime:F1}");
+                            Debug.Log($"Урон: {_enemyConfig.Damage * Time.deltaTime:F1}" );
                         }
                     }
                 }

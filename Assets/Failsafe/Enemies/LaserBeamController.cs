@@ -4,10 +4,10 @@ using UnityEngine;
 public class LaserBeamController : MonoBehaviour
 {
     private Transform _origin;
-    private Transform _target; // Игрок
+    private Vector3 _target; // Игрок
     private float _maxLength = 30f;
 
-    public void Initialize(Transform origin, Transform target)
+    public void Initialize(Transform origin, Vector3 target)
     {
         _origin = origin;
         _target = target;
@@ -15,11 +15,11 @@ public class LaserBeamController : MonoBehaviour
 
     private void Update()
     {
-        if (_origin == null || _target == null)
+        if (_origin == null)
             return;
 
         Vector3 start = _origin.position;
-        Vector3 direction = (_target.position - start).normalized;
+        Vector3 direction = (_target - start).normalized;
 
         float length = _maxLength;
 

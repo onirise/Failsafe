@@ -7,48 +7,36 @@ using UnityEngine;
 
 namespace Failsafe.Items
 {
-    public class Gorilla : IUsable
+    public class Gorilla : StimulatorBaseItem
     {
-        GorillaData _data;
 
-        IEffectManager _effectManager;
-        GorillaEffect _effect;
-        public Gorilla(GorillaData data, PlayerModelParameters playerModelParameters, IEffectManager effectManager)
+        public Gorilla(GorillaData data, PlayerModelParameters playerModelParameters, IEffectManager effectManager) : base(effectManager)
         {
-            _data = data;
-            _effectManager = effectManager;
-            _effect = new GorillaEffect(playerModelParameters, data);
+            Effect = new GorillaEffect(playerModelParameters, data);
         }
 
 
-        public void Use()
-        {
-            _effectManager.ApplyEffect(_effect);
-        }
     }
 
-    public class GorillaEffect : Effect
+    public class GorillaEffect : StimulatorBaseEffect
     {
         private PlayerModelParameters _playerModelParameters;
-        private IModificator<float> _throwPowerModificator;
-        public GorillaEffect(PlayerModelParameters playerModelParameters, GorillaData data)
+
+        public GorillaEffect(PlayerModelParameters playerModelParameters, GorillaData data) : base(data)
         {
             _playerModelParameters = playerModelParameters;
-            _throwPowerModificator = new MultiplierFloat(data.ThrowPowerMultiplier, priority: 100);
-            _duration = data.Duration;
-            IsUniqueEffect = true;
         }
         public override void ApplyEffect()
         {
 
-            _playerModelParameters.ThrowPower.AddModificator(_throwPowerModificator);
-            _playerModelParameters.ThrowTorquePower.AddModificator(_throwPowerModificator);
+            _playerModelParameters.ThrowPower.AddModificator(Modificator);
+            _playerModelParameters.ThrowTorquePower.AddModificator(Modificator);
         }
 
         public override void ClearEffect()
         {
-            _playerModelParameters.ThrowPower.RemoveModificator(_throwPowerModificator);
-            _playerModelParameters.ThrowTorquePower.RemoveModificator(_throwPowerModificator);
+            _playerModelParameters.ThrowPower.RemoveModificator(Modificator);
+            _playerModelParameters.ThrowTorquePower.RemoveModificator(Modificator);
         }
     }
 }

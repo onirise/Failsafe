@@ -3,9 +3,8 @@ using UnityEngine;
 namespace Failsafe.Items
 {
     [CreateAssetMenu(fileName = "AdrenalineData", menuName = "ScriptableObjects/Entities/Items/Components/AdrenalineData")]
-    public class AdrenalineData : ScriptableObject
+    public class AdrenalineData : StimulatorBaseData
     {
-        public float SpeedMultiplier;
-        public float Duration;
+
     }
 }

@@ -8,51 +8,39 @@ using UnityEngine;
 
 namespace Failsafe.Items
 {
-    public class Tushkan : IUsable
+    public class Tushkan : StimulatorBaseItem
     {
-        TushkanData _data;
-        IEffectManager _effectManager;
-        TushkanEffect _effect;
 
-        public Tushkan(TushkanData data, PlayerMovementParameters playerMovementParameters, IEffectManager effectManager)
+
+        public Tushkan(TushkanData data, IEffectManager effectManager, PlayerMovementParameters playerMovementParameters) : base(effectManager)
         {
-            _data = data;
-            _effectManager = effectManager;
-            _effect = new TushkanEffect(playerMovementParameters, data);
+            Effect = new TushkanEffect(playerMovementParameters, data);
         }
 
 
-
-        public void Use()
-        {
-            _effectManager.ApplyEffect(_effect);
-
-        }
 
 
     }
 
-    public class TushkanEffect : Effect
+    public class TushkanEffect : StimulatorBaseEffect
     {
         private PlayerMovementParameters _playerMovementParameters;
-        private IModificator<float> _jumpModificator;
-        public TushkanEffect(PlayerMovementParameters playerMovementParameters, TushkanData data)
+
+        public TushkanEffect(PlayerMovementParameters playerMovementParameters, StimulatorBaseData data) : base(data)
         {
             _playerMovementParameters = playerMovementParameters;
-            _jumpModificator = new MultiplierFloat(data.JumpMultiplier, priority: 100);
-            _duration = data.Duration;
-            IsUniqueEffect = true;
+
         }
         public override void ApplyEffect()
         {
-            _playerMovementParameters.JumpMaxHeight.AddModificator(_jumpModificator);
-            _playerMovementParameters.JumpMaxSpeed.AddModificator(_jumpModificator);
+            _playerMovementParameters.JumpMaxHeight.AddModificator(Modificator);
+            _playerMovementParameters.JumpMaxSpeed.AddModificator(Modificator);
         }
 
         public override void ClearEffect()
         {
-            _playerMovementParameters.JumpMaxHeight.RemoveModificator(_jumpModificator);
-            _playerMovementParameters.JumpMaxSpeed.RemoveModificator(_jumpModificator);
+            _playerMovementParameters.JumpMaxHeight.RemoveModificator(Modificator);
+            _playerMovementParameters.JumpMaxSpeed.RemoveModificator(Modificator);
         }
     }
 }

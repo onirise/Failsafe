@@ -787,6 +787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a7577b61f74404fbf86d284bddb963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPowered: 0
   _isOpen: 0
   _panelLights:
   - {fileID: 6759041580154622407}
@@ -853,8 +854,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.193535, y: 2.583127, z: 1.7400744}
-  m_Center: {x: -0.21159577, y: 1.3451185, z: 0.37003726}
+  m_Size: {x: 2.193535, y: 2.583127, z: 2.0729346}
+  m_Center: {x: -0.21159577, y: 1.3451185, z: 0.43963274}
 --- !u!208 &8284425786581714580
 NavMeshObstacle:
   m_ObjectHideFlags: 0

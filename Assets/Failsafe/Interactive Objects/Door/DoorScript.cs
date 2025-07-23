@@ -48,12 +48,10 @@ public class DoorScript : MonoBehaviour
         _animator.SetBool("isOpen", open);
         Debug.Log("Active Door");
     }
-
-    private void OnMouseDown() //для примера вызов открытия/закрытия дверей
+    public void InteractDoor()
     {
         OpenCloseDoor(!_isOpen);
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.CompareTag(_enemyTag)) return;
@@ -64,7 +62,6 @@ public class DoorScript : MonoBehaviour
         _enemyBlockDoor = true;
         ChangeColor(Color.red);
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (!other.gameObject.CompareTag(_enemyTag)) return;
@@ -76,7 +73,6 @@ public class DoorScript : MonoBehaviour
 
         OpenCloseDoor(false);
     }
-
     private void ChangeColor(Color lightColor)
     {
         foreach (Light panelLight in _panelLights)

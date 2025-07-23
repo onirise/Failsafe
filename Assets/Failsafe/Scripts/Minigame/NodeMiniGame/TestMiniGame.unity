@@ -899,7 +899,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.5
+  m_VoxelSize: 0.2
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: f50c11b7956ae3b46a57509a4473cb3b, type: 2}
   m_BuildHeightMesh: 0
@@ -1448,6 +1448,14 @@ PrefabInstance:
     - target: {fileID: 121858936865393135, guid: 982cb9e9e8aff01429ff32e159b97fee, type: 3}
       propertyPath: m_Name
       value: ElectricalPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 121858936865393135, guid: 982cb9e9e8aff01429ff32e159b97fee, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 429027785964066575, guid: 982cb9e9e8aff01429ff32e159b97fee, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4052173276679179182, guid: 982cb9e9e8aff01429ff32e159b97fee, type: 3}
       propertyPath: NeighborsSerialized.Array.data[0].Node
@@ -2504,7 +2512,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 374109433352817464, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1587118414}
   m_SourcePrefab: {fileID: 100100000, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
 --- !u!1 &1555668333
 GameObject:
@@ -2614,6 +2625,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 440688855}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1587118403 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 374109433352817464, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+  m_PrefabInstance: {fileID: 1519675558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1587118414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1587118403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7380f1feb9c046449989e38284eedbac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCam: {fileID: 1724698226}
+  _distance: 3
+  _mask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1001 &1648056935
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2703,6 +2736,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2d1c1df701787843b48e88ebe1bd9e9, type: 3}
+--- !u!20 &1724698226 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 374109432981789075, guid: 4168a1c5b47b6244cbf55fadeb19c7ba, type: 3}
+  m_PrefabInstance: {fileID: 1519675558}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1747461187
 GameObject:
   m_ObjectHideFlags: 0
@@ -3157,6 +3195,18 @@ PrefabInstance:
       value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 5688133029716585352, guid: 46616d2bb8e268643b32851fbf2b6d18, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688133029716585352, guid: 46616d2bb8e268643b32851fbf2b6d18, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688133029716585352, guid: 46616d2bb8e268643b32851fbf2b6d18, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688133029716585352, guid: 46616d2bb8e268643b32851fbf2b6d18, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.62
       objectReference: {fileID: 0}
@@ -3195,6 +3245,10 @@ PrefabInstance:
     - target: {fileID: 5688133029716585352, guid: 46616d2bb8e268643b32851fbf2b6d18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688133029716585352, guid: 46616d2bb8e268643b32851fbf2b6d18, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1958,7 +1958,7 @@ GameObject:
   - component: {fileID: 7816565215594736745}
   - component: {fileID: 2649436084138552317}
   - component: {fileID: 561810501875660208}
-  m_Layer: 14
+  m_Layer: 11
   m_Name: Panels
   m_TagString: Untagged
   m_Icon: {fileID: 0}

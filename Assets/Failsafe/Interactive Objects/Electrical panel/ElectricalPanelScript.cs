@@ -3,7 +3,7 @@ using UnityEngine;
 public class ElectricalPanelScript : Interactable
 {
     [SerializeField]private PowerSource _powerSource;
-    [SerializeField]private bool _isEnable = true;
+    [SerializeField]private bool _isEnable;
     private void Start()
     {
         _powerSource.SetEnable(_isEnable);

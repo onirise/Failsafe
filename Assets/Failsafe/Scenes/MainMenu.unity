@@ -802,6 +802,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProfilesScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 6321771699468215196, guid: 0b0f479346c1a0e4d9e1493647efc02f, type: 3}
+      propertyPath: _mainTextMeshProUGUI
+      value: 
+      objectReference: {fileID: 1814807591}
+    - target: {fileID: 6321771699468215196, guid: 0b0f479346c1a0e4d9e1493647efc02f, type: 3}
+      propertyPath: _optionalTextsGO.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321771699468215196, guid: 0b0f479346c1a0e4d9e1493647efc02f, type: 3}
+      propertyPath: '_optionalTextsGO.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1814807591}
     - target: {fileID: 6925762928718947909, guid: 0b0f479346c1a0e4d9e1493647efc02f, type: 3}
       propertyPath: _popup
       value: 
@@ -927,6 +939,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: RunButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5094595323410784145, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7065371950537934467, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: _mainTextMeshProUGUI
+      value: 
+      objectReference: {fileID: 1788902920}
+    - target: {fileID: 7065371950537934467, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: '_textMeshProUGUI.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1788902920}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1417,6 +1441,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258187180}
   m_CullTransparentMesh: 1
+--- !u!114 &1436958318 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 470578958244674199, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+  m_PrefabInstance: {fileID: 2141072630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1494552951
 GameObject:
   m_ObjectHideFlags: 0
@@ -2109,6 +2144,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c227efbf9ac2449b38cd11d0edc5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1788902920 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 470578958244674199, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+  m_PrefabInstance: {fileID: 777348462}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1814807591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 833142866848365859, guid: 0b0f479346c1a0e4d9e1493647efc02f, type: 3}
+  m_PrefabInstance: {fileID: 669082166}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1876182015 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5453985369330761665, guid: 0b0f479346c1a0e4d9e1493647efc02f, type: 3}
@@ -2119,6 +2176,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4322263050795315552, guid: 0b0f479346c1a0e4d9e1493647efc02f, type: 3}
   m_PrefabInstance: {fileID: 669082166}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2047103962 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 470578958244674199, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+  m_PrefabInstance: {fileID: 2373038920699531049}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2062713507 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8145262372717467654, guid: dc35896c274914e2687a4b9d9d891ed6, type: 3}
@@ -2250,6 +2318,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewGameButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5094595323410784145, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7065371950537934467, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: _mainTextMeshProUGUI
+      value: 
+      objectReference: {fileID: 1436958318}
+    - target: {fileID: 7065371950537934467, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: '_textMeshProUGUI.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1436958318}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2379,6 +2459,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExitButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5094595323410784145, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7065371950537934467, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: _mainTextMeshProUGUI
+      value: 
+      objectReference: {fileID: 2047103962}
+    - target: {fileID: 7065371950537934467, guid: 15486a6ca0bb4af42a2bd1897b29bf36, type: 3}
+      propertyPath: '_textMeshProUGUI.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2047103962}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

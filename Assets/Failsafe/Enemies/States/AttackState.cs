@@ -1,38 +1,32 @@
-﻿using System.Linq;
-using Failsafe.Scripts.Damage;
+﻿using Failsafe.Scripts.Damage;
 using Failsafe.Scripts.Damage.Implementation;
 using UnityEngine;
 using UnityEngine.AI;
 
-/// <summary>
-/// Атака лучем объекта, попавшего в сенсор
-/// Противник кастует луч в сторону игрока, опираясь на визуальный сенсор
-/// </summary>
 public class AttackState : BehaviorState
 {
     private Sensor[] _sensors;
     private Transform _transform;
-    private Vector3? _targetPosition;
     private Transform _target;
+    private Transform _targetPoint;
     private NavMeshAgent _navMeshAgent;
     private Enemy_ScriptableObject _enemyConfig;
-    
+
     private float _attackProgress = 0;
     private bool _delayOver = false;
     private bool _onCooldown = false;
     private bool _attackFired = false;
+    private bool _targetPointLocked = false;
 
     private EnemyController _enemyController;
     private EnemyAnimator _enemyAnimator;
 
     private float _distanceToPlayer;
-
     private LaserBeamController _activeLaser;
     private GameObject _laserPrefab;
     private Transform _laserOrigin;
-    private bool _playerInSight;
 
-    public AttackState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, EnemyAnimator enemyAnimator, LaserBeamController laserBeamController, GameObject laser, Transform laserOrigin,NavMeshAgent navMeshAgent ,Enemy_ScriptableObject enemyconfig)
+    public AttackState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, EnemyAnimator enemyAnimator, LaserBeamController laserBeamController, GameObject laser, Transform laserOrigin, NavMeshAgent navMeshAgent, Enemy_ScriptableObject enemyConfig)
     {
         _sensors = sensors;
         _transform = currentTransform;
@@ -42,12 +36,13 @@ public class AttackState : BehaviorState
         _laserPrefab = laser;
         _laserOrigin = laserOrigin;
         _navMeshAgent = navMeshAgent;
-        _enemyConfig = enemyconfig;
+        _enemyConfig = enemyConfig;
     }
 
     public bool PlayerOutOfAttackRange()
     {
-        return (_distanceToPlayer > _enemyConfig.AttackRangeMax || !_playerInSight) && !_onCooldown;
+        return (_targetPoint == null || _distanceToPlayer > _enemyConfig.AttackRangeMax)
+               && !_onCooldown && !_attackFired;
     }
 
     public override void Enter()
@@ -57,10 +52,9 @@ public class AttackState : BehaviorState
         _delayOver = false;
         _onCooldown = false;
         _attackFired = false;
-        _playerInSight = true;
+        _targetPointLocked = false;
         _enemyController.StopMoving();
         _enemyAnimator.isAttacking(true);
-        Debug.Log("Enter AttackState");
     }
 
     public override void Update()
@@ -75,40 +69,47 @@ public class AttackState : BehaviorState
 
         foreach (var sensor in _sensors)
         {
-            if (sensor is VisualSensor visual)
-                if(visual.IsActivated())
+            if (sensor is VisualSensor visual && visual.IsActivated())
+            {
+                _target = visual.Target;
+
+                // 🔒 Зафиксировать точку только один раз
+                if (!_targetPointLocked)
                 {
-                    _playerInSight = true;
-                    _targetPosition = visual.SignalSourcePosition;
-                    _distanceToPlayer = Vector3.Distance(_transform.position, _targetPosition.Value);
-                    _enemyController.RotateToPoint(_targetPosition.Value, 5f);
+                    _targetPoint = visual.GetBestVisiblePointWithChestOverride();
+                    _targetPointLocked = _targetPoint != null;
 
-                    if (_delayOver && !_onCooldown)
+                    if (_targetPointLocked)
+                        Debug.Log($"🎯 Цель зафиксирована: {_targetPoint.name}");
+                }
+
+                if (_targetPoint == null) return;
+
+                _distanceToPlayer = Vector3.Distance(_transform.position, _targetPoint.position);
+                _enemyController.RotateToPoint(_targetPoint.position, 5f);
+
+                if (_delayOver && !_onCooldown && !_attackFired)
+                {
+                    if (_activeLaser == null)
                     {
-                        if (_activeLaser == null)
-                        {
-                            GameObject laserGO = GameObject.Instantiate(_laserPrefab, _laserOrigin.position, _laserOrigin.rotation);
-                            _activeLaser = laserGO.GetComponent<LaserBeamController>();
-                            _activeLaser.Initialize(_laserOrigin, _targetPosition.Value);
-                        }
+                        GameObject laserGO = GameObject.Instantiate(_laserPrefab, _laserOrigin.position, _laserOrigin.rotation);
+                        _activeLaser = laserGO.GetComponent<LaserBeamController>();
+                        _activeLaser.Initialize(_laserOrigin, _targetPoint);
+                    }
 
-                        _enemyAnimator.TryAttack();
-                        _attackFired = true;
+                    _enemyAnimator.TryAttack();
+                    _attackFired = true;
 
-                        var damageableComponent = visual.Target.GetComponentInChildren<DamageableComponent>();
-                        if (sensor.SignalInAttackRay((Vector3)_targetPosition) && damageableComponent is not null)
-                        {
-                            damageableComponent.TakeDamage(new FlatDamage(_enemyConfig.Damage * Time.deltaTime));
-                            Debug.Log($"Урон: {_enemyConfig.Damage * Time.deltaTime:F1}" );
-                        }
+                    var damageable = _target.GetComponentInChildren<DamageableComponent>();
+                    if (sensor.SignalInAttackRay(_targetPoint.position) && damageable != null)
+                    {
+                        damageable.TakeDamage(new FlatDamage(_enemyConfig.Damage * Time.deltaTime));
                     }
                 }
-                else
-                {
-                    _playerInSight = false;
-                }
+            }
         }
 
+        // Завершение атаки
         if (_attackFired && _attackProgress > _enemyConfig.AttackDuration)
         {
             if (_activeLaser != null)
@@ -116,30 +117,39 @@ public class AttackState : BehaviorState
                 GameObject.Destroy(_activeLaser.gameObject);
                 _activeLaser = null;
             }
+
             _onCooldown = true;
             _enemyAnimator.TryReload();
             _enemyAnimator.isReloading(true);
-            Debug.Log("Атака на перезарядке");
         }
 
+        // Завершение кулдауна
         if (_attackProgress > _enemyConfig.AttackDuration + _enemyConfig.AttackCooldown)
         {
             _onCooldown = false;
             _enemyAnimator.isReloading(false);
             _attackProgress = 0;
             _attackFired = false;
+
+            // 🎯 готов к новой атаке — сбрасываем фиксированную точку
+            _targetPoint = null;
+            _targetPointLocked = false;
         }
     }
 
     public override void Exit()
     {
         base.Exit();
+
         if (_activeLaser != null)
         {
             GameObject.Destroy(_activeLaser.gameObject);
             _activeLaser = null;
         }
+
         _enemyAnimator.isAttacking(false);
         _enemyController.ResumeMoving();
+        _targetPoint = null;
+        _targetPointLocked = false;
     }
 }

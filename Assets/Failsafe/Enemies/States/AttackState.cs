@@ -73,7 +73,7 @@ public class AttackState : BehaviorState
             {
                 _target = visual.Target;
 
-                // 🔒 Зафиксировать точку только один раз
+                // Зафиксировать точку только один раз
                 if (!_targetPointLocked)
                 {
                     _targetPoint = visual.GetBestVisiblePointWithChestOverride();
@@ -131,7 +131,7 @@ public class AttackState : BehaviorState
             _attackProgress = 0;
             _attackFired = false;
 
-            // 🎯 готов к новой атаке — сбрасываем фиксированную точку
+            // готов к новой атаке — сбрасываем фиксированную точку
             _targetPoint = null;
             _targetPointLocked = false;
         }

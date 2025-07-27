@@ -9,7 +9,6 @@ public class PowerCrossInteraction : Interactable
     }
     protected override void Interact()
     {
-        Debug.Log(_powerCross);
         _powerCross.Rotate();
     }
 }

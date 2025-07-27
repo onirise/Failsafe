@@ -36,7 +36,7 @@ public class PlayerInteraction: MonoBehaviour
             if(hitInfo.collider.GetComponent<Interactable>() != null)
             {
                 Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
-                if (_inputHandler.UseTriggered && _allowToInteract) // Пока не настрою нармальное нажатие в InputHandler
+                if (_inputHandler.GrabOrDropTriggered && _allowToInteract) //использовал триггер GrapOrDrop так как не смг создать свой
                 {
                     _allowToInteract = false;
                     interactable.BaseInteract();

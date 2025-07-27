@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
@@ -9,6 +9,6 @@ public abstract class Interactable : MonoBehaviour
     }
     protected virtual void Intaract()
     {
-        //функция которую будут переопределять подклассы
+        //С„СѓРЅРєС†РёСЏ РєРѕС‚РѕСЂСѓСЋ Р±СѓРґСѓС‚ РїРµСЂРµРѕРїСЂРµРґРµР»СЏС‚СЊ РїРѕРґРєР»Р°СЃСЃС‹
     }
 }

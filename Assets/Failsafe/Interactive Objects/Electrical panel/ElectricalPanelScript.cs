@@ -13,7 +13,7 @@ public class ElectricalPanelScript : Interactable
         _isEnable = !_isEnable;
         _powerSource.SetEnable(_isEnable);
     }
-    protected override void Intaract()
+    protected override void Interact()
     {
         OnEnablePowerSource();
     }

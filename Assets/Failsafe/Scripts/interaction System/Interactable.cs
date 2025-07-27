@@ -5,9 +5,9 @@ public abstract class Interactable : MonoBehaviour
 
     public void BaseInteract()
     {
-        Intaract();
+        Interact();
     }
-    protected virtual void Intaract()
+    protected virtual void Interact()
     {
         //функция которую будут переопределять подклассы
     }

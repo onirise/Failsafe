@@ -17,6 +17,8 @@ public class PlayerInteraction: MonoBehaviour
     [SerializeField] private float _scaleSpeed = 8f;
 
     private float _normalSize;
+    private bool _allowToInteract = true;
+
     void Start()
     {
         _normalSize = _crosshairImage.transform.localScale.x;
@@ -34,9 +36,14 @@ public class PlayerInteraction: MonoBehaviour
             if(hitInfo.collider.GetComponent<Interactable>() != null)
             {
                 Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
-                if (Input.GetButtonDown("Fire1")) // Пока не настрою нармальное нажатие в InputHandler
+                if (_inputHandler.UseTriggered && _allowToInteract) // Пока не настрою нармальное нажатие в InputHandler
                 {
+                    _allowToInteract = false;
                     interactable.BaseInteract();
+                }
+                else if (!_inputHandler.UseTriggered)
+                {
+                    _allowToInteract = true;
                 }
                 targetScale = _hoverSize;
             }

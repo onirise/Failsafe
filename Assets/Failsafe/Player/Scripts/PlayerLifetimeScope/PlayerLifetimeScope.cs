@@ -38,8 +38,8 @@ namespace Failsafe.Player
 
             builder.RegisterInstance(_playerCam);
 
-            builder.Register<InputHandler>(Lifetime.Scoped);
-
+            builder.RegisterEntryPoint<InputHandler>().AsSelf();
+            
             builder.Register<IHealth, PlayerHealth>(Lifetime.Singleton).AsSelf().WithParameter(_playerModelParameters.MaxHealth);
             builder.Register<IStamina, PlayerStamina>(Lifetime.Singleton).AsSelf().WithParameter(_playerModelParameters.MaxStamina);
             builder.RegisterEntryPoint<PlayerDamageable>(Lifetime.Scoped);

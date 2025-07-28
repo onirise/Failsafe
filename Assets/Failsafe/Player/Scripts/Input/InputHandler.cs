@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using VContainer.Unity;
 
 /// <summary>
 /// Класс работы с инпутом от игрока
 /// </summary>
-public class InputHandler
+public class InputHandler : ILateTickable
 {
     private readonly InputActionAsset _playerControls;
 
@@ -86,6 +87,11 @@ public class InputHandler
         _useAction = mapReference.FindAction(_use);
 
         SubscribeActionValuesToInputEvents();
+    }
+    
+    public void LateTick()
+    {
+        GrabOrDropTriggered = false;
     }
     
     private void SubscribeOnActionsPerformed()

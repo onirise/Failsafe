@@ -12,16 +12,18 @@ public class CheckState : BehaviorState
     private float _waitTimer;
 
     private Sensor[] _sensors;
-    private EnemyController _enemyController;
+    private EnemyMovePatterns _enemyMovePatterns;
+    private EnemyNavMeshActions _enemyNavMeshActions;
     private Enemy_ScriptableObject _config;
     private Transform _transform;
     
     public bool CheckEnd() => _checkTimer >= _config.CheckDuration;
-    public CheckState(Sensor[] sensors, Transform transform, EnemyController enemyController, Enemy_ScriptableObject config)
+    public CheckState(Sensor[] sensors, Transform transform, EnemyMovePatterns enemyMovePatterns, EnemyNavMeshActions enemyNavMeshActions, Enemy_ScriptableObject config)
     {
         _sensors = sensors;
         _transform = transform;
-        _enemyController = enemyController;
+        _enemyMovePatterns = enemyMovePatterns;
+        _enemyNavMeshActions = enemyNavMeshActions;
         _config = config;
     }
 
@@ -40,7 +42,7 @@ public class CheckState : BehaviorState
             {
                 _originPoint = sensor.SignalSourcePosition.Value;
                 _searchDirection = (sensor.SignalSourcePosition.Value - _transform.position).normalized;
-                _enemyController.MoveToPoint(_originPoint, _config.PatrolingSpeed);
+                _enemyNavMeshActions.MoveToPoint(_originPoint, _config.PatrolingSpeed);
                 break;
             }
         }
@@ -52,7 +54,7 @@ public class CheckState : BehaviorState
 
         if (!_hasReachedOrigin)
         {
-            if (_enemyController.IsPointReached())
+            if (_enemyNavMeshActions.IsPointReached())
             {
                 _hasReachedOrigin = true;
                 _isWaiting = true;
@@ -72,7 +74,7 @@ public class CheckState : BehaviorState
             return;
         }
 
-        if (_enemyController.IsPointReached())
+        if (_enemyNavMeshActions.IsPointReached())
         {
             _checkTimer += Time.deltaTime;
             _isWaiting = true;
@@ -82,8 +84,8 @@ public class CheckState : BehaviorState
 
     private void PickPoint(Vector3 center)
     {
-        _targetPoint = _enemyController.RandomPointAround(_originPoint, _config.CheckRadius);
-        _enemyController.MoveToPoint(_targetPoint, _config.PatrolingSpeed);
+        _targetPoint = _enemyMovePatterns.RandomPointAround(_originPoint, _config.CheckRadius);
+        _enemyNavMeshActions.MoveToPoint(_targetPoint, _config.PatrolingSpeed);
     }
 
     public override void Exit()

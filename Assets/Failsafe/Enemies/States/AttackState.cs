@@ -22,7 +22,7 @@ public class AttackState : BehaviorState
     private bool _onCooldown = false;
     private bool _attackFired = false;
 
-    private EnemyController _enemyController;
+    private EnemyNavMeshActions _enemyNavMeshActions;
     private EnemyAnimator _enemyAnimator;
 
     private float _distanceToPlayer;
@@ -32,11 +32,11 @@ public class AttackState : BehaviorState
     private Transform _laserOrigin;
     private bool _playerInSight;
 
-    public AttackState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, EnemyAnimator enemyAnimator, LaserBeamController laserBeamController, GameObject laser, Transform laserOrigin,NavMeshAgent navMeshAgent ,Enemy_ScriptableObject enemyconfig)
+    public AttackState(Sensor[] sensors, Transform currentTransform, EnemyNavMeshActions enemyNavMeshActions, EnemyAnimator enemyAnimator, LaserBeamController laserBeamController, GameObject laser, Transform laserOrigin,NavMeshAgent navMeshAgent ,Enemy_ScriptableObject enemyconfig)
     {
         _sensors = sensors;
         _transform = currentTransform;
-        _enemyController = enemyController;
+        _enemyNavMeshActions = enemyNavMeshActions;
         _enemyAnimator = enemyAnimator;
         _activeLaser = laserBeamController;
         _laserPrefab = laser;
@@ -58,7 +58,7 @@ public class AttackState : BehaviorState
         _onCooldown = false;
         _attackFired = false;
         _playerInSight = true;
-        _enemyController.StopMoving();
+        _enemyNavMeshActions.StopMoving();
         _enemyAnimator.isAttacking(true);
         Debug.Log("Enter AttackState");
     }
@@ -81,7 +81,7 @@ public class AttackState : BehaviorState
                     _playerInSight = true;
                     _targetPosition = visual.SignalSourcePosition;
                     _distanceToPlayer = Vector3.Distance(_transform.position, _targetPosition.Value);
-                    _enemyController.RotateToPoint(_targetPosition.Value, 5f);
+                    _enemyNavMeshActions.RotateToPoint(_targetPosition.Value, 5f);
 
                     if (_delayOver && !_onCooldown)
                     {
@@ -140,6 +140,6 @@ public class AttackState : BehaviorState
             _activeLaser = null;
         }
         _enemyAnimator.isAttacking(false);
-        _enemyController.ResumeMoving();
+        _enemyNavMeshActions.ResumeMoving();
     }
 }

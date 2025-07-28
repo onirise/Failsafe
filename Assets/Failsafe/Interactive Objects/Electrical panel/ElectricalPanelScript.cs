@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class ElectricalPanelScript : MonoBehaviour
+public class ElectricalPanelScript : Interactable
 {
     [SerializeField]private PowerSource _powerSource;
-    [SerializeField]private bool _isEnable = true;
+    [SerializeField]private bool _isEnable;
     private void Start()
     {
         _powerSource.SetEnable(_isEnable);
@@ -13,8 +13,7 @@ public class ElectricalPanelScript : MonoBehaviour
         _isEnable = !_isEnable;
         _powerSource.SetEnable(_isEnable);
     }
-
-    private void OnMouseDown()
+    protected override void Interact()
     {
         OnEnablePowerSource();
     }

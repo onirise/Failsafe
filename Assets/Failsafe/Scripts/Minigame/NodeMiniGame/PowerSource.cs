@@ -4,17 +4,18 @@ using UnityEngine;
 public class PowerSource : PowerNode
 {
     private bool _isEnable = true;
+    [SerializeField]
+    private ElectricalPanelScript _electricalPanel;
 
     private void Start()
     {
         // Например, питание запускается автоматически или после починки
+        if (_electricalPanel != null) return;
         StartPower();
     }
     public void SetEnable(bool isEnable)
     {
         _isEnable = isEnable;
-        if (!isEnable)
-            ResetPower();
         var manager = FindFirstObjectByType<PowerNetworkManager>();
         if (manager != null)
         {

@@ -16,17 +16,21 @@ public class SearchingState : BehaviorState
     private Transform _transform;
     private NavMeshAgent _navMeshAgent;
     private Enemy_ScriptableObject _enemyConfig;
-    private EnemyController _enemyController;
+    private EnemyMovePatterns _enemyMovePatterns;
+    private EnemyNavMeshActions _enemyNavMeshActions;
+    private EnemyMemory _enemyMemory;
 
     public bool SearchingEnd() => _searchTimer >= _enemyConfig.SearchingDuration;
 
-    public SearchingState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, NavMeshAgent navMeshAgent, Enemy_ScriptableObject enemyConfig)
+    public SearchingState(Sensor[] sensors, Transform currentTransform, EnemyMovePatterns enemyMovePatterns,EnemyNavMeshActions enemyNavMeshActions,EnemyMemory enemyMemory, NavMeshAgent navMeshAgent, Enemy_ScriptableObject enemyConfig)
     {
         _sensors = sensors;
         _transform = currentTransform;
         _navMeshAgent = navMeshAgent;
         _enemyConfig = enemyConfig;
-        _enemyController = enemyController;
+        _enemyMovePatterns = enemyMovePatterns;
+        _enemyNavMeshActions = enemyNavMeshActions;
+        _enemyMemory = enemyMemory;
     }
 
     public override void Enter()
@@ -38,9 +42,9 @@ public class SearchingState : BehaviorState
         _waitTimer = 0f;
 
         _navMeshAgent.stoppingDistance = 1f;
-        _searchOrigin = _enemyController.LastKnownPlayerPosition;
-        _searchDir = _enemyController.LastKnownPlayerDirection;
-        _enemyController.MoveToPoint(_searchOrigin, _enemyConfig.SearchingSpeed);
+        _searchOrigin = _enemyMemory.LastKnownPlayerPosition;
+        _searchDir = _enemyMemory.LastKnownPlayerDirection;
+        _enemyNavMeshActions.MoveToPoint(_searchOrigin, _enemyConfig.SearchingSpeed);
 
         Debug.Log("Enter SearchingState: going to last known player position");
     }
@@ -51,7 +55,7 @@ public class SearchingState : BehaviorState
 
         if (!_hasReachedOrigin)
         {
-            if (_enemyController.IsPointReached())
+            if (_enemyNavMeshActions.IsPointReached())
             {
                 _hasReachedOrigin = true;
                 _isWaiting = true;
@@ -77,7 +81,7 @@ public class SearchingState : BehaviorState
             return;
         }
 
-        if (_enemyController.IsPointReached())
+        if (_enemyNavMeshActions.IsPointReached())
         {
             _isWaiting = true;
             _waitTimer = _enemyConfig.changePointInterval;
@@ -86,8 +90,8 @@ public class SearchingState : BehaviorState
 
     private void PickPoint(Vector3 center)
     {
-        _targetPoint = _enemyController.RandomPointInForwardCone(_searchOrigin, _searchDir, _enemyConfig.SearchRadius, 65f);
-        _enemyController.MoveToPoint(_targetPoint, _enemyConfig.SearchingSpeed);
+        _targetPoint = _enemyMovePatterns.RandomPointInForwardCone(_searchOrigin, _searchDir, _enemyConfig.SearchRadius, 65f);
+        _enemyNavMeshActions.MoveToPoint(_targetPoint, _enemyConfig.SearchingSpeed);
     }
 
     public override void Exit()

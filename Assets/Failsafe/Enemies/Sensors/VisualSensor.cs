@@ -19,14 +19,14 @@ public class VisualSensor : Sensor
     private float _rayHeight = 0.2f;
     private float _nearDistance;
 
-    public override Vector3? SignalSourcePosition => IsActivated() ? FindBestVisiblePointWithChestPriority()?.position : null;
+    public override Vector3? SignalSourcePosition => IsActivated() ? GetBestVisiblePointWithChestOverride()?.position : null;
 
-    private Transform FindBestVisiblePointWithChestPriority()
+    public Transform GetBestVisiblePointWithChestOverride()
     {
         if (_targets == null || _targets.Length == 0)
             return null;
 
-        // 1. Сначала проверяем грудь
+        // 1. Сначала — грудь
         if (_chestIndex >= 0 && _chestIndex < _targets.Length)
         {
             Transform chest = _targets[_chestIndex];
@@ -34,11 +34,9 @@ public class VisualSensor : Sensor
                 return chest;
         }
 
-        // 2. Любая другая точка
-        for (int i = 0; i < _targets.Length; i++)
+        // 2. Если грудь не видно — ищем любую другую
+        foreach (var point in _targets)
         {
-            if (i == _chestIndex) continue;
-            Transform point = _targets[i];
             if (IsPointVisible(point))
                 return point;
         }
@@ -68,7 +66,7 @@ public class VisualSensor : Sensor
         if (_targets == null || _targets.Length == 0)
             return 0f;
 
-        Transform bestPoint = FindBestVisiblePointWithChestPriority();
+        Transform bestPoint = GetBestVisiblePointWithChestOverride();
         if (bestPoint == null)
             return 0f;
 

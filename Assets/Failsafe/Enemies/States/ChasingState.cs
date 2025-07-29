@@ -13,21 +13,22 @@ public class ChasingState : BehaviorState
     private NavMeshAgent _navMeshAgent;
     private Enemy_ScriptableObject _enemyConfig;
     private EnemyAnimator _enemyAnimator;
-    private EnemyController _enemyController;
-
+    private EnemyNavMeshActions _enemyNavMeshActions;
+    private EnemyMemory _enemyMemory;
     private float _loseProgress;
 
     private float _distanceToPlayer;
     private bool _playerInSight;
 
-    public ChasingState(Sensor[] sensors, Transform currentTransform, EnemyController enemyController, NavMeshAgent navMeshAgent, Enemy_ScriptableObject enemyConfig, EnemyAnimator enemyAnimator)
+    public ChasingState(Sensor[] sensors, Transform currentTransform, EnemyNavMeshActions enemyNavMeshActions, EnemyMemory enemyMemory, NavMeshAgent navMeshAgent, Enemy_ScriptableObject enemyConfig, EnemyAnimator enemyAnimator)
     {
         _sensors = sensors;
         _transform = currentTransform;
-        _enemyController = enemyController;
+        _enemyNavMeshActions = enemyNavMeshActions;
         _navMeshAgent = navMeshAgent;   
         _enemyConfig = enemyConfig;
         _enemyAnimator = enemyAnimator;
+        _enemyMemory = enemyMemory;
     }
 
     public bool PlayerInAttackRange() => _playerInSight && (_distanceToPlayer < _enemyConfig.AttackRangeMin);
@@ -66,9 +67,9 @@ public class ChasingState : BehaviorState
             {
                 anySensorIsActive = true;
                 _loseProgress = 0;
-                _enemyController.RotateToPoint((Vector3)sensor.SignalSourcePosition, 5f);
+                _enemyNavMeshActions.RotateToPoint((Vector3)sensor.SignalSourcePosition, 5f);
                 _chasingPosition = sensor.SignalSourcePosition;
-                _enemyController.SetLastKnownPlayerPosition(
+                _enemyMemory.SetLastKnownPlayerPosition(
                     sensor.SignalSourcePosition.Value,
                     (sensor.SignalSourcePosition.Value - _transform.position).normalized
                 );                break;
@@ -79,7 +80,7 @@ public class ChasingState : BehaviorState
         {
             return;
         }
-        _enemyController.RunToPoint(_chasingPosition.Value, _enemyConfig.ChaseSpeed);
+        _enemyNavMeshActions.RunToPoint(_chasingPosition.Value, _enemyConfig.ChaseSpeed);
     }
 
     public override void Exit()

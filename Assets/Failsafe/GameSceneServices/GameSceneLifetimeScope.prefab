@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: Failsafe.Scripts.DependencyInjection.RootLifetimeScope
+    TypeName: Failsafe.Player.PlayerLifetimeScope
   autoRun: 1
   autoInjectGameObjects: []
   _enemySpawnSystemBuilder: {fileID: 6504668550751240824, guid: dc0ba49eac487a641a5967fffdef513f, type: 3}

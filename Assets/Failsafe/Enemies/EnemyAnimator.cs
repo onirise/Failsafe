@@ -7,7 +7,6 @@ public class EnemyAnimator
     private readonly NavMeshAgent _navMeshAgent;
     private readonly Animator _animator;
     private readonly Transform _transform;
-    private EnemyController _controller;
     private EnemyAudioManager _audioManager;
     private bool _isTurning = false;
 
@@ -15,9 +14,8 @@ public class EnemyAnimator
     private bool _inCooldown = false;
     private bool _inAttack = false;
 
-    public EnemyAnimator( NavMeshAgent navMeshAgent, Animator animator, Transform transform, EnemyController enemyController)
+    public EnemyAnimator( NavMeshAgent navMeshAgent, Animator animator, Transform transform)
     {
-        _controller = enemyController;
         _navMeshAgent = navMeshAgent;
         _animator = animator;
         _transform = transform;

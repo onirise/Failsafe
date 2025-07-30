@@ -58,9 +58,4 @@ public class PowerCross : PowerNode
         return (Direction)intConnection;
     }
 
-    // Для теста — поворот по клику мыши
-    private void OnMouseDown()
-    {
-        Rotate();
-    }
 }

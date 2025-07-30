@@ -66,7 +66,7 @@ public abstract class PowerNode : MonoBehaviour
     }
 
     // Метод для запуска питания снаружи (например, у начальной точки)
-    public void StartPower()
+    public virtual void StartPower()
     {
         if (IsPowered) return;
         IsPowered = true;

@@ -70,9 +70,19 @@ namespace Failsafe.Enemies.Sensors
         }
 
         public bool IsAlerted()
-        {    
-            ApplyAlertSensorParams();
-            return _alertness >= _alertThreshold;
+        {
+            if (_alertness <= _alertThreshold)
+            {
+                return false;
+            }
+            else
+            {
+                ApplyAlertSensorParams();
+                return true;
+            }
+            
+            
+
         }
 
         public bool IsCalm()

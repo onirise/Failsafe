@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public interface IUpdatable
+namespace Failsafe.Items
 {
-    
-    public void Update();
-    
+    public interface IUpdatable
+    {
+
+        public void Update();
+
+    }
 }

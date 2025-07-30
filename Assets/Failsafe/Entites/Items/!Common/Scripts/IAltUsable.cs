@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IAltUsable
+namespace Failsafe.Items
 {
-    public void AltUse();
+    public interface IAltUsable
+    {
+        public void AltUse();
+    }
 }

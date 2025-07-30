@@ -26,6 +26,8 @@ namespace Failsafe.Player
         [SerializeField] private PlayerView _playerView;
         [SerializeField] private InputActionAsset _inputActionAsset;
 
+        [SerializeField] private Camera _playerCam;
+
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterInstance(_playerModelParameters);
@@ -33,6 +35,8 @@ namespace Failsafe.Player
             builder.RegisterInstance(_playerNoiseParameters);
             builder.RegisterComponent(_playerView);
             builder.RegisterComponent(_inputActionAsset);
+
+            builder.RegisterInstance(_playerCam);
 
             builder.Register<InputHandler>(Lifetime.Scoped);
 
@@ -57,6 +61,9 @@ namespace Failsafe.Player
             }
             builder.Register<Stimpack>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
             builder.Register<StasisGun>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
+            builder.Register<Adrenaline>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
+            builder.Register<Tushkan>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
+            builder.Register<Gorilla>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
         }
     }
 }

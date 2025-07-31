@@ -1,6 +1,7 @@
 ﻿using UnityEngine.UI;
 using VContainer;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInteraction: MonoBehaviour
 {
@@ -17,13 +18,13 @@ public class PlayerInteraction: MonoBehaviour
     [SerializeField] private float _scaleSpeed = 8f;
 
     private float _normalSize;
-    private bool _allowToInteract = true;
 
     void Start()
     {
         _normalSize = _crosshairImage.transform.localScale.x;
     }
 
+    
     void Update()
     {
         float targetScale = _normalSize;
@@ -36,14 +37,9 @@ public class PlayerInteraction: MonoBehaviour
             if(hitInfo.collider.GetComponent<Interactable>() != null)
             {
                 Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
-                if (_inputHandler.GrabOrDropTriggered && _allowToInteract) //использовал триггер GrapOrDrop так как не смг создать свой
+                if (_inputHandler.GrabOrDropAction.WasPressedThisFrame()) //использовал триггер GrapOrDrop так как не смг создать свой
                 {
-                    _allowToInteract = false;
                     interactable.BaseInteract();
-                }
-                else if (!_inputHandler.UseTriggered)
-                {
-                    _allowToInteract = true;
                 }
                 targetScale = _hoverSize;
             }

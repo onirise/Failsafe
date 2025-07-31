@@ -50,7 +50,6 @@ namespace Failsafe.Player.Scripts.Interaction
         private float _throwForceMultiplier;
         private const float _maxForceMultiplier = 3f;
 
-        private bool _allowToGrabOrDrop = true;
         private int _cachedCarryingLayer;
 
 
@@ -78,13 +77,9 @@ namespace Failsafe.Player.Scripts.Interaction
         private void Update()
         {
             UpdateCrosshairScale();
-            if (_inputHandler.GrabOrDropTriggered && _allowToGrabOrDrop)
+            if (_inputHandler.GrabOrDropAction.WasPressedThisFrame())
             {
                 GrabOrDrop();
-            }
-            else if (!_inputHandler.GrabOrDropTriggered)
-            {
-                _allowToGrabOrDrop = true;
             }
 
             if (IsDragging)
@@ -121,7 +116,6 @@ namespace Failsafe.Player.Scripts.Interaction
 
         public void GrabOrDrop()
         {
-            _allowToGrabOrDrop = false;
 
             if (!CarryingObject)
             {

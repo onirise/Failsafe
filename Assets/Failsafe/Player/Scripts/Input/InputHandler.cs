@@ -38,7 +38,7 @@ public class InputHandler
     private InputAction _jumpAction;
     private InputAction _sprintAction;
     private InputAction _crouchAction;
-    private InputAction _grabOrDropAction;
+    public InputAction GrabOrDropAction;
     private InputAction _attackAction;
     private InputAction _grabLedgeAction;
     private InputAction _zoomAction;
@@ -53,7 +53,6 @@ public class InputHandler
     public bool JumpTriggered { get; private set; }
     public bool SprintTriggered { get; private set; }
     public InputTrigger CrouchTrigger { get; private set; } = new InputTrigger();
-    public bool GrabOrDropTriggered { get; private set; }
     public bool AttackTriggered {get; private set;}
     public InputTrigger GrabLedgeTrigger { get; private set; } = new InputTrigger();
     public bool ZoomTriggered {get; private set;} 
@@ -79,7 +78,7 @@ public class InputHandler
         _jumpAction = mapReference.FindAction(_jump);
         _sprintAction = mapReference.FindAction(_sprint);
         _crouchAction = mapReference.FindAction(_crouch);
-        _grabOrDropAction = mapReference.FindAction(_grabOrDrop);
+        GrabOrDropAction = mapReference.FindAction(_grabOrDrop);
         _attackAction = mapReference.FindAction(_attack);
         _grabLedgeAction = mapReference.FindAction(_grabLedge);
         _zoomAction = mapReference.FindAction(_zoom);
@@ -125,9 +124,6 @@ public class InputHandler
 
         _crouchAction.performed += CrouchTrigger.OnInputStart;
         _crouchAction.canceled += CrouchTrigger.OnInputCancel;
-
-        _grabOrDropAction.performed += inputInfo => GrabOrDropTriggered = true;
-        _grabOrDropAction.canceled += inputInfo => GrabOrDropTriggered = false;
 
         _attackAction.performed += inputInfo => AttackTriggered = true;
         _attackAction.canceled += inputInfo => AttackTriggered = false;

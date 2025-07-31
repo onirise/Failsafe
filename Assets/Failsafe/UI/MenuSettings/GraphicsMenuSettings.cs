@@ -180,12 +180,13 @@ public class GraphicsMenuSettings : MonoBehaviour
     private void InitializeMaxFPSDropdown()
     {
         MaxFPS.options.Clear();
-        List<string> options = new List<string> {
-            "15 fps",
-            "30 fps",
-            "60 fps"
-        };
 
+        List<string> options = new()
+        {
+            "60 fps",
+            "30 fps",
+            "15 fps",
+        };
         MaxFPS.AddOptions(options);
 
 

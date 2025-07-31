@@ -1,4 +1,6 @@
 
+using Failsafe.PlayerMovements;
+using Failsafe.Scripts.EffectSystem;
 using Failsafe.Scripts.Modifiebles;
 using System;
 using System.Collections;
@@ -6,33 +8,51 @@ using UnityEngine;
 
 namespace Failsafe.Items
 {
-    public class Tushkan : IUsable, ILimitedEffect
+    public class Tushkan : IUsable
     {
         TushkanData _data;
-        private PlayerMovements.PlayerMovementParameters _playerMovementParameters;
-        private IModificator<float> _jumpModificator;
-        public Tushkan(TushkanData data, PlayerMovements.PlayerMovementParameters playerMovementParameters)
+        IEffectManager _effectManager;
+        TushkanEffect _effect;
+
+        public Tushkan(TushkanData data, PlayerMovementParameters playerMovementParameters, IEffectManager effectManager)
         {
             _data = data;
-            _playerMovementParameters = playerMovementParameters;
-            _jumpModificator = new MultiplierFloat(_data.JumpMultiplier, priority: 100);
+            _effectManager = effectManager;
+            _effect = new TushkanEffect(playerMovementParameters, data);
         }
-        public IEnumerator EndEffect(Action callback)
-        {
-            yield return new WaitForSeconds(_data.Duration);
-            _playerMovementParameters.JumpMaxHeight.RemoveModificator(_jumpModificator);
-            _playerMovementParameters.JumpMaxSpeed.RemoveModificator(_jumpModificator);
-            callback.Invoke();
-        }
+
 
 
         public void Use()
         {
-            //происходит именно УМНОЖЕНИЕ
+            _effectManager.ApplyEffect(_effect);
+
+        }
+
+
+    }
+
+    public class TushkanEffect : Effect
+    {
+        private PlayerMovementParameters _playerMovementParameters;
+        private IModificator<float> _jumpModificator;
+        public TushkanEffect(PlayerMovementParameters playerMovementParameters, TushkanData data)
+        {
+            _playerMovementParameters = playerMovementParameters;
+            _jumpModificator = new MultiplierFloat(data.JumpMultiplier, priority: 100);
+            _duration = data.Duration;
+            IsUniqueEffect = true;
+        }
+        public override void ApplyEffect()
+        {
             _playerMovementParameters.JumpMaxHeight.AddModificator(_jumpModificator);
             _playerMovementParameters.JumpMaxSpeed.AddModificator(_jumpModificator);
         }
 
-
+        public override void ClearEffect()
+        {
+            _playerMovementParameters.JumpMaxHeight.RemoveModificator(_jumpModificator);
+            _playerMovementParameters.JumpMaxSpeed.RemoveModificator(_jumpModificator);
+        }
     }
 }

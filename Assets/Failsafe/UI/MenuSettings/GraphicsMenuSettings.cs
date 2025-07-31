@@ -59,14 +59,14 @@ public class GraphicsMenuSettings : MonoBehaviour
 
     public void  OnSaveButtonClick()
     {   
-        Debug.Log("knopka nazhata");
+        Debug.Log("Settings button pressed");
         
 
     }
 
     public void  OnDefaultButtonClick()
     {   
-        Debug.Log("knopka nazhata");
+        Debug.Log("Settings button pressed");
 
 
     }

@@ -11,7 +11,7 @@ public class MainMenuSettings : MonoBehaviour
 
     public void  OnGraphicSettingsClick()
     {   
-        Debug.Log("knopka nazhata");
+        Debug.Log("Settings button pressed");
         graphicsMenu.SetActive(true);
         soundMenu.SetActive(false);
         gameplayMenu.SetActive(false);
@@ -20,7 +20,7 @@ public class MainMenuSettings : MonoBehaviour
 
     public void  OnSoundSettingsClick()
     {   
-        Debug.Log("knopka nazhata");
+        Debug.Log("Settings button pressed");
         graphicsMenu.SetActive(false);
         soundMenu.SetActive(true);
         gameplayMenu.SetActive(false);
@@ -29,7 +29,7 @@ public class MainMenuSettings : MonoBehaviour
 
     public void  OnGameSettingsClick()
     {   
-        Debug.Log("knopka nazhata");
+        Debug.Log("Settings button pressed");
         gameplayMenu.SetActive(true);
         graphicsMenu.SetActive(false);
         soundMenu.SetActive(false);

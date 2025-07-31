@@ -6,7 +6,7 @@ public class MainMenuSettings : MonoBehaviour
     public GameObject soundMenu;
     public GameObject gameplayMenu;
 
-
+    
 
 
     public void  OnGraphicSettingsClick()

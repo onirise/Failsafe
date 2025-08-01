@@ -6,15 +6,15 @@ using UnityEngine;
 namespace Failsafe.Granate.States
 {
     [Serializable]
-    public class GranateStateSettings
+    public class GrenadeStateSettings
     {
         [field: SerializeField] public float DelayExplode { get; private set; }
     }
-    public class GranateState: GranateStateBase
+    public class GrenadeState: GrenadeStateBase
     {
-        private readonly GranateStateSettings _settings;
+        private readonly GrenadeStateSettings _settings;
         private CancellationTokenSource _explodeDelayCts;
-        public GranateState(Granate granate, GranateStateSettings settings) : base(granate)
+        public GrenadeState(Grenade grenade, GrenadeStateSettings settings) : base(grenade)
         {
             _settings = settings;
         }
@@ -36,7 +36,7 @@ namespace Failsafe.Granate.States
         private async UniTaskVoid DelayExplode(CancellationToken ct)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(_settings.DelayExplode), cancellationToken: ct);
-            _granate.Explode();
+            Grenade.Explode();
         }
         
         

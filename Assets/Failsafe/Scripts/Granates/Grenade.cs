@@ -6,19 +6,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Failsafe.Granate
 {
     [Serializable]
-    public enum GranateStateName
+    public enum GrenadeStateName
     {
         MINE,
         GRANATE
     }
-    public class Granate : MonoBehaviour, IDisposable
+    public class Grenade : MonoBehaviour, IDisposable
     {
-        [SerializeField] private GranateData _data;
-        [SerializeField] private GranateStateName _startState;
+        [SerializeField] private GrenadeData _data;
+        [SerializeField] private GrenadeStateName _startState;
         
         [SerializeField] private KeyCode _switchGranateKey = KeyCode.H;
 
@@ -27,14 +28,14 @@ namespace Failsafe.Granate
         
         [SerializeField] private MineStateSettings _mineStateSettings;
 
-        [SerializeField] private GranateStateSettings _granateStateSettings;
+        [SerializeField] private GrenadeStateSettings grenadeStateSettings;
         
-        private GranateStateBase _currentState;
-        private GranateStateName _currentStateName;
+        private GrenadeStateBase _currentState;
+        private GrenadeStateName _currentStateName;
 
-        public GranateStateName GetCurrentStateName => _currentStateName;
+        public GrenadeStateName GetCurrentStateName => _currentStateName;
         
-        private List<GranateStateBase> _allGranateStates;
+        private List<GrenadeStateBase> _allGrenadeStates;
         
         private CancellationTokenSource _explodeCts;
         private RaycastHit[] _hits;
@@ -59,9 +60,9 @@ namespace Failsafe.Granate
 
         private void Initialize()
         {
-            _allGranateStates = new List<GranateStateBase>()
+            _allGrenadeStates = new List<GrenadeStateBase>()
             {
-                new GranateState(this, _granateStateSettings),
+                new GrenadeState(this, grenadeStateSettings),
                 new MineState(this, _mineStateSettings)
             };
         }
@@ -89,13 +90,13 @@ namespace Failsafe.Granate
             }
         }
         
-        private GranateStateName IncrementEnumCyclic(GranateStateName current)
+        private GrenadeStateName IncrementEnumCyclic(GrenadeStateName current)
         {
-            GranateStateName[] values = (GranateStateName[])Enum.GetValues(typeof(GranateStateName));
+            GrenadeStateName[] values = (GrenadeStateName[])Enum.GetValues(typeof(GrenadeStateName));
             
             int currentInt = (int)current;
             int nextInt = (currentInt + 1) % values.Length;
-            return (GranateStateName)nextInt;
+            return (GrenadeStateName)nextInt;
         }
 
 
@@ -155,9 +156,9 @@ namespace Failsafe.Granate
             }
         }
         
-        public void SwitchState<T>() where T : GranateStateBase
+        public void SwitchState<T>() where T : GrenadeStateBase
         {
-            var newState = _allGranateStates.FirstOrDefault(s=> s is T);
+            var newState = _allGrenadeStates.FirstOrDefault(s=> s is T);
             _currentState?.OnStopState();
 
             if(newState == null)throw new Exception("New granate state is null");
@@ -165,18 +166,18 @@ namespace Failsafe.Granate
             _currentState = newState;
         }
 
-        public void SwitchState(GranateStateName newState)
+        public void SwitchState(GrenadeStateName newState)
         {
             switch (newState)
             {
-                case GranateStateName.GRANATE:
-                    SwitchState<GranateState>();
+                case GrenadeStateName.GRANATE:
+                    SwitchState<GrenadeState>();
                     break;
-                case GranateStateName.MINE:
+                case GrenadeStateName.MINE:
                     SwitchState<MineState>();
                     break;
                 default:
-                    SwitchState<GranateState>();
+                    SwitchState<GrenadeState>();
                     break;
             }
 
@@ -196,7 +197,7 @@ namespace Failsafe.Granate
                 _explodeCts.Dispose();
             }
 
-            foreach (var state in _allGranateStates)
+            foreach (var state in _allGrenadeStates)
             {
                 state.Dispose();
             }

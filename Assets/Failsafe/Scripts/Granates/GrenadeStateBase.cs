@@ -12,13 +12,13 @@ namespace Failsafe.Granate.States
             Success = success;
         }
     }
-    public abstract class GranateStateBase: IDisposable
+    public abstract class GrenadeStateBase: IDisposable
     {
-        protected readonly Granate _granate;
+        protected readonly Grenade Grenade;
 
-        protected GranateStateBase(Granate granate)
+        protected GrenadeStateBase(Grenade grenade)
         {
-            _granate = granate;
+            Grenade = grenade;
         }
         public abstract void OnStartState();
         public abstract UseGranateResult OnUsed();

@@ -12,13 +12,13 @@ namespace Failsafe.Granate.States
         [field: SerializeField] public LayerMask LayerMaskPlentable { get; private set; }
         [field: SerializeField] public Vector3 MineOffset { get; private set; }
     }
-    public class MineState: GranateStateBase
+    public class MineState: GrenadeStateBase
     {
         private readonly MineStateSettings _settings;
 
         private readonly RaycastHit[] _hits = new RaycastHit[1];
         private readonly Camera _camera;
-        public MineState(Granate granate, MineStateSettings settings) : base(granate)
+        public MineState(Grenade grenade, MineStateSettings settings) : base(grenade)
         {
             _settings = settings;
             

@@ -1,17 +1,18 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Failsafe.Granate
 {
-    public class GranateView : MonoBehaviour
+    public class GrenadeView : MonoBehaviour
     {
-        [SerializeField] private Granate _granate;
+        [SerializeField] private Grenade grenade;
         [SerializeField] private ParticleSystem _explodeParticle;
         //[SerializeField] private AudioClip _explodeSound;
 
         private void Start()
         {
-            _granate.OnExplode += OnExplodeVisual;
+            grenade.OnExplode += OnExplodeVisual;
         }
 
         private void OnExplodeVisual()
@@ -21,7 +22,7 @@ namespace Failsafe.Granate
 
         private void OnDestroy()
         {
-            _granate.OnExplode -= OnExplodeVisual;
+            grenade.OnExplode -= OnExplodeVisual;
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Failsafe.Granate
 {
     [Serializable]
-    public class GranateData
+    public class GrenadeData
     {
         [field: SerializeField] public float DelayLerpRadius { get; private set; }
         [field: SerializeField] public float StartLerpRadius { get; private set; }

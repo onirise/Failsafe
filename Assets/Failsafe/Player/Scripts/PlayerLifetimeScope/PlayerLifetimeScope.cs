@@ -50,6 +50,9 @@ namespace Failsafe.Player
             builder.RegisterEntryPoint<PlayerAnimationController>(Lifetime.Scoped);
             builder.RegisterEntryPoint<PlayerCameraController>(Lifetime.Scoped);
 
+            builder.Register<PlayerHandsContainer>(Lifetime.Scoped);
+            builder.RegisterEntryPoint<PlayerHandsSystem>(Lifetime.Scoped);
+
             RegisterItems(builder);
         }
 

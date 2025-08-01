@@ -41,7 +41,7 @@ public class PlayerInteraction: MonoBehaviour
                     _allowToInteract = false;
                     interactable.BaseInteract();
                 }
-                else if (!_inputHandler.UseTriggered)
+                else if (!_inputHandler.GrabOrDropTriggered)
                 {
                     _allowToInteract = true;
                 }

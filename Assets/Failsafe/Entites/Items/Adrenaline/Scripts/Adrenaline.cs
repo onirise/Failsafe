@@ -20,11 +20,12 @@ namespace Failsafe.Items
             _effect = new AdrenalineEffect(playerMovementParameters, data);
         }
 
-        public void Use()
+        public ItemUseResult Use()
         {
             // Если эффекты должны складываться друг с другом, то нужно убрать у эффекта IsUniqueEffect = true;
             // и создавать новый экземпляр перед каждым применением (в этом случае можно создать Pooling для оптимизации)
             _effectManager.ApplyEffect(_effect);
+            return ItemUseResult.Consumed;
         }
 
         //TODO: Вынести в отдельный файл если эффект будет переиспользоваться другими предметами

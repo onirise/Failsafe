@@ -4,6 +4,6 @@ namespace Failsafe.Items
 {
     public interface IAltUsable
     {
-        public void AltUse();
+        public ItemUseResult AltUse();
     }
 }

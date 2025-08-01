@@ -21,9 +21,10 @@ namespace Failsafe.Items
         }
 
 
-        public void Use()
+        public ItemUseResult Use()
         {
             _effectManager.ApplyEffect(_effect);
+            return ItemUseResult.Consumed;
         }
     }
 

@@ -48,7 +48,7 @@ public class CheckState : BehaviorState
         }
     }
 
-    public override void Update()
+    public override async void Update()
     {
         base.Update();
 
@@ -65,12 +65,11 @@ public class CheckState : BehaviorState
 
         if (_isWaiting)
         {
-            _waitTimer -= Time.deltaTime;
-            if (_waitTimer <= 0f)
+            await Timer.StartTimer(_waitTimer, 0, null, () =>
             {
                 _isWaiting = false;
                 PickPoint(_transform.position);
-            }
+            });
             return;
         }
 

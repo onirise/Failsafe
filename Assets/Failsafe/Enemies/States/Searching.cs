@@ -49,7 +49,7 @@ public class SearchingState : BehaviorState
         Debug.Log("Enter SearchingState: going to last known player position");
     }
 
-    public override void Update()
+    public override async void Update()
     {
         base.Update();
 
@@ -72,12 +72,11 @@ public class SearchingState : BehaviorState
 
         if (_isWaiting)
         {
-            _waitTimer -= Time.deltaTime;
-            if (_waitTimer <= 0f)
+            await Timer.StartTimer(_waitTimer, 0, null, () =>
             {
                 _isWaiting = false;
                 PickPoint(_transform.position);
-            }
+            });
             return;
         }
 

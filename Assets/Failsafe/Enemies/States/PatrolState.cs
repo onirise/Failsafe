@@ -57,17 +57,16 @@ public class PatrolState : BehaviorState
             HandlePatrolling();
         }
     }
-    public override void Update()
+    public async override void Update()
     {
        
         if (_isWaiting)
         {
-            _waitTimer -= Time.deltaTime;
-            if (_waitTimer <= 0f)
+            await Timer.StartTimer(_waitTimer, 0, null, () =>
             {
                 _isWaiting = false;
                 HandlePatrolling();
-            }
+            });
             return;
         }
 

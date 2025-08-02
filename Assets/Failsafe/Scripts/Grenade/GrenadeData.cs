@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
-namespace Failsafe.Granate
+namespace Failsafe.Grenade
 {
     [Serializable]
     public class GrenadeData

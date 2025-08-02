@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using UnityEngine;
 
-namespace Failsafe.Granate.States
+namespace Failsafe.Grenade.States
 {
     [Serializable]
     public class GrenadeStateSettings
@@ -24,13 +24,13 @@ namespace Failsafe.Granate.States
             //Animations
         }
 
-        public override UseGranateResult OnUsed()
+        public override UseGrenadeResult OnUsed()
         {
             _explodeDelayCts?.Cancel();
             _explodeDelayCts = new CancellationTokenSource();
             //Throw granate
             DelayExplode(_explodeDelayCts.Token).Forget();
-            return new UseGranateResult(true);
+            return new UseGrenadeResult(true);
         }
 
         private async UniTaskVoid DelayExplode(CancellationToken ct)

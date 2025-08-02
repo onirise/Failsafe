@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
-using Failsafe.Granate.States;
+using Failsafe.Grenade.States;
+using Failsafe.Items;
 using Failsafe.Scripts.Damage.Implementation;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Failsafe.Granate
+namespace Failsafe.Grenade
 {
     [Serializable]
     public enum GrenadeStateName
@@ -16,7 +17,7 @@ namespace Failsafe.Granate
         MINE,
         GRANATE
     }
-    public class Grenade : MonoBehaviour, IDisposable
+    public class Grenade : Item, IUsable, IAltUsable, IDisposable
     {
         [SerializeField] private GrenadeData _data;
         [SerializeField] private GrenadeStateName _startState;
@@ -67,7 +68,6 @@ namespace Failsafe.Granate
             };
         }
         
-        //вызывается извне
         public void Use()
         {
             _isUsed = true;
@@ -81,7 +81,7 @@ namespace Failsafe.Granate
             }
         }
         
-        private void Update()
+        public void AltUse()
         {
             if(_isUsed)return;
             if (Input.GetKeyDown(_switchGranateKey))
@@ -202,5 +202,7 @@ namespace Failsafe.Granate
                 state.Dispose();
             }
         }
+
+      
     }
 }

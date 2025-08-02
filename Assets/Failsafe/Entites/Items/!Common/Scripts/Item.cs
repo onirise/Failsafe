@@ -1,19 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Item : Prop
 {
     public ItemData ItemData;
     public List<ActionsGroup> ActionsGroups;
-
-    private void Awake()
-    {
-        if (!GetComponent<BoxCollider>())
-        {
-            gameObject.AddComponent<BoxCollider>();
-        }
-    }
-
+    
     public void SetKinematic(bool value)
     {
         var rigidbody = gameObject.GetComponent<Rigidbody>();

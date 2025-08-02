@@ -1,13 +1,13 @@
 using System;
 
-namespace Failsafe.Granate.States
+namespace Failsafe.Grenade.States
 {
     [Serializable]
-    public class UseGranateResult
+    public class UseGrenadeResult
     {
         public readonly bool Success;
 
-        public UseGranateResult(bool success)
+        public UseGrenadeResult(bool success)
         {
             Success = success;
         }
@@ -21,7 +21,7 @@ namespace Failsafe.Granate.States
             Grenade = grenade;
         }
         public abstract void OnStartState();
-        public abstract UseGranateResult OnUsed();
+        public abstract UseGrenadeResult OnUsed();
         public abstract void OnStopState();
         public abstract void Dispose();
     }

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Failsafe.Granate
+namespace Failsafe.Grenade
 {
     public class GrenadeView : MonoBehaviour
     {

@@ -25,7 +25,7 @@ namespace Failsafe.PlayerMovements.States
             base.Enter();
         }
 
-        public override async UniTask Update()
+        public override void Update()
         {
             if (Mathf.Abs(_playerRotationController.HeadLocalRotation.y) >= 80)
             {

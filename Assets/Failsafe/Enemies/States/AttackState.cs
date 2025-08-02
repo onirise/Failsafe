@@ -57,7 +57,7 @@ public class AttackState : BehaviorState
         _enemyAnimator.isAttacking(true);
     }
 
-    public override async UniTask Update()
+    public override void Update()
     {
         _attackProgress += Time.deltaTime;
 

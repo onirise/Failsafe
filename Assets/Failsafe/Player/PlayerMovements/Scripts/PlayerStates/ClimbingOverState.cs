@@ -49,7 +49,7 @@ namespace Failsafe.PlayerMovements.States
             base.Enter();
         }
 
-        public override async UniTask Update()
+        public override void Update()
         {
             _climbingProgress += Time.deltaTime;
             Vector3 movement = Vector3.zero;

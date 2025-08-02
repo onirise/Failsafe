@@ -58,16 +58,18 @@ public class PatrolState : BehaviorState
             HandlePatrolling();
         }
     }
-    public override async UniTask Update()
+    public override void Update()
     {
        
         if (_isWaiting)
         {
-            await Timer.StartTimer(_waitTimer, 1, null, () =>
+            _waitTimer -= Time.deltaTime;
+            if (_waitTimer <= 0f)
             {
                 _isWaiting = false;
                 HandlePatrolling();
-            });
+            }
+            return;
         }
 
         if (_enemyNavMeshActions.IsPointReached())

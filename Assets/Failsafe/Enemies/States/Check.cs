@@ -49,7 +49,7 @@ public class CheckState : BehaviorState
         }
     }
 
-    public override async UniTask Update()
+    public override void Update()
     {
         base.Update();
 
@@ -66,11 +66,13 @@ public class CheckState : BehaviorState
 
         if (_isWaiting)
         {
-            await Timer.StartTimer(_waitTimer, 1, null, () =>
+            _waitTimer -= Time.deltaTime;
+            if (_waitTimer <= 0f)
             {
                 _isWaiting = false;
                 PickPoint(_transform.position);
-            });
+            }
+            return;
         }
 
         if (_enemyNavMeshActions.IsPointReached())

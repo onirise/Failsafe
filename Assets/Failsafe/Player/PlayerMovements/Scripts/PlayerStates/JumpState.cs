@@ -48,7 +48,7 @@ namespace Failsafe.PlayerMovements.States
             _playerStaminaController.SpendOnJump();
         }
 
-        public override async UniTask Update()
+        public override void Update()
         {
             _jumpProgress += Time.deltaTime;
 

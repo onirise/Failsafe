@@ -18,7 +18,7 @@ public class DisabledState : BehaviorForcedState
         Debug.Log("Enter DisabledState");
     }
 
-    public override async UniTask Update()
+    public override void Update()
     {
         _disableProgress += Time.deltaTime;
         Debug.Log(_disableProgress);

@@ -50,7 +50,7 @@ public class SearchingState : BehaviorState
         Debug.Log("Enter SearchingState: going to last known player position");
     }
 
-    public override async UniTask Update()
+    public override void Update()
     {
         base.Update();
 
@@ -73,11 +73,13 @@ public class SearchingState : BehaviorState
 
         if (_isWaiting)
         {
-            await Timer.StartTimer(_waitTimer, 1, null, () =>
+            _waitTimer -= Time.deltaTime;
+            if (_waitTimer <= 0f)
             {
                 _isWaiting = false;
                 PickPoint(_transform.position);
-            });
+            }
+            return;
         }
 
         if (_enemyNavMeshActions.IsPointReached())

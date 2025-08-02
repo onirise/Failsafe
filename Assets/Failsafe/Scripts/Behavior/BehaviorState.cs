@@ -45,7 +45,7 @@ public abstract class BehaviorState
     /// <summary>
     /// Выполняется пока состояние активно
     /// </summary>
-    public virtual async UniTask Update() { }
+    public virtual void Update() { }
 
     /// <summary>
     /// Выполняется пока состояние активно

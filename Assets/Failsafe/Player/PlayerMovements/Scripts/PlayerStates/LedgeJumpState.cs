@@ -42,7 +42,7 @@ namespace Failsafe.PlayerMovements.States
             _initialVelocity = _headTransform.forward * 5f;
         }
 
-        public override async UniTask Update()
+        public override void Update()
         {
             _jumpProgress += Time.deltaTime;
             var jumpMovement = Vector3.up * (_jumpForce - _jumpProgress * _jumpForceFade) * Time.deltaTime;

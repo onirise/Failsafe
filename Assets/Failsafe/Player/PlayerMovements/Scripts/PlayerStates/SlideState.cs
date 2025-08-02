@@ -45,7 +45,7 @@ namespace Failsafe.PlayerMovements.States
             _playerRotationController.RotateBodyToDirection(_movementController.GetRelativeMovement(Vector2.up));
         }
 
-        public override async UniTask Update()
+        public override void Update()
         {
             _slideProgress += Time.deltaTime;
             var movement = _movementController.GetRelativeMovement(Vector2.up) * GetCurrentSpeed();

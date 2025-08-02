@@ -40,7 +40,7 @@ namespace Failsafe.PlayerMovements.States
             _stepController.Enable(Speed);
         }
 
-        public override async UniTask Update()
+        public override void Update()
         {
             _sprintProgress += Time.deltaTime;
             var movement = _movementController.GetRelativeMovement(_inputHandler.MovementInput) * Speed;

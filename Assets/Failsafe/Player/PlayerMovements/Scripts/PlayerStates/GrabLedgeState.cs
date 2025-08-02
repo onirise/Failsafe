@@ -54,7 +54,7 @@ namespace Failsafe.PlayerMovements.States
             //TODO: переделать все перемещение на PlayerMovementController
         }
 
-        public override async UniTask Update()
+        public override void Update()
         {
             _stateProgress += Time.deltaTime;
             var movementInput = _inputHandler.MovementInput;

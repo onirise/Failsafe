@@ -46,7 +46,7 @@ public class ChasingState : BehaviorState
         Debug.Log("Enter ChasingState");
     }
 
-    public override async UniTask Update()
+    public override void Update()
     {
         
         bool anySensorIsActive = false;

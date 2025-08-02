@@ -44,7 +44,7 @@ namespace Failsafe.PlayerMovements.States
             _movementController.SetGravity(_movementParameters.InitialGravityStrength * _movementParameters.GravityForce * Vector3.down);
         }
 
-        public override async UniTask Update()
+        public override void Update()
         {
             _fallProgress += Time.deltaTime;
 

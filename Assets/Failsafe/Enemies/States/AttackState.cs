@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using Failsafe.Scripts.Damage;
+﻿using Failsafe.Scripts.Damage;
 using Failsafe.Scripts.Damage.Implementation;
 using UnityEngine;
 using UnityEngine.AI;

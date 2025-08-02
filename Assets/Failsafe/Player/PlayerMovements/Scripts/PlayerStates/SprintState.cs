@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using Failsafe.Player.Model;
+﻿using Failsafe.Player.Model;
 using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 

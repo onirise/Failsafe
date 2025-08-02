@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Стандартное поведение противника пока он не обнаружил игрока

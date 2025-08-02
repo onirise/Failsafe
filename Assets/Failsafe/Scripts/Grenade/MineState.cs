@@ -26,7 +26,7 @@ namespace Failsafe.Grenade.States
             //Animations
         }
 
-        public override UseGrenadeResult OnUsed()
+        public override UseGrenadeResult OnUsed(Vector3 direction)
         {
             return new UseGrenadeResult(true);
         }

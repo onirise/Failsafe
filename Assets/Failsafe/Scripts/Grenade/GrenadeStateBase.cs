@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Failsafe.Grenade.States
 {
@@ -21,7 +22,7 @@ namespace Failsafe.Grenade.States
             Grenade = grenade;
         }
         public abstract void OnStartState();
-        public abstract UseGrenadeResult OnUsed();
+        public abstract UseGrenadeResult OnUsed(Vector3 direction);
         public abstract void OnStopState();
         public abstract void Dispose();
     }

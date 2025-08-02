@@ -24,11 +24,11 @@ namespace Failsafe.Grenade.States
             //Animations
         }
 
-        public override UseGrenadeResult OnUsed()
+        public override UseGrenadeResult OnUsed(Vector3 direction)
         {
             _explodeDelayCts?.Cancel();
             _explodeDelayCts = new CancellationTokenSource();
-            //Throw granate
+            //Throw grenade
             DelayExplode(_explodeDelayCts.Token).Forget();
             return new UseGrenadeResult(true);
         }

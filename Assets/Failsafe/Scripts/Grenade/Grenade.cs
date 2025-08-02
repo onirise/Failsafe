@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using Failsafe.Grenade.States;
 using Failsafe.Items;
 using Failsafe.Scripts.Damage.Implementation;
+using Failsafe.Scripts.Grenade;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,19 +18,19 @@ namespace Failsafe.Grenade
         MINE,
         GRANATE
     }
-    public class Grenade : Item, IUsable, IAltUsable, IDisposable
+    public class Grenade : Item, IUsable, IAltUsable, IDisposable, IGetCameraDirection
     {
         [SerializeField] private GrenadeData _data;
         [SerializeField] private GrenadeStateName _startState;
         
-        [SerializeField] private KeyCode _switchGranateKey = KeyCode.H;
-
         [Space(15)]
         [Header("StatesSettings")]
         
         [SerializeField] private MineStateSettings _mineStateSettings;
 
         [SerializeField] private GrenadeStateSettings grenadeStateSettings;
+        
+        
         
         private GrenadeStateBase _currentState;
         private GrenadeStateName _currentStateName;
@@ -46,6 +47,7 @@ namespace Failsafe.Grenade
 
 
         private bool _isUsed;
+        private Vector3 _currentDirection = Vector3.zero;
 
         private void Awake()
         {
@@ -67,11 +69,12 @@ namespace Failsafe.Grenade
                 new MineState(this, _mineStateSettings)
             };
         }
+        public void SetCameraDirection(Vector3 newDirection) => _currentDirection = newDirection;
         
         public void Use()
         {
             _isUsed = true;
-            if (_currentState.OnUsed().Success)
+            if (_currentState.OnUsed(_currentDirection).Success)
             {
                 //Success sound
             }
@@ -84,10 +87,7 @@ namespace Failsafe.Grenade
         public void AltUse()
         {
             if(_isUsed)return;
-            if (Input.GetKeyDown(_switchGranateKey))
-            {
-                SwitchState(IncrementEnumCyclic(_currentStateName));
-            }
+            SwitchState(IncrementEnumCyclic(_currentStateName));
         }
         
         private GrenadeStateName IncrementEnumCyclic(GrenadeStateName current)
@@ -150,7 +150,7 @@ namespace Failsafe.Grenade
                     {
                         _hitsTransforms.Add(_hits[i].transform);
                         damageable.TakeDamage(new FlatDamage(_data.DamageCount));
-                        //Add fire effect
+                        //Add fire damage effect
                     }
                 }
             }
@@ -202,6 +202,7 @@ namespace Failsafe.Grenade
                 state.Dispose();
             }
         }
+
 
       
     }

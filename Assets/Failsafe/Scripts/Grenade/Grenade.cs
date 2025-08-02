@@ -145,10 +145,11 @@ namespace Failsafe.Grenade
                 {
                     if(_hits[i].transform == null || _hits[i].transform == transform || 
                        _hitsTransforms.Contains(_hits[i].transform))continue;
+                    
+                    _hitsTransforms.Add(_hits[i].transform);
 
                     if (_hits[i].transform.TryGetComponent(out DamageableComponent damageable))
                     {
-                        _hitsTransforms.Add(_hits[i].transform);
                         damageable.TakeDamage(new FlatDamage(_data.DamageCount));
                         //Add fire damage effect
                     }

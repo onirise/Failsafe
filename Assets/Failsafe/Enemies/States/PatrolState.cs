@@ -1,4 +1,5 @@
-﻿using FMOD;
+﻿using Cysharp.Threading.Tasks;
+using FMOD;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,11 +36,11 @@ public class PatrolState : BehaviorState
     {
         base.Enter();
         _navMeshAgent.stoppingDistance = 1f;
-        ChoosePatroloStyle();
+        ChoosePatrolStyle();
 
     }
 
-    private void ChoosePatroloStyle()
+    private void ChoosePatrolStyle()
     {
         if (_patrolPoints == null || _patrolPoints.Count == 0)
         {
@@ -57,17 +58,16 @@ public class PatrolState : BehaviorState
             HandlePatrolling();
         }
     }
-    public async override void Update()
+    public override async UniTask Update()
     {
        
         if (_isWaiting)
         {
-            await Timer.StartTimer(_waitTimer, 0, null, () =>
+            await Timer.StartTimer(_waitTimer, 1, null, () =>
             {
                 _isWaiting = false;
                 HandlePatrolling();
             });
-            return;
         }
 
         if (_enemyNavMeshActions.IsPointReached())

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -49,7 +50,7 @@ public class SearchingState : BehaviorState
         Debug.Log("Enter SearchingState: going to last known player position");
     }
 
-    public override async void Update()
+    public override async UniTask Update()
     {
         base.Update();
 
@@ -72,12 +73,11 @@ public class SearchingState : BehaviorState
 
         if (_isWaiting)
         {
-            await Timer.StartTimer(_waitTimer, 0, null, () =>
+            await Timer.StartTimer(_waitTimer, 1, null, () =>
             {
                 _isWaiting = false;
                 PickPoint(_transform.position);
             });
-            return;
         }
 
         if (_enemyNavMeshActions.IsPointReached())

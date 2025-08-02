@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace Failsafe.PlayerMovements.States
             base.Enter();
         }
 
-        public override void Update()
+        public override async UniTask Update()
         {
             if (Mathf.Abs(_playerRotationController.HeadLocalRotation.y) >= 80)
             {

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Failsafe.Obstacles;
 using Failsafe.PlayerMovements.Controllers;
 using System.Linq;
@@ -53,7 +54,7 @@ namespace Failsafe.PlayerMovements.States
             //TODO: переделать все перемещение на PlayerMovementController
         }
 
-        public override void Update()
+        public override async UniTask Update()
         {
             _stateProgress += Time.deltaTime;
             var movementInput = _inputHandler.MovementInput;

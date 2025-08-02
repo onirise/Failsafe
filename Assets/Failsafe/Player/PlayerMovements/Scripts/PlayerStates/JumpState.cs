@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Failsafe.Player.Model;
 using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace Failsafe.PlayerMovements.States
             _playerStaminaController.SpendOnJump();
         }
 
-        public override void Update()
+        public override async UniTask Update()
         {
             _jumpProgress += Time.deltaTime;
 

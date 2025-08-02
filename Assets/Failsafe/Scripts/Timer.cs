@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 public static class Timer
 {
-    public static async UniTask StartTimer(float totalTime, float tickInterval, Action onTick, Action onComplete)
+    public static async UniTask StartTimer(float totalTime, float tickInterval = 1, Action onTick = null, Action onComplete = null)
     {
         float elapsed = 0f;
         while (elapsed < totalTime)

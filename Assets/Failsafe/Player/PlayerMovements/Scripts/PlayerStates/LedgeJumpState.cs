@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
@@ -41,7 +42,7 @@ namespace Failsafe.PlayerMovements.States
             _initialVelocity = _headTransform.forward * 5f;
         }
 
-        public override void Update()
+        public override async UniTask Update()
         {
             _jumpProgress += Time.deltaTime;
             var jumpMovement = Vector3.up * (_jumpForce - _jumpProgress * _jumpForceFade) * Time.deltaTime;

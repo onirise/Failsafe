@@ -1,4 +1,5 @@
-﻿using Failsafe.Scripts.Damage;
+﻿using Cysharp.Threading.Tasks;
+using Failsafe.Scripts.Damage;
 using Failsafe.Scripts.Damage.Implementation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -56,7 +57,7 @@ public class AttackState : BehaviorState
         _enemyAnimator.isAttacking(true);
     }
 
-    public override void Update()
+    public override async UniTask Update()
     {
         _attackProgress += Time.deltaTime;
 

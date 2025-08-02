@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Failsafe.Obstacles;
 using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
@@ -48,7 +49,7 @@ namespace Failsafe.PlayerMovements.States
             base.Enter();
         }
 
-        public override void Update()
+        public override async UniTask Update()
         {
             _climbingProgress += Time.deltaTime;
             Vector3 movement = Vector3.zero;

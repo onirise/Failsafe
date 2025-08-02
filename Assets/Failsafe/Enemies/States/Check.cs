@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class CheckState : BehaviorState
@@ -48,7 +49,7 @@ public class CheckState : BehaviorState
         }
     }
 
-    public override async void Update()
+    public override async UniTask Update()
     {
         base.Update();
 
@@ -65,12 +66,11 @@ public class CheckState : BehaviorState
 
         if (_isWaiting)
         {
-            await Timer.StartTimer(_waitTimer, 0, null, () =>
+            await Timer.StartTimer(_waitTimer, 1, null, () =>
             {
                 _isWaiting = false;
                 PickPoint(_transform.position);
             });
-            return;
         }
 
         if (_enemyNavMeshActions.IsPointReached())

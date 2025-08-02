@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Failsafe.Scripts.EffectSystem;
 using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
@@ -43,7 +44,7 @@ namespace Failsafe.PlayerMovements.States
             _movementController.SetGravity(_movementParameters.InitialGravityStrength * _movementParameters.GravityForce * Vector3.down);
         }
 
-        public override void Update()
+        public override async UniTask Update()
         {
             _fallProgress += Time.deltaTime;
 

@@ -1,4 +1,5 @@
-﻿using Failsafe.PlayerMovements.Controllers;
+﻿using Cysharp.Threading.Tasks;
+using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
 namespace Failsafe.PlayerMovements.States
@@ -36,7 +37,7 @@ namespace Failsafe.PlayerMovements.States
             _stepController.Enable(Speed);
         }
 
-        public override void Update()
+        public override async UniTask Update()
         {
             var movement = _movementController.GetRelativeMovement(_inputHandler.MovementInput) * Speed;
             _movementController.Move(movement);

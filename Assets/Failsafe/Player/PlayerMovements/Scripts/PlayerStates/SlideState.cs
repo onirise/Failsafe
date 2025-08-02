@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Failsafe.PlayerMovements.Controllers;
 using UnityEngine;
 
@@ -44,7 +45,7 @@ namespace Failsafe.PlayerMovements.States
             _playerRotationController.RotateBodyToDirection(_movementController.GetRelativeMovement(Vector2.up));
         }
 
-        public override void Update()
+        public override async UniTask Update()
         {
             _slideProgress += Time.deltaTime;
             var movement = _movementController.GetRelativeMovement(Vector2.up) * GetCurrentSpeed();

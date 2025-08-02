@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 /// <summary>
 /// Состояние деактивации
@@ -17,7 +18,7 @@ public class DisabledState : BehaviorForcedState
         Debug.Log("Enter DisabledState");
     }
 
-    public override void Update()
+    public override async UniTask Update()
     {
         _disableProgress += Time.deltaTime;
         Debug.Log(_disableProgress);

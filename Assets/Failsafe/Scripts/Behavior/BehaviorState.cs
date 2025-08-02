@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 /// <summary>
@@ -44,7 +45,7 @@ public abstract class BehaviorState
     /// <summary>
     /// Выполняется пока состояние активно
     /// </summary>
-    public virtual void Update() { }
+    public virtual async UniTask Update() { }
 
     /// <summary>
     /// Выполняется пока состояние активно

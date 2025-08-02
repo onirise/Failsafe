@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
@@ -45,7 +46,7 @@ public class ChasingState : BehaviorState
         Debug.Log("Enter ChasingState");
     }
 
-    public override void Update()
+    public override async UniTask Update()
     {
         
         bool anySensorIsActive = false;

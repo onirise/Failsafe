@@ -1611,8 +1611,8 @@ GameObject:
   - component: {fileID: 6775870886951891066}
   - component: {fileID: 3325948451869141101}
   - component: {fileID: 3193436742333253775}
-  - component: {fileID: 1787221053027915814}
-  - component: {fileID: 6066249229859090446}
+  - component: {fileID: 4551226578461979612}
+  - component: {fileID: 2307031734720968503}
   m_Layer: 10
   m_Name: Walker_Patrol_Bot_1 1
   m_TagString: Enemy
@@ -1664,7 +1664,7 @@ MonoBehaviour:
   _manualPoints: []
   seePlayer: 0
   hearPlayer: 0
-  _enemyConfig: {fileID: 11400000, guid: 724be6a3266871249b346fdf1bb26a46, type: 2}
+  _enemyConfig: {fileID: 0}
 --- !u!114 &202986098991734307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1913,7 +1913,7 @@ MonoBehaviour:
   - 0
   applyHRTFToPathing: 0
   pathingMixLevel: 1
---- !u!54 &1787221053027915814
+--- !u!54 &4551226578461979612
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1935,34 +1935,23 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &6066249229859090446
-CapsuleCollider:
+--- !u!114 &2307031734720968503
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5441590585779604949}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.13
-  m_Height: 0
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.26, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69530086952b6bf42ac00bdee204cdb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5568232610338988830
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     public AwarenessMeter _awarenessMeter;
     public bool seePlayer;
     public bool hearPlayer;
-    [SerializeField] private Enemy_ScriptableObject _enemyConfig;
+    public Enemy_ScriptableObject _enemyConfig;
     private EnemyMovePatterns _enemyMovePatterns;
     private EnemyNavMeshActions _enemyNavMeshActions;
     private EnemyMemory _enemyMemory;

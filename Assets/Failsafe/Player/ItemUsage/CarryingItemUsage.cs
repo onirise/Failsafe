@@ -4,9 +4,11 @@ using VContainer;
 using System.Linq;
 using Sirenix.Utilities;
 using System.Collections.Generic;
+using System;
 
 namespace Failsafe.Player.ItemUsage
 {
+    [Obsolete("Использовалоьсь для теста. Заменено на PlayerHandsSystem")]
     public class CarryingItemUsage : MonoBehaviour
     {
         private PhysicsInteraction _physicsInteraction;
@@ -25,7 +27,7 @@ namespace Failsafe.Player.ItemUsage
 
         private void Update()
         {
-            if (!(_inputHandler.UseTriggered || _inputHandler.ZoomTriggered)) return;
+            if (!(_inputHandler.UseTrigger.IsTriggered || _inputHandler.ZoomTriggered)) return;
             if (!_physicsInteraction.CarryingObject) return;
 
             if (_physicsInteraction.CarryingObject.TryGetComponent(out Item item))

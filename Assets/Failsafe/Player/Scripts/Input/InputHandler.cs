@@ -32,13 +32,13 @@ public class InputHandler
     private const string _grabLedge = "GrabLedge";
     private const string _zoom = "Zoom";
     private const string _use = "Use";
-    
+
     private InputAction _movementAction;
     private InputAction _rotationAction;
     private InputAction _jumpAction;
     private InputAction _sprintAction;
     private InputAction _crouchAction;
-    private InputAction _grabOrDropAction;
+    public InputAction GrabOrDropAction;
     private InputAction _attackAction;
     private InputAction _grabLedgeAction;
     private InputAction _zoomAction;
@@ -53,11 +53,10 @@ public class InputHandler
     public bool JumpTriggered { get; private set; }
     public bool SprintTriggered { get; private set; }
     public InputTrigger CrouchTrigger { get; private set; } = new InputTrigger();
-    public bool GrabOrDropTriggered { get; private set; }
-    public bool AttackTriggered {get; private set;}
+    public bool AttackTriggered { get; private set; }
     public InputTrigger GrabLedgeTrigger { get; private set; } = new InputTrigger();
-    public bool ZoomTriggered {get; private set;} 
-    public bool UseTriggered {get; private set;}
+    public bool ZoomTriggered { get; private set; }
+    public InputTrigger UseTrigger { get; private set; } = new InputTrigger();
 
 
     /// <summary>
@@ -79,7 +78,7 @@ public class InputHandler
         _jumpAction = mapReference.FindAction(_jump);
         _sprintAction = mapReference.FindAction(_sprint);
         _crouchAction = mapReference.FindAction(_crouch);
-        _grabOrDropAction = mapReference.FindAction(_grabOrDrop);
+        GrabOrDropAction = mapReference.FindAction(_grabOrDrop);
         _attackAction = mapReference.FindAction(_attack);
         _grabLedgeAction = mapReference.FindAction(_grabLedge);
         _zoomAction = mapReference.FindAction(_zoom);
@@ -87,7 +86,7 @@ public class InputHandler
 
         SubscribeActionValuesToInputEvents();
     }
-    
+
     private void SubscribeOnActionsPerformed()
     {
         foreach (var actionMap in _playerControls.actionMaps)
@@ -107,7 +106,7 @@ public class InputHandler
 
     public void RemovePerformedAction(InputAction.CallbackContext context) =>
         PerformedActions.Remove(context.action);
-        
+
 
     private void SubscribeActionValuesToInputEvents()
     {
@@ -126,9 +125,6 @@ public class InputHandler
         _crouchAction.performed += CrouchTrigger.OnInputStart;
         _crouchAction.canceled += CrouchTrigger.OnInputCancel;
 
-        _grabOrDropAction.performed += inputInfo => GrabOrDropTriggered = true;
-        _grabOrDropAction.canceled += inputInfo => GrabOrDropTriggered = false;
-
         _attackAction.performed += inputInfo => AttackTriggered = true;
         _attackAction.canceled += inputInfo => AttackTriggered = false;
 
@@ -138,11 +134,11 @@ public class InputHandler
         _zoomAction.performed += inputInfo => ZoomTriggered = true;
         _zoomAction.canceled += inputInfo => ZoomTriggered = false;
 
-        _useAction.performed += _ => UseTriggered = true;
-        _useAction.canceled += _ => UseTriggered = false;
+        _useAction.performed += UseTrigger.OnInputStart;
+        _useAction.canceled += UseTrigger.OnInputCancel;
 
     }
-    
+
     public class InputTrigger
     {
         /// <summary>

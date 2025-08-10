@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Failsafe.Player.View;
 using Failsafe.PlayerMovements;
 using Failsafe.PlayerMovements.States;
@@ -10,8 +11,11 @@ namespace Failsafe.Player
     public class PlayerAnimationController : IInitializable, ITickable, IDisposable
     {
         private readonly PlayerController _playerController;
+        private readonly PlayerHandsSystem _playerHandsSystem;
         private readonly Animator _animator;
         private readonly Transform _payerTransform;
+        private readonly int _upperBodyLayerId;
+        private int _upperBodyActive;
 
         private float _movementDumpTime = 0.2f;
         private int _xMovementId = Animator.StringToHash("XMovement");
@@ -25,12 +29,16 @@ namespace Failsafe.Player
         private int _groundedId = Animator.StringToHash("Grounded");
         private int _jumpId = Animator.StringToHash("Jump");
         private int _slidingId = Animator.StringToHash("Sliding");
+        private int _healId = Animator.StringToHash("Heal");
 
-        public PlayerAnimationController(PlayerController playerController, PlayerView playerView)
+        public PlayerAnimationController(PlayerController playerController, PlayerView playerView, PlayerHandsSystem playerHandsSystem)
         {
             _playerController = playerController;
             _animator = playerView.Animator;
             _payerTransform = playerView.PlayerTransform;
+            _playerHandsSystem = playerHandsSystem;
+
+            _upperBodyLayerId = _animator.GetLayerIndex("UpperBody");
         }
 
         public void Tick()
@@ -62,12 +70,14 @@ namespace Failsafe.Player
         {
             _playerController.StateMachine.GetState<JumpState>().OnEnter += OnStartJumping;
             _playerController.StateMachine.GetState<JumpState>().OnExit += OnFinishJumping;
+            _playerHandsSystem.OnItemStartUsing += OnUseItem;
         }
 
         public void Dispose()
         {
             _playerController.StateMachine.GetState<JumpState>().OnEnter -= OnStartJumping;
             _playerController.StateMachine.GetState<JumpState>().OnExit -= OnFinishJumping;
+            _playerHandsSystem.OnItemStartUsing -= OnUseItem;
         }
 
         public void OnStartJumping()
@@ -79,6 +89,24 @@ namespace Failsafe.Player
         {
             //Иногда юнити не успевает сбросить триггер, нужно это делать вручную
             _animator.ResetTrigger(_jumpId);
+        }
+
+        public void OnUseItem()
+        {
+            _animator.SetTrigger(_healId);
+            ActivateLayerForSeconds(_upperBodyLayerId, 2.5f).Forget();
+        }
+
+        private async UniTask ActivateLayerForSeconds(int layerId, float seconds)
+        {
+            _upperBodyActive++;
+            _animator.SetLayerWeight(layerId, 1);
+            await UniTask.Delay(TimeSpan.FromSeconds(seconds));
+            _upperBodyActive--;
+            if (_upperBodyActive == 0)
+            {
+                _animator.SetLayerWeight(layerId, 0);
+            }
         }
     }
 }

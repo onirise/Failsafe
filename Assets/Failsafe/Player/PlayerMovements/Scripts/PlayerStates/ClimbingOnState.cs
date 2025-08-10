@@ -57,6 +57,7 @@ namespace Failsafe.PlayerMovements.States
             {
                 movement = Vector3.up;
             }
+
             movement += _targetPosition - _characterController.transform.position;
             _movementController.Move(_climbSpeed * movement.normalized);
         }

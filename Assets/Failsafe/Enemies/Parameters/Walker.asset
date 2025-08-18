@@ -47,8 +47,8 @@ MonoBehaviour:
   changePointInterval: 5
   enemyHealth: 100
   Damage: 100
-  AttackRangeMin: 10
+  AttackRangeMin: 8
   AttackRangeMax: 15
   AttackDuration: 5
-  AttackDelay: 0.5
+  AttackDelay: 0.3
   AttackCooldown: 4

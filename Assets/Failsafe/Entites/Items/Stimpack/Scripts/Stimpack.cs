@@ -16,10 +16,11 @@ namespace Failsafe.Items
             _maxHealthModificator = new AdderFloat(_data.MaxHealthBonus);
         }
 
-        public void Use()
+        public ItemUseResult Use()
         {
             _playerHealth.AddHealth(_data.HealAmount);
             _playerHealth.ModifyMaxHealth(_maxHealthModificator);
+            return ItemUseResult.Consumed;
         }
     }
 }

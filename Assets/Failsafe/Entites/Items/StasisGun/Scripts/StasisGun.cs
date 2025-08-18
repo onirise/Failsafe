@@ -34,14 +34,16 @@ namespace Failsafe.Items
         }
 
 
-        public void Use()
+        public ItemUseResult Use()
         {
             Shoot(Raycast());
+            return new ItemUseResult { ItemStateAfterUse = ItemState.Hold, UsageType = UsageType.ClickToUse };
         }
 
-        public void AltUse()
+        public ItemUseResult AltUse()
         {
             ChangeMode();
+            return new ItemUseResult { ItemStateAfterUse = ItemState.Hold, UsageType = UsageType.ClickToUse };
         }
 
         public void ChangeMode()

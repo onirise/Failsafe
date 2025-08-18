@@ -8,6 +8,6 @@ namespace Failsafe.Items
         /// <summary>
         /// Использовать
         /// </summary>
-        public void Use();
+        public ItemUseResult Use();
     }
 }

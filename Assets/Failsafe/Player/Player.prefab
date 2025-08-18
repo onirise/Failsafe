@@ -500,7 +500,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374109433352817464}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6f0b28ef36b2d84d8f44addb5b6002a, type: 3}
   m_Name: 
@@ -1096,6 +1096,37 @@ MonoBehaviour:
   m_ObsoleteUseShadowQualitySettings: 0
   m_ObsoleteCustomShadowResolution: 512
   m_ObsoleteContactShadows: 0
+--- !u!1 &5573205581300387156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7187681983919734697}
+  m_Layer: 0
+  m_Name: RightHandItemPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7187681983919734697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5573205581300387156}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.075, y: -0, z: -0.041}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7072087757042273252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6936916532298821700
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,6 +1239,7 @@ MonoBehaviour:
   PlayerRigHead: {fileID: 1762145597234849145}
   PlayerCamera: {fileID: 374109432981789085}
   Body: {fileID: 1615477473312663351}
+  RightHandItemPlace: {fileID: 7187681983919734697}
   Animator: {fileID: 3574109746567184272}
   Damageable: {fileID: 5474980340744432184}
   PlayerGrabPoint: {fileID: 4161287245272060702}
@@ -1640,6 +1672,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -881307949318026440, guid: d7ca798fd77580545bba5e4d709ca19c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9023566760621262230}
+    - targetCorrespondingSourceObject: {fileID: -881307949318026440, guid: d7ca798fd77580545bba5e4d709ca19c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7187681983919734697}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7ca798fd77580545bba5e4d709ca19c, type: 3}
       insertIndex: -1

@@ -36,6 +36,10 @@ namespace Failsafe.Player.View
         /// Тело персонажа
         /// </summary>
         public Transform Body;
+        /// <summary>
+        /// Место для предмета в правой руке
+        /// </summary>
+        public Transform RightHandItemPlace;
 
         public Animator Animator;
 
@@ -60,6 +64,8 @@ namespace Failsafe.Player.View
                 Debug.LogWarning($"Не задан компонент {nameof(PlayerView)}.{nameof(PlayerRigHead)}");
             if (PlayerCamera == null)
                 Debug.LogWarning($"Не задан компонент {nameof(PlayerView)}.{nameof(PlayerCamera)}");
+            if (RightHandItemPlace == null)
+                Debug.LogWarning($"Не задан компонент {nameof(PlayerView)}.{nameof(RightHandItemPlace)}");
             if (Animator == null)
                 Debug.LogWarning($"Не задан компонент {nameof(PlayerView)}.{nameof(Animator)}");
             if (PlayerGrabPoint == null)

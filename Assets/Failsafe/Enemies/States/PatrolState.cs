@@ -35,11 +35,11 @@ public class PatrolState : BehaviorState
     {
         base.Enter();
         _navMeshAgent.stoppingDistance = 1f;
-        ChoosePatroloStyle();
+        ChoosePatrolStyle();
 
     }
 
-    private void ChoosePatroloStyle()
+    private void ChoosePatrolStyle()
     {
         if (_patrolPoints == null || _patrolPoints.Count == 0)
         {

@@ -32,7 +32,7 @@ public class InputHandler
     private const string _grabLedge = "GrabLedge";
     private const string _zoom = "Zoom";
     private const string _use = "Use";
-    
+
     private InputAction _movementAction;
     private InputAction _rotationAction;
     private InputAction _jumpAction;
@@ -53,10 +53,10 @@ public class InputHandler
     public bool JumpTriggered { get; private set; }
     public bool SprintTriggered { get; private set; }
     public InputTrigger CrouchTrigger { get; private set; } = new InputTrigger();
-    public bool AttackTriggered {get; private set;}
+    public bool AttackTriggered { get; private set; }
     public InputTrigger GrabLedgeTrigger { get; private set; } = new InputTrigger();
-    public bool ZoomTriggered {get; private set;} 
-    public bool UseTriggered {get; private set;}
+    public bool ZoomTriggered { get; private set; }
+    public InputTrigger UseTrigger { get; private set; } = new InputTrigger();
 
 
     /// <summary>
@@ -86,7 +86,7 @@ public class InputHandler
 
         SubscribeActionValuesToInputEvents();
     }
-    
+
     private void SubscribeOnActionsPerformed()
     {
         foreach (var actionMap in _playerControls.actionMaps)
@@ -106,7 +106,7 @@ public class InputHandler
 
     public void RemovePerformedAction(InputAction.CallbackContext context) =>
         PerformedActions.Remove(context.action);
-        
+
 
     private void SubscribeActionValuesToInputEvents()
     {
@@ -134,11 +134,11 @@ public class InputHandler
         _zoomAction.performed += inputInfo => ZoomTriggered = true;
         _zoomAction.canceled += inputInfo => ZoomTriggered = false;
 
-        _useAction.performed += _ => UseTriggered = true;
-        _useAction.canceled += _ => UseTriggered = false;
+        _useAction.performed += UseTrigger.OnInputStart;
+        _useAction.canceled += UseTrigger.OnInputCancel;
 
     }
-    
+
     public class InputTrigger
     {
         /// <summary>

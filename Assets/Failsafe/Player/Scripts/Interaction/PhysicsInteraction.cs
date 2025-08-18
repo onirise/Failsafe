@@ -45,6 +45,7 @@ namespace Failsafe.Player.Scripts.Interaction
 
         [Inject]
         private InputHandler _inputHandler;
+        [Inject] private PlayerHandsContainer _playerHandsContainer;
 
         private bool _isPreparingToThrow;
         private float _throwForceMultiplier;
@@ -150,6 +151,16 @@ namespace Failsafe.Player.Scripts.Interaction
 
             if (!hitInfo.rigidbody)
                 return;
+
+            if (hitInfo.transform.TryGetComponent<Item>(out var itemObject))
+            {
+                if (_playerHandsContainer.State == PlayerHandsContainer.HandState.ItemInHand)
+                {
+                    _playerHandsContainer.DropItemFromHand();
+                }
+                _playerHandsContainer.TryTakeItemInHand(itemObject);
+                return;
+            }
 
             CarryingBody = hitInfo.rigidbody;
             CarryingBody.useGravity = false;

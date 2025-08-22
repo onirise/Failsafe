@@ -19,14 +19,12 @@ public class EnemyPhysicsStunComponent : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        var stunTime = Mathf.Pow(collision.relativeVelocity.magnitude, 2) * collision.rigidbody.mass 
-            * _physicsStunData.StunMultiplier;
+        float stunTime = Mathf.Pow(collision.relativeVelocity.magnitude, 2) * collision.rigidbody.mass * _physicsStunData.StunMultiplier;
         if (stunTime > _physicsStunData.MinStunTime)
         {
             stunTime = Mathf.Min(stunTime, _physicsStunData.MaxStunTime);
-            //TODO: Передавать время стана как аргумент в DisabledState()
-            _enemy.DisableState();
-            Debug.Log("Стан: " + stunTime + "мс");
+            _enemy.DisableState(stunTime/1000);
+            Debug.Log("Стан: " + stunTime/1000 + "секунд");
         }
     }
 }

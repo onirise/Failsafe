@@ -46,6 +46,9 @@ MonoBehaviour:
   offsetSearchingPoint: 10
   changePointInterval: 5
   enemyHealth: 100
+  MinStunTime: 200
+  MaxStunTime: 1500
+  StunMultiplier: 10
   Damage: 100
   AttackRangeMin: 8
   AttackRangeMax: 15

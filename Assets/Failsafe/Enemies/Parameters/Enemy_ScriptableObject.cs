@@ -59,8 +59,8 @@ public class Enemy_ScriptableObject : ScriptableObject
     public float enemyHealth = 100f; // Здоровье врага
 
     [Header("Stun")]
-    public int MinStunTime; //Если высчитаный скриптом результат меньше этого значения - враг не станится
-    public int MaxStunTime; //Верхняя граница стана, результаты выше понижаются до этого параметра
+    public float MinStunTime; //Если высчитаный скриптом результат меньше этого значения - враг не станится
+    public float MaxStunTime; //Верхняя граница стана, результаты выше понижаются до этого параметра
     public float StunMultiplier; //Множитель стана, чтобы подогнать результат произведения массы на скорость к желаемому значению времени стана
 
     [Header("Attack")]

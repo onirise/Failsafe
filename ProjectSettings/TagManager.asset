@@ -20,7 +20,7 @@ TagManager:
   - Ledge
   - Enemy
   - Interactable
-  - 
+  - floor
   - 
   - Inventory
   - PlayerHead

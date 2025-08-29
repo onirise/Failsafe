@@ -91,8 +91,13 @@ namespace Failsafe.Player
             _animator.ResetTrigger(_jumpId);
         }
 
-        public void OnUseItem()
+        public void OnUseItem(ItemType itemType)
         {
+            // TODO: Выбрать анимацию по типу предмета
+            // Кроме типа нужны другие параметры: 
+            // - основное или дополнительное действие
+            // - в зависимости от режима предмета могут быть разные анимации
+            // - для каждого предмета могут быть разные анимации или разная длительность анимации
             _animator.SetTrigger(_healId);
             ActivateLayerForSeconds(_upperBodyLayerId, 2.5f).Forget();
         }

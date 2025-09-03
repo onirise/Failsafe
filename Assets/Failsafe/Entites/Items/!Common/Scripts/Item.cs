@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Item : Prop
 {
     public ItemData ItemData;

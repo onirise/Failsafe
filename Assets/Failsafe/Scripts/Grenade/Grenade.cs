@@ -1,0 +1,210 @@
+using Cysharp.Threading.Tasks;
+using Failsafe.Grenade.States;
+using Failsafe.Items;
+using Failsafe.Scripts.Damage.Implementation;
+using Failsafe.Scripts.Grenade;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using UnityEngine;
+using UnityEngine.Serialization;
+
+namespace Failsafe.Grenade
+{
+    [Serializable]
+    public enum GrenadeStateName
+    {
+        MINE,
+        GRANATE
+    }
+    public class Grenade : Item, IUsable, IAltUsable, IDisposable, IGetCameraDirection
+    {
+        [SerializeField] private GrenadeData _data;
+        [SerializeField] private GrenadeStateName _startState;
+        
+        [Space(15)]
+        [Header("StatesSettings")]
+        
+        [SerializeField] private MineStateSettings _mineStateSettings;
+
+        [SerializeField] private GrenadeStateSettings grenadeStateSettings;
+        
+        
+        
+        private GrenadeStateBase _currentState;
+        private GrenadeStateName _currentStateName;
+
+        public GrenadeStateName GetCurrentStateName => _currentStateName;
+        
+        private List<GrenadeStateBase> _allGrenadeStates;
+        
+        private CancellationTokenSource _explodeCts;
+        private RaycastHit[] _hits;
+        private readonly HashSet<Transform> _hitsTransforms = new();
+        
+        public event Action OnExplode;
+
+
+        private bool _isUsed;
+        private Vector3 _currentDirection = Vector3.zero;
+
+        private void Awake()
+        {
+            _hits = new RaycastHit[_data.HitsCount];
+            
+            Initialize();
+        }
+
+        private void Start()
+        {
+            SwitchState(_startState);
+        }
+
+        private void Initialize()
+        {
+            _allGrenadeStates = new List<GrenadeStateBase>()
+            {
+                new GrenadeState(this, grenadeStateSettings),
+                new MineState(this, _mineStateSettings)
+            };
+        }
+        public void SetCameraDirection(Vector3 newDirection) => _currentDirection = newDirection;
+        
+        public void Use()
+        {
+            _isUsed = true;
+            if (_currentState.OnUsed(_currentDirection).Success)
+            {
+                //Success sound
+            }
+            else
+            {
+                //No success sound
+            }
+        }
+        
+        public void AltUse()
+        {
+            if(_isUsed)return;
+            SwitchState(IncrementEnumCyclic(_currentStateName));
+        }
+        
+        private GrenadeStateName IncrementEnumCyclic(GrenadeStateName current)
+        {
+            GrenadeStateName[] values = (GrenadeStateName[])Enum.GetValues(typeof(GrenadeStateName));
+            
+            int currentInt = (int)current;
+            int nextInt = (currentInt + 1) % values.Length;
+            return (GrenadeStateName)nextInt;
+        }
+
+
+        public void Explode()
+        {
+            //Эффекты через вьюшку
+            OnExplode?.Invoke();
+            
+            _explodeCts?.Cancel();
+            _explodeCts = new CancellationTokenSource();
+            DamageExplode(_explodeCts.Token).Forget();
+        }
+        
+        
+        private async UniTaskVoid DamageExplode(CancellationToken ct)
+        {
+            try
+            {
+                float evaluatedTime = 0f;
+                
+                while (evaluatedTime < _data.DelayLerpRadius && !ct.IsCancellationRequested)
+                {
+                    evaluatedTime += Time.deltaTime;
+                    float t = Mathf.Clamp01(evaluatedTime / _data.DelayLerpRadius);
+                    float currentRadiusValue = Mathf.Lerp(_data.StartLerpRadius, _data.EndLerpRadius, t);
+                    
+                    CheckDamagebles(currentRadiusValue);
+                    await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: ct);
+                }
+                
+                CheckDamagebles(_data.EndLerpRadius);
+            }
+            catch (OperationCanceledException){}
+        }
+
+        private void CheckDamagebles(float radius)
+        {
+            int hitsCount = Physics.SphereCastNonAlloc(transform.position, radius, Vector3.up,
+                _hits, radius, _data.DamageLayerMask);
+            
+            _hitsTransforms.Clear();
+
+            if (hitsCount > 0)
+            {
+                for (int i = 0; i < hitsCount; i++)
+                {
+                    if(_hits[i].transform == null || _hits[i].transform == transform || 
+                       _hitsTransforms.Contains(_hits[i].transform))continue;
+                    
+                    _hitsTransforms.Add(_hits[i].transform);
+
+                    if (_hits[i].transform.TryGetComponent(out DamageableComponent damageable))
+                    {
+                        damageable.TakeDamage(new FlatDamage(_data.DamageCount));
+                        //Add fire damage effect
+                    }
+                }
+            }
+        }
+        
+        public void SwitchState<T>() where T : GrenadeStateBase
+        {
+            var newState = _allGrenadeStates.FirstOrDefault(s=> s is T);
+            _currentState?.OnStopState();
+
+            if(newState == null)throw new Exception("New granate state is null");
+            newState.OnStartState();
+            _currentState = newState;
+        }
+
+        public void SwitchState(GrenadeStateName newState)
+        {
+            switch (newState)
+            {
+                case GrenadeStateName.GRANATE:
+                    SwitchState<GrenadeState>();
+                    break;
+                case GrenadeStateName.MINE:
+                    SwitchState<MineState>();
+                    break;
+                default:
+                    SwitchState<GrenadeState>();
+                    break;
+            }
+
+            _currentStateName = newState;
+        }
+        
+        private void OnDestroy()
+        {
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            if (_explodeCts != null && !_explodeCts.IsCancellationRequested)
+            {
+                _explodeCts.Cancel();
+                _explodeCts.Dispose();
+            }
+
+            foreach (var state in _allGrenadeStates)
+            {
+                state.Dispose();
+            }
+        }
+
+
+      
+    }
+}

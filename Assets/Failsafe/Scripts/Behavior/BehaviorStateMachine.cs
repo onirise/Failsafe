@@ -84,23 +84,23 @@ public class BehaviorStateMachine
     /// <summary>
     /// Переключение на принудительное состояние
     /// </summary>
-    public void ForseChangeState<T>() where T : BehaviorForcedState
+    public void ForseChangeState<T>(float? duration = null) where T : BehaviorForcedState
     {
         var nextState = _forcedStates.FirstOrDefault(x => x.GetType() == typeof(T));
         if (nextState != null)
         {
-            ForseChangeState(nextState);
+            ForseChangeState(nextState, duration);
         }
     }
 
-    private void ForseChangeState(BehaviorForcedState nextState)
+    private void ForseChangeState(BehaviorForcedState nextState, float? duration)
     {
         if (nextState != _currentState)
         {
             var prevState = _currentState;
             prevState.Exit();
             _currentState = nextState;
-            nextState.Enter(prevState);
+            nextState.Enter(prevState, duration);
         }
     }
 

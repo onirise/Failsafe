@@ -49,7 +49,7 @@ public class StasisGunOLD : MonoBehaviour
         }
         else if (hit.collider.GetComponentInParent<Enemy>() != null)
         {
-            hit.collider.GetComponentInParent<Enemy>().DisableState();
+            hit.collider.GetComponentInParent<Enemy>().DisableState(Data.StasisDuration);
         }
     }
 
@@ -61,7 +61,7 @@ public class StasisGunOLD : MonoBehaviour
         }
         else if (hit.collider.GetComponentInParent<Enemy>() != null)
         {
-            hit.collider.GetComponentInParent<Enemy>().DisableState();
+            hit.collider.GetComponentInParent<Enemy>().DisableState(Data.StasisDuration);
         }
     }
 }

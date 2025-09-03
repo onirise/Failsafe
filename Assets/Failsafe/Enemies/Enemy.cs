@@ -102,9 +102,9 @@ public class Enemy : MonoBehaviour
     }
 
     [ContextMenu("DisableState")]
-    public void DisableState()
+    public void DisableState(float? duration = null)
     {
-        _stateMachine.ForseChangeState<DisabledState>();
+        _stateMachine.ForseChangeState<DisabledState>(duration);
     }
     
 

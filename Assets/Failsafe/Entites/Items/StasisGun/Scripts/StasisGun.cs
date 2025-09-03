@@ -81,7 +81,7 @@ namespace Failsafe.Items
             }
             else if (hit.collider.GetComponentInParent<Enemy>() != null)
             {
-                hit.collider.GetComponentInParent<Enemy>().DisableState();
+                hit.collider.GetComponentInParent<Enemy>().DisableState(_data.StasisDuration);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Failsafe.Items
             }
             else if (hit.collider.GetComponentInParent<Enemy>() != null)
             {
-                hit.collider.GetComponentInParent<Enemy>().DisableState();
+                hit.collider.GetComponentInParent<Enemy>().DisableState(_data.StasisDuration);
             }
         }
 

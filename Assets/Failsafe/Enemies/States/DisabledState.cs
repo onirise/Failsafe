@@ -5,7 +5,6 @@
 /// </summary>
 public class DisabledState : BehaviorForcedState
 {
-    private float _disableTime = 5f;
     private float _disableProgress;
     private Transition _transitionToPreviousState;
 
@@ -23,10 +22,13 @@ public class DisabledState : BehaviorForcedState
         Debug.Log(_disableProgress);
     }
 
-    private bool IsStateFinished() => _disableProgress >= _disableTime;
+    private bool IsStateFinished() => StateDuration != null ? _disableProgress >= StateDuration : false;
 
     public override Transition DecideTransition()
     {
-        return _transitionToPreviousState;
+        if (IsStateFinished())
+            return _transitionToPreviousState;
+        else
+            return null;
     }
 }
